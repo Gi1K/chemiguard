@@ -203,3 +203,18 @@
   - https://www.dupont.co.uk/products/tychem-4000-s-slchz5twh00.html
   - https://www.dupont.co.uk/products/tychem-6000-f-tfcha5tgy00.html
   - https://www.dupont.co.uk/products/tyvek-500-xpert-tychf5swhxp-tychf5swhxb.html
+
+## 시연 화학복 제품명·라벨 웹 재조사 (2026-10-09)
+
+- 사용자 요청: 예전에 확보할 때 조사했던 DuPont 시연 화학복의 제품명/라벨을 웹에서 다시 확인한다. 구현 변경 요청이 아니라 출처 조사다.
+- 사전 근거: research/video_product_links_20261004/README.md와 V08_p11_source.json는 기존 두 사람/착의 발췌가 같은 V08 원본에서 나왔으며 Tychem 4000 S 제품군 연결은 확인, 정확 SKU는 미확인이라고 기록했다. 이 사전 기록을 수정하거나 신규 조사로 바꿔 쓰지 않았다.
+- 새 확인: 로컬 원본 5초 프레임에 'DUPONT TYCHEM 4000 S (WITH SOCKS)'가 명시되어 있음을 직접 확인했다. 제품 포털 HTML의 data-href는 기존 기록과 같은 DuPont Scene7 착탈의 미디어 URL이고 YouTube 71i0IWVS99c 연결도 남아 있다. CHZ5 페이지에서 제공되는 영상이 반드시 CHZ5 변형 영상이라는 뜻은 아니다.
+- 공식 변형 대조: DuPont CHZ6 제품 페이지는 Tychem 4000 S with socks / SLCHZ6TWH16, 공식 IFU는 일반 CHZ5와 with socks CHZ6를 구분한다. 따라서 시연 주 착용자는 'Tychem 4000 S 양말 일체형, 공식 자료 대응 모델 CHZ6'로 설명할 근거가 있다. 현재 P11 사진 프로필 CHZ5/SLCHZ5TWH00은 같은 계열의 다른 변형이므로 시연의 정확 SKU 정답으로 사용하지 않는다.
+- 라벨 한계: 확인한 주 착용자 222초 crop의 가슴 마크는 보이지만 글자가 흐려 모델번호를 직접 읽지 못했다. IFU의 모델 식별은 내부 라벨 설명이다. 제목/공식 대응을 실물 내부 라벨·사이즈·제조번호 직접 판독으로 기록하지 않는다. 옆 보조자의 흰 보호복은 해당 제목만으로 동일 제품으로 확정할 수 없다.
+- 적용 경계: 앱 예측·제품 DB·등록 사진·임베딩·착용 정책은 변경하지 않았다. SigLIP의 P12 상위 결과를 정답으로 바꾸지 않았으며 주 착용자에 대한 P11/P12 계열 혼동은 여전히 개선 대상이다. 새 학습/유료 AI/성능 시험/서비스 재시작 없이 기록과 AGENTS만 추가했다. 제목 프레임 .data/v08-source-title-5s.jpg는 로컬 Git 제외다.
+- 접근 한계: YouTube 직접 페이지의 웹 도구 읽기는 실패했다. 제조사 포털 HTML의 영상 연결, 공식 CHZ6 페이지·IFU, 기존 로컬 원본의 제목을 교차 확인했으며 YouTube 본문을 읽었다고 주장하지 않는다.
+- 공식 출처:
+  - https://www.smartservices.tyvek.es/products/tychem-4000-s-slchz5twh00.html
+  - https://www.dupont.co.uk/products/tychem-4000-s-slchz6twh16.html
+  - https://www.dupont.com/content/dam/dupont/amer/us/en/personal-protection/public/documents/es/IFU_Tychem_4000S_model_CHZ6.pdf
+  - https://www.dupont.co.uk/knowledge/donning-and-doffing.html
