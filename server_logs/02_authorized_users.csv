@@ -1,0 +1,2 @@
+server_id,participant_id,account,access_method,ssh_fingerprint,role
+SERVER_01,MEMBER_01,ACCOUNT_01,SSH over Tailscale,KEY_01,본선 개발·관리·시연; 사용자 확인 1명; 실명은 비공개 대응표; 정식 참가자 ID 미제공

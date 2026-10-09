@@ -1,0 +1,32 @@
+# source=journalctl / sshd,sshd-session
+# requested_range=2026-10-09T10:00:00+09:00 ~ 2026-10-09T16:45:06+09:00
+# covered_range=observed_success_events_only: 2026-10-09T11:08:53.260172+09:00 ~ 2026-10-09T16:10:17.786247+09:00
+# collected_at=2026-10-09T16:45:06+09:00
+# timezone=Asia/Seoul (UTC+09:00)
+# format=journalctl short-iso-precise; original timestamps/results/protocol/PID/port retained
+# implementation_scope=ChemiGuard finals after 2026-10-09T10:00:00+09:00 only
+# account_scope=ACCOUNT_01; participant=MEMBER_01; one development/admin user confirmed by participant
+# filter=Accepted (publickey|password|keyboard-interactive).* for ACCOUNT_01 from
+# command_exit=0; stderr=empty; matched_success_records=16
+# redacted_fields=host,account,source_ip,key_fingerprint
+# aliases=SERVER_01,ACCOUNT_01,IP_01,KEY_01; same mapping as previous collection
+# limitations=success authentication only; no session closure/activity/forwarding/VPN history; pre-start sessions may persist; identity/completeness not independently proven
+# web_access_limitation=public web access is unauthenticated; project Nginx access_log off; no web visitor authentication/IP records included; not evidence of zero web visits
+# originals_and_mapping=restricted private storage outside repository
+# Actual pseudonymized source records follow; not sample or synthetic data.
+2026-10-09T11:08:53.260172+09:00 SERVER_01 sshd[3447644]: Accepted publickey for ACCOUNT_01 from IP_01 port 58983 ssh2: ED25519 KEY_01
+2026-10-09T11:30:15.912095+09:00 SERVER_01 sshd[3466063]: Accepted publickey for ACCOUNT_01 from IP_01 port 59324 ssh2: ED25519 KEY_01
+2026-10-09T13:47:55.879449+09:00 SERVER_01 sshd[3588926]: Accepted publickey for ACCOUNT_01 from IP_01 port 62398 ssh2: ED25519 KEY_01
+2026-10-09T14:46:11.145334+09:00 SERVER_01 sshd[3648921]: Accepted publickey for ACCOUNT_01 from IP_01 port 63807 ssh2: ED25519 KEY_01
+2026-10-09T14:53:21.583853+09:00 SERVER_01 sshd[3652932]: Accepted publickey for ACCOUNT_01 from IP_01 port 63984 ssh2: ED25519 KEY_01
+2026-10-09T14:53:22.415014+09:00 SERVER_01 sshd[3653229]: Accepted publickey for ACCOUNT_01 from IP_01 port 63992 ssh2: ED25519 KEY_01
+2026-10-09T14:53:23.094477+09:00 SERVER_01 sshd[3653388]: Accepted publickey for ACCOUNT_01 from IP_01 port 63993 ssh2: ED25519 KEY_01
+2026-10-09T14:53:23.761131+09:00 SERVER_01 sshd[3653549]: Accepted publickey for ACCOUNT_01 from IP_01 port 64006 ssh2: ED25519 KEY_01
+2026-10-09T15:36:42.429538+09:00 SERVER_01 sshd[3694245]: Accepted publickey for ACCOUNT_01 from IP_01 port 64777 ssh2: ED25519 KEY_01
+2026-10-09T15:36:43.131185+09:00 SERVER_01 sshd[3694349]: Accepted publickey for ACCOUNT_01 from IP_01 port 64788 ssh2: ED25519 KEY_01
+2026-10-09T15:36:43.833653+09:00 SERVER_01 sshd[3694488]: Accepted publickey for ACCOUNT_01 from IP_01 port 64793 ssh2: ED25519 KEY_01
+2026-10-09T15:36:44.395457+09:00 SERVER_01 sshd[3694658]: Accepted publickey for ACCOUNT_01 from IP_01 port 64803 ssh2: ED25519 KEY_01
+2026-10-09T16:10:16.198816+09:00 SERVER_01 sshd[3724082]: Accepted publickey for ACCOUNT_01 from IP_01 port 65472 ssh2: ED25519 KEY_01
+2026-10-09T16:10:16.749112+09:00 SERVER_01 sshd[3724379]: Accepted publickey for ACCOUNT_01 from IP_01 port 65476 ssh2: ED25519 KEY_01
+2026-10-09T16:10:17.237225+09:00 SERVER_01 sshd[3724515]: Accepted publickey for ACCOUNT_01 from IP_01 port 65480 ssh2: ED25519 KEY_01
+2026-10-09T16:10:17.786247+09:00 SERVER_01 sshd[3724660]: Accepted publickey for ACCOUNT_01 from IP_01 port 65489 ssh2: ED25519 KEY_01

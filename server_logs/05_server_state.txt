@@ -1,0 +1,74 @@
+server_id=SERVER_01
+collected_at=2026-10-09T16:45:06+09:00
+snapshot_finished_at=2026-10-09T16:45:06+09:00
+timezone=Asia/Seoul (UTC+09:00)
+requested_range=2026-10-09T10:00:00+09:00 ~ 2026-10-09T16:45:06+09:00
+implementation_scope=ChemiGuard finals implementation after 2026-10-09T10:00:00+09:00 only; prework and separate catalog excluded
+os=Ubuntu 24.04.5 LTS
+kernel=Linux 7.0.0-34-generic
+architecture=x86_64
+gpu=NVIDIA GeForce RTX 3090, 24576 MiB
+client_id=CLIENT_01
+client_os=macOS (participant statement and current Tailscale lookup for IP_01)
+project_accounts=ACCOUNT_01
+participant_alias=MEMBER_01
+account_scope=User confirms sole development/admin user; current execution account matches SSH success account. Not a full server administrator/account inventory; anonymous public web visitors are separate.
+access_method=SSH publickey over Tailscale; KEY_01; IP_01
+web_access=Temporary anonymous public route via Cloudflare Quick Tunnel and Nginx; separate Tailscale-only presentation preview
+web_access_records=Not collected; project Nginx configuration has access_log off; visitor count/identity not established
+deployed_git_sha=fc9335e1efd32baa1181092a8b1ae57c8340e1da
+deployed_git_sha_scope=Source checkout HEAD before this evidence update; not independently attested as exact loaded in-memory code
+working_tree=uncommitted changes
+project_processes=4 scoped user services; PID/name/state listed below
+project_containers=1 scoped Nginx container; CONTAINER_01; metadata below
+evidence_snapshot=During event; not final 17:00 KST state
+
+[project_processes]
+service=chemiguard-monitor.service
+role=Main video monitoring and phone workers
+main_pid=3740492
+state=active/running
+started_at=Fri 2026-10-09 16:28:28 KST
+process_pid=3740492; process_name=python
+
+service=chemiguard-discord-voice.service
+role=Separate Discord voice demo
+main_pid=3627564
+state=active/running
+started_at=Fri 2026-10-09 14:20:51 KST
+process_pid=3627564; process_name=node
+
+service=chemiguard-presentation-preview.service
+role=Tailscale presentation preview
+main_pid=3758699
+state=active/running
+started_at=Fri 2026-10-09 16:43:35 KST
+process_pid=3758699; process_name=python3
+
+service=chemiguard-monitor-public.service
+role=Cloudflare public verification tunnel
+main_pid=3723710
+state=active/running
+started_at=Fri 2026-10-09 16:08:40 KST
+process_pid=3723710; process_name=cloudflared
+
+[project_containers]
+container_alias=CONTAINER_01
+role=Nginx public reverse proxy for the main monitoring app
+image=0985e772fb9f (exact docker ps image value)
+status=Up 23 minutes (relative uptime at collected_at)
+query_scope=Exact project container name; no other containers enumerated
+
+[read_only_phone_status]
+http_status=200
+enabled=true
+ready=true
+automatic=false
+demo_per_run_enabled=true
+cooldown_s=50
+cooldown_scope=recipient
+realtime_model=gpt-realtime-2
+note=General automatic calls are disabled; separately enabled receiver demo can place a combined call on each new valid run. This collection did not start a run or a call.
+
+[limitations]
+Only scoped service PID/name/status and project container metadata were read. No process arguments/environment, secret files, unrelated users/processes/containers or call media are included. Service liveness is not evidence of active AI inference or event-long uptime. Source checkout SHA does not attest memory or uncommitted files. Anonymous web visitors are not developer accounts. This snapshot cannot prove all event activity. Originals, personal name, host/account/IP/key-fingerprint mapping and exact private storage paths are not public.
