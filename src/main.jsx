@@ -118,7 +118,7 @@ function App(){
   const visibleScene=aligned?presented.scene:null;
   const currentEvents=events.filter(row=>row.run_id===run?.id);
   const chooseSource=(id)=>{if(running&&id!==run?.source_id){setError('현재 분석을 중지한 뒤 영상을 변경해 주세요.');return;}setSourceId(id);setPage('monitor');};
-  return <div className="app-shell">
+  return <div className={`app-shell${page==='sources'?' demo-page':''}`}>
     <aside className="sidebar">
       <a className="brand" href="#" onClick={e=>{e.preventDefault();setPage('monitor');}}><span className="brand-icon"><ShieldCheck size={24}/></span><div>ChemiGuard<small>SAFETY OPERATIONS</small></div></a>
       <div className="workspace-label">본선 워크스페이스<span>01</span></div>
@@ -131,8 +131,9 @@ function App(){
         {error && <div className="notice error" role="alert"><AlertTriangle size={18}/><span>{error}</span><IconButton icon={X} title="오류 닫기" onClick={()=>setError('')}/></div>}
         {!connected && <div className="notice error"><AlertTriangle size={18}/>서버 연결이 끊겼습니다. 표시된 관측은 최신 상태가 아닙니다.</div>}
         {!boot ? <Empty icon={LoaderCircle}>관제 환경 불러오는 중</Empty> : <>
-          <div className="page-heading"><div><div className="eyebrow">CHEMIGUARD / {page==='monitor'?'LIVE MONITORING':page.toUpperCase()}</div><h1>{NAV.find(item=>item.id===page).title}</h1></div>
+          <div className="page-heading"><div><div className="eyebrow">CHEMIGUARD / {page==='monitor'?'LIVE MONITORING':page==='sources'?'DEMO STUDIO':page.toUpperCase()}</div><h1>{NAV.find(item=>item.id===page).title}</h1></div>
             <div className="heading-actions">{page==='monitor' && <Badge value={!connected?'ERROR':run?.status || 'WAITING'}/>}
+              {page==='sources' && <span className="demo-library-count"><FileVideo size={17}/><b>{String(boot.sources.length).padStart(2,'0')}</b> VIDEOS</span>}
               {page==='policies' && <button className="button primary" onClick={()=>setModal('policy')}><Plus size={16}/>기준 만들기</button>}
               {page==='references' && <button className="button primary" disabled={running} onClick={()=>setModal('reference')}><ImagePlus size={17}/>사진 등록</button>}
             </div>
@@ -237,16 +238,34 @@ function ReferenceSelection({references,siteProducts}){
 
 function SourcesView({sources,choose,run,connected,busy,control,onStart,policies,policyId,setPolicyId,size,setSize}){
   const sections=useRef(new Map());
+  const indexRef=useRef(null);
+  const [visibleSource,setVisibleSource]=useState(sources[0]?.id);
   const running=activeStatus(run?.status);
+  useEffect(()=>{
+    let frame=0;
+    const update=()=>{
+      frame=0;
+      const boundary=(indexRef.current?.offsetHeight||0)+48;
+      let current=sources[0]?.id;
+      for(const source of sources){
+        if((sections.current.get(source.id)?.getBoundingClientRect().top??Infinity)<=boundary) current=source.id;
+      }
+      if(window.scrollY+window.innerHeight>=document.documentElement.scrollHeight-2) current=sources.at(-1)?.id;
+      setVisibleSource(current);
+    };
+    const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
+    update();window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);
+    return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);};
+  },[sources]);
   const jump=id=>sections.current.get(id)?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
   return <div className="demo-showcase">
     <div className="demo-settings">
       <Field label="작업 기준"><select aria-label="시연 작업 기준" value={policyId} disabled={running||busy} onChange={e=>setPolicyId(e.target.value)}>{policies.map(row=><option key={row.id} value={row.id}>{row.name} · v{row.revision}</option>)}</select></Field>
       <div className="field"><span>사람 감지</span><div className="segmented" role="group" aria-label="시연 사람 감지 모델">{['medium','large'].map(value=><button key={value} aria-label={value==='medium'?'Medium':'Large'} aria-pressed={size===value} disabled={running||busy} className={size===value?'active':''} onClick={()=>setSize(value)}>{value==='medium'?'Medium':'Large'}</button>)}</div></div>
-      <span className="demo-run-state"><i className={running?'online':'idle'}/>{running?`${sources.find(row=>row.id===run.source_id)?.name||'영상'} · ${LABEL[run.status]}`:`시연 영상 ${sources.length}개`}</span>
+      <span className="demo-run-state"><i className={!connected?'offline':running?'online':'idle'}/>{!connected?'연결 끊김':running?`${sources.find(row=>row.id===run.source_id)?.name||'영상'} · ${LABEL[run.status]}`:'시연 대기'}</span>
     </div>
-    <nav className="demo-index" aria-label="시연 영상 바로가기">{sources.map((source,index)=><button key={source.id} onClick={()=>jump(source.id)} aria-label={`${source.name} 영상으로 이동`}>
-      <img src={source.preview_url} alt=""/><span><small>{String(index+1).padStart(2,'0')}</small>{source.name}</span><ChevronRight size={15}/>
+    <nav className="demo-index" ref={indexRef} aria-label="시연 영상 바로가기">{sources.map((source,index)=><button key={source.id} onClick={()=>jump(source.id)} aria-current={visibleSource===source.id?'location':undefined} aria-label={`${source.name} 영상으로 이동`}>
+      <img src={source.preview_url} alt=""/><span><small>VIDEO {String(index+1).padStart(2,'0')}</small>{source.name}</span><ChevronRight size={16}/>
     </button>)}</nav>
     {sources.map((source,index)=><section className="demo-section" id={`demo-${source.id}`} key={source.id} aria-labelledby={`demo-title-${source.id}`}
       ref={element=>{if(element)sections.current.set(source.id,element);else sections.current.delete(source.id);}}>
@@ -260,7 +279,7 @@ function DemoVideo({source,index,run,connected,busy,control,onStart,canStart,cho
   const current=run?.source_id===source.id?run:null;
   const otherRunning=activeStatus(run?.status)&&!current;
   return <>
-    <header className="demo-section-heading"><div className="demo-heading-title"><span className="demo-number">{String(index+1).padStart(2,'0')}</span><div><small>{source.case}</small><h2 id={`demo-title-${source.id}`}>{source.name}</h2></div></div>
+    <header className="demo-section-heading"><div className="demo-heading-title"><span className="demo-number">{String(index+1).padStart(2,'0')}</span><div><small><Video size={13}/>{source.case}</small><h2 id={`demo-title-${source.id}`}>{source.name}</h2></div></div>
       <div className="demo-actions"><Badge value={current?.status||'WAITING'}>{otherRunning?'다른 영상 시연 중':undefined}</Badge>
         <IconButton icon={Radio} title={`${source.name} 관제에서 열기`} disabled={otherRunning||busy} onClick={choose}/>
         <button className="button primary" disabled={!canStart||busy} onClick={onStart}>{current?.status==='LOADING'?<LoaderCircle size={17} className="spin"/>:<Play size={17}/>}시연 시작</button>
