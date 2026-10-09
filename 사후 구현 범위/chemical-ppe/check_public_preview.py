@@ -1,4 +1,4 @@
-"""Bounded offline check of public-origin authorization and private photo isolation."""
+"""Bounded offline check of public access and opt-in catalog photo delivery."""
 
 import asyncio
 from pathlib import Path
@@ -25,8 +25,11 @@ async def main():
             'PPE_LOCAL_PHOTOS_DIR': str(root),
             'PPE_TAILSCALE_ORIGIN': private_origin,
             'PPE_TAILSCALE_USER_LOGIN': 'private-fixture-user',
+            'PPE_PUBLIC_CATALOG_PHOTOS': 'false',
         }):
             app = server.create_app(settings)
+            with patch.dict(server.os.environ, {'PPE_PUBLIC_CATALOG_PHOTOS': 'true'}):
+                photo_app = server.create_app(settings)
 
         async def offline_chat(_body):
             return {'reply': 'offline route check; no model request'}
@@ -52,7 +55,17 @@ async def main():
                 state.unlink()
                 assert (await client.post('/api/ppe/chat', headers={**public, **auth}, json={})).status_code == 403
                 assert (await client.post('/api/ppe/chat', headers={**auth, 'Origin': settings.origins[0]}, json={})).status_code == 200
-        print('Public origin, authentication, photo isolation, stopped tunnel, and local access checks passed; paid calls: 0.')
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=photo_app, client=('127.0.0.1', 12345)),
+                                     base_url='http://public-preview.invalid') as client:
+            assert pid in (await client.get('/api/ppe/status')).json()['local_photos']
+            assert (await client.get(f'/api/ppe/local-media/{pid}')).content == photo_path.read_bytes()
+            assert (await client.get('/api/ppe/local-media/unregistered-product')).status_code == 404
+            assert (await client.get('/api/ppe/local-media/%2E%2E%2F.env')).status_code == 404
+            assert (await client.post('/api/ppe/chat', json={})).status_code == 401
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=photo_app, client=('203.0.113.10', 12345)),
+                                     base_url='http://public-preview.invalid') as client:
+            assert (await client.get(f'/api/ppe/local-media/{pid}')).status_code == 404
+        print('Public origin, authentication, opt-in catalog photos, file isolation, and local access checks passed; paid calls: 0.')
 
 
 if __name__ == '__main__':

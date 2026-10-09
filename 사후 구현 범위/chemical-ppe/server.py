@@ -413,10 +413,11 @@ def create_app(settings=None):
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
     app.state.counselor = counselor
     # Optional pre-existing photos are read directly from disk, never copied into
-    # the Git repository or dist. Private Tailscale preview is opt-in and bound
-    # to one HTTPS origin/user, with the backend listening only on loopback.
+    # the Git repository or dist. Public product photos and private Tailscale
+    # preview are separate opt-ins, with the backend listening only on loopback.
     photo_directory = os.environ.get('PPE_LOCAL_PHOTOS_DIR')
     photo_root = Path(photo_directory).resolve() if photo_directory else None
+    public_catalog_photos = os.environ.get('PPE_PUBLIC_CATALOG_PHOTOS', 'false').lower() == 'true'
     tailnet_origin = os.environ.get('PPE_TAILSCALE_ORIGIN', '').rstrip('/')
     tailnet_login = os.environ.get('PPE_TAILSCALE_USER_LOGIN', '')
     if tailnet_origin or tailnet_login:
@@ -426,12 +427,12 @@ def create_app(settings=None):
     tailnet_host = urlsplit(tailnet_origin).netloc
 
     def local_media_allowed(request):
-        # The public tunnel pins this Host; client-supplied tailnet headers must
-        # never turn a public request into a private photo preview.
-        if request.headers.get('host') == 'public-preview.invalid':
-            return False
         if not photo_root or not request.client or request.client.host not in ('127.0.0.1', '::1'):
             return False
+        # Explicitly enabled product photos use the existing catalog allowlist.
+        # Public requests never rely on caller-supplied tailnet identity headers.
+        if request.headers.get('host') == 'public-preview.invalid':
+            return public_catalog_photos
         direct = (request.url.hostname in ('127.0.0.1', 'localhost', '::1')
                   and not request.headers.get('forwarded') and not request.headers.get('x-forwarded-for'))
         # Serve strips caller-supplied identity headers and injects the signed-in
