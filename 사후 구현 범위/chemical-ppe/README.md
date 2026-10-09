@@ -138,7 +138,25 @@ systemctl --user status chemiguard-catalog.service --no-pager
 - API 오류에 원문 예외·키·입력을 포함하지 않는다. 자동 유료 재시도는 없다. 미등록 제품/출처, 미조회 원문, 제외 제품 포함 조합, 중복 기본 품목, 표시 형식 불일치는 반환하지 않는다.
 - 시험 행의 CAS/농도/온도/원문 값/시험 주석/조회 시각/개정 및 matched/not_found/error를 보존한다. 모든 결과는 검토 후보이며 승인·감지 등록·합성 생성 플래그는 false다.
 
-## Vercel + 별도 HTTPS API
+## 외부 공개 방법
+
+### 도메인 없이 임시 공개하기
+
+현재 PC의 홈페이지를 누구나 조회할 임시 주소로 열 때는 Cloudflare Quick Tunnel을 사용한다. 공식 `cloudflared` 실행 파일을 `~/.local/bin/cloudflared`에 설치하고, `deploy/chemiguard-catalog-public.service.example`의 WorkingDirectory를 앱 경로로 바꿔 `~/.config/systemd/user/chemiguard-catalog-public.service`에 저장한다. 기존 홈페이지 서비스가 필요하다.
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now chemiguard-catalog-public.service
+cat .runtime/public-preview/url.txt
+```
+
+출력한 HTTPS 주소는 방문자 계정이나 Tailscale 설치 없이 열 수 있다. 종료는 `systemctl --user disable --now chemiguard-catalog-public.service`다. 이 작업은 기존 Tailscale/SSH 설정을 변경하지 않는다. PC가 꺼지면 접속할 수 없고, 터널 재생성 시 주소가 바뀌므로 위 파일을 다시 확인한다. Quick Tunnel은 임시 시연용이며 운영 가용성을 보장하지 않는다.
+
+터널은 동일한 `127.0.0.1:34402` 앱과 제품 DB를 연결한다. 키를 터널 프로세스에 전달하지 않고 HTTP Host를 `public-preview.invalid`로 고정한다. 공개 요청에는 로컬 사진 목록·원본 사진을 제공하지 않으며, 원래 사진의 공개 권한이 없는 제품은 품목 도식과 공식 출처로 표시한다. 시연 코드와 기존 전역 상담 예산 제한은 그대로 적용된다. 홈페이지와 상담 API가 같은 공개 출처를 사용하므로 `PUBLIC_API_BASE`는 비워 둔다.
+
+`deploy/public_preview.py`는 생성된 정확한 HTTPS Origin을 비공개 실행 폴더에 기록한다. 서버는 고정 Host·loopback 연결에서 이 Origin만 추가로 허용하고 기존 시연 코드도 확인한다. 임의의 `*.trycloudflare.com` 전체를 허용하지 않는다. 터널을 정상 종료하면 해당 Origin 허용도 제거된다. 매일 오전 9시 제품 수집은 기존 로컬 Codex 자동화를 계속 사용하므로 PC와 Codex 앱이 켜져 있어야 한다.
+
+### 별도 서버와 Vercel 구성
 
 1. API 서버에 전체 저장소를 배치하고 위 실행 방법으로 단일 프로세스를 실행한다. `deploy/Caddyfile.example`을 실제 도메인으로 수정해 TLS 프록시를 연결한다. Python API는 loopback에서 실행한다.
 2. Vercel에서 이 저장소를 연결한다. Root Directory: `사후 구현 범위/chemical-ppe`, Framework: Other, Build: `npm run build`, Output: `dist`.

@@ -426,6 +426,10 @@ def create_app(settings=None):
     tailnet_host = urlsplit(tailnet_origin).netloc
 
     def local_media_allowed(request):
+        # The public tunnel pins this Host; client-supplied tailnet headers must
+        # never turn a public request into a private photo preview.
+        if request.headers.get('host') == 'public-preview.invalid':
+            return False
         if not photo_root or not request.client or request.client.host not in ('127.0.0.1', '::1'):
             return False
         direct = (request.url.hostname in ('127.0.0.1', 'localhost', '::1')
@@ -493,7 +497,17 @@ def create_app(settings=None):
     @app.post('/api/ppe/chat')
     async def chat(request: Request):
         origin = request.headers.get('origin')
-        if origin is not None and origin not in settings.origins:
+        public_origin_allowed = False
+        if (origin and request.client and request.client.host in ('127.0.0.1', '::1')
+                and request.headers.get('host') == 'public-preview.invalid'):
+            try:
+                public_origin = (ROOT / '.runtime/public-preview/origin.txt').read_text().strip()
+            except OSError:
+                public_origin = ''
+            public_origin_allowed = bool(
+                re.fullmatch(r'https://[a-z0-9-]+\.trycloudflare\.com', public_origin)
+                and hmac.compare_digest(origin.encode(), public_origin.encode()))
+        if origin is not None and origin not in settings.origins and not public_origin_allowed:
             raise PublicError('허용되지 않은 페이지의 요청입니다.', 403, 'origin_denied')
         auth = request.headers.get('authorization', '')
         if len(settings.demo_token) < 16 or not hmac.compare_digest(auth.encode(), ('Bearer ' + settings.demo_token).encode()):
