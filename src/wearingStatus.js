@@ -3,7 +3,7 @@ export const WEARING_LABELS = {
   NOT_WORN: '미착용 의심', UNKNOWN: '확인 불가',
 };
 
-const PART_NAMES = {torso:'몸통',left_arm:'왼팔',right_arm:'오른팔',left_leg:'왼다리',right_leg:'오른다리',hood:'후드',closure:'여밈'};
+const PART_NAMES = {torso:'몸통',left_arm:'왼팔',right_arm:'오른팔',left_leg:'왼다리',right_leg:'오른다리',hood:'후드',closure:'여밈',respirator:'전면형 방독면'};
 
 export function observationLabel(track) {
   if(track.active_violations?.length) return '미해제 위반 재확인';

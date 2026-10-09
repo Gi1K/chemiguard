@@ -16,3 +16,7 @@ test('video label is concise without hiding an unresolved alarm',()=>{
   assert.equal(overlayLabel({wearing:'VISIBLE_WORN',active_violations:['필수 여밈 열림']}),'미해제 위반 재확인');
   assert.equal(overlayLabel({wearing:'UNKNOWN'}),'확인 불가');
 });
+test('full-face respirator has a specific missing-equipment label',()=>{
+  assert.equal(overlayLabel({wearing:'NOT_WORN',parts:{hood:'covered',respirator:'uncovered'}}),'전면형 방독면 미착용 의심');
+  assert.equal(overlayLabel({wearing:'VISIBLE_WORN',active_violations:['필수 전면형 방독면 미착용']}),'미해제 위반 재확인');
+});

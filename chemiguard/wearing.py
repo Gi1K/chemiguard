@@ -2,9 +2,10 @@
 
 PARTS = ('torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg')
 PART_NAMES = {'torso': '몸통', 'left_arm': '왼팔', 'right_arm': '오른팔',
-              'left_leg': '왼다리', 'right_leg': '오른다리', 'hood': '후드', 'closure': '여밈'}
+              'left_leg': '왼다리', 'right_leg': '오른다리', 'hood': '후드', 'closure': '여밈',
+              'respirator': '전면형 방독면'}
 VIOLATION_PARTS = {PART_NAMES[name] + ' 미착용 관찰': name for name in PARTS} | {
-    '필수 후드 미착용': 'hood', '필수 여밈 열림': 'closure'}
+    '필수 후드 미착용': 'hood', '필수 여밈 열림': 'closure', '필수 전면형 방독면 미착용': 'respirator'}
 POSITIVE_STATES = ('WORN', 'VISIBLE_WORN')
 
 
@@ -14,6 +15,8 @@ def summarize_parts(parts, policy):
         required.append('hood')
     if policy['closure_required']:
         required.append('closure')
+    if policy.get('respirator_required', False):
+        required.append('respirator')
     visible_mode = policy.get('wearing_assessment') == 'visible_regions'
     observed = [name for name in required if parts.get(name) in ('covered', 'closed')]
     hidden = [name for name in required if parts.get(name) == 'not_visible']

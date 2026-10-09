@@ -26,6 +26,7 @@ class PolicyInput(BaseModel):
     zone_id: str = Field(min_length=1, max_length=100)
     coverall_required: bool = True
     hood_required: bool = True
+    respirator_required: bool = True
     closure_required: bool = True
     closure_location: str = Field(default='앞 중앙 지퍼 및 덮개', max_length=200)
     closure_assessment: Literal['external_appearance', 'visible_components'] = 'external_appearance'
@@ -38,8 +39,9 @@ class PolicyInput(BaseModel):
 
     @model_validator(mode='after')
     def validate_policy(self):
-        if not self.coverall_required and (self.hood_required or self.closure_required or self.identity_required):
-            raise ValueError('후드·여밈·제품 확인은 화학복 필수 정책에서 설정해 주세요.')
+        if not self.coverall_required and (self.hood_required or self.respirator_required
+                                            or self.closure_required or self.identity_required):
+            raise ValueError('후드·전면형 방독면·여밈·제품 확인은 화학복 필수 정책에서 설정해 주세요.')
         x1, y1, x2, y2 = self.scene_roi
         if not 0 <= x1 < x2 <= 1 or not 0 <= y1 < y2 <= 1:
             raise ValueError('감시 영역은 0~1 범위의 유효한 사각형이어야 합니다.')
@@ -86,8 +88,9 @@ async def lifespan(app):
                   {'revision': 1, 'reference_revision': store.revision()})
     defaults = [row for row in store.list('policy') if row['name'] == '화학보호복 기본 관찰']
     latest = max(defaults, key=lambda row: row['revision'], default=None)
-    if latest and ('closure_assessment' not in latest or 'wearing_assessment' not in latest):
+    if latest and any(key not in latest for key in ('closure_assessment', 'wearing_assessment', 'respirator_required')):
         fields = {key: value for key, value in latest.items() if key in PolicyInput.model_fields}
+        fields.setdefault('respirator_required', fields.get('coverall_required', True))
         store.put('policy', PolicyInput(**fields).model_dump() |
                   {'revision': latest['revision']+1, 'reference_revision': store.revision(),
                    'supersedes': latest['id']})

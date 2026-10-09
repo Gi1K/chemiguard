@@ -73,6 +73,26 @@ def questions_for(policy):
         questions.append({'type': 'choice', 'name': 'closure',
                           'instructions': instructions + 'Never assume a front zipper.',
                           'choices': [{'value': state} for state in ('closed', 'open', *unknown_states)]})
+
+    if policy.get('respirator_required', False):
+        questions.append({'type': 'choice', 'name': 'respirator',
+                          'instructions': (
+                              'Independently from the hood, is a full-face respirator visibly worn on the target face? '
+                              'For this question covered means a worn full-face respirator facepiece with a visor '
+                              'covering the eyes and a connected facepiece over the nose and mouth. '
+                              'A half-face respirator plus goggles, face shield alone, hood alone, '
+                              'ordinary glasses or disposable mask does not satisfy this full-face requirement. '
+                              'Choose uncovered only when a visible face region clearly shows the full-face respirator '
+                              'is absent, lifted, hanging, or not covering that region. '
+                              'Do not mistake a transparent respirator visor with visible eyes for absence. '
+                              'Use the person image for context when the head crop is incomplete. '
+                              'Do not require a frontal view if the visible profile establishes the worn facepiece. '
+                              'Do not infer presence or absence from a rear-facing hood or hidden face. '
+                              + hidden_instruction + ' If the visible equipment type cannot be distinguished, choose '
+                              + ('uncertain. ' if visible else 'unobservable. ')
+                              + 'Observe external wearing only, not cartridge suitability, certification, fit, '
+                              'seal, breathing-air supply or chemical protection.'),
+                          'choices': [{'value': state} for state in ('covered', 'uncovered', *unknown_states)]})
     return questions
 
 
@@ -108,9 +128,12 @@ def parse_answers(data, questions):
 def observe(images, policy):
     start = time.monotonic()
     visible = policy.get('wearing_assessment') == 'visible_regions'
+    respirator_required = policy.get('respirator_required', False)
     result = {'backend': 'decisions', 'model': API_MODEL, 'wearing': 'UNKNOWN', 'parts': {},
               'processing_state': 'ERROR', 'raw_result': None, 'usage': None,
-              'prompt_version': 'ppe-observation-v4' if visible else 'ppe-observation-v3',
+              'prompt_version': 'ppe-observation-v5' if respirator_required else (
+                  'ppe-observation-v4' if visible else 'ppe-observation-v3'),
+              'respirator_assessment': 'full_face_external_appearance' if respirator_required else 'not_requested',
               'wearing_assessment': policy.get('wearing_assessment', 'all_required'),
               'closure_assessment': policy.get('closure_assessment', 'visible_components')}
     key = os.getenv('OPENAI_API_KEY', '').strip()
@@ -119,7 +142,7 @@ def observe(images, policy):
     questions = questions_for(policy)
     content = [{'type': 'input_text', 'text': VISIBLE_RULES if visible else RULES}]
     for name in ('person', 'torso', 'legs', 'head'):
-        if name not in images or (name == 'head' and not policy['hood_required']):
+        if name not in images or (name == 'head' and not (policy['hood_required'] or respirator_required)):
             continue
         content.extend([
             {'type': 'input_text', 'text': f'Image: {name}. Same observation; region label does not establish visibility.'},
