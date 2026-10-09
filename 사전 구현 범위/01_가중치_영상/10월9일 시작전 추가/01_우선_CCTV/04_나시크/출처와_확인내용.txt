@@ -1,0 +1,13 @@
+나시크
+상태: 영상 확보
+확인 내용: ARY 기사에 연결된 YouTube 방송본. 저장탱크 CCTV를 포함하나 방송 자막과 편집이 있음. 요청한 NDTV 26초본은 다운로드 실패.
+
+영상 파일:
+  nashik_cctv_20210423.mp4
+
+출처:
+https://www.ndtv.com/video/nashik-gas-leak-video-watch-exact-moment-of-nashik-hospital-oxygen-leak-that-left-24-dead-583764
+https://arynews.tv/cctv-footage-india-oxygen-leak-tragedy
+https://www.youtube.com/watch?v=nMjGALyvAtI
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

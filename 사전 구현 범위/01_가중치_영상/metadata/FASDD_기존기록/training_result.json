@@ -1,0 +1,21 @@
+{
+  "checkpoint": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/weights/best.pt",
+  "checkpoint_sha256": "c7fa38e55551550e4e6de961a2a947d3e4f6c7e8f7797506bae1cfed5c821dcc",
+  "epochs_completed": 50,
+  "best_epoch": 50,
+  "elapsed_seconds": 22423.898301026027,
+  "validation": {
+    "metrics/precision(B)": 0.8702855248066852,
+    "metrics/recall(B)": 0.755319363016089,
+    "metrics/mAP50(B)": 0.8512026697360306,
+    "metrics/mAP50-95(B)": 0.6468207071912568,
+    "fitness": 0.6468207071912568
+  },
+  "dataset_counts": {
+    "train": 37251,
+    "val": 4657,
+    "test": 4657
+  },
+  "class_name": "smoke",
+  "initialization": "General COCO YOLO26s. Original AI Hub gas model not used or modified."
+}

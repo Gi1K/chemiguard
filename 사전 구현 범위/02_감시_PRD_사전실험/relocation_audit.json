@@ -1,0 +1,125 @@
+{
+  "moved_at": "2026-10-09T00:26:03.874085+09:00",
+  "documents_original_path": "/home/giwon/Downloads/ppe-reference-poc/docs/chemiguard_hackathon_plan_20261009",
+  "documents_current_path": "/home/giwon/Downloads/해커톤 준비물 prd",
+  "documents_compatibility_symlink": true,
+  "weights_root": "/home/giwon/Downloads/해커톤 준비물 1",
+  "moved_weight_files": 12,
+  "total_weight_bytes": 1642465396,
+  "weight_checks": [
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/person/yolo26l.pt",
+      "bytes": 53211173,
+      "sha256": "9fe3c544f2b19bebad7ea41e76d7ad3d88b7c2f10d11d24430c5311f6b32db26",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/person/yolo26s.pt",
+      "bytes": 20422725,
+      "sha256": "646f8bc3fe0a656803d95c294f7852321748cb29d13466a1af8862e2db384a1b",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/pose/yolo26n-pose.pt",
+      "bytes": 7878574,
+      "sha256": "eb3bb8268828aeaf515cec23a4bfafd793944a86fe9af94ba7823609c14522a9",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/release/fasdd_smoke_yolo26s.pt",
+      "bytes": 20328773,
+      "sha256": "c7fa38e55551550e4e6de961a2a947d3e4f6c7e8f7797506bae1cfed5c821dcc",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/README.md",
+      "bytes": 3375,
+      "sha256": "3dab28ee04f108b1b1c8af6a9f0451cf1a6fff67dfba3dddfe16ca6dc1018214",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/config.json",
+      "bytes": 276,
+      "sha256": "b1b2481aa448d0cd29001bcf5244e72fa8f916dd8348bd18abf9e5533105b96c",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/model.safetensors",
+      "bytes": 1501968264,
+      "sha256": "ed72c0ace85020ae610fc817c2538b9cae5a477b012a50859c60af5b3ad30857",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/preprocessor_config.json",
+      "bytes": 394,
+      "sha256": "fb2817d3523ca3b666c859f15320c7138416bc38ffc515e2963f78c868c51c90",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/special_tokens_map.json",
+      "bytes": 636,
+      "sha256": "baec30ea10906f16adb8c18af7a34023002c1746542612b8b41c9f09e1351351",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/tokenizer.json",
+      "bytes": 34363039,
+      "sha256": "cb9140fae3ac5122c972d37adf83e1248471a38147ad76f8215c8872c6fd8322",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/tokenizer.model",
+      "bytes": 4241003,
+      "sha256": "61a7b147390c64585d6c3543dd6fc636906c9af3865a5548f27f31aee1d4c8e2",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    },
+    {
+      "path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/tokenizer_config.json",
+      "bytes": 47164,
+      "sha256": "14afe629fe4959b9e0d51e1852b8d9f7ad074f90a1a7125a4fcdd17f06e78fc8",
+      "matches_recorded": true,
+      "regular_file_not_symlink": true
+    }
+  ],
+  "existing_destination_files_overwritten": false,
+  "model_loads": 0,
+  "inference_calls": 0,
+  "GPU_calls": 0,
+  "final_validation": {
+    "source_files_checked": 35,
+    "changed_source_files": [],
+    "document_links_checked": 99,
+    "missing_links": [],
+    "documents": [
+      {
+        "file": "PREWORK.md",
+        "bytes": 37134,
+        "sha256": "6ff8f98cf3ad378dfb7ec1f4422948c8088d0d03efbc6566f5a0df65b378fa8a"
+      },
+      {
+        "file": "ARCHITECTURE.md",
+        "bytes": 35748,
+        "sha256": "bc5ee160c7ad387d8d0b8107c321b96726e86d19cd2d65d15d87ec2830bc67ff"
+      },
+      {
+        "file": "PRD.md",
+        "bytes": 17693,
+        "sha256": "a8f58a7e297d72482e2133c8fa6ab837749c01e0757ee5409d666884c9e6d644"
+      }
+    ],
+    "all_weight_files_regular": true,
+    "original_compatibility_links_valid": true,
+    "readme": "../해커톤 준비물 1/models/CHEMIGUARD_MODELS.txt"
+  }
+}

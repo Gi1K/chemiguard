@@ -1,0 +1,17 @@
+{
+  "metrics": {
+    "metrics/precision(B)": 0.8341205280015029,
+    "metrics/recall(B)": 0.7037190632544665,
+    "metrics/mAP50(B)": 0.7985557349429451,
+    "metrics/mAP50-95(B)": 0.5854673107148564,
+    "fitness": 0.5854673107148564
+  },
+  "speed": {
+    "preprocess": 0.6773518811869749,
+    "inference": 3.1848668292862143,
+    "loss": 0.00034889343228860684,
+    "postprocess": 0.07514830584259252
+  },
+  "images": 4657,
+  "limitations": "FASDD has no source video/scene IDs in its image metadata. Perceptual grouping reduces detected near-duplicate leakage but does not prove complete scene independence."
+}

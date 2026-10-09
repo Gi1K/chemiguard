@@ -1,0 +1,202 @@
+{
+  "checkpoint": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/weights/best.pt",
+  "checkpoint_sha256": "c7fa38e55551550e4e6de961a2a947d3e4f6c7e8f7797506bae1cfed5c821dcc",
+  "settings": {
+    "imgsz": 960,
+    "confidence": 0.25,
+    "all_frames": true
+  },
+  "clips": [
+    {
+      "number": 3,
+      "name": "암모니아 압력용기 파열",
+      "source": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/03_nh3_pressure_vessel.mp4",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA",
+      "onset_note": "파열 전 → 첫 구름",
+      "fps": 29.415,
+      "total_frames": 501,
+      "detection_frames": 137,
+      "first_detection": {
+        "frame": 92,
+        "seconds": 3.1276559578446372,
+        "boxes": [
+          {
+            "xyxy": [
+              0.48833316564559937,
+              0.2748049199581146,
+              0.5641002058982849,
+              0.5669092535972595
+            ],
+            "confidence": 0.3228352963924408,
+            "class": "smoke"
+          }
+        ]
+      },
+      "highest_confidence_detection": {
+        "frame": 399,
+        "seconds": 13.564507904130545,
+        "boxes": [
+          {
+            "xyxy": [
+              0.25090527534484863,
+              0.03441905975341797,
+              0.6496995091438293,
+              0.6659783720970154
+            ],
+            "confidence": 0.7806084156036377,
+            "class": "smoke"
+          }
+        ]
+      },
+      "preview": {
+        "frame": 88,
+        "seconds": 2.9916709161992183,
+        "boxes": []
+      },
+      "video": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/03_nh3_pressure_vessel_smoke.mp4",
+      "predictions": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/03_nh3_pressure_vessel_predictions.json",
+      "first_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/03_nh3_pressure_vessel_first.jpg",
+      "peak_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/03_nh3_pressure_vessel_peak.jpg",
+      "preview_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/03_nh3_pressure_vessel_preview.jpg",
+      "runtime_seconds": 4.404268354002852
+    },
+    {
+      "number": 4,
+      "name": "암모니아 리시버 밸브 작업",
+      "source": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/04_nh3_receiver_valve.mp4",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU",
+      "onset_note": "밸브 조작 → 첫 분출",
+      "fps": 29.953,
+      "total_frames": 653,
+      "detection_frames": 292,
+      "first_detection": {
+        "frame": 361,
+        "seconds": 12.052215137048043,
+        "boxes": [
+          {
+            "xyxy": [
+              0.2514127790927887,
+              0.5530082583427429,
+              0.37008365988731384,
+              0.7584065794944763
+            ],
+            "confidence": 0.4029637575149536,
+            "class": "smoke"
+          }
+        ]
+      },
+      "highest_confidence_detection": {
+        "frame": 587,
+        "seconds": 19.5973692117651,
+        "boxes": [
+          {
+            "xyxy": [
+              0.0037750881165266037,
+              0.006806098390370607,
+              0.9908818602561951,
+              0.9982961416244507
+            ],
+            "confidence": 0.9372934699058533,
+            "class": "smoke"
+          }
+        ]
+      },
+      "preview": {
+        "frame": 419,
+        "seconds": 13.988582111975429,
+        "boxes": [
+          {
+            "xyxy": [
+              0.2592351734638214,
+              0.0023793538566678762,
+              0.966057300567627,
+              0.8560084104537964
+            ],
+            "confidence": 0.9292024374008179,
+            "class": "smoke"
+          },
+          {
+            "xyxy": [
+              0.002954340074211359,
+              0.005507349502295256,
+              0.1399955153465271,
+              0.8039349317550659
+            ],
+            "confidence": 0.3263889253139496,
+            "class": "smoke"
+          }
+        ]
+      },
+      "video": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/04_nh3_receiver_valve_smoke.mp4",
+      "predictions": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/04_nh3_receiver_valve_predictions.json",
+      "first_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/04_nh3_receiver_valve_first.jpg",
+      "peak_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/04_nh3_receiver_valve_peak.jpg",
+      "preview_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/04_nh3_receiver_valve_preview.jpg",
+      "runtime_seconds": 3.1921140500344336
+    },
+    {
+      "number": 9,
+      "name": "냉동 설비실 흰 분출",
+      "source": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/09_refrigeration_nh3.mp4",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ",
+      "onset_note": "시작부터 방출 중",
+      "fps": 29.779,
+      "total_frames": 874,
+      "detection_frames": 874,
+      "first_detection": {
+        "frame": 0,
+        "seconds": 0.0,
+        "boxes": [
+          {
+            "xyxy": [
+              0.2025165557861328,
+              0.18155433237552643,
+              0.9822570085525513,
+              0.9982473254203796
+            ],
+            "confidence": 0.8974028825759888,
+            "class": "smoke"
+          }
+        ]
+      },
+      "highest_confidence_detection": {
+        "frame": 533,
+        "seconds": 17.89851909063434,
+        "boxes": [
+          {
+            "xyxy": [
+              0.13701066374778748,
+              0.19322216510772705,
+              0.9791156649589539,
+              0.9958007335662842
+            ],
+            "confidence": 0.916947603225708,
+            "class": "smoke"
+          }
+        ]
+      },
+      "preview": {
+        "frame": 238,
+        "seconds": 7.992209274992445,
+        "boxes": [
+          {
+            "xyxy": [
+              0.18300247192382812,
+              0.1693718582391739,
+              0.9787442684173584,
+              0.996467113494873
+            ],
+            "confidence": 0.9127166271209717,
+            "class": "smoke"
+          }
+        ]
+      },
+      "video": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/09_refrigeration_nh3_smoke.mp4",
+      "predictions": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/09_refrigeration_nh3_predictions.json",
+      "first_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/09_refrigeration_nh3_first.jpg",
+      "peak_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/09_refrigeration_nh3_peak.jpg",
+      "preview_image": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/09_refrigeration_nh3_preview.jpg",
+      "runtime_seconds": 5.813207786006387
+    }
+  ]
+}

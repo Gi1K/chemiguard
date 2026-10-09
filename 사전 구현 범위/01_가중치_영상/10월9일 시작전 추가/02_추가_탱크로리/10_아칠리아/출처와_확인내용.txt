@@ -1,0 +1,11 @@
+아칠리아
+상태: 미확보 — 공개 미디어 접근 거부 / 원래 링크 필요
+확인 내용: 공개 RAI 영상 페이지는 확인했으나 다운로드 실패. 플레이어 미디어 서버가 HTTP 403으로 접근을 거부함. 원래 목록의 Dailymotion/YouTube URL이 없어 같은 게시본을 특정하지 못함.
+
+영상 파일:
+  아직 없음
+
+출처:
+https://www.rainews.it/tgr/lazio/articoli/2026/07/perdita-di-gpl-lungo-via-di-acilia-strada-chiusa-e-zona-evacuata-069e022b-7720-41ff-a8b5-6f9861b05e8a.html
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

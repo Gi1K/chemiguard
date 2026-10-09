@@ -1,0 +1,52 @@
+{
+  "document_version": "1.0",
+  "scope": "Chemical PPE kit-catalog page only; video/operations/model/contest carry scope excluded",
+  "prepared_at": "2026-10-08T23:52:52.449400+09:00",
+  "baseline_date": "2026-10-08",
+  "hackathon_date": "2026-10-09",
+  "root": "/home/giwon/Downloads/ppe-reference-poc",
+  "git_repository": false,
+  "note": "Hash index only; no source, media, DB or secrets copied. No model call or deployment performed.",
+  "files": [
+    {
+      "path": "demo/video-gallery/kit-catalog/index.html",
+      "bytes": 12903,
+      "sha256": "a5fc3af74a35effa76293a4ac693826ff9cebbf3e84f58b81edb35b9ced37d40"
+    },
+    {
+      "path": "demo/video-gallery/kit-catalog/app.js",
+      "bytes": 38603,
+      "sha256": "96558fc2174af064c6620309642be1cc0caf35dfd1cd28acecb6650d3f04874e"
+    },
+    {
+      "path": "demo/video-gallery/kit-catalog/style.css",
+      "bytes": 24880,
+      "sha256": "62249394ac4ec53c4fb3adcaf876b69d5990cf2fb425ca40c1563ab378bc6bd3"
+    },
+    {
+      "path": "demo/video-gallery/kit-catalog/catalog-data.json",
+      "bytes": 409505,
+      "sha256": "ac5ff1bb8ce26012d4a64e4ee8b019ba7a189f9f3c6fcc7c111c78786debdafb"
+    },
+    {
+      "path": "demo/video-gallery/kit-catalog/process.md",
+      "bytes": 12102,
+      "sha256": "3a46de0068fb6ad342f22e139388d14e584380fb03a48221a82c735e97bd205a"
+    },
+    {
+      "path": "catalog_chat_server.py",
+      "bytes": 53324,
+      "sha256": "ed2f13bf7e52d5ff31c3bf275f8f8146dbc34e88ee2b2b620ef48a0b7d0eadbd"
+    },
+    {
+      "path": "chemical_live_lookup.py",
+      "bytes": 12385,
+      "sha256": "a118e1ea6aafe2089a46a28924cd80265c251f355b585d032a68e8eb91c641b9"
+    },
+    {
+      "path": "research/work_group_colours_20261007/README.md",
+      "bytes": 4538,
+      "sha256": "e6cf3deb292434c0511aa95f77272af9607d4d3abc457588d2936648c6f9a859"
+    }
+  ]
+}

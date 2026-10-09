@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "source": "Existing FASDD_CV",
+  "classes": {
+    "0": "smoke"
+  },
+  "positive_images": 43565,
+  "background_images": 3000,
+  "initialization": "General COCO YOLO26s; separate from original AI Hub leak model",
+  "imgsz": 960,
+  "batch": 16,
+  "epochs_cap": 50,
+  "patience": 12,
+  "mosaic": 0,
+  "fraction": 1.0,
+  "storage": "Hard-link existing local images; no dataset download",
+  "original_checkpoint": "/home/giwon/Downloads/models/visible_leak/aihub-71677/yolov8/누출/leak.pt",
+  "original_sha256": "15e3a0759307d26d58ecdd75d39d52ea9f18140392398b9315cd7a80ac21a34d",
+  "split_policy": "Regroup identical SHA256 and pHash Hamming distance <=4 photos, approximately 80/10/10",
+  "split_limitations": "No original video IDs are supplied. Unidentified same-scene photos may still cross splits.",
+  "license": "CC BY-SA 4.0",
+  "source_doi": "10.57760/sciencedb.j00104.00103",
+  "actual_positive_images": 43565,
+  "actual_total_images": 46565,
+  "split_counts": {
+    "train": 37251,
+    "val": 4657,
+    "test": 4657
+  },
+  "label_cleaning": {
+    "removed_degenerate_smoke_boxes": 1,
+    "boxes_clipped_to_image": 125,
+    "excluded_positive_images_without_valid_boxes": []
+  },
+  "training_pid": 2604641,
+  "loader_check_passed": true,
+  "visual_review_passed": true,
+  "completed_at": "2026-10-07T17:45:05.336090+00:00",
+  "epochs_completed": 50,
+  "best_epoch": 50
+}

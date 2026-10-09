@@ -1,0 +1,227 @@
+{
+  "scope": "documentation_only; no model/API/GPU execution; excludes secrets",
+  "source_root": "/home/giwon/Downloads/ppe-reference-poc",
+  "source_snapshot": [
+    {
+      "path": ".env.example",
+      "bytes": 413,
+      "sha256": "4a9ebee63e6e9ca24ec785f566ce9fd590ba1a36805ab6575bbe43c247b7b703"
+    },
+    {
+      "path": "benchmark_luna_api_diagnostics.py",
+      "bytes": 6739,
+      "sha256": "099c4eaf88a207a868eb28466bf54c3a4ae4616304ef2d72026727c1d83a324a"
+    },
+    {
+      "path": "benchmark_luna_regions.py",
+      "bytes": 9372,
+      "sha256": "fc99fabeda4fad796c2436e132e95666838830de91d10e03c4ef481fb92e15b1"
+    },
+    {
+      "path": "benchmark_luna_responses.py",
+      "bytes": 13799,
+      "sha256": "c00520a47504ce0c6321b3aaa490d785850dab0d4d01f94f9a3422c765895e00"
+    },
+    {
+      "path": "build_wearing_comparison_review.py",
+      "bytes": 10605,
+      "sha256": "9c4663205155bbb55d1afb2a90f41431a29c74a78ad6182e41073493e90f03ff"
+    },
+    {
+      "path": "catalog_chat_server.py",
+      "bytes": 53324,
+      "sha256": "ed2f13bf7e52d5ff31c3bf275f8f8146dbc34e88ee2b2b620ef48a0b7d0eadbd"
+    },
+    {
+      "path": "chemical_live_lookup.py",
+      "bytes": 12385,
+      "sha256": "a118e1ea6aafe2089a46a28924cd80265c251f355b585d032a68e8eb91c641b9"
+    },
+    {
+      "path": "chemiguard_evidence.py",
+      "bytes": 11667,
+      "sha256": "63cbef5c721ce10258d7cea461f807892a30db476c4de8fa652fc572d4dbda46"
+    },
+    {
+      "path": "chemiguard_workflow.py",
+      "bytes": 16048,
+      "sha256": "1c32c028c804a4c91813696c5c36cdb2bb2d4f0e35562f3dc881569925936756"
+    },
+    {
+      "path": "compare_pose_regions.py",
+      "bytes": 6909,
+      "sha256": "0c9a20761b36c23c11c51f2dea7adf0e4cd8ccd60fea9c906302ed0a5db4da91"
+    },
+    {
+      "path": "compare_wearing_backends.py",
+      "bytes": 6537,
+      "sha256": "a4c8739eb8857ca3d09a62b1c93557ab8e4c35f4021ec1cc66f3000f2530e7f7"
+    },
+    {
+      "path": "detect_reference.py",
+      "bytes": 3479,
+      "sha256": "4a0349138a49a53cd1ffe06321f91f5de7638201ae5aac8434d0a8f4b54c1aeb"
+    },
+    {
+      "path": "evaluate_wearing_snapshots.py",
+      "bytes": 5251,
+      "sha256": "53da7775c58263ff69767302ed3a94ed3be5da0b54eac92ec0ed5c04452d9c49"
+    },
+    {
+      "path": "import_research.py",
+      "bytes": 6762,
+      "sha256": "86d219b06580fc0494198958b1d54b058f60c3a72aa88b4ab7c67f3d6cb48991"
+    },
+    {
+      "path": "inspect_ppe_masks.py",
+      "bytes": 7907,
+      "sha256": "73d61d9a265dfbb4e807be870e1453637cd81d3fce80cfe790389896999283b3"
+    },
+    {
+      "path": "inspect_tracking.py",
+      "bytes": 4586,
+      "sha256": "32ed3245939df106e0c5fe7baa96bcf1d67117fbec9cd688628f6b263b21f187"
+    },
+    {
+      "path": "luna_decisions.py",
+      "bytes": 16884,
+      "sha256": "dcf8eb62954428b0ae70f00e7bf4415efae2f9ac3c48519758fa5dc49f42a1fe"
+    },
+    {
+      "path": "luna_responses.py",
+      "bytes": 26441,
+      "sha256": "a502e8b1b70d114937cdad771e0eadd325e7a7d31eb00024686005eb7e0cd9a3"
+    },
+    {
+      "path": "luna_wearing.py",
+      "bytes": 7576,
+      "sha256": "3a6598f74a21d5906aef9f9d015e21b2719f8a1ace01afa228b60cdff64d6a02"
+    },
+    {
+      "path": "monitor_video.py",
+      "bytes": 43931,
+      "sha256": "dceed0e31218560dd06ff9e19b3c195b6d8fa28ef3554f0882776760153ad5a9"
+    },
+    {
+      "path": "person_crops.py",
+      "bytes": 10911,
+      "sha256": "517361a90d056b518c46f794f5f7d7d3da28501e7319719db5dc641c03651971"
+    },
+    {
+      "path": "person_evidence.py",
+      "bytes": 1548,
+      "sha256": "01260ce5c13b04118586830cc216053654961c4637973497f629e4f2b0ae6855"
+    },
+    {
+      "path": "refresh_luna_results.py",
+      "bytes": 8370,
+      "sha256": "bfd1862fb88e38a916d2bf1ba0fb28589204675e97f7cd3027c6a3f1083814b2"
+    },
+    {
+      "path": "registry.py",
+      "bytes": 13153,
+      "sha256": "994231444cc5c17d31ce625aa927aa706f982522af066dcf3ed26c54b7a5036d"
+    },
+    {
+      "path": "render_review.py",
+      "bytes": 12372,
+      "sha256": "eb8a659ee5a8b47ada486f10a291a2cc4f8dcf00d91931bf2c94f88585fbc142"
+    },
+    {
+      "path": "requirements-api.txt",
+      "bytes": 75,
+      "sha256": "ca88fc794b4a3b0f14e66111d4c7ace4145f469b79adb99c6b9c42e573324069"
+    },
+    {
+      "path": "requirements-yoloe-text.txt",
+      "bytes": 268,
+      "sha256": "5b1cce93795ad034ec7a45ea45a1bd03b7c1e566deae995b66020c4bb1197300"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 126,
+      "sha256": "6beaed52fcd2bd847f54ed41d56b53751982c12374b7879ecc4741229982dd98"
+    },
+    {
+      "path": "run_luna_api_video_check.py",
+      "bytes": 3319,
+      "sha256": "40782b9ce45c8ce600f56405aa26e4a96f116c6e2a98177bdefdd6556b4f822f"
+    },
+    {
+      "path": "run_wearing_video_comparison.py",
+      "bytes": 3613,
+      "sha256": "dab1eeb69d0de18da78ef5f00fc3b2cafa9011122784f256158f2b338ce10871"
+    },
+    {
+      "path": "similarity.py",
+      "bytes": 8039,
+      "sha256": "e526da249733c5854b49f902da1aa08794b0cdd779b59a63b1e98e728237d62f"
+    },
+    {
+      "path": "tests/test_person_evidence.py",
+      "bytes": 3690,
+      "sha256": "acfb7edbe0092c258c88419e433f506038bc1d608d5cae4a986ce5ae1580e585"
+    },
+    {
+      "path": "tests/test_person_monitor_binding.py",
+      "bytes": 2267,
+      "sha256": "5205153be22d632f21e3e9df011db60c1b5c0c475e74e0e778fbcb1ad233bb25"
+    },
+    {
+      "path": "tests/test_pose_direct_similarity.py",
+      "bytes": 3372,
+      "sha256": "651646fdc41486c6305ccf0b4ae12fd1f142237881c717083c056702d1ea0441"
+    },
+    {
+      "path": "wearing.py",
+      "bytes": 19299,
+      "sha256": "5a970ca9ebef796c1f3afcaf3c7d27487e06d2cdac026b41edcadb9e704309e8"
+    }
+  ],
+  "verification": {
+    "source_files_checked": 35,
+    "changed_or_missing_source_files": [],
+    "local_links_checked": 96,
+    "missing_links": [],
+    "json_examples_parsed": 4,
+    "weight_files_existence_checked": 12,
+    "missing_weights": [],
+    "weight_size_mismatches": [],
+    "weight_hashes_recomputed": false,
+    "model_loads": 0,
+    "inference_calls": 0,
+    "model_API_calls": 0,
+    "service_restarts": 0,
+    "note": "Static document checks only. Weight SHA values are historical records, not freshly computed. No runtime architecture validation performed."
+  },
+  "verified_at": "2026-10-09T00:23:34.569543+09:00",
+  "documentation_review": [
+    "PPE, leak and product-strategy evidence independently checked.",
+    "Corrected full-gas source count: 26 total; 21 gas/steam subset; valid anchors in 20.",
+    "Specified hood/closure policy handling, latest consecutive votes and out-of-order rejection.",
+    "Added standalone request/response contracts and current weight inventory."
+  ],
+  "documents": [
+    {
+      "path": "ARCHITECTURE.md",
+      "bytes": 35414,
+      "sha256": "ba41c56f739480e23e7477ba0fd9a305870f1fa728f2ea1748b03f69c4ee1822"
+    },
+    {
+      "path": "PRD.md",
+      "bytes": 17693,
+      "sha256": "a8f58a7e297d72482e2133c8fa6ab837749c01e0757ee5409d666884c9e6d644"
+    },
+    {
+      "path": "PREWORK.md",
+      "bytes": 34904,
+      "sha256": "8194f3c6af1b76799d1cdae4bd64b84617a8bd5e920a54e7692a6d135723d9f3"
+    }
+  ],
+  "relocation": {
+    "at": "2026-10-09T00:26:03.874085+09:00",
+    "path": "/home/giwon/Downloads/해커톤 준비물 prd",
+    "audit_file": "relocation_audit.json",
+    "note": "Original documentation verification above is historical. Current paths and document hashes are recorded in relocation_audit.json; all 12 model hashes verified after this move."
+  }
+}

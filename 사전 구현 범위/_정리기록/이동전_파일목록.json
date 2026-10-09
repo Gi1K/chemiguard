@@ -1,0 +1,1529 @@
+{
+  "recorded_at": "2026-10-09T10:17:26.393519+09:00",
+  "files": [
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/00_최신편집_데모/receiver_valve_centered.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/00_최신편집_데모/receiver_valve_centered.mp4",
+      "bytes": 1077979,
+      "sha256_before": "e0e51d7cbabc6f2d187bde8969c21a270e13be4b7cbb3edf95b2612c946d42c3"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/00_최신편집_데모/receiver_valve_centered_leak.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/00_최신편집_데모/receiver_valve_centered_leak.mp4",
+      "bytes": 1240119,
+      "sha256_before": "625ef7fc8eea700a551238d00f292237adc24390d57cf4c6e579e2313741de93"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/00_최신편집_데모/확인사진/receiver_valve_centered_first_detection.jpg",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/00_최신편집_데모/확인사진/receiver_valve_centered_first_detection.jpg",
+      "bytes": 101116,
+      "sha256_before": "18bc75370e0893d33defc3e615d45be87ac31a03d4276d5102e9cc6dca8c3731"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/00_최신편집_데모/확인사진/receiver_valve_centered_t14.jpg",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/00_최신편집_데모/확인사진/receiver_valve_centered_t14.jpg",
+      "bytes": 62775,
+      "sha256_before": "38f63edf4d441eda6b3766911973feeb984cd83be4ed937a4900c1d65b6b4c33"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/iOcGOilqYeU.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/iOcGOilqYeU.mp4",
+      "bytes": 1369506,
+      "sha256_before": "34b401598cb3cf14c5a450c077f2e5780a307d6facf7f866aca79725f5e967fb"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/AqPOAPiH0Sk.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/AqPOAPiH0Sk.mp4",
+      "bytes": 11282477,
+      "sha256_before": "4214bc56b19651fdacd5e4b7fc89e0b038187c5f64e7595a6afe1a07adfb195c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/03_암모니아 압력용기 파열__NPEcJhbOMWA/NPEcJhbOMWA.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/03_암모니아 압력용기 파열__NPEcJhbOMWA/NPEcJhbOMWA.mp4",
+      "bytes": 1440167,
+      "sha256_before": "c7859d5113a35f71df74d0530cb2b59869b205265076b10246d8cd6dd9ca6ef1"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/uBqybTTIvtQ.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/uBqybTTIvtQ.mp4",
+      "bytes": 1699518,
+      "sha256_before": "a77a537806fce160ea2e236c277471fc0aee2f3354988073467eaef258db39d4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q.mp4",
+      "bytes": 8967345,
+      "sha256_before": "7ff0ab0c9686b1973294b1aef45a4600c044d4858eaa2384cb032f0eb2e6a535"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q__ac803cc4.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q__ac803cc4.mp4",
+      "bytes": 2223834,
+      "sha256_before": "ac803cc48750fd28179ac54ab8fa47b1c26cf82f22485bc85afeb6ff5d6dcc6b"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/06_8 cylinder Vilter slugged with liqu__gatCSASaFPw/gatCSASaFPw.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/06_8 cylinder Vilter slugged with liqu__gatCSASaFPw/gatCSASaFPw.mp4",
+      "bytes": 1185472,
+      "sha256_before": "355428d61cd049139877e6f4ef67d204465114a127f00e5de6b4bc1e60768822"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/07_AMMONIA LEAK__HVnb3Rc7it8/HVnb3Rc7it8.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/07_AMMONIA LEAK__HVnb3Rc7it8/HVnb3Rc7it8.mp4",
+      "bytes": 4239149,
+      "sha256_before": "c9c9755a0c9d4e6e526589f87d2d291ce81a5208f3bc2b51fb6a7fe0929fd615"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/08_Ammonia Refrigeration Condenser Tub__n_jLtrs8iWo/n_jLtrs8iWo.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/08_Ammonia Refrigeration Condenser Tub__n_jLtrs8iWo/n_jLtrs8iWo.mp4",
+      "bytes": 692293,
+      "sha256_before": "f8f7027ea88f418f4e804e59789142b4ea1656509a4ff7b2c392b6bc9e4a12bc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/09_Catastrophic Failure of an Anhydrou__VRlxKCiikL4/VRlxKCiikL4.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/09_Catastrophic Failure of an Anhydrou__VRlxKCiikL4/VRlxKCiikL4.mp4",
+      "bytes": 5640039,
+      "sha256_before": "4359c2498cffbd0d77b48cf533bd5e45ecbaa904f0165610c45a180b780afbf7"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/10_Cold Storage NH3 Explosion and Leak__tJ_PBcOscoY/tJ_PBcOscoY.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/10_Cold Storage NH3 Explosion and Leak__tJ_PBcOscoY/tJ_PBcOscoY.mp4",
+      "bytes": 3945021,
+      "sha256_before": "fa890bcfbcbece3e32b10d0d32870ef159e602e467097466b606bb8a5ee26716"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/11_NH3 Catastrophic Pressure Vessel Fa__8QZW0rKM9Aw/8QZW0rKM9Aw.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/11_NH3 Catastrophic Pressure Vessel Fa__8QZW0rKM9Aw/8QZW0rKM9Aw.mp4",
+      "bytes": 2539324,
+      "sha256_before": "7f69890282385142896cab3129b6f7fdc52fe0d84fe2bb9f3040bdb02aeb85b8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/12_NH3 Compressed Gas Cylinder Catastr__1h3UT_jVDY8/1h3UT_jVDY8.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/12_NH3 Compressed Gas Cylinder Catastr__1h3UT_jVDY8/1h3UT_jVDY8.mp4",
+      "bytes": 893739,
+      "sha256_before": "8583812dc5a9669d8c3e73effd63c1b78aea09448aa63f2565f9198f11bca670"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/13_NH3 Explosion @ ice cream plant fat__CUWCrNBzLio/CUWCrNBzLio.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/13_NH3 Explosion @ ice cream plant fat__CUWCrNBzLio/CUWCrNBzLio.mp4",
+      "bytes": 3878317,
+      "sha256_before": "ec1c98725904148d0c4cb223811a259bb089dbc69196c3d66d7048a4324fb56c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/14_NH3 Line Break with COVID Face Mask__4qxowQsJNpg/4qxowQsJNpg.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/14_NH3 Line Break with COVID Face Mask__4qxowQsJNpg/4qxowQsJNpg.mp4",
+      "bytes": 9399679,
+      "sha256_before": "a28b10fe75b7072a94cb1f9572aa8a3268f8efe5939b73f65e8b3ad306675905"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/15_NH3 Purger Safety__Hw5vCpmRx6E/Hw5vCpmRx6E.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/15_NH3 Purger Safety__Hw5vCpmRx6E/Hw5vCpmRx6E.mp4",
+      "bytes": 3854548,
+      "sha256_before": "15708ec6dd5c5327869c497c98ac803e8c9a49c3cc015149c451323eb5088114"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/16_NH3 RV release downward discharge__C_v7wwWawPM/C_v7wwWawPM.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/16_NH3 RV release downward discharge__C_v7wwWawPM/C_v7wwWawPM.mp4",
+      "bytes": 803787,
+      "sha256_before": "83ba9b4c2e85625a4285ba50bb2528f91393305bdf4788360a49d38a144c60f1"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/17_Pipe Inspections matter in NH3 proc__hMVPR8_p-QA/hMVPR8_p-QA.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/17_Pipe Inspections matter in NH3 proc__hMVPR8_p-QA/hMVPR8_p-QA.mp4",
+      "bytes": 1291757,
+      "sha256_before": "1002b35ef7283989fe5840660a8a5e0503711ac18873e22c4c02934ffecd253c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/sNkdAs1e7Cw.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/sNkdAs1e7Cw.mp4",
+      "bytes": 7133982,
+      "sha256_before": "bfa1a67ce1a53474e8a161577e18d750ec365a7d4137eeecfd59e83c556f63e7"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/x0vBwzl1Ox4.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/x0vBwzl1Ox4.mp4",
+      "bytes": 985322,
+      "sha256_before": "3db3232ed75534d4d412066c418f41efb263c55d6d4619f2eee8b2a51139117c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/20_weatherford_ammonia__Eq5bHxbsgdU/Eq5bHxbsgdU.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/20_weatherford_ammonia__Eq5bHxbsgdU/Eq5bHxbsgdU.mp4",
+      "bytes": 6968779,
+      "sha256_before": "35101377bba3972a804ed2d9696d0c6271d3b6f128326172330584b203a8abce"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/13_DYJS5mKY.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/13_DYJS5mKY.mp4",
+      "bytes": 9564852,
+      "sha256_before": "d81614d9afa9f7159d878b16235c657144a8e7625a2c7ada378a84c024458f13"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/Ve8c9h0-dbc.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/Ve8c9h0-dbc.mp4",
+      "bytes": 1487543,
+      "sha256_before": "dc73d0324372275b7f27e042853038f9b97e3c57e055dfa426fa85e710dd41b9"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/4ZXBwQ7Fx4c.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/4ZXBwQ7Fx4c.mp4",
+      "bytes": 3058350,
+      "sha256_before": "f038ac0749144c8a5d69d7a2a5ca711ac434eae1a9a36fffa339e0b2fb9c7f9c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/24_중국 공장 흰 분출__y_s8VpQczB8/y_s8VpQczB8.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/24_중국 공장 흰 분출__y_s8VpQczB8/y_s8VpQczB8.mp4",
+      "bytes": 529767,
+      "sha256_before": "61e71f974b0db58df3678ef9404e4bc70f28d82289024996ae6d05176b733d5e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/01_암모니아_원본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/65M1EurDQV0.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/01_암모니아_원본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/65M1EurDQV0.mp4",
+      "bytes": 36269819,
+      "sha256_before": "3c247bc33cf203442985362fba676164b89b401045d645c6134d4596e8de1058"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve.mp4",
+      "bytes": 1193210,
+      "sha256_before": "3c52f34d900f0dbf523d28c7996a3c8c5713cbbd5fb99f8ec955571e606db438"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/ammonia_receiver_valve_operation.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/ammonia_receiver_valve_operation.mp4",
+      "bytes": 1238699,
+      "sha256_before": "39f87ac2040441c82feb75e6439e3f801ca7560f997506ecafde4e3352d64964"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/08_elk_grove_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/08_elk_grove_nh3.mp4",
+      "bytes": 594917,
+      "sha256_before": "d48d1a0f851bedea133be870763aeb962a5bfadf334be855bf0504c5769fc8b0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_worker_entry_source27s_54s.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_worker_entry_source27s_54s.mp4",
+      "bytes": 475476,
+      "sha256_before": "28d8b63a5bb93787842bec03f932bacaa5c9057f6bef69d4d714c492a402798d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel.mp4",
+      "bytes": 1281298,
+      "sha256_before": "60dd98e78c2433c0026b1f08b592b22681311e55c2004b211c21bbdcded1477f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/ammonia_pressure_vessel_failure.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/ammonia_pressure_vessel_failure.mp4",
+      "bytes": 1512022,
+      "sha256_before": "fa87ee55448d62360fd90fe6ace50b5438673f1c32e0f0de0f8c401c7298fd6b"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3.mp4",
+      "bytes": 1651237,
+      "sha256_before": "88086e6fea29257fbc36cb72fe1ec7f56c597f5ed9e187b11e1e7904432e6e69"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/13_seward_nh3_cloud.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/13_seward_nh3_cloud.mp4",
+      "bytes": 959627,
+      "sha256_before": "76da159a9b8ef26fba09cfe61c1fd29e0b3ea9a5c5e1622db9d07831e4768194"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022.mp4",
+      "bytes": 781723,
+      "sha256_before": "41bdc1736a0e41453bc5b26d872d8e7b40971e42ec84c2865317bfecfba1dbe0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022__d3985735.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022__d3985735.mp4",
+      "bytes": 965918,
+      "sha256_before": "d3985735d155e78ec3340b97801521ad6bf61818bd7e29ec1c619a76d5e0eaad"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia_release.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia_release.mp4",
+      "bytes": 1575222,
+      "sha256_before": "018bbca263dc2cd52d814e13d7a7c38f71b0044c4cb37967fb0b1ba4d60f6339"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/05_shanghai_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/05_shanghai_nh3.mp4",
+      "bytes": 991686,
+      "sha256_before": "21467930eefa033f76f75f469a52067c575b565e3423064d03b4a781f94056cc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge.mp4",
+      "bytes": 210892,
+      "sha256_before": "ae65126cff2bf535bd2fb8169ee992bf70a6da1c32ee8fff90c3448ee6f5bc5c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge__4ff1bd33.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge__4ff1bd33.mp4",
+      "bytes": 240637,
+      "sha256_before": "4ff1bd333a9cf5e6e9ab09daab7a0c83116dbb79de37700b33cee37dde6abc78"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/10_night_nh3_tank.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/10_night_nh3_tank.mp4",
+      "bytes": 860526,
+      "sha256_before": "6a598e38bd2f428701e3748cc35cb52327ef506597aa0b206589cf72758a428d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/24_중국 공장 흰 분출__y_s8VpQczB8/07_china_factory_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/24_중국 공장 흰 분출__y_s8VpQczB8/07_china_factory_nh3.mp4",
+      "bytes": 493713,
+      "sha256_before": "4b460a987a75d6fca406e0557c780a73a7775ae17c7e6437a945f591574dd1d9"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/02_암모니아_발췌본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/06_ochsi_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/02_암모니아_발췌본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/06_ochsi_nh3.mp4",
+      "bytes": 2610094,
+      "sha256_before": "265d41c4f880b1238a4fb8b5eb289c95b48d33b5cc1f5fccd0c621e4b042f83f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve_smoke.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve_smoke.mp4",
+      "bytes": 1311611,
+      "sha256_before": "b94bd656b83efad75b46851b48db494065f5e626ef3a35be1df65b4757bafc9d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_leak.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_leak.mp4",
+      "bytes": 1617046,
+      "sha256_before": "b9594b2a1ffec01450d137ad65037efb6b7c5e1d36a1a9ce2187c47074ca43e1"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_wall_crop_leak.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_wall_crop_leak.mp4",
+      "bytes": 1404836,
+      "sha256_before": "6ea66217ebab2487248d3f9415f3a254b56b6cdf346d6d831e6b8858865a423d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/03_FASDD_탐지결과/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_full_leak.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/03_FASDD_탐지결과/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_full_leak.mp4",
+      "bytes": 9513798,
+      "sha256_before": "6371b9a3af9a46889550a8166bf5f6e7893e6a416f14dd459e795e38467acaf7"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/03_FASDD_탐지결과/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel_smoke.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/03_FASDD_탐지결과/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel_smoke.mp4",
+      "bytes": 1290519,
+      "sha256_before": "ebbaa7d7f2d0b40bc518544495832b206345d06a812edbcb335b86473a8951f8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_leak.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_leak.mp4",
+      "bytes": 2297943,
+      "sha256_before": "a84ffd6851915545b3cb910e4e5eaec2a632db4b1758947e2581f4a8885a3e73"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_smoke.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_smoke.mp4",
+      "bytes": 1834707,
+      "sha256_before": "e1dccb184d1546095f4388561a67919e86981eaf7253b63fdd45e754587cfe94"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/03_nh3_pressure_vessel.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/03_nh3_pressure_vessel.mp4",
+      "bytes": 1112776,
+      "sha256_before": "01041a3be34e38c66d42922a11a62c6cf7a57f70dade1c38c1bbdf78b2340a23"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/04_nh3_receiver_valve.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/04_nh3_receiver_valve.mp4",
+      "bytes": 1434965,
+      "sha256_before": "213afb9c98bb15bd4f1b1df9b6bf9d2640b5282dc9c8a56a6a605fc974062917"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/05_shanghai_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/05_shanghai_nh3.mp4",
+      "bytes": 1049180,
+      "sha256_before": "69751a112fcd94ed147ece69ec62fa05d63a687a214857cd77b68884d6092e20"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/06_ochsi_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/06_ochsi_nh3.mp4",
+      "bytes": 832918,
+      "sha256_before": "a44a3241fb9a180e4e21563063802dfadf6b080e48a50ebcc6b8fb88d4e0a82e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/07_china_factory_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/07_china_factory_nh3.mp4",
+      "bytes": 837406,
+      "sha256_before": "e263b747c70bb4210fee539baeec3bfdb1a48ce6345b7f7192ca8f7cc4f52a8b"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/08_elk_grove_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/08_elk_grove_nh3.mp4",
+      "bytes": 1050770,
+      "sha256_before": "0694efabf73f13809fb5a5b76b9d26e46393f39f19eae9f88b2a31dcaf737438"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/09_refrigeration_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/09_refrigeration_nh3.mp4",
+      "bytes": 1310898,
+      "sha256_before": "137820bd6334498bdf1258770b6de96f66c08358e858b8220aa70bc27bf513c5"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/10_night_nh3_tank.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/10_night_nh3_tank.mp4",
+      "bytes": 1031892,
+      "sha256_before": "6fa02cedb83015fab0f6538b25ff61c12a53786806728fc52964420053eba25d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/13_seward_nh3_cloud.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/13_seward_nh3_cloud.mp4",
+      "bytes": 2071953,
+      "sha256_before": "dcdf66397506339b64d24a20b94d366f0afa7de3fc9f86ecc440a02f805bb754"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "bytes": 1443831,
+      "sha256_before": "ddb20c78ae054dbdddc160fbe7800f26cbfc66df27dbb40d358e7c82e9828d59"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/aihub-leak-yolo26-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/aihub-leak-yolo26-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "bytes": 639633,
+      "sha256_before": "66d7d8299dea4a58167d4ea98e201cf194c6f6c8279ef8fc5e91c962e42ce74e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/03_nh3_pressure_vessel.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/03_nh3_pressure_vessel.mp4",
+      "bytes": 1113836,
+      "sha256_before": "968b6dc0ff592568703af43a6dd26de4273cfbc35687af1a8765c6189c13a620"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/04_nh3_receiver_valve.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/04_nh3_receiver_valve.mp4",
+      "bytes": 1464320,
+      "sha256_before": "90a0256034e2389882448a8474dd04835324279c925d615a1da616dd59c85f28"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/05_shanghai_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/05_shanghai_nh3.mp4",
+      "bytes": 1093510,
+      "sha256_before": "101d8ff6a26028fe4824db19eb91703a7ef55563e02a8ee816d58a36d6d1da8e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/06_ochsi_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/06_ochsi_nh3.mp4",
+      "bytes": 867054,
+      "sha256_before": "1d80f35d9024b05be08d8b4c6a72a6276448c2a1eb4864f3ecb58c232da098f8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/07_china_factory_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/07_china_factory_nh3.mp4",
+      "bytes": 861081,
+      "sha256_before": "ef5157e0d10030cf840e0ff939122c64a688fea42d71ddd1f50592941ece9b84"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/08_elk_grove_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/08_elk_grove_nh3.mp4",
+      "bytes": 1054586,
+      "sha256_before": "d8e9e60b64395e0a061eb85a0e0f14e3949b1470c6c5e275c779877e7902bd99"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/09_refrigeration_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/09_refrigeration_nh3.mp4",
+      "bytes": 1369205,
+      "sha256_before": "5697b20e7126c5d1c178e8cb16759cd62551d1f9940495ff776531fe0fa61f01"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/10_night_nh3_tank.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/10_night_nh3_tank.mp4",
+      "bytes": 1040691,
+      "sha256_before": "0024936732b45d36c832663ba4b05269db1658a8a2e097af19e1efeff028ee27"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/13_seward_nh3_cloud.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/13_seward_nh3_cloud.mp4",
+      "bytes": 2078326,
+      "sha256_before": "156fc41e6c14eed5b0eed2df2c10357f8b27ded11757c953dcd0a7d5139fb8a5"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "bytes": 1469438,
+      "sha256_before": "7e1d3b01eb5e59604548107f23fd061570f60934676623a2da4c3e186eb054f1"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/all-gas-leak-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/all-gas-leak-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "bytes": 643742,
+      "sha256_before": "7970c12d9db1982285764408997b5648786e69266ab87fe031b145c7892f7e10"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/03_nh3_pressure_vessel.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/03_nh3_pressure_vessel.mp4",
+      "bytes": 1116205,
+      "sha256_before": "a4c7933cfb15e00f1164282ddc8ec09cd46eebcb485867b0c10511f036e65ff2"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/04_nh3_receiver_valve.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/04_nh3_receiver_valve.mp4",
+      "bytes": 1453802,
+      "sha256_before": "698da13d10693206d3f3e9f88387a2e049f70d5970d9a8f1e9214f1d8547fdd1"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/05_shanghai_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/05_shanghai_nh3.mp4",
+      "bytes": 1058749,
+      "sha256_before": "3acb05e4da999c93c640aa898f9e38af5f1990bc3d36eacdca78533c7bb40620"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/06_ochsi_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/06_ochsi_nh3.mp4",
+      "bytes": 834261,
+      "sha256_before": "3d7537acc149cbecc17fbbe0974815ed4fe14af3e3d15a2fc25d62d0b9239b9f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/07_china_factory_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/07_china_factory_nh3.mp4",
+      "bytes": 846468,
+      "sha256_before": "f780006d1f369331573ae42581ba3fd720badeae0d80d225bc2e4ed8b17c0ae5"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/08_elk_grove_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/08_elk_grove_nh3.mp4",
+      "bytes": 1053505,
+      "sha256_before": "e84e9d0d2443a963a94a0d4cd68b6229a3347d9c2a6ebec1ca7c5303a731b36c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/09_refrigeration_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/09_refrigeration_nh3.mp4",
+      "bytes": 1309187,
+      "sha256_before": "195b365dc63c555fc9dc75b6bd4a7b17efb4360e5f13b8ea4e2ca07ce2224e97"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/10_night_nh3_tank.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/10_night_nh3_tank.mp4",
+      "bytes": 1031772,
+      "sha256_before": "a18900b7a1b3f1389a12e25d32bd995f14feb0d7c0e6d811c8936ad510dce539"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/13_seward_nh3_cloud.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/13_seward_nh3_cloud.mp4",
+      "bytes": 2124691,
+      "sha256_before": "8048766638c718c8c76250868225098dfe0e7fdb7e1af23a922bef76df27c9b9"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "bytes": 1424787,
+      "sha256_before": "1ae6d546d07a3e20f89e78f143944cb179c18e8e2a99038300b08fa673520aa3"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/full-gas-yolo26s-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/full-gas-yolo26s-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "bytes": 648125,
+      "sha256_before": "4ca5eb4713577569cccf859e6d39819c8e91d322dab3ec4a183ecd891b3d32aa"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/03_nh3_pressure_vessel.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/03_nh3_pressure_vessel.mp4",
+      "bytes": 1100538,
+      "sha256_before": "8c4d4aa2495d44e3c19944904316b075fac50e4862bef1079da3c8914d3f3d01"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/04_nh3_receiver_valve.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/04_nh3_receiver_valve.mp4",
+      "bytes": 1412092,
+      "sha256_before": "2aa83b21701c877d1e3ff2cf61891d386487237f392ad6de4adffc23805523e4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/05_shanghai_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/05_shanghai_nh3.mp4",
+      "bytes": 1019582,
+      "sha256_before": "2b1693a86294eb82a84747bf6249bc3c7a5a7fd0bac19951f069ef1a2aebf10f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/06_ochsi_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/06_ochsi_nh3.mp4",
+      "bytes": 824568,
+      "sha256_before": "00912e616d83a86f87a39d7cf11c500ed2f230e33a610fc414d19a6ed115902a"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/07_china_factory_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/07_china_factory_nh3.mp4",
+      "bytes": 798209,
+      "sha256_before": "ecd9d211404550b4d6f6a638ca951690e10fa9c34c7deebf8f35a6e028feec22"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/08_elk_grove_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/08_elk_grove_nh3.mp4",
+      "bytes": 1028579,
+      "sha256_before": "e90f9dec936ec5b13d3beaf3a473acd9eebbbfea3bdd73fff83d76d4b390d627"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/09_refrigeration_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/09_refrigeration_nh3.mp4",
+      "bytes": 1155742,
+      "sha256_before": "5e01362de9d967d068f816515f4dcd736b442c62a3bbca865bb8fde7848ceb0f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/10_night_nh3_tank.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/10_night_nh3_tank.mp4",
+      "bytes": 1014765,
+      "sha256_before": "ee0b994e414591d853991970d89d7f52bfd1615b4e6e035abe5def1f7deffbbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/13_seward_nh3_cloud.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/13_seward_nh3_cloud.mp4",
+      "bytes": 1994840,
+      "sha256_before": "94f347f1801c31ebd3034f4735bae160c816ae0dfbbcb9b8338093a4c9329e6f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "bytes": 1423227,
+      "sha256_before": "b6f9eca368c25ebc19c4f0485e9b37512ae9d3017628c41d78dd581a91d8f96e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/gas-only-yolo26-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/gas-only-yolo26-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "bytes": 607973,
+      "sha256_before": "60f5f7977b27282af6c7d7c92e62b76d33caefbe2c871532e7c0a65fb8a2a732"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/03_nh3_pressure_vessel.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/03_nh3_pressure_vessel.mp4",
+      "bytes": 1125189,
+      "sha256_before": "b54578835b0f212c744891f32715b0403f09585e70af3637e689fec096feca43"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/04_nh3_receiver_valve.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/04_nh3_receiver_valve.mp4",
+      "bytes": 1453975,
+      "sha256_before": "00ee4de6bdd3135a2d4a64c0a1fc20a838a27174981d4c278f2940b83c3f9ca7"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/05_shanghai_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/05_shanghai_nh3.mp4",
+      "bytes": 1060006,
+      "sha256_before": "22b818bd31390601eb19d4a6b6ab67508a21702c4b59319cd521382d6e04fb31"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/06_ochsi_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/06_ochsi_nh3.mp4",
+      "bytes": 848514,
+      "sha256_before": "020196161b62779d6a9835c10911dc5b4e80001929d3cce6fedee72bd5d96b43"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/07_china_factory_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/07_china_factory_nh3.mp4",
+      "bytes": 834946,
+      "sha256_before": "a0e71b30d17b7d5cd3391e36fd2d82baca2084e31967b059ad7048fc7fbd2a1e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/08_elk_grove_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/08_elk_grove_nh3.mp4",
+      "bytes": 1052611,
+      "sha256_before": "c06187146f5390e4548b0d1268109e2e9140df63b36776e5ebdc5c73adc967da"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/09_refrigeration_nh3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/09_refrigeration_nh3.mp4",
+      "bytes": 1177689,
+      "sha256_before": "7d694fb1b971dfa0ed555662c77cd86b904e7f814539d9d8082be95b76495938"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/10_night_nh3_tank.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/10_night_nh3_tank.mp4",
+      "bytes": 1037711,
+      "sha256_before": "23231d36f41725005c98be3a344e8bfbe8cbf7c4b04b5a32bb68063b090c8286"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/13_seward_nh3_cloud.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/13_seward_nh3_cloud.mp4",
+      "bytes": 2081363,
+      "sha256_before": "8bffb9ac97ea0719f7b669bd47735aef66e15da1ef0cd1bb5b908926277cf74b"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "bytes": 1411325,
+      "sha256_before": "03249aa3af39f206322b9d1204a6c8e099c7d0f08274d047f3dbd230ef1b6ffe"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/leak-transfer-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/leak-transfer-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "bytes": 632483,
+      "sha256_before": "ea738c36b5dcb09a7eff30b83841f8025aa968c16d7286a693d86a681e694444"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/tank-transfer-20261004/ammonia_pressure_vessel_failure_annotated.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/tank-transfer-20261004/ammonia_pressure_vessel_failure_annotated.mp4",
+      "bytes": 1629194,
+      "sha256_before": "b1f750572cb778f5b70669f17eb1ca67ee3e9e10433d689a8c486681f23f70b4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/tank-transfer-20261004/ammonia_receiver_valve_operation_annotated.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/tank-transfer-20261004/ammonia_receiver_valve_operation_annotated.mp4",
+      "bytes": 1330046,
+      "sha256_before": "f8f9c6a31b5b2a63bf6ebc0dd37b871820c38ff227a374b2c00b285660c6013b"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/tank-transfer-20261004/ammonia_tank_relief_discharge_annotated.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/tank-transfer-20261004/ammonia_tank_relief_discharge_annotated.mp4",
+      "bytes": 279226,
+      "sha256_before": "8abebdf49f928f316c82edb318348645b02d08f7b27b48638e0769dae7f3e998"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/04_이전모델_비교/tank-transfer-20261004/sumykhimprom_ammonia_tank_2022_annotated.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/04_이전모델_비교/tank-transfer-20261004/sumykhimprom_ammonia_tank_2022_annotated.mp4",
+      "bytes": 936241,
+      "sha256_before": "63e88a3b507ac21d747f1f3ef9c8f377a0dbb4ba8000db6495ff54fd06786bce"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/05_이전편집본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_left_wall_removed.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/05_이전편집본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_left_wall_removed.mp4",
+      "bytes": 1234329,
+      "sha256_before": "5feebcbec6570250fb49dd612c5140d66a18b40c236ae21313b22ffbc6402ecf"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/06_기타보관영상/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/seward_ammonia.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/06_기타보관영상/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/seward_ammonia.mp4",
+      "bytes": 4141786,
+      "sha256_before": "6f6637aca1824ec34987e62912accdabe059dc62f14cb9916bdcd25b89080c80"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/06_기타보관영상/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/06_기타보관영상/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia.mp4",
+      "bytes": 21102120,
+      "sha256_before": "7077d270420803a33396658ca60e8b14debffe715e64fabf3703d263f41797f0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/06_기타보관영상/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/ochsi_ammonia.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/06_기타보관영상/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/ochsi_ammonia.mp4",
+      "bytes": 97458337,
+      "sha256_before": "ba7872aec0a2e0589935d9299bd001b0e609c321fc2012ae0b22fa943495f04c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_agsradiotv_20260721.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_agsradiotv_20260721.mp4",
+      "bytes": 13679081,
+      "sha256_before": "22826c66a63845c900aa7c379deaba1d4a5506d68f5132b3061dbe71071284fe"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_news_20260721.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_news_20260721.mp4",
+      "bytes": 7435007,
+      "sha256_before": "bd19d1a1d6932896e8743088e8cc410c116023c7e5304db2d732aab3333d97ef"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/출처와_확인내용.txt",
+      "bytes": 642,
+      "sha256_before": "b649f437957a70c1dd1db8df5fac484265c39e281990981037bbc3f78a28ab9e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/02_테텔/tetel_385grados_20260401.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/02_테텔/tetel_385grados_20260401.mp4",
+      "bytes": 1989375,
+      "sha256_before": "9e0528550006bf086640f68dd8698def699aa2d6bc4835344ee1bbfdbcc5179f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/02_테텔/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/02_테텔/출처와_확인내용.txt",
+      "bytes": 492,
+      "sha256_before": "e9d7eeb99dc8adbd9bd01bdd568b5253623c24f29754920e229e4e9f48470dc9"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/03_아모소크/amozoc_hose_leak_202307.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/03_아모소크/amozoc_hose_leak_202307.mp4",
+      "bytes": 2863488,
+      "sha256_before": "1a70e3f581ae518793abc2826239b1b3ed7982a2cab0c68d6dfde7dc00e38681"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/03_아모소크/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/03_아모소크/출처와_확인내용.txt",
+      "bytes": 476,
+      "sha256_before": "519dd96240035aa0e34999fe2df555720f713f026a5cb1c61550f6edaef77e11"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/04_나시크/nashik_cctv_20210423.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/04_나시크/nashik_cctv_20210423.mp4",
+      "bytes": 43987290,
+      "sha256_before": "d783fbada6fff0fa1e1ef876a157e5c5b4d319f5447defd059cdd5f9c865a583"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/04_나시크/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/04_나시크/출처와_확인내용.txt",
+      "bytes": 584,
+      "sha256_before": "4e9427a09ac99c9fcadf11a01f7b854dea0d2e08bcf2744ef6d0c42352a0eb72"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/05_구미_불산/80odRsKUXvc.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/05_구미_불산/80odRsKUXvc.mp4",
+      "bytes": 1411101,
+      "sha256_before": "b68762a852f93719fd5f1e086806f1c670688345c3db07d79a3fc73f7a38d490"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/05_구미_불산/gumi_hf_digital_cctv_onset.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/05_구미_불산/gumi_hf_digital_cctv_onset.mp4",
+      "bytes": 994475,
+      "sha256_before": "25be58563799f158e0cd97563e1f7d02253219486d551316ea0fa830ebfa7caa"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/05_구미_불산/ktv_442065_source.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/05_구미_불산/ktv_442065_source.mp4",
+      "bytes": 5396204,
+      "sha256_before": "629443ca5eaa997dcd1cdc0dd9cd3f9669e384046124e7a091326d2bf8fccce0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/05_구미_불산/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/05_구미_불산/출처와_확인내용.txt",
+      "bytes": 448,
+      "sha256_before": "86bfaf2caed02ae2f9f205c4de752c676850f0ceca3bbe172351112ec5631dd9"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/06_에카테펙/ecatepec_20240406_cctv.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/06_에카테펙/ecatepec_20240406_cctv.mp4",
+      "bytes": 9642234,
+      "sha256_before": "1ee683337b55f2dcb7064a3a364bc54ba7d069883b05fb290d5ad5f990a39a66"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/06_에카테펙/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/06_에카테펙/출처와_확인내용.txt",
+      "bytes": 551,
+      "sha256_before": "5c832d70060e8cbd49ce134861a38e8e822c80d243b1a4285cb9e113fa6a4d4b"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/07_린이/linyi_20170605_cctv.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/07_린이/linyi_20170605_cctv.mp4",
+      "bytes": 33832542,
+      "sha256_before": "161c514da915862f0f83805b9f2b915efdd919c88dab4f8327286a58a38a4da7"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/07_린이/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/07_린이/출처와_확인내용.txt",
+      "bytes": 517,
+      "sha256_before": "a6c734f27d98ff80ba458754b621c00679380d1532ecbcce71f57bbf372bba83"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/08_Seward/sNkdAs1e7Cw.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/08_Seward/sNkdAs1e7Cw.mp4",
+      "bytes": 7133982,
+      "sha256_before": "bfa1a67ce1a53474e8a161577e18d750ec365a7d4137eeecfd59e83c556f63e7"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/08_Seward/seward_ammonia_cloud_arrival.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/08_Seward/seward_ammonia_cloud_arrival.mp4",
+      "bytes": 959627,
+      "sha256_before": "76da159a9b8ef26fba09cfe61c1fd29e0b3ea9a5c5e1622db9d07831e4768194"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/08_Seward/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/08_Seward/출처와_확인내용.txt",
+      "bytes": 348,
+      "sha256_before": "54ea3fc4374d6cec79d0b365b705fec02ef2a904207963ec5e698228975bbc14"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/09_야안/yaan_20231107_cctv.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/09_야안/yaan_20231107_cctv.mp4",
+      "bytes": 1647243,
+      "sha256_before": "a4b8979e4c4d42d9a27deaa5ad9fae591174f35de307e04958c6d279e7e2f7ed"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/09_야안/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/01_우선_CCTV/09_야안/출처와_확인내용.txt",
+      "bytes": 422,
+      "sha256_before": "566b1732799866f1e9b60a21a5cd1b2bfef40f8e77624e132bfffd0b7bd00632"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/01_대구_LPG/daegu_lpg_newspim_20221116.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/01_대구_LPG/daegu_lpg_newspim_20221116.mp4",
+      "bytes": 10391272,
+      "sha256_before": "c3d0659469f4cdfae84d29838444e391097ba4af34ce0acd4bdee826dc9eeb9e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/01_대구_LPG/daegu_lpg_tvchosun_cctv.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/01_대구_LPG/daegu_lpg_tvchosun_cctv.mp4",
+      "bytes": 33898534,
+      "sha256_before": "325274d949e6c2bc197ded95b6cd1987e10f41cd08e4a84172daf29623386f0e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/01_대구_LPG/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/01_대구_LPG/출처와_확인내용.txt",
+      "bytes": 620,
+      "sha256_before": "9d0b3e38deb4c4d3ed35cfdecd8f02f62a777710c18863b50a57fcaf8a57f991"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/02_평창_LPG/52OQ9S_NM4E.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/02_평창_LPG/52OQ9S_NM4E.mp4",
+      "bytes": 18139990,
+      "sha256_before": "89e3e05122cb6e539763438fdaffacd1a12837b13d03c926dd0810a2fcfc783d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/02_평창_LPG/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/02_평창_LPG/출처와_확인내용.txt",
+      "bytes": 364,
+      "sha256_before": "87c2cb68bf8bfea672e937173eab508af8032f4c0729b42b5a6f62ee4aa5eb24"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/03_허베이_스자좡/shijiazhuang_20231113.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/03_허베이_스자좡/shijiazhuang_20231113.mp4",
+      "bytes": 1891717,
+      "sha256_before": "4089e6a3e4de4988fa6de8efd2ab7a7ad99429cb61338589aa694642038f83f9"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/03_허베이_스자좡/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/03_허베이_스자좡/출처와_확인내용.txt",
+      "bytes": 467,
+      "sha256_before": "3745b232464ce90c8cd476da484e3bf874a9addef820fd49db6c3f700b94f0d5"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/04_차차크/cacak_20220810.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/04_차차크/cacak_20220810.mp4",
+      "bytes": 110164434,
+      "sha256_before": "86fc68f56db13e70df6b49844624a3236759e44a8ea26b54b0c744a39ac1013f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/04_차차크/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/04_차차크/출처와_확인내용.txt",
+      "bytes": 537,
+      "sha256_before": "733a7b885e798487be546a9184f8188ce8040861a478568dbabcf1347c4d05e1"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/05_로마_노르테/roma_norte_20190705_angle1.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/05_로마_노르테/roma_norte_20190705_angle1.mp4",
+      "bytes": 3847317,
+      "sha256_before": "9876fb5b0590eaf0e6d751ca2315e037ed63c1b11b9316fdf2c6fb4635f7a38e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/05_로마_노르테/roma_norte_20190705_angle2.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/05_로마_노르테/roma_norte_20190705_angle2.mp4",
+      "bytes": 1607995,
+      "sha256_before": "ab7ee1c25e6ab0b0e341dcb0a3da6eb15914f12b96a7a06e083a13d35736b627"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/05_로마_노르테/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/05_로마_노르테/출처와_확인내용.txt",
+      "bytes": 530,
+      "sha256_before": "74191d4fe7711149a25b424996539281b43ea94ceac1058c5b8e5a181d531d6a"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/06_쿠아히말파_병원/cuajimalpa_nplus_univision_20150216.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/06_쿠아히말파_병원/cuajimalpa_nplus_univision_20150216.mp4",
+      "bytes": 13979934,
+      "sha256_before": "2cdda9144a7d9e0456ca3351dfc22d8bb0a2ca2f70ba251879dd46c39553a8ee"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/06_쿠아히말파_병원/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/06_쿠아히말파_병원/출처와_확인내용.txt",
+      "bytes": 353,
+      "sha256_before": "eb50fe0e21e8f6695a3e654c1fc34580eaed70df7469938223f4510eef1ec25c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/07_웨더퍼드/Eq5bHxbsgdU.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/07_웨더퍼드/Eq5bHxbsgdU.mp4",
+      "bytes": 6968779,
+      "sha256_before": "35101377bba3972a804ed2d9696d0c6271d3b6f128326172330584b203a8abce"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/07_웨더퍼드/weatherford_ammonia_release.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/07_웨더퍼드/weatherford_ammonia_release.mp4",
+      "bytes": 1575222,
+      "sha256_before": "018bbca263dc2cd52d814e13d7a7c38f71b0044c4cb37967fb0b1ba4d60f6339"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/07_웨더퍼드/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/07_웨더퍼드/출처와_확인내용.txt",
+      "bytes": 360,
+      "sha256_before": "e55ad10273c7e6fc1461e1bd4f04604d7c3a2a6b1c7acf6a304ebf0d19e439bd"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/08_치말우아칸/chimalhuacan_20260927.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/08_치말우아칸/chimalhuacan_20260927.mp4",
+      "bytes": 27926214,
+      "sha256_before": "0fb4fb5d67426f791f4595cb53f89bfe37cf1aa265aee61f325dc26d341f9946"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/08_치말우아칸/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/08_치말우아칸/출처와_확인내용.txt",
+      "bytes": 473,
+      "sha256_before": "ae358900e1ea47439b29977b788780fc97e4268ebd8345888517d7a647f75baf"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/09_테페아카/tepeaca_nmas_20260816.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/09_테페아카/tepeaca_nmas_20260816.mp4",
+      "bytes": 7151617,
+      "sha256_before": "b807689a77523a45a2feda45e569c61b2a3ccf96aa3d51cc43bd814eeb1f386a"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/09_테페아카/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/09_테페아카/출처와_확인내용.txt",
+      "bytes": 588,
+      "sha256_before": "fbbcf4394d40f60bd0ddb68ec059816d6f5f917203e460a5c3d1781c6d5a0628"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/10_아칠리아/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/10_아칠리아/출처와_확인내용.txt",
+      "bytes": 630,
+      "sha256_before": "7a62f1297744bdfa7c0c00e372b4f4345e45b1a50537a9783955f208e90b6f4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/dangjin_ytn_20260503.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/dangjin_ytn_20260503.mp4",
+      "bytes": 2260076,
+      "sha256_before": "50473fba6b3bcf7f962fb6d584f68482e4bfb88626e658ec403672c41e302258"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/출처와_확인내용.txt",
+      "bytes": 432,
+      "sha256_before": "06034fc9102cef88df08a803ca7a5d77e746b110165af7d3a13a239dfe8507d3"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/12_툭스틀라/tuxtla_nmas_news.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/12_툭스틀라/tuxtla_nmas_news.mp4",
+      "bytes": 8772783,
+      "sha256_before": "4d8e7c77e857c91328809763dd42aa7e8a20a5dc3ebd046718c52fb27d851a63"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/12_툭스틀라/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/12_툭스틀라/출처와_확인내용.txt",
+      "bytes": 652,
+      "sha256_before": "36aea8febf213541ac4fa89e1d7f5080ad60faef2804f13928842ec3cbcf97fe"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/13_올덤/oldham_storyful_20250423.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/13_올덤/oldham_storyful_20250423.mp4",
+      "bytes": 10474936,
+      "sha256_before": "9e2dbadbb0fdb3d1b9c1336c9d4acba21e630b933e79270918c8eb70ac9f4742"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/13_올덤/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/13_올덤/출처와_확인내용.txt",
+      "bytes": 470,
+      "sha256_before": "ff7e2ad524a8c61dfed93e8f05e09de03f06286ad0ad6491a45c8926a76a8067"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/cuernavaca_unotv_20260806.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/cuernavaca_unotv_20260806.mp4",
+      "bytes": 19776679,
+      "sha256_before": "fb11957f6c550dd3a403b0049655800f9baa9e6be3999b0e80b01fabcf5e0f40"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/출처와_확인내용.txt",
+      "bytes": 526,
+      "sha256_before": "0c431fddbf58880580ab8bda9084095c2b2f70343af91744bd1cb778c5f898d0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/01_포산_LPG_훈련/foshan_lpg_drill_20260623.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/01_포산_LPG_훈련/foshan_lpg_drill_20260623.mp4",
+      "bytes": 1446817,
+      "sha256_before": "09fc2e36bccce4b1ecea79f7bcdde1d7eb9d041eb61aa415ca7709cb40e5c7a6"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/01_포산_LPG_훈련/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/01_포산_LPG_훈련/출처와_확인내용.txt",
+      "bytes": 428,
+      "sha256_before": "f6ee9d73947acf34467c28aa9b2c11d9303695ba5f47c4b3a1f138a91b4fab7a"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/02_중산_암모니아_훈련/zhongshan_ammonia_drill_20200715.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/02_중산_암모니아_훈련/zhongshan_ammonia_drill_20200715.mp4",
+      "bytes": 3049434,
+      "sha256_before": "7bbcf924c28d4597ea6584d7b3d3ab153199402372acddc528d3a0663442bc09"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/02_중산_암모니아_훈련/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/02_중산_암모니아_훈련/출처와_확인내용.txt",
+      "bytes": 478,
+      "sha256_before": "d34113f1d4d37238f690e96beb443d65cb2b3b4f3033420387891061e7f19bdf"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/03_아카바항_염소/Ufbyg_cZISw.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/03_아카바항_염소/Ufbyg_cZISw.mp4",
+      "bytes": 4785975,
+      "sha256_before": "4de5329e6b2236c7bb45fe2c08ec3707a373baac79a2323a16758e3ccca04754"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/03_아카바항_염소/aqaba_chlorine_release.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/03_아카바항_염소/aqaba_chlorine_release.mp4",
+      "bytes": 3019901,
+      "sha256_before": "ed5f391df77fa590e65167c13c0cc433c9c362644320a0c1aadbc98007c5d0bf"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/03_아카바항_염소/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/03_아카바항_염소/출처와_확인내용.txt",
+      "bytes": 412,
+      "sha256_before": "21cc6398143c4d8130e0d6065c41db75825c325daa527382bb36000184ea2bf8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/04_과테말라_LPG_선박/guatemala_nice_20260304_angle1.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/04_과테말라_LPG_선박/guatemala_nice_20260304_angle1.mp4",
+      "bytes": 7155976,
+      "sha256_before": "06ee81c23c5fedc329a1605d6d32a1be92da71c9264ea0bc4ac70c9e1d696fd7"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/04_과테말라_LPG_선박/guatemala_nice_20260304_angle2.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/04_과테말라_LPG_선박/guatemala_nice_20260304_angle2.mp4",
+      "bytes": 2300721,
+      "sha256_before": "dd617f90b00cdb2cc4bbb27a9554fbb8cbaf083f24ea0909c766dacd80c8c844"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/04_과테말라_LPG_선박/guatemala_nice_20260304_angle3.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/04_과테말라_LPG_선박/guatemala_nice_20260304_angle3.mp4",
+      "bytes": 5587122,
+      "sha256_before": "c8998bf2e45b3cd38900aed1efdc1524b7abdae07a17d90a0c0060b75db06362"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/04_과테말라_LPG_선박/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/04_과테말라_LPG_선박/출처와_확인내용.txt",
+      "bytes": 801,
+      "sha256_before": "a28253aecd5164dc0d1c898999dce22ad91c20d88bdbc9d34a562cfeed4c4202"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/minnesota_nurse_tank_20121031.mp4",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/minnesota_nurse_tank_20121031.mp4",
+      "bytes": 21462527,
+      "sha256_before": "b543736f892b196ec8fce91ba87bda481ae12abf8d6f20ea56e7b3a3aed38833"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/출처와_확인내용.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/출처와_확인내용.txt",
+      "bytes": 432,
+      "sha256_before": "5e94c039b26ffb1930f79413189ace9a725a9d523e2d43084a2078155cfef017"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/README.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/README.txt",
+      "bytes": 3048,
+      "sha256_before": "cd882b3e9215286e3c7fa1ae55d7e80a564e3d7130aa0ab0f08eb339fff9cce1"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/나시크__nashik_cctv_20210423_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/나시크__nashik_cctv_20210423_download.log",
+      "bytes": 1142,
+      "sha256_before": "597e93c203dd33c6b220eee6edd3deca68f5adacaedf0404378085f261070189"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/나시크__nashik_ndtv_26s_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/나시크__nashik_ndtv_26s_download.log",
+      "bytes": 512,
+      "sha256_before": "34c7696057ecba91203659e8b971cb790320f3eef6d931d24dfcbe71ff6f829f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/당진_염산__dangjin_ytn_20260503_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/당진_염산__dangjin_ytn_20260503_download.log",
+      "bytes": 1202,
+      "sha256_before": "c091302d7db3e4e3085387e51c9cb676c5bf2b6fe2e61445ff3b0b19722ac4ca"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/대구_LPG__daegu_lpg_mbc_20221117_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/대구_LPG__daegu_lpg_mbc_20221117_download.log",
+      "bytes": 509,
+      "sha256_before": "20ce514ebae68542075868595628a86610d1ab699b6cf5ebecc544ed6ca2d19f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/대구_LPG__daegu_lpg_newspim_20221116_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/대구_LPG__daegu_lpg_newspim_20221116_download.log",
+      "bytes": 1217,
+      "sha256_before": "967714992b6115302e602b80df8e14d60bb8a2666bf72beba77cb79457755234"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/대구_LPG__daegu_lpg_tvchosun_cctv_20221118_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/대구_LPG__daegu_lpg_tvchosun_cctv_20221118_download.log",
+      "bytes": 1247,
+      "sha256_before": "e7fe0a532c690b427f1b500b5d019c4a027af3d315f5e7215100c5b66616f41f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/로마_노르테__roma_norte_20190705_angle1_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/로마_노르테__roma_norte_20190705_angle1_download.log",
+      "bytes": 515,
+      "sha256_before": "de6754e5e2d6d992e30e302a5b0c1f67863302281bf15124bdbb0b558ecd6b91"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/로마_노르테__roma_norte_20190705_angle2_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/로마_노르테__roma_norte_20190705_angle2_download.log",
+      "bytes": 515,
+      "sha256_before": "6fc38b9e1f5d0ec927dc90b5114bf6592a367c6329a782a3a6389b11711a1649"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/미네소타_암모니아__minnesota_nurse_tank_20121031_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/미네소타_암모니아__minnesota_nurse_tank_20121031_download.log",
+      "bytes": 1339,
+      "sha256_before": "2370243f77588e26d2de4308de106779425b4f6d666ab89e56ce87ef78b6fb7d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/아모소크__amozoc_hose_leak_202307_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/아모소크__amozoc_hose_leak_202307_download.log",
+      "bytes": 506,
+      "sha256_before": "cbcff4124f6b6c2e2327d18c9fe78304dfbdc329edb54296574848b49a50f996"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/아칠리아__acilia_rai_20260728_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/아칠리아__acilia_rai_20260728_download.log",
+      "bytes": 631,
+      "sha256_before": "155e5588b016673f5197a03aa50234eb4c4f7d5b2aab91bb1a465c428a18c46f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/올덤__oldham_sky_20250423_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/올덤__oldham_sky_20250423_download.log",
+      "bytes": 283,
+      "sha256_before": "ac7b4a0997deae5eb4e0ba48138f495c2e6baf2bba1f5bd0d5b236f35b6e871d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/올덤__oldham_storyful_20250423_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/올덤__oldham_storyful_20250423_download.log",
+      "bytes": 1187,
+      "sha256_before": "50095433c9984904734e6b017e9046839bcdaf2fc1e0a6b9bfa52e9d4702b43d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/치말우아칸__chimalhuacan_20260927_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/치말우아칸__chimalhuacan_20260927_download.log",
+      "bytes": 456,
+      "sha256_before": "6aadb1b7d7a1a5504c21343fc4104a8d764d285f287e43b15597630230f62da6"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/쿠아히말파_병원__cuajimalpa_nplus_univision_20150216_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/쿠아히말파_병원__cuajimalpa_nplus_univision_20150216_download.log",
+      "bytes": 1320,
+      "sha256_before": "7dded1fe251daa2fd6dfcf8c900b7dbcf3dba4266f7111f6ce9721d53ef488a6"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/쿠에르나바카__cuernavaca_dashcam_20260806_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/쿠에르나바카__cuernavaca_dashcam_20260806_download.log",
+      "bytes": 266,
+      "sha256_before": "1c4fd9ca6db63e7abb8c55970345c870deeb868d35e03b6e420221f211544b1b"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/쿠에르나바카__cuernavaca_unotv_20260806_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/쿠에르나바카__cuernavaca_unotv_20260806_download.log",
+      "bytes": 1252,
+      "sha256_before": "ff91385b990d0dbf15660cdb621e2db0256f4af0e5c55b2a1f649ad58bcd9734"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/테텔__tetel_385grados_20260401_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/테텔__tetel_385grados_20260401_download.log",
+      "bytes": 442,
+      "sha256_before": "586ca1024eb1e8dbbbc01a397c52ab31b4013ed3cc457fcbf09b4c6c461aca32"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/테페아카__tepeaca_nmas_20260816_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/테페아카__tepeaca_nmas_20260816_download.log",
+      "bytes": 1615,
+      "sha256_before": "1c5c3bac0171f0447b0ad2f5b0c7603f0488709686a41053d64e51fc40b46fc1"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/툭스틀라__tuxtla_nmas_news_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/툭스틀라__tuxtla_nmas_news_download.log",
+      "bytes": 2010,
+      "sha256_before": "7cb67ed0ca2c0322b6b59dcaad19b2fdf175fadc299c4228e04cc3a63a2fe1be"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/포시토스__pocitos_agsradiotv_20260721_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/포시토스__pocitos_agsradiotv_20260721_download.log",
+      "bytes": 1200,
+      "sha256_before": "7a02b73edd4e97a9500a67a5216d06f1ed01fb14b6643cec62306bca0399e895"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/metadata/download_logs/포시토스__pocitos_news_20260721_download.log",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/metadata/download_logs/포시토스__pocitos_news_20260721_download.log",
+      "bytes": 916,
+      "sha256_before": "3364f37cc294bb4b694ad44725be29915ad9afd0f3a4e018a3a3e870da9a0c00"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/영상목록.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/10월9일 시작전 추가/영상목록.json",
+      "bytes": 48726,
+      "sha256_before": "88f246a556aa538a1d11be36d3e33ce633cb1d8862c6cc8c6ed5a4ca2586d84e"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/README.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/README.txt",
+      "bytes": 5433,
+      "sha256_before": "93e8a1eafb0d0dfe29a3a3880f9e710e6314cd364136ff0d25c512e7ffbde7e0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/experiment_plan.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/experiment_plan.json",
+      "bytes": 1404,
+      "sha256_before": "e68ea2d4c896d0924d70d50ae806e97839b6b081ab2838a5b4cfe9a16c9895bb"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/heldout_test.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/heldout_test.json",
+      "bytes": 613,
+      "sha256_before": "2af650b549f1c6a6092d90a2a408ff66acb2453ac94a0309280005d35cedda1d"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/runs/yolo26s_fasdd_smoke/args.yaml",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/runs/yolo26s_fasdd_smoke/args.yaml",
+      "bytes": 1957,
+      "sha256_before": "4a9c2b613a1360e487c890be77394d903d7364e99ea7c14afdf9f5831658b269"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/runs/yolo26s_fasdd_smoke/results.csv",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/runs/yolo26s_fasdd_smoke/results.csv",
+      "bytes": 8259,
+      "sha256_before": "8992b2a87e3c47b99ed9d5da80059e2292944d3549943114ad994f026bef8469"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/training_result.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/training_result.json",
+      "bytes": 750,
+      "sha256_before": "899f1f90ddfc010cb41a4d4de9a6f743fc415a3a98cc031009e441b82abdc230"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/video-check-20261008/indoor-pair-leak-20261008/summary.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/video-check-20261008/indoor-pair-leak-20261008/summary.json",
+      "bytes": 7185,
+      "sha256_before": "e2ac7e0e19db87de00683b6b39155ae5faaab35d5c61256fcd028621f34d418c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/video-check-20261008/leak-display/label_alias.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/video-check-20261008/leak-display/label_alias.json",
+      "bytes": 1287,
+      "sha256_before": "d54c3bf3e7053a408c82f4de282ddcd82b6dd6096d6a2b444e9bdcd5b1bb1ffb"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_predictions.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_predictions.json",
+      "bytes": 85336,
+      "sha256_before": "a3422daafb4274138883357cd03acea30b7066439e570d087c1fa1ad1588862f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/video-check-20261008/receiver-valve-centered-20261008/summary.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/video-check-20261008/receiver-valve-centered-20261008/summary.json",
+      "bytes": 3429,
+      "sha256_before": "f4730149fc50a4e170ebb34d1e816b8adffa7f76a71a630016200856bb8714cb"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/video-check-20261008/receiver-valve-wall-crop-20261008/summary.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/video-check-20261008/receiver-valve-wall-crop-20261008/summary.json",
+      "bytes": 3458,
+      "sha256_before": "d776e5bd61cc24615fde05d511918603211cf1d3462087daa91885b01b900195"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/FASDD_기존기록/video-check-20261008/summary.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/FASDD_기존기록/video-check-20261008/summary.json",
+      "bytes": 7421,
+      "sha256_before": "6c429deb6e819887ec5f1ce1816c0976962602f70ce6ca5e17cdb86173cd88ce"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/chemiguard_weights_20261009.manifest.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/chemiguard_weights_20261009.manifest.json",
+      "bytes": 16997,
+      "sha256_before": "55db31e7ef899f5186ac3b5c7b5373632caefd07ff838762affd75311dc4b9bb"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/package_manifest.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/package_manifest.json",
+      "bytes": 110028,
+      "sha256_before": "6fc8cecd086e2e4e457917e04782c8f03c0a7b7f7dd1c37212d5a91aaf092a6a"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/metadata/sources.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/metadata/sources.json",
+      "bytes": 51274,
+      "sha256_before": "654caa64c9b8ec52962bb0fef5163771d04ca68c6494b78221598684ee32ce16"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/CHEMIGUARD_MODELS.txt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/CHEMIGUARD_MODELS.txt",
+      "bytes": 899,
+      "sha256_before": "2caedbe436a88b453bd6dc3f17edbc7fd419ae983a65f037c00a9e71bbed7745"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/fasdd_yolo26s_leak_best.pt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/fasdd_yolo26s_leak_best.pt",
+      "bytes": 20367179,
+      "sha256_before": "e9c45758842dcb72072ee4090c967b88452e32e1e48b36071711911fde0c6a2f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/README.md",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/identity/siglip2-base-patch16-384/README.md",
+      "bytes": 3375,
+      "sha256_before": "3dab28ee04f108b1b1c8af6a9f0451cf1a6fff67dfba3dddfe16ca6dc1018214"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/config.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/identity/siglip2-base-patch16-384/config.json",
+      "bytes": 276,
+      "sha256_before": "b1b2481aa448d0cd29001bcf5244e72fa8f916dd8348bd18abf9e5533105b96c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/model.safetensors",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/identity/siglip2-base-patch16-384/model.safetensors",
+      "bytes": 1501968264,
+      "sha256_before": "ed72c0ace85020ae610fc817c2538b9cae5a477b012a50859c60af5b3ad30857"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/preprocessor_config.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/identity/siglip2-base-patch16-384/preprocessor_config.json",
+      "bytes": 394,
+      "sha256_before": "fb2817d3523ca3b666c859f15320c7138416bc38ffc515e2963f78c868c51c90"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/special_tokens_map.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/identity/siglip2-base-patch16-384/special_tokens_map.json",
+      "bytes": 636,
+      "sha256_before": "baec30ea10906f16adb8c18af7a34023002c1746542612b8b41c9f09e1351351"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/tokenizer.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/identity/siglip2-base-patch16-384/tokenizer.json",
+      "bytes": 34363039,
+      "sha256_before": "cb9140fae3ac5122c972d37adf83e1248471a38147ad76f8215c8872c6fd8322"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/tokenizer.model",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/identity/siglip2-base-patch16-384/tokenizer.model",
+      "bytes": 4241003,
+      "sha256_before": "61a7b147390c64585d6c3543dd6fc636906c9af3865a5548f27f31aee1d4c8e2"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/identity/siglip2-base-patch16-384/tokenizer_config.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/identity/siglip2-base-patch16-384/tokenizer_config.json",
+      "bytes": 47164,
+      "sha256_before": "14afe629fe4959b9e0d51e1852b8d9f7ad074f90a1a7125a4fcdd17f06e78fc8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/person/yolo26l.pt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/person/yolo26l.pt",
+      "bytes": 53211173,
+      "sha256_before": "9fe3c544f2b19bebad7ea41e76d7ad3d88b7c2f10d11d24430c5311f6b32db26"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/person/yolo26s.pt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/person/yolo26s.pt",
+      "bytes": 20422725,
+      "sha256_before": "646f8bc3fe0a656803d95c294f7852321748cb29d13466a1af8862e2db384a1b"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/pose/yolo26n-pose.pt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/pose/yolo26n-pose.pt",
+      "bytes": 7878574,
+      "sha256_before": "eb3bb8268828aeaf515cec23a4bfafd793944a86fe9af94ba7823609c14522a9"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 1/models/release/fasdd_smoke_yolo26s.pt",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/01_가중치_영상/models/release/fasdd_smoke_yolo26s.pt",
+      "bytes": 20328773,
+      "sha256_before": "c7fa38e55551550e4e6de961a2a947d3e4f6c7e8f7797506bae1cfed5c821dcc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 prd/ARCHITECTURE.md",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/02_감시_PRD_사전실험/ARCHITECTURE.md",
+      "bytes": 35748,
+      "sha256_before": "bc5ee160c7ad387d8d0b8107c321b96726e86d19cd2d65d15d87ec2830bc67ff"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 prd/PRD.md",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/02_감시_PRD_사전실험/PRD.md",
+      "bytes": 17693,
+      "sha256_before": "a8f58a7e297d72482e2133c8fa6ab837749c01e0757ee5409d666884c9e6d644"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 prd/PREWORK.md",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/02_감시_PRD_사전실험/PREWORK.md",
+      "bytes": 37134,
+      "sha256_before": "6ff8f98cf3ad378dfb7ec1f4422948c8088d0d03efbc6566f5a0df65b378fa8a"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 prd/WEIGHTS.manifest.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/02_감시_PRD_사전실험/WEIGHTS.manifest.json",
+      "bytes": 16997,
+      "sha256_before": "55db31e7ef899f5186ac3b5c7b5373632caefd07ff838762affd75311dc4b9bb"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 prd/documentation_audit.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/02_감시_PRD_사전실험/documentation_audit.json",
+      "bytes": 7504,
+      "sha256_before": "1aa8c8adcc806a725d5da164c560d36032a58cfe12ae5534d9b4c3094d008187"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 prd/relocation_audit.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/02_감시_PRD_사전실험/relocation_audit.json",
+      "bytes": 4966,
+      "sha256_before": "7d38f458d827a2b3bbe6d5bb1ad3aeddee6c5650fa709122860e55aa5553fcd2"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/CHEMICAL_PPE_PAGE_PRD_20261009.docx",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/CHEMICAL_PPE_PAGE_PRD_20261009.docx",
+      "bytes": 97041,
+      "sha256_before": "8860a9ad20c8a51ebad15cdab81756f6e2850d295e4723a16b8aaae28f01d86c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/baseline_snapshot.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/baseline_snapshot.json",
+      "bytes": 1846,
+      "sha256_before": "57a6c7dcae39d499e45d04a3eb4a730930df7d5f0c970133733cd963240e6d3f"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/build_page_prd.py",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/build_page_prd.py",
+      "bytes": 18514,
+      "sha256_before": "b0d136ac12cbbaabbf74d5b6b2f6abb3e80c12b03d62e2a4d25752de9d114012"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/document_validation.json",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/document_validation.json",
+      "bytes": 306,
+      "sha256_before": "f633b603f828aec3229567be1ff2d85460ed6780ae991d2b719e93587821e18a"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/docx_layout.py",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/docx_layout.py",
+      "bytes": 6145,
+      "sha256_before": "66c91f228a7c5edd5c5b9b0682aec18f48fcd0c42e49b753ab84e88c3672b2f2"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/page_architecture.png",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/page_architecture.png",
+      "bytes": 54737,
+      "sha256_before": "61fcca136394d17211fa0be79973db428b5c2d32370d5924fac9cc986feacc4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/page_rendered/CHEMICAL_PPE_PAGE_PRD_20261009.pdf",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/page_rendered/CHEMICAL_PPE_PAGE_PRD_20261009.pdf",
+      "bytes": 433199,
+      "sha256_before": "b588ab503035e350f508ea8d5e15fae255547ff78ea821f7868943a75b929331"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/page_rendered/page-1.png",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/page_rendered/page-1.png",
+      "bytes": 298644,
+      "sha256_before": "485bd7b8b9c0c1058d4abe3c4fd4258b25885ccd6954c539e8f7d6775e5ca131"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/page_rendered/page-2.png",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/page_rendered/page-2.png",
+      "bytes": 316792,
+      "sha256_before": "252e22e6d8891f8dfd39a16653bf617e137fe2e9b5bfc6608c4c8a89f4e2c705"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/page_rendered/page-3.png",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/page_rendered/page-3.png",
+      "bytes": 288769,
+      "sha256_before": "44d57c416c99ef515ccd84473306c6ed16a6dba9b25a04da471df9a8948ff7d9"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/page_rendered/page-4.png",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/page_rendered/page-4.png",
+      "bytes": 306284,
+      "sha256_before": "2d4829ad0631569ef6e355d5230a5071f7faf5fcdb39b780e8d77c1c631dcaf3"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/page_rendered/page-5.png",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/page_rendered/page-5.png",
+      "bytes": 277974,
+      "sha256_before": "8778c182b935ef0005950dc2da52323a018b3106843a33c379234c31ea20cb86"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/해커톤 준비물 PRD/page_rendered/page-6.png",
+      "current_path": "/home/giwon/Downloads/해커톤 본선/사전 구현 범위/03_화학보호복_페이지_PRD/page_rendered/page-6.png",
+      "bytes": 279230,
+      "sha256_before": "ba366b5ac216f296a47ee2b817f94a07817c613697c80a04a1b64d2c7b8bd2a4"
+    }
+  ]
+}

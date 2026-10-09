@@ -1,0 +1,12 @@
+[youtube] Extracting URL: https://www.youtube.com/watch?v=OZBIneicPBk
+[youtube] OZBIneicPBk: Downloading webpage
+[youtube] OZBIneicPBk: Downloading visionos player API JSON
+[youtube] OZBIneicPBk: Downloading m3u8 information
+[info] OZBIneicPBk: Downloading 1 format(s): 788+251
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/cuernavaca_unotv_20260806.f788.mp4
+[download] Download completed
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/cuernavaca_unotv_20260806.f251.webm
+[download] Download completed
+[Merger] Merging formats into "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/cuernavaca_unotv_20260806.mp4"
+Deleting original file /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/cuernavaca_unotv_20260806.f251.webm (pass -k to keep)
+Deleting original file /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/14_쿠에르나바카/cuernavaca_unotv_20260806.f788.mp4 (pass -k to keep)

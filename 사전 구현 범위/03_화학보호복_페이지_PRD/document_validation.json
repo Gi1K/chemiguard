@@ -1,0 +1,17 @@
+{
+  "scope": "kit-catalog page only",
+  "docx": "CHEMICAL_PPE_PAGE_PRD_20261009.docx",
+  "pages": 6,
+  "visually_inspected_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "source_files_changed_since_snapshot": [],
+  "runtime_changes": false,
+  "model_calls": 0,
+  "deployment_performed": false
+}

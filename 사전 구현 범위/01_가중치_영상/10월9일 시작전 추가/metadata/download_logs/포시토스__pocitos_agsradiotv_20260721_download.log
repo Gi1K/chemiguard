@@ -1,0 +1,12 @@
+[youtube] Extracting URL: https://www.youtube.com/watch?v=f6jN28dD2HA
+[youtube] f6jN28dD2HA: Downloading webpage
+[youtube] f6jN28dD2HA: Downloading visionos player API JSON
+[youtube] f6jN28dD2HA: Downloading m3u8 information
+[info] f6jN28dD2HA: Downloading 1 format(s): 243+251-3
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_agsradiotv_20260721.f243.webm
+[download] Download completed
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_agsradiotv_20260721.f251-3.webm
+[download] Download completed
+[Merger] Merging formats into "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_agsradiotv_20260721.mp4"
+Deleting original file /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_agsradiotv_20260721.f243.webm (pass -k to keep)
+Deleting original file /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_agsradiotv_20260721.f251-3.webm (pass -k to keep)

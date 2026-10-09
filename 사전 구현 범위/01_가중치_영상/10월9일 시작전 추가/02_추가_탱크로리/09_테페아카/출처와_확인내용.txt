@@ -1,0 +1,12 @@
+테페아카
+상태: 영상 확보
+확인 내용: N+ 방송본. 원거리 누출운과 방송 자막이 있음.
+
+영상 파일:
+  tepeaca_nmas_20260816.mp4
+
+출처:
+https://www.nmas.com.mx/puebla/seguridad/accidentes/fuga-de-gas-en-pipa-genera-densa-nube-y-alarma-en-tepeaca-puebla/
+https://tkx.mp.lura.live/rest/v2/mcp/video/1580404/master.m3u8?anvack=D7xyKLzOp0JHoIwNS7oKVgID6aJEQveO&eud=UNCm6h3DllNiat2gvgt%2FxI%2Bm4RI3cBabrR8kYW1kako0uZ4s%2FmtBb2Zz2AbsaCs7yiiK9NWC9wr3eQXYw9pjZg%3D%3D
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

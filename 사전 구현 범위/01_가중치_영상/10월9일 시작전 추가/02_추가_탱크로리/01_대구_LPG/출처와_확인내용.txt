@@ -1,0 +1,16 @@
+대구_LPG
+상태: 영상 확보
+확인 내용: TV조선의 폭발 2분 전 가스 누출 보도 및 뉴스핌의 폭발 CCTV 게시본. 2014년 대구 화학물질 오주입 사고와 구분.
+
+영상 파일:
+  daegu_lpg_newspim_20221116.mp4
+  daegu_lpg_tvchosun_cctv.mp4
+
+출처:
+https://imnews.imbc.com/replay/2022/nwdesk/article/6428073_35744.html
+https://tv.kakao.com/v/433588777
+https://www.newspim.com/news/view/20221116001081
+https://www.youtube.com/watch?v=BqYtJIpo1h8
+https://www.youtube.com/watch?v=fE2S9cNgL0E
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

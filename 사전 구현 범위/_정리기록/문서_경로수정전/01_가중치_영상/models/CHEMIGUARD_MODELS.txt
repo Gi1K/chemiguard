@@ -1,0 +1,17 @@
+ChemiGuard PRD 권장 가중치 — 2026-10-09
+
+기본
+- person/yolo26l.pt : 사람 검출
+- pose/yolo26n-pose.pt : 관절·몸통 crop
+- identity/siglip2-base-patch16-384/ : 제품 외형 참고 검색. 폴더의 8파일을 함께 이동
+- release/fasdd_smoke_yolo26s.pt : native smoke, 가시적 연무·분출 의심
+
+예비
+- person/yolo26s.pt : 사람 검출 부하 대안
+
+위 12파일: 1,642,465,396 bytes (약 1.64 GB). 이동 후 SHA256 일치 확인.
+Luna는 외부 API이며 ByteTrack도 별도 가중치가 필요 없음.
+기존 models/fasdd_yolo26s_leak_best.pt는 기존 준비물로 보존했으며, 새 PRD의 선택 파일은 release/fasdd_smoke_yolo26s.pt임.
+출처·라이선스 확인 상태: ../metadata/chemiguard_weights_20261009.manifest.json
+PRD: ../../해커톤 준비물 prd/PRD.md
+이번 정리는 파일 이동과 무결성 확인이며 모델 실행 시험이 아님.

@@ -1,0 +1,115 @@
+{
+  "checkpoint": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/weights/best_leak.pt",
+  "checkpoint_sha256": "e9c45758842dcb72072ee4090c967b88452e32e1e48b36071711911fde0c6a2f",
+  "display_names": {
+    "0": "leak"
+  },
+  "trained_class": "smoke",
+  "settings": {
+    "imgsz": 960,
+    "confidence": 0.25,
+    "batch": 16,
+    "every_frame": true
+  },
+  "limitations": "Display name only was changed. Edited external videos have no ground truth; first boxes and counts are not accuracy or physical alarm delay. Not used for training or tuning.",
+  "videos": {
+    "receiver_valve": {
+      "source": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/04_nh3_receiver_valve.mp4",
+      "source_sha256": "3c52f34d900f0dbf523d28c7996a3c8c5713cbbd5fb99f8ec955571e606db438",
+      "fps": 29.953,
+      "width": 640,
+      "height": 360,
+      "expected_frames": 653,
+      "detection_frames": 292,
+      "first_detection": {
+        "frame": 361,
+        "video_seconds": 12.052215137048043,
+        "boxes": [
+          {
+            "xyxy": [
+              160.9041748046875,
+              199.08297729492188,
+              236.85354614257812,
+              273.0263671875
+            ],
+            "confidence": 0.4029637575149536,
+            "class_id": 0,
+            "label": "leak"
+          }
+        ]
+      },
+      "highest_confidence_detection": {
+        "frame": 587,
+        "video_seconds": 19.5973692117651,
+        "confidence": 0.9372934699058533
+      },
+      "images": {
+        "t0": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_t0.jpg",
+        "t8.7": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_t8.7.jpg",
+        "t12": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_t12.jpg",
+        "first_detection": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_first_detection.jpg",
+        "highest_confidence": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_highest_confidence.jpg",
+        "t14": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_t14.jpg",
+        "t18": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_t18.jpg"
+      },
+      "total_frames": 653,
+      "predictions": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_predictions.json",
+      "annotated_video": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_leak.mp4",
+      "elapsed_seconds": 6.600344271981157
+    },
+    "elk_grove_full": {
+      "source": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/AqPOAPiH0Sk.mp4",
+      "source_sha256": "4214bc56b19651fdacd5e4b7fc89e0b038187c5f64e7595a6afe1a07adfb195c",
+      "fps": 24.0,
+      "width": 528,
+      "height": 360,
+      "expected_frames": 8262,
+      "detection_frames": 3902,
+      "first_detection": {
+        "frame": 3065,
+        "video_seconds": 127.70833333333333,
+        "boxes": [
+          {
+            "xyxy": [
+              239.9245147705078,
+              155.4080352783203,
+              337.6880798339844,
+              230.6302947998047
+            ],
+            "confidence": 0.26028671860694885,
+            "class_id": 0,
+            "label": "leak"
+          }
+        ]
+      },
+      "highest_confidence_detection": {
+        "frame": 6540,
+        "video_seconds": 272.5,
+        "confidence": 0.9223362803459167
+      },
+      "images": {
+        "t0": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t0.jpg",
+        "t8": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t8.jpg",
+        "t16": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t16.jpg",
+        "t32": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t32.jpg",
+        "t40": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t40.jpg",
+        "t64": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t64.jpg",
+        "t100": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t100.jpg",
+        "first_detection": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_first_detection.jpg",
+        "highest_confidence": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_highest_confidence.jpg",
+        "t128": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t128.jpg",
+        "t160": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t160.jpg",
+        "t230": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t230.jpg",
+        "t250": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t250.jpg",
+        "t270": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t270.jpg",
+        "t290": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t290.jpg",
+        "t335": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_t335.jpg"
+      },
+      "total_frames": 8262,
+      "predictions": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_predictions.json",
+      "annotated_video": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_leak.mp4",
+      "elapsed_seconds": 67.97783529898152
+    }
+  },
+  "completed_at": "2026-10-08T14:12:11.206246+00:00"
+}

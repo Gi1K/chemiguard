@@ -1,0 +1,12 @@
+[youtube] Extracting URL: https://www.youtube.com/watch?v=fYRVQfdFHZ0
+[youtube] fYRVQfdFHZ0: Downloading webpage
+[youtube] fYRVQfdFHZ0: Downloading visionos player API JSON
+[youtube] fYRVQfdFHZ0: Downloading m3u8 information
+[info] fYRVQfdFHZ0: Downloading 1 format(s): 244+251
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/minnesota_nurse_tank_20121031.f244.webm
+[download] Download completed
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/minnesota_nurse_tank_20121031.f251.webm
+[download] Download completed
+[Merger] Merging formats into "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/minnesota_nurse_tank_20121031.mp4"
+Deleting original file /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/minnesota_nurse_tank_20121031.f251.webm (pass -k to keep)
+Deleting original file /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/03_모의훈련_다른시설/05_미네소타_암모니아/minnesota_nurse_tank_20121031.f244.webm (pass -k to keep)

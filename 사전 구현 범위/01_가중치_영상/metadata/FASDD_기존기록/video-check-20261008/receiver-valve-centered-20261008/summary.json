@@ -1,0 +1,62 @@
+{
+  "checkpoint": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/weights/best_leak.pt",
+  "checkpoint_sha256": "e9c45758842dcb72072ee4090c967b88452e32e1e48b36071711911fde0c6a2f",
+  "display_names": {
+    "0": "leak"
+  },
+  "trained_class": "smoke",
+  "settings": {
+    "imgsz": 960,
+    "confidence": 0.25,
+    "batch": 16,
+    "every_frame": true
+  },
+  "limitations": "Display name only was changed. Edited external videos have no ground truth; first boxes and counts are not accuracy or physical alarm delay. Not used for training or tuning.",
+  "videos": {
+    "receiver_valve_centered": {
+      "source": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered.mp4",
+      "source_sha256": "e0e51d7cbabc6f2d187bde8969c21a270e13be4b7cbb3edf95b2612c946d42c3",
+      "fps": 29.953,
+      "width": 448,
+      "height": 360,
+      "expected_frames": 653,
+      "detection_frames": 292,
+      "first_detection": {
+        "frame": 361,
+        "video_seconds": 12.052215137048043,
+        "boxes": [
+          {
+            "xyxy": [
+              65.651123046875,
+              196.91944885253906,
+              139.9350128173828,
+              272.4026794433594
+            ],
+            "confidence": 0.5235906839370728,
+            "class_id": 0,
+            "label": "leak"
+          }
+        ]
+      },
+      "highest_confidence_detection": {
+        "frame": 590,
+        "video_seconds": 19.697526124261344,
+        "confidence": 0.9284183382987976
+      },
+      "images": {
+        "t0": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_t0.jpg",
+        "t8.7": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_t8.7.jpg",
+        "t12": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_t12.jpg",
+        "first_detection": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_first_detection.jpg",
+        "highest_confidence": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_highest_confidence.jpg",
+        "t14": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_t14.jpg",
+        "t18": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_t18.jpg"
+      },
+      "total_frames": 653,
+      "predictions": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_predictions.json",
+      "annotated_video": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_leak.mp4",
+      "elapsed_seconds": 6.7302056540502235
+    }
+  },
+  "completed_at": "2026-10-08T14:31:43.333389+00:00"
+}

@@ -1,0 +1,4 @@
+WARNING: The program functionality for this site has been marked as broken, and will probably not work.
+[NDTV] Extracting URL: https://www.ndtv.com/video/nashik-gas-leak-video-watch-exact-moment-of-nashik-hospital-oxygen-lea...-left-24-dead-583764
+[NDTV] 583764: Downloading webpage
+ERROR: [NDTV] 583764: Unable to extract video filename; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U

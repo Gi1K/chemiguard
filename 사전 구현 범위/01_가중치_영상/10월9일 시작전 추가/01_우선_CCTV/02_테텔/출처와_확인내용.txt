@@ -1,0 +1,12 @@
+테텔
+상태: 영상 확보
+확인 내용: 385 Grados 공개 게시본. 휴대폰 화면을 재촬영한 형태이며, 전체 구간의 기존 BBox 여부는 확정하지 않음.
+
+영상 파일:
+  tetel_385grados_20260401.mp4
+
+출처:
+https://www.aztecapuebla.com/noticias/video-momento-fuga-gas-en-el-fraccionamiento-arcos-del-tetel-tlaxcala/
+https://www.facebook.com/reel/1757232198587288/
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

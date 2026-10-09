@@ -1,0 +1,970 @@
+[
+  {
+    "source_id": "iOcGOilqYeU",
+    "title": "암모니아 리시버 밸브 작업",
+    "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU",
+    "case_folder": "01_암모니아 리시버 밸브 작업__iOcGOilqYeU",
+    "videos": [
+      "00_최신편집_데모/receiver_valve_centered.mp4",
+      "00_최신편집_데모/receiver_valve_centered_leak.mp4",
+      "01_암모니아_원본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/iOcGOilqYeU.mp4",
+      "02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve.mp4",
+      "02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/ammonia_receiver_valve_operation.mp4",
+      "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve_smoke.mp4",
+      "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_leak.mp4",
+      "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_wall_crop_leak.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/04_nh3_receiver_valve.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/04_nh3_receiver_valve.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/04_nh3_receiver_valve.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/04_nh3_receiver_valve.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/04_nh3_receiver_valve.mp4",
+      "04_이전모델_비교/tank-transfer-20261004/ammonia_receiver_valve_operation_annotated.mp4",
+      "05_이전편집본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_left_wall_removed.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 4,
+          "id": "nh3_receiver_valve",
+          "name_ko": "암모니아 리시버 밸브 작업",
+          "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU",
+          "youtube_id": "iOcGOilqYeU",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_receiver_valve_operation.mp4",
+          "extraction_start_seconds": 0,
+          "requested_duration_seconds": 21.8,
+          "source_start_seconds": 0,
+          "onset_status_ko": "밸브 조작 → 첫 분출",
+          "review_note_ko": "게시자는 탱크 비우기 작업으로 설명. 주입 장면이 아님. 장소·날짜 미확인. 원 게시자의 자막 포함.",
+          "material": "Ammonia",
+          "material_verification": "publisher only",
+          "scene_ko": "고정 리시버 밸브·배출 작업",
+          "incident_evidence_url": null,
+          "preview_seconds": 14,
+          "copy_prepared_clip": true,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/04_nh3_receiver_valve.mp4",
+          "actual_duration_seconds": 21.800821,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 640,
+            "height": 360
+          },
+          "file_size_bytes": 1193210
+        }
+      },
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/selected_clips.json",
+        "item": {
+          "id": "ammonia_receiver_valve_operation",
+          "name_ko": "암모니아 리시버 밸브 작업 중 방출",
+          "incident_date": null,
+          "material": "Ammonia (publisher description)",
+          "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU",
+          "scope": "Fixed receiver maintenance/emptying operation, not filling",
+          "onset_status": "visible_onset_confirmed",
+          "approx_onset_in_clip_seconds": [
+            11,
+            12
+          ],
+          "source_id": "iOcGOilqYeU",
+          "start": 0,
+          "duration": 21.8,
+          "note": "Publisher describes improper evacuation. Place/date unverified. Visible white jet after valve operation.",
+          "source_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/iOcGOilqYeU.mp4",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_receiver_valve_operation.mp4",
+          "actual_duration_seconds": 21.800821
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/iOcGOilqYeU.info.json"
+    ],
+    "existing_notes": [
+      "밸브 조작 → 첫 분출",
+      "visible_onset_confirmed"
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "AqPOAPiH0Sk",
+    "title": "Elk Grove 냉동 설비실 · 2017",
+    "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk",
+    "case_folder": "02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk",
+    "videos": [
+      "01_암모니아_원본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/AqPOAPiH0Sk.mp4",
+      "02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/08_elk_grove_nh3.mp4",
+      "02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_worker_entry_source27s_54s.mp4",
+      "03_FASDD_탐지결과/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_full_leak.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/08_elk_grove_nh3.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/08_elk_grove_nh3.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/08_elk_grove_nh3.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/08_elk_grove_nh3.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/08_elk_grove_nh3.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 8,
+          "id": "elk_grove_nh3",
+          "name_ko": "Elk Grove 냉동 설비실 · 2017",
+          "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk",
+          "youtube_id": "AqPOAPiH0Sk",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/AqPOAPiH0Sk.mp4",
+          "extraction_start_seconds": 85,
+          "requested_duration_seconds": 38,
+          "source_start_seconds": 85,
+          "onset_status_ko": "약한 누출 → 구름 증가 · 시간 편집",
+          "review_note_ko": "공개 영상에서 CCTV 시계가 건너뜀. 정상·방출 장면을 볼 수 있으나 연속적인 첫 누출 지연 측정에는 부적합. 장소·물질은 게시자 설명.",
+          "material": "Ammonia",
+          "material_verification": "publisher only",
+          "scene_ko": "고정 냉동 설비실",
+          "incident_evidence_url": null,
+          "preview_seconds": 30,
+          "copy_prepared_clip": false,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/08_elk_grove_nh3.mp4",
+          "actual_duration_seconds": 38.0,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 528,
+            "height": 360
+          },
+          "file_size_bytes": 594917
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/AqPOAPiH0Sk.info.json"
+    ],
+    "existing_notes": [
+      "약한 누출 → 구름 증가 · 시간 편집"
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "NPEcJhbOMWA",
+    "title": "암모니아 압력용기 파열",
+    "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA",
+    "case_folder": "03_암모니아 압력용기 파열__NPEcJhbOMWA",
+    "videos": [
+      "01_암모니아_원본/03_암모니아 압력용기 파열__NPEcJhbOMWA/NPEcJhbOMWA.mp4",
+      "02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel.mp4",
+      "02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/ammonia_pressure_vessel_failure.mp4",
+      "03_FASDD_탐지결과/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel_smoke.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/03_nh3_pressure_vessel.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/03_nh3_pressure_vessel.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/03_nh3_pressure_vessel.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/03_nh3_pressure_vessel.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/03_nh3_pressure_vessel.mp4",
+      "04_이전모델_비교/tank-transfer-20261004/ammonia_pressure_vessel_failure_annotated.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 3,
+          "id": "nh3_pressure_vessel",
+          "name_ko": "암모니아 압력용기 파열",
+          "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA",
+          "youtube_id": "NPEcJhbOMWA",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_pressure_vessel_failure.mp4",
+          "extraction_start_seconds": 0,
+          "requested_duration_seconds": 17,
+          "source_start_seconds": 0,
+          "onset_status_ko": "파열 전 → 첫 구름",
+          "review_note_ko": "시작 후 약 1초 이내 방출. 물질명은 게시자 설명이며 장소·날짜·용기 역할 미확인.",
+          "material": "Ammonia",
+          "material_verification": "publisher only",
+          "scene_ko": "냉동 설비 압력용기",
+          "incident_evidence_url": null,
+          "preview_seconds": 3,
+          "copy_prepared_clip": true,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/03_nh3_pressure_vessel.mp4",
+          "actual_duration_seconds": 17.032126,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 854,
+            "height": 400
+          },
+          "file_size_bytes": 1281298
+        }
+      },
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/selected_clips.json",
+        "item": {
+          "id": "ammonia_pressure_vessel_failure",
+          "name_ko": "암모니아 압력용기 파열 CCTV",
+          "incident_date": null,
+          "material": "Ammonia (publisher description)",
+          "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA",
+          "scope": "Fixed refrigeration pressure vessel; exact process role not established",
+          "onset_status": "visible_onset_confirmed",
+          "approx_onset_in_clip_seconds": [
+            0.5,
+            1
+          ],
+          "source_id": "NPEcJhbOMWA",
+          "start": 0,
+          "duration": 17,
+          "note": "Location, incident date, inventory and exact vessel role not independently verified. Video starts less than one second before first visible cloud.",
+          "source_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/NPEcJhbOMWA.mp4",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_pressure_vessel_failure.mp4",
+          "actual_duration_seconds": 17.032126
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/NPEcJhbOMWA.info.json"
+    ],
+    "existing_notes": [
+      "파열 전 → 첫 구름",
+      "visible_onset_confirmed"
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "uBqybTTIvtQ",
+    "title": "냉동 설비실 흰 분출",
+    "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ",
+    "case_folder": "04_냉동 설비실 흰 분출__uBqybTTIvtQ",
+    "videos": [
+      "01_암모니아_원본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/uBqybTTIvtQ.mp4",
+      "02_암모니아_발췌본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3.mp4",
+      "03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_leak.mp4",
+      "03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_smoke.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/09_refrigeration_nh3.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/09_refrigeration_nh3.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/09_refrigeration_nh3.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/09_refrigeration_nh3.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/09_refrigeration_nh3.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 9,
+          "id": "refrigeration_nh3",
+          "name_ko": "냉동 설비실 흰 분출",
+          "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ",
+          "youtube_id": "uBqybTTIvtQ",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/uBqybTTIvtQ.mp4",
+          "extraction_start_seconds": 0,
+          "requested_duration_seconds": null,
+          "source_start_seconds": 0,
+          "onset_status_ko": "시작부터 방출 중",
+          "review_note_ko": "고정 CCTV의 탱크·배관 주변 흰 분출. 게시자는 암모니아로 설명. 장소 미확인, 화면 날짜는 별도 검증하지 않음.",
+          "material": "Ammonia",
+          "material_verification": "publisher only",
+          "scene_ko": "냉동 설비 탱크·배관",
+          "incident_evidence_url": null,
+          "preview_seconds": 8,
+          "copy_prepared_clip": false,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/09_refrigeration_nh3.mp4",
+          "actual_duration_seconds": 29.349542,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 842,
+            "height": 480
+          },
+          "file_size_bytes": 1651237
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/uBqybTTIvtQ.info.json"
+    ],
+    "existing_notes": [
+      "시작부터 방출 중"
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "hX_h8Hk2q4Q",
+    "title": "2019 NH3 Fertilizer Release 30K",
+    "source_url": "https://www.youtube.com/watch?v=hX_h8Hk2q4Q",
+    "case_folder": "05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q",
+    "videos": [
+      "01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q.mp4",
+      "01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q__ac803cc4.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/hX_h8Hk2q4Q.info.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/hX_h8Hk2q4Q.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "gatCSASaFPw",
+    "title": "8 cylinder Vilter slugged with liquid ammonia 720p",
+    "source_url": "https://www.youtube.com/watch?v=gatCSASaFPw",
+    "case_folder": "06_8 cylinder Vilter slugged with liqu__gatCSASaFPw",
+    "videos": [
+      "01_암모니아_원본/06_8 cylinder Vilter slugged with liqu__gatCSASaFPw/gatCSASaFPw.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/gatCSASaFPw.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "HVnb3Rc7it8",
+    "title": "AMMONIA LEAK",
+    "source_url": "https://www.youtube.com/watch?v=HVnb3Rc7it8",
+    "case_folder": "07_AMMONIA LEAK__HVnb3Rc7it8",
+    "videos": [
+      "01_암모니아_원본/07_AMMONIA LEAK__HVnb3Rc7it8/HVnb3Rc7it8.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/HVnb3Rc7it8.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "n_jLtrs8iWo",
+    "title": "Ammonia Refrigeration Condenser Tube Failure #2",
+    "source_url": "https://www.youtube.com/watch?v=n_jLtrs8iWo",
+    "case_folder": "08_Ammonia Refrigeration Condenser Tub__n_jLtrs8iWo",
+    "videos": [
+      "01_암모니아_원본/08_Ammonia Refrigeration Condenser Tub__n_jLtrs8iWo/n_jLtrs8iWo.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/n_jLtrs8iWo.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "VRlxKCiikL4",
+    "title": "Catastrophic Failure of an Anhydrous Ammonia Receiver 2019",
+    "source_url": "https://www.youtube.com/watch?v=VRlxKCiikL4",
+    "case_folder": "09_Catastrophic Failure of an Anhydrou__VRlxKCiikL4",
+    "videos": [
+      "01_암모니아_원본/09_Catastrophic Failure of an Anhydrou__VRlxKCiikL4/VRlxKCiikL4.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/VRlxKCiikL4.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "tJ_PBcOscoY",
+    "title": "Cold Storage NH3 Explosion and Leak",
+    "source_url": "https://www.youtube.com/watch?v=tJ_PBcOscoY",
+    "case_folder": "10_Cold Storage NH3 Explosion and Leak__tJ_PBcOscoY",
+    "videos": [
+      "01_암모니아_원본/10_Cold Storage NH3 Explosion and Leak__tJ_PBcOscoY/tJ_PBcOscoY.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/tJ_PBcOscoY.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "8QZW0rKM9Aw",
+    "title": "NH3 Catastrophic Pressure Vessel Failure - Refrigeration #3",
+    "source_url": "https://www.youtube.com/watch?v=8QZW0rKM9Aw",
+    "case_folder": "11_NH3 Catastrophic Pressure Vessel Fa__8QZW0rKM9Aw",
+    "videos": [
+      "01_암모니아_원본/11_NH3 Catastrophic Pressure Vessel Fa__8QZW0rKM9Aw/8QZW0rKM9Aw.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/8QZW0rKM9Aw.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "1h3UT_jVDY8",
+    "title": "NH3 Compressed Gas Cylinder Catastrophically Fails",
+    "source_url": "https://www.youtube.com/watch?v=1h3UT_jVDY8",
+    "case_folder": "12_NH3 Compressed Gas Cylinder Catastr__1h3UT_jVDY8",
+    "videos": [
+      "01_암모니아_원본/12_NH3 Compressed Gas Cylinder Catastr__1h3UT_jVDY8/1h3UT_jVDY8.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/1h3UT_jVDY8.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "CUWCrNBzLio",
+    "title": "NH3 Explosion @ ice cream plant fatalities 2014",
+    "source_url": "https://www.youtube.com/watch?v=CUWCrNBzLio",
+    "case_folder": "13_NH3 Explosion @ ice cream plant fat__CUWCrNBzLio",
+    "videos": [
+      "01_암모니아_원본/13_NH3 Explosion @ ice cream plant fat__CUWCrNBzLio/CUWCrNBzLio.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/CUWCrNBzLio.info.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/CUWCrNBzLio.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "4qxowQsJNpg",
+    "title": "NH3 Line Break with COVID Face Mask",
+    "source_url": "https://www.youtube.com/watch?v=4qxowQsJNpg",
+    "case_folder": "14_NH3 Line Break with COVID Face Mask__4qxowQsJNpg",
+    "videos": [
+      "01_암모니아_원본/14_NH3 Line Break with COVID Face Mask__4qxowQsJNpg/4qxowQsJNpg.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/4qxowQsJNpg.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "Hw5vCpmRx6E",
+    "title": "NH3 Purger Safety",
+    "source_url": "https://www.youtube.com/watch?v=Hw5vCpmRx6E",
+    "case_folder": "15_NH3 Purger Safety__Hw5vCpmRx6E",
+    "videos": [
+      "01_암모니아_원본/15_NH3 Purger Safety__Hw5vCpmRx6E/Hw5vCpmRx6E.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/Hw5vCpmRx6E.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "C_v7wwWawPM",
+    "title": "NH3 RV release downward discharge",
+    "source_url": "https://www.youtube.com/watch?v=C_v7wwWawPM",
+    "case_folder": "16_NH3 RV release downward discharge__C_v7wwWawPM",
+    "videos": [
+      "01_암모니아_원본/16_NH3 RV release downward discharge__C_v7wwWawPM/C_v7wwWawPM.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/C_v7wwWawPM.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "hMVPR8_p-QA",
+    "title": "Pipe Inspections matter in NH3 processing",
+    "source_url": "https://www.youtube.com/watch?v=hMVPR8_p-QA",
+    "case_folder": "17_Pipe Inspections matter in NH3 proc__hMVPR8_p-QA",
+    "videos": [
+      "01_암모니아_원본/17_Pipe Inspections matter in NH3 proc__hMVPR8_p-QA/hMVPR8_p-QA.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/hMVPR8_p-QA.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "sNkdAs1e7Cw",
+    "title": "Seward 암모니아 구름 · 2007",
+    "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw",
+    "case_folder": "18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw",
+    "videos": [
+      "01_암모니아_원본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/sNkdAs1e7Cw.mp4",
+      "02_암모니아_발췌본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/13_seward_nh3_cloud.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/13_seward_nh3_cloud.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/13_seward_nh3_cloud.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/13_seward_nh3_cloud.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/13_seward_nh3_cloud.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/13_seward_nh3_cloud.mp4",
+      "06_기타보관영상/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/seward_ammonia.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 13,
+          "id": "seward_nh3_cloud",
+          "name_ko": "Seward 암모니아 구름 · 2007",
+          "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw",
+          "youtube_id": "sNkdAs1e7Cw",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/clips/seward_ammonia_cloud_arrival.mp4",
+          "extraction_start_seconds": 0,
+          "requested_duration_seconds": 60,
+          "source_start_seconds": 110,
+          "onset_status_ko": "깨끗한 화면 → 구름 도착",
+          "review_note_ko": "고정 주차장 CCTV. 누출 원점은 화면 밖이며 구름 도착을 볼 수 있음. 탱크 이송 호스 사고와 관련된 공개 사례이나 첫 누출 시각의 근거는 아님.",
+          "material": "Anhydrous ammonia",
+          "material_verification": "government incident reference",
+          "scene_ko": "이송 설비 인근 주차장",
+          "incident_evidence_url": "https://www.qfes.qld.gov.au/sites/default/files/2021-04/emergency-planning-ammonia-based-refrigeration-systems.pdf",
+          "preview_seconds": 35,
+          "copy_prepared_clip": true,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/13_seward_nh3_cloud.mp4",
+          "actual_duration_seconds": 60.026633,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 320,
+            "height": 240
+          },
+          "file_size_bytes": 959627
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/inputs/youtube/sNkdAs1e7Cw.info.json"
+    ],
+    "existing_notes": [
+      "깨끗한 화면 → 구름 도착"
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "x0vBwzl1Ox4",
+    "title": "Sumykhimprom 암모니아 탱크 손상",
+    "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4",
+    "case_folder": "19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4",
+    "videos": [
+      "01_암모니아_원본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/x0vBwzl1Ox4.mp4",
+      "02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022.mp4",
+      "02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022__d3985735.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "04_이전모델_비교/tank-transfer-20261004/sumykhimprom_ammonia_tank_2022_annotated.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/selected_clips.json",
+        "item": {
+          "id": "sumykhimprom_ammonia_tank_2022",
+          "name_ko": "Sumykhimprom 암모니아 탱크 손상",
+          "incident_date": "2022-03-21",
+          "material": "Ammonia",
+          "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4",
+          "evidence_url": "https://www.ukrinform.net/rubric-ato/3435542-state-emergency-service-accident-at-sumykhimprom-contained.html",
+          "scope": "Fixed ammonia tank at chemical plant damaged by shelling",
+          "onset_status": "release_already_present",
+          "source_id": "x0vBwzl1Ox4",
+          "start": 0,
+          "duration": 25,
+          "note": "Ongoing cloud filmed outside installation; first damage/release not recorded in this clip.",
+          "source_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/x0vBwzl1Ox4.mp4",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/sumykhimprom_ammonia_tank_2022.mp4",
+          "actual_duration_seconds": 25.0
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/x0vBwzl1Ox4.info.json"
+    ],
+    "existing_notes": [
+      "release_already_present"
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "Eq5bHxbsgdU",
+    "title": "weatherford_ammonia",
+    "source_url": "https://www.youtube.com/watch?v=Eq5bHxbsgdU",
+    "case_folder": "20_weatherford_ammonia__Eq5bHxbsgdU",
+    "videos": [
+      "01_암모니아_원본/20_weatherford_ammonia__Eq5bHxbsgdU/Eq5bHxbsgdU.mp4",
+      "02_암모니아_발췌본/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia_release.mp4",
+      "06_기타보관영상/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia.mp4"
+    ],
+    "existing_material_and_scene_records": [],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/gas-candidates-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/gas-candidates-20261004/inputs/youtube/Eq5bHxbsgdU.info.json"
+    ],
+    "existing_notes": [],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "13_DYJS5mKY",
+    "title": "상하이 냉동공장 배관 사고 · 2013",
+    "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY",
+    "case_folder": "21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY",
+    "videos": [
+      "01_암모니아_원본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/13_DYJS5mKY.mp4",
+      "02_암모니아_발췌본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/05_shanghai_nh3.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/05_shanghai_nh3.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/05_shanghai_nh3.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/05_shanghai_nh3.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/05_shanghai_nh3.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/05_shanghai_nh3.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 5,
+          "id": "shanghai_nh3",
+          "name_ko": "상하이 냉동공장 배관 사고 · 2013",
+          "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY",
+          "youtube_id": "13_DYJS5mKY",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/shanghai_ammonia_2013_onset.mp4",
+          "extraction_start_seconds": 0,
+          "requested_duration_seconds": 30,
+          "source_start_seconds": 0,
+          "onset_status_ko": "정상 작업 → 첫 흰 안개",
+          "review_note_ko": "고정 작업장 CCTV 재게시 영상. CCTV 날짜·시간과 공식 사고 설명을 대조한 사례.",
+          "material": "Ammonia",
+          "material_verification": "incident source and CCTV timestamp",
+          "scene_ko": "냉동공장 암모니아 배관",
+          "incident_evidence_url": "https://www.shanghai.gov.cn/nw39224/20200821/0001-39224_36933.html",
+          "preview_seconds": 12,
+          "copy_prepared_clip": true,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/05_shanghai_nh3.mp4",
+          "actual_duration_seconds": 30.0,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 854,
+            "height": 480
+          },
+          "file_size_bytes": 991686
+        }
+      },
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/selected_clips.json",
+        "item": {
+          "id": "shanghai_ammonia_2013",
+          "name_ko": "상하이 냉동공장 암모니아 배관 사고",
+          "incident_date": "2013-08-31",
+          "material": "Ammonia",
+          "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY",
+          "incident_source_url": "https://www.shanghai.gov.cn/nw39224/20200821/0001-39224_36933.html",
+          "publisher": "JUAN JUAN (CCTV repost)",
+          "note": "Normal work area, camera shake, first white haze. CCTV clock corresponds to official pipe-cap failure at 10:50:15; video publisher is a repost.",
+          "source_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/13_DYJS5mKY.mp4",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/shanghai_ammonia_2013_onset.mp4",
+          "source_start_seconds": 0,
+          "requested_duration_seconds": 30,
+          "approx_first_visible_release_in_clip_seconds": [
+            5,
+            7
+          ],
+          "actual_duration_seconds": 30.0,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 854,
+            "height": 480
+          }
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/13_DYJS5mKY.info.json"
+    ],
+    "existing_notes": [
+      "정상 작업 → 첫 흰 안개",
+      "Normal work area, camera shake, first white haze. CCTV clock corresponds to official pipe-cap failure at 10:50:15; video publisher is a repost."
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "Ve8c9h0-dbc",
+    "title": "암모니아 탱크 설비 안전밸브 방출",
+    "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc",
+    "case_folder": "22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc",
+    "videos": [
+      "01_암모니아_원본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/Ve8c9h0-dbc.mp4",
+      "02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge.mp4",
+      "02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge__4ff1bd33.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "04_이전모델_비교/tank-transfer-20261004/ammonia_tank_relief_discharge_annotated.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/selected_clips.json",
+        "item": {
+          "id": "ammonia_tank_relief_discharge",
+          "name_ko": "암모니아 탱크 설비 안전밸브 방출",
+          "incident_date": null,
+          "material": "Ammonia (publisher title)",
+          "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc",
+          "scope": "Fixed receiver/tank installation and relief outlet",
+          "onset_status": "release_already_present",
+          "source_id": "Ve8c9h0-dbc",
+          "start": 0,
+          "duration": 17,
+          "note": "Visible white discharge. Whether accidental pressure event or intentional venting is unverified; not an established filling accident.",
+          "source_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/Ve8c9h0-dbc.mp4",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_tank_relief_discharge.mp4",
+          "actual_duration_seconds": 17.0
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/Ve8c9h0-dbc.info.json"
+    ],
+    "existing_notes": [
+      "release_already_present"
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "4ZXBwQ7Fx4c",
+    "title": "야간 암모니아 탱크 조작",
+    "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c",
+    "case_folder": "23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c",
+    "videos": [
+      "01_암모니아_원본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/4ZXBwQ7Fx4c.mp4",
+      "02_암모니아_발췌본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/10_night_nh3_tank.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/10_night_nh3_tank.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/10_night_nh3_tank.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/10_night_nh3_tank.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/10_night_nh3_tank.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/10_night_nh3_tank.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 10,
+          "id": "night_nh3_tank",
+          "name_ko": "야간 암모니아 탱크 조작",
+          "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c",
+          "youtube_id": "4ZXBwQ7Fx4c",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/night_ammonia_tank_2012_onset.mp4",
+          "extraction_start_seconds": 0,
+          "requested_duration_seconds": 30,
+          "source_start_seconds": 8,
+          "onset_status_ko": "탱크 조작 → 첫 분출",
+          "review_note_ko": "야간 CCTV. 게시자는 암모니아 절취 시도로 설명. 장소 미확인, CCTV 표시 날짜만으로 사고 날짜를 확정하지 않음.",
+          "material": "Anhydrous ammonia",
+          "material_verification": "publisher only",
+          "scene_ko": "고정 암모니아 탱크",
+          "incident_evidence_url": null,
+          "preview_seconds": 10,
+          "copy_prepared_clip": true,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/10_night_nh3_tank.mp4",
+          "actual_duration_seconds": 30.0,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 352,
+            "height": 256
+          },
+          "file_size_bytes": 860526
+        }
+      },
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/selected_clips.json",
+        "item": {
+          "id": "night_ammonia_tank_2012",
+          "name_ko": "야간 암모니아 탱크 조작 중 분출",
+          "incident_date": null,
+          "cctv_displayed_date": "2012-09-22",
+          "material": "Anhydrous ammonia, per publisher",
+          "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c",
+          "publisher": "Supercircuits",
+          "note": "Tank manipulation followed by first white jet. Publisher identifies ammonia theft; location unverified. Date is from CCTV overlay, not independently established.",
+          "source_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/4ZXBwQ7Fx4c.mp4",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/night_ammonia_tank_2012_onset.mp4",
+          "source_start_seconds": 8,
+          "requested_duration_seconds": 30,
+          "approx_first_visible_release_in_clip_seconds": [
+            4,
+            5
+          ],
+          "actual_duration_seconds": 30.0,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 352,
+            "height": 256
+          }
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/4ZXBwQ7Fx4c.info.json"
+    ],
+    "existing_notes": [
+      "탱크 조작 → 첫 분출",
+      "Tank manipulation followed by first white jet. Publisher identifies ammonia theft; location unverified. Date is from CCTV overlay, not independently established."
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "y_s8VpQczB8",
+    "title": "중국 공장 흰 분출",
+    "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8",
+    "case_folder": "24_중국 공장 흰 분출__y_s8VpQczB8",
+    "videos": [
+      "01_암모니아_원본/24_중국 공장 흰 분출__y_s8VpQczB8/y_s8VpQczB8.mp4",
+      "02_암모니아_발췌본/24_중국 공장 흰 분출__y_s8VpQczB8/07_china_factory_nh3.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/07_china_factory_nh3.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/07_china_factory_nh3.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/07_china_factory_nh3.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/07_china_factory_nh3.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/07_china_factory_nh3.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 7,
+          "id": "china_factory_nh3",
+          "name_ko": "중국 공장 흰 분출",
+          "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8",
+          "youtube_id": "y_s8VpQczB8",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/y_s8VpQczB8.mp4",
+          "extraction_start_seconds": 0,
+          "requested_duration_seconds": null,
+          "source_start_seconds": 0,
+          "onset_status_ko": "정상 설비 → 첫 분출",
+          "review_note_ko": "CCTV 모니터 재촬영. 게시자는 암모니아로 설명. 제목의 2022년과 CCTV에 표시된 2021년이 달라 사고 날짜 미확인.",
+          "material": "Ammonia",
+          "material_verification": "publisher only; date conflict",
+          "scene_ko": "공장 설비실",
+          "incident_evidence_url": null,
+          "preview_seconds": 8,
+          "copy_prepared_clip": false,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/07_china_factory_nh3.mp4",
+          "actual_duration_seconds": 14.6575,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 426,
+            "height": 242
+          },
+          "file_size_bytes": 493713
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/y_s8VpQczB8.info.json",
+      "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/y_s8VpQczB8.info.json"
+    ],
+    "existing_notes": [
+      "정상 설비 → 첫 분출"
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  },
+  {
+    "source_id": "65M1EurDQV0",
+    "title": "파라과이 Ochsi 공장 · 2024",
+    "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0",
+    "case_folder": "25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0",
+    "videos": [
+      "01_암모니아_원본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/65M1EurDQV0.mp4",
+      "02_암모니아_발췌본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/06_ochsi_nh3.mp4",
+      "04_이전모델_비교/aihub-leak-yolo26-20261006/06_ochsi_nh3.mp4",
+      "04_이전모델_비교/all-gas-leak-20261007/06_ochsi_nh3.mp4",
+      "04_이전모델_비교/full-gas-yolo26s-20261007/06_ochsi_nh3.mp4",
+      "04_이전모델_비교/gas-only-yolo26-20261007/06_ochsi_nh3.mp4",
+      "04_이전모델_비교/leak-transfer-20261006/06_ochsi_nh3.mp4",
+      "06_기타보관영상/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/ochsi_ammonia.mp4"
+    ],
+    "existing_material_and_scene_records": [
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+        "item": {
+          "number": 6,
+          "id": "ochsi_nh3",
+          "name_ko": "파라과이 Ochsi 공장 · 2024",
+          "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0",
+          "youtube_id": "65M1EurDQV0",
+          "prepared_input_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/ochsi_ammonia_2024_onset.mp4",
+          "extraction_start_seconds": 0,
+          "requested_duration_seconds": 17,
+          "source_start_seconds": 26,
+          "onset_status_ko": "통로 정상 → 흰 구름 유입",
+          "review_note_ko": "뉴스가 CCTV 모니터를 촬영. 왼쪽 가장자리에서 구름이 시작되며 용기·밸브 자체는 보이지 않음. 주입 작업 여부 미확인.",
+          "material": "Ammonia",
+          "material_verification": "incident source",
+          "scene_ko": "공장 냉동 설비 인근 통로",
+          "incident_evidence_url": "https://www.abc.com.py/nacionales/2024/02/08/video-asi-fue-la-explosion-y-fatal-fuga-de-amoniaco-en-fabrica-de-ochsi/?outputType=amp",
+          "preview_seconds": 8,
+          "copy_prepared_clip": true,
+          "camera_type": "fixed CCTV; published/reposted footage, sometimes monitor recording",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/06_ochsi_nh3.mp4",
+          "actual_duration_seconds": 17.0,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 1280,
+            "height": 720
+          },
+          "file_size_bytes": 2610094
+        }
+      },
+      {
+        "record": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/selected_clips.json",
+        "item": {
+          "id": "ochsi_ammonia_2024",
+          "name_ko": "파라과이 Ochsi 암모니아 누출",
+          "incident_date": "2024-02-07",
+          "material": "Ammonia",
+          "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0",
+          "incident_source_url": "https://www.abc.com.py/nacionales/2024/02/08/video-asi-fue-la-explosion-y-fatal-fuga-de-amoniaco-en-fabrica-de-ochsi/?outputType=amp",
+          "publisher": "ABC Paraguay",
+          "note": "Passageway before sudden cloud from left edge. CCTV monitor in news report; not confirmed chemical transfer operation.",
+          "source_existing_clip": "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/clips/ochsi_ammonia_before_release.mp4",
+          "clip_file": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/ochsi_ammonia_2024_onset.mp4",
+          "source_start_seconds": 26,
+          "requested_duration_seconds": 17,
+          "approx_first_visible_release_in_clip_seconds": [
+            4.5,
+            5
+          ],
+          "actual_duration_seconds": 17.0,
+          "video_stream": {
+            "codec_name": "h264",
+            "width": 1280,
+            "height": 720
+          }
+        }
+      }
+    ],
+    "existing_source_record_paths": [
+      "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/selected_clips.json",
+      "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/inputs/youtube/65M1EurDQV0.info.json"
+    ],
+    "existing_notes": [
+      "통로 정상 → 흰 구름 유입",
+      "Passageway before sudden cloud from left edge. CCTV monitor in news report; not confirmed chemical transfer operation."
+    ],
+    "video_usage_rights": "Not established by the local source catalog; included for local review/demo, not training."
+  }
+]

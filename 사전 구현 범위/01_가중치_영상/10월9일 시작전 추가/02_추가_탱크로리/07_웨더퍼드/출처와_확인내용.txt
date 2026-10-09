@@ -1,0 +1,12 @@
+웨더퍼드
+상태: 영상 확보
+확인 내용: 기존 로컬 KJRH 게시본과 암모니아 방출 클립을 같은 사건으로 묶음.
+
+영상 파일:
+  Eq5bHxbsgdU.mp4
+  weatherford_ammonia_release.mp4
+
+출처:
+https://www.youtube.com/watch?v=Eq5bHxbsgdU
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

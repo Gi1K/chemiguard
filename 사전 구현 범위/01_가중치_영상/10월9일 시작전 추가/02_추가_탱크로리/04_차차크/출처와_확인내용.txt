@@ -1,0 +1,12 @@
+차차크
+상태: 영상 확보
+확인 내용: Kurir/RINA 공개 항공 촬영본. 탱크로리와 흰 누출운이 보이나 고정 CCTV가 아님.
+
+영상 파일:
+  cacak_20220810.mp4
+
+출처:
+https://www.kurir.rs/vesti/srbija/3988299/drama-kod-cacka-pukla-plinska-cev-preti-izlivanje-gasa-policija-blokirala-sve-ulice-u-toku-evakuacija-gradjana
+https://static.am.mediaoutcast.com/storage/nQJnjJkO/nQJnjJkO/2022/8/10/DJrgjXe1/index.mp4
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

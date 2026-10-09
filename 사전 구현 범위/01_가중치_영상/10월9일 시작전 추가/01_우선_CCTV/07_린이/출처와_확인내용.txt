@@ -1,0 +1,12 @@
+린이
+상태: 영상 확보
+확인 내용: 베이징일보에 전재된 사고 해설 영상. 야간 CCTV와 다중 시점 비교, 도식이 섞임. 단독 CCTV 원본은 아님.
+
+영상 파일:
+  linyi_20170605_cctv.mp4
+
+출처:
+https://xinwen.bjd.com.cn/content/s685de463e4b0bd64e2e02650.html
+https://static.bjd.com.cn/dams-res-external/editing/video/202506/27/rjzitsedidhbpeoeoop7x28o/rjzitsedidhbpeoeoop7x28o.mp4
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

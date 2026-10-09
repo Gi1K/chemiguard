@@ -1,0 +1,14 @@
+구미_불산
+상태: 영상 확보
+확인 내용: 기존 로컬 KTV 방송본, YouTube 게시본, CCTV 시작 구간을 복사. 기존 원본은 보존.
+
+영상 파일:
+  ktv_442065_source.mp4
+  gumi_hf_digital_cctv_onset.mp4
+  80odRsKUXvc.mp4
+
+출처:
+https://m.ktv.go.kr/content/view?content_id=442065
+https://www.youtube.com/watch?v=80odRsKUXvc
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

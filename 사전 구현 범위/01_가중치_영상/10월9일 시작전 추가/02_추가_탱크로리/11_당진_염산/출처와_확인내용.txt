@@ -1,0 +1,12 @@
+당진_염산
+상태: 영상 확보
+확인 내용: YTN 방송본. 차량·현장 대응을 포함하며 가시적 기상 누출의 시작 시점은 확정하지 않음.
+
+영상 파일:
+  dangjin_ytn_20260503.mp4
+
+출처:
+https://m.ytn.co.kr/news_view.php?key=202605031734145216&s_mcd=0115
+https://www.youtube.com/watch?v=usAAudcguSw
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

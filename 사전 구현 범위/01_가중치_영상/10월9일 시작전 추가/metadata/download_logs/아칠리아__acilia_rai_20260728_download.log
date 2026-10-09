@@ -1,0 +1,5 @@
+[RaiNews] Extracting URL: https://www.rainews.it/tgr/lazio/articoli/2026/07/perdita-di-gpl-lungo-via-di-acilia-strada-chius...b5-6f9861b05e8a.html
+[RaiNews] 069e022b-7720-41ff-a8b5-6f9861b05e8a: Downloading webpage
+[RaiNews] 069e022b-7720-41ff-a8b5-6f9861b05e8a: Downloading video JSON
+WARNING: [RaiNews] 069e022b-7720-41ff-a8b5-6f9861b05e8a: Failed to parse JSON: Expecting value in '': line 1 column 1 (char 0)
+WARNING: Extractor RaiNews returned nothing; please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U

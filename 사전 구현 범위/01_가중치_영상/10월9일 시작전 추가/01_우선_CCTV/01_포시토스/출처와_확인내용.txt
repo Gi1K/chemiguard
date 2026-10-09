@@ -1,0 +1,14 @@
+포시토스
+상태: 영상 확보
+확인 내용: Azteca 뉴스본과 Ags Radio TV 현장 인터뷰를 확보. 요청한 누출 시작 고정 CCTV 게시본은 아직 미확보. 뉴스본에는 이미 진행 중인 흰 누출운이 보임.
+
+영상 파일:
+  pocitos_news_20260721.mp4
+  pocitos_agsradiotv_20260721.mp4
+
+출처:
+https://www.aztecamichoacan.com/noticias/bomberos-evitan-explosion-una-pipa-gas-lp-abastecimiento-en-aguascalientes/
+https://mdstrm.com/video/6a612db44a890e1b6df2bebf.m3u8
+https://www.youtube.com/watch?v=f6jN28dD2HA
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

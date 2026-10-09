@@ -1,0 +1,12 @@
+[youtube] Extracting URL: https://www.youtube.com/watch?v=usAAudcguSw
+[youtube] usAAudcguSw: Downloading webpage
+[youtube] usAAudcguSw: Downloading visionos player API JSON
+[youtube] usAAudcguSw: Downloading m3u8 information
+[info] usAAudcguSw: Downloading 1 format(s): 398+251
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/dangjin_ytn_20260503.f398.mp4
+[download] Download completed
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/dangjin_ytn_20260503.f251.webm
+[download] Download completed
+[Merger] Merging formats into "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/dangjin_ytn_20260503.mp4"
+Deleting original file /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/dangjin_ytn_20260503.f398.mp4 (pass -k to keep)
+Deleting original file /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/11_당진_염산/dangjin_ytn_20260503.f251.webm (pass -k to keep)

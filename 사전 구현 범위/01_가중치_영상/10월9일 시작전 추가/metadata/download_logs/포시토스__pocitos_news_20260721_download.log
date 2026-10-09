@@ -1,0 +1,11 @@
+[generic] Extracting URL: https://mdstrm.com/video/6a612db44a890e1b6df2bebf.m3u8
+[generic] 6a612db44a890e1b6df2bebf: Downloading webpage
+[generic] 6a612db44a890e1b6df2bebf: Downloading m3u8 information
+[generic] 6a612db44a890e1b6df2bebf: Checking m3u8 live status
+[info] 6a612db44a890e1b6df2bebf: Downloading 1 format(s): 993
+[hlsnative] Downloading m3u8 manifest
+WARNING: Live HLS streams are not supported by the native downloader. If this is a livestream, please add "--downloader ffmpeg --hls-use-mpegts" to your command
+[hlsnative] Total fragments: 12
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_news_20260721.mp4
+[download] Download completed
+[FixupM3u8] Fixing MPEG-TS in MP4 container of "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/01_우선_CCTV/01_포시토스/pocitos_news_20260721.mp4"

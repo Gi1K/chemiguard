@@ -1,0 +1,13 @@
+[generic] Extracting URL: https://tkx.mp.lura.live/rest/v2/mcp/video/1580404/master.m3u8?anvack=D7xyKLzOp0JHoIwNS7oKVgID6aJ...9wr3eQXYw9pjZg%3D%3D
+[generic] master: Downloading webpage
+[redirect] Following redirect to https://dcs-vod.mp.lura.live/vod/p/master.m3u8?encp=LnBYjCITL_UiV8OM95QtRg:dNeQoXIEQVI0qRxyw_Mp1yZFQnePNf-leADolm051TzJpteNvB8n39z9Tqp9MH3WQkPSlep9XyfFf_hUeDomFMu-gRH5q759HtLBQlIu03oso2ACBjFH23f_-ydBjjChvt3gJnjfIMxaD-jFzRxYbKT-z47_cftErPlgaEJnEfDMMTfQpUDIShv6CobBLDnC_N8r0wdfvpXYqix6SxUhtU0OCRSniX3p56uk27kJX5kh8N2Yb7L5FJOQEV_8brv1q4TKwqoGnnqyeF5qAgacW2RHkgTJkbq8IcKY_lMOoFCDlQIW2Iht5RuS6m3aWgV1VkXvF5g6b-_2MmlYuKmXZbtiK6UmCl9mAlFp-xh-xTRYlnfrHActYc36OQcd-fvhCmEW5RflSH2XlJ7BGexjTg&anvtrid=613c224fa566008b7e38e1a21f698454&anvauth=tb=0~te=1791504094~sgn=3a222447c91ea489f7a9e5c695d94f69eff746a799a5c4e10d7fcc4f978e1ede&t=1791504004
+[generic] Extracting URL: https://dcs-vod.mp.lura.live/vod/p/master.m3u8?encp=LnBYjCITL_UiV8OM95QtRg:dNeQoXIEQVI0qRxyw_Mp1y...78e1ede&t=1791504004
+[generic] master: Downloading webpage
+[generic] master: Downloading m3u8 information
+[generic] master: Checking m3u8 live status
+[info] master: Downloading 1 format(s): 2894
+[hlsnative] Downloading m3u8 manifest
+[hlsnative] Total fragments: 6
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/09_테페아카/tepeaca_nmas_20260816.mp4
+[download] Download completed
+[FixupM3u8] Fixing MPEG-TS in MP4 container of "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/09_테페아카/tepeaca_nmas_20260816.mp4"

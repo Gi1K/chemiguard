@@ -1,0 +1,3 @@
+[sky:news] Extracting URL: https://news.sky.com/video/acid-spurts-from-truck-after-chemical-spill-in-manchester-13355055
+[sky:news] 13355055: Downloading webpage
+ERROR: [sky:news] 13355055: Unable to download webpage: HTTP Error 403: Forbidden (caused by <HTTPError 403: Forbidden>)

@@ -1,0 +1,7 @@
+[generic] Extracting URL: https://tv.kakao.com/v/433588777
+[generic] 433588777: Downloading webpage
+[redirect] Following redirect to https://tv.kakao.com/embed/player/cliplink/433588777
+[Kakao] Extracting URL: https://tv.kakao.com/embed/player/cliplink/433588777
+[Kakao] 433588777: Downloading video info
+[Kakao] 433588777: Downloading video URL for profile LOW
+ERROR: [Kakao] 433588777: Unable to download JSON metadata: HTTP Error 422: Unprocessable Entity (caused by <HTTPError 422: Unprocessable Entity>)

@@ -1,0 +1,12 @@
+툭스틀라
+상태: 영상 확보
+확인 내용: N+ 방송본. 정차 차량과 현장 대응을 포함. 가시적 누출 시작 구간은 확보 여부를 확정하지 않음.
+
+영상 파일:
+  tuxtla_nmas_news.mp4
+
+출처:
+https://www.nmas.com.mx/foro-tv/programas/expreso-la-manana/videos/fuga-pipa-gas-causa-desalojo-tuxtla-gutierrez-chiapas/
+https://tkx.mp.lura.live/rest/v2/mcp/video/948604/master.m3u8?anvack=aPVzydj0dJaaipIYtJl15Lh0lWekAB8Z&eud=AtuLko7m7qAkX%2FbdoCqM22Y8I3xYByRsIC3D9mhvL3B%2Fva93PHijSee6FE%2BxFHSiOXy7lSii8sfugqSS6gRTcg%3D%3D
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

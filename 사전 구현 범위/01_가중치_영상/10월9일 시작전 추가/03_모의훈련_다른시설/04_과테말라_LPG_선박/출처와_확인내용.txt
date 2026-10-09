@@ -1,0 +1,16 @@
+과테말라_LPG_선박
+상태: 영상 확보
+확인 내용: La Red 기사에 제공된 동일 선박 사건의 영상 3개를 확보. 서로 다른 사건으로 세지 않음.
+
+영상 파일:
+  guatemala_nice_20260304_angle1.mp4
+  guatemala_nice_20260304_angle2.mp4
+  guatemala_nice_20260304_angle3.mp4
+
+출처:
+https://www.lared1061.com/posts/video-controlan-fuga-de-gas-licuado-en-buque-noruego-en-puerto-quetzal
+http://cms.lared1061.com/wp-content/uploads/2026/03/WhatsApp-Video-2026-03-04-at-20.39.16.mp4
+https://cms.lared1061.com/wp-content/uploads/2026/03/WhatsApp-Video-2026-03-04-at-20.39.15-1.mp4
+https://cms.lared1061.com/wp-content/uploads/2026/03/WhatsApp-Video-2026-03-04-at-20.39.15.mp4
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

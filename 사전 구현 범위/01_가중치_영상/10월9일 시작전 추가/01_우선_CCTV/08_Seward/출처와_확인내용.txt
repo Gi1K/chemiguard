@@ -1,0 +1,12 @@
+Seward
+상태: 영상 확보
+확인 내용: 기존 로컬 원본과 누출운 도착 클립을 같은 사건 폴더로 묶음.
+
+영상 파일:
+  sNkdAs1e7Cw.mp4
+  seward_ammonia_cloud_arrival.mp4
+
+출처:
+https://www.youtube.com/watch?v=sNkdAs1e7Cw
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

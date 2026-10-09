@@ -1,0 +1,13 @@
+[generic] Extracting URL: https://tkx.mp.lura.live/rest/v2/mcp/video/948604/master.m3u8?anvack=aPVzydj0dJaaipIYtJl15Lh0lWek...8sfugqSS6gRTcg%3D%3D
+[generic] master: Downloading webpage
+[redirect] Following redirect to https://dcs-vod.mp.lura.live/vod/p/master.m3u8?encp=YYz952DEWSZsSX4R70M9hA:hrtxsei7TPbrn4dLRp7KljC6Y_JB6CrL9czZC6OMrSWWPBFCd8r6duW2xXBawI_B1YU9dk87psWGMPJmWfDQWbjWBdqt-TIXq9NLfncXbVO2AD3xyRk1HHR1Lc0bm2kdt03GGb0jtfLrnsaTLK9TRny8fVwQy_u4VNeyWved7TI0MvZAByH1cPwycHqMOrUufWVvIRiNJA7M4xkDBOmXzuSA0vMm04jQVg4hgaR1_XdBHbk55idxqPVDvbq9f0RbZGoud4fdZne_ixQo7ZlAQh_i7CISsVrrr0vkjBCU3nLQQanBrIPSVJ8msmDCfNb05lFJ9Q418XLRQH8uFQEqcoSHhA2iQlVMSkW-coCHDwS5-lJNK26tCeKKmth4aI0TtrXMgk9mnw2UWFcptVYjWt3eIbXAdPi6oElRZ10pJ7sBnh25puEFSvCXKsSIkL2Zdk0MyjsuSWQQHX3D3vTyWudlY3tvPihY8OoYO5qY-y8bKG_biz239zDUjsstTMYUDamSrei6GGfZjmqzoipk2m1S1GEud1N0g76CCSic7ehJ5iyeKqdQPJBck_zJfVKdH9IyFmcNr7kxG5QoqfVE9-T8cJa7FRF0gOVo3DXuTKNd566QLvvR5sYjG4vJPKfbtKeSyVH0BseWMBy7B67BUsrXJtPDYq_XL9_cMxxztd7esqvnL59EHzKbjzdqAaGOdUikkI_nhO-AtVe1kLkZ8b3JldwQ2A1zdXTsnEG5un8Pnc9Z44SliOaUhnWKyBXoZZeyid1O1Iuc8erapN9QfrIEa6SrC5rWy-1W5Z1rNno&anvtrid=24a220f19b3ece2c2929f5314a46ba09&anvauth=tb=0~te=1791504155~sgn=8ecd3194b86f75ddcadda324ff27c914a96caaae238202bf919ffd75ded652d3&t=1791504065
+[generic] Extracting URL: https://dcs-vod.mp.lura.live/vod/p/master.m3u8?encp=YYz952DEWSZsSX4R70M9hA:hrtxsei7TPbrn4dLRp7Klj...ed652d3&t=1791504065
+[generic] master: Downloading webpage
+[generic] master: Downloading m3u8 information
+[generic] master: Checking m3u8 live status
+[info] master: Downloading 1 format(s): 2666
+[hlsnative] Downloading m3u8 manifest
+[hlsnative] Total fragments: 5
+[download] Destination: /home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/12_툭스틀라/tuxtla_nmas_news.mp4
+[download] Download completed
+[FixupM3u8] Fixing MPEG-TS in MP4 container of "/home/giwon/Downloads/해커톤 준비물 1/10월9일 시작전 추가/02_추가_탱크로리/12_툭스틀라/tuxtla_nmas_news.mp4"

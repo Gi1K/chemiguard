@@ -1,0 +1,2296 @@
+{
+  "created_at": "2026-10-08T15:02:23.128105+00:00",
+  "scope": "Existing locally downloaded ammonia-related sources, video variants and the FASDD leak-display checkpoint.",
+  "copy_policy": "Actual copies; originals preserved; byte-identical video duplicates merged by SHA256.",
+  "counts": {
+    "source_urls": 25,
+    "selected_original_video_paths": 124,
+    "copied_unique_videos": 115,
+    "merged_duplicate_paths": 9,
+    "video_groups": {
+      "demo": 2,
+      "original": 26,
+      "clip": 17,
+      "fasdd": 7,
+      "comparison": 59,
+      "older_edit": 1,
+      "unclassified": 3
+    },
+    "checkpoints": 1
+  },
+  "files": [
+    {
+      "path": "00_최신편집_데모/receiver_valve_centered.mp4",
+      "kind": "video",
+      "bytes": 1077979,
+      "sha256": "e0e51d7cbabc6f2d187bde8969c21a270e13be4b7cbb3edf95b2612c946d42c3",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered.mp4"
+      ],
+      "group": "demo",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "00_최신편집_데모/receiver_valve_centered_leak.mp4",
+      "kind": "video",
+      "bytes": 1240119,
+      "sha256": "625ef7fc8eea700a551238d00f292237adc24390d57cf4c6e579e2313741de93",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_leak.mp4"
+      ],
+      "group": "demo",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "01_암모니아_원본/12_NH3 Compressed Gas Cylinder Catastr__1h3UT_jVDY8/1h3UT_jVDY8.mp4",
+      "kind": "video",
+      "bytes": 893739,
+      "sha256": "8583812dc5a9669d8c3e73effd63c1b78aea09448aa63f2565f9198f11bca670",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/1h3UT_jVDY8.mp4"
+      ],
+      "group": "original",
+      "source_id": "1h3UT_jVDY8",
+      "source_url": "https://www.youtube.com/watch?v=1h3UT_jVDY8"
+    },
+    {
+      "path": "01_암모니아_원본/13_NH3 Explosion @ ice cream plant fat__CUWCrNBzLio/CUWCrNBzLio.mp4",
+      "kind": "video",
+      "bytes": 3878317,
+      "sha256": "ec1c98725904148d0c4cb223811a259bb089dbc69196c3d66d7048a4324fb56c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/CUWCrNBzLio.mp4",
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/CUWCrNBzLio.mp4"
+      ],
+      "group": "original",
+      "source_id": "CUWCrNBzLio",
+      "source_url": "https://www.youtube.com/watch?v=CUWCrNBzLio"
+    },
+    {
+      "path": "01_암모니아_원본/15_NH3 Purger Safety__Hw5vCpmRx6E/Hw5vCpmRx6E.mp4",
+      "kind": "video",
+      "bytes": 3854548,
+      "sha256": "15708ec6dd5c5327869c497c98ac803e8c9a49c3cc015149c451323eb5088114",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/Hw5vCpmRx6E.mp4"
+      ],
+      "group": "original",
+      "source_id": "Hw5vCpmRx6E",
+      "source_url": "https://www.youtube.com/watch?v=Hw5vCpmRx6E"
+    },
+    {
+      "path": "01_암모니아_원본/06_8 cylinder Vilter slugged with liqu__gatCSASaFPw/gatCSASaFPw.mp4",
+      "kind": "video",
+      "bytes": 1185472,
+      "sha256": "355428d61cd049139877e6f4ef67d204465114a127f00e5de6b4bc1e60768822",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/gatCSASaFPw.mp4"
+      ],
+      "group": "original",
+      "source_id": "gatCSASaFPw",
+      "source_url": "https://www.youtube.com/watch?v=gatCSASaFPw"
+    },
+    {
+      "path": "01_암모니아_원본/17_Pipe Inspections matter in NH3 proc__hMVPR8_p-QA/hMVPR8_p-QA.mp4",
+      "kind": "video",
+      "bytes": 1291757,
+      "sha256": "1002b35ef7283989fe5840660a8a5e0503711ac18873e22c4c02934ffecd253c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/hMVPR8_p-QA.mp4"
+      ],
+      "group": "original",
+      "source_id": "hMVPR8_p-QA",
+      "source_url": "https://www.youtube.com/watch?v=hMVPR8_p-QA"
+    },
+    {
+      "path": "01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q.mp4",
+      "kind": "video",
+      "bytes": 8967345,
+      "sha256": "7ff0ab0c9686b1973294b1aef45a4600c044d4858eaa2384cb032f0eb2e6a535",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/hX_h8Hk2q4Q.mp4"
+      ],
+      "group": "original",
+      "source_id": "hX_h8Hk2q4Q",
+      "source_url": "https://www.youtube.com/watch?v=hX_h8Hk2q4Q"
+    },
+    {
+      "path": "01_암모니아_원본/08_Ammonia Refrigeration Condenser Tub__n_jLtrs8iWo/n_jLtrs8iWo.mp4",
+      "kind": "video",
+      "bytes": 692293,
+      "sha256": "f8f7027ea88f418f4e804e59789142b4ea1656509a4ff7b2c392b6bc9e4a12bc",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/n_jLtrs8iWo.mp4"
+      ],
+      "group": "original",
+      "source_id": "n_jLtrs8iWo",
+      "source_url": "https://www.youtube.com/watch?v=n_jLtrs8iWo"
+    },
+    {
+      "path": "01_암모니아_원본/24_중국 공장 흰 분출__y_s8VpQczB8/y_s8VpQczB8.mp4",
+      "kind": "video",
+      "bytes": 529767,
+      "sha256": "61e71f974b0db58df3678ef9404e4bc70f28d82289024996ae6d05176b733d5e",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/y_s8VpQczB8.mp4",
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/y_s8VpQczB8.mp4"
+      ],
+      "group": "original",
+      "source_id": "y_s8VpQczB8",
+      "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8"
+    },
+    {
+      "path": "01_암모니아_원본/20_weatherford_ammonia__Eq5bHxbsgdU/Eq5bHxbsgdU.mp4",
+      "kind": "video",
+      "bytes": 6968779,
+      "sha256": "35101377bba3972a804ed2d9696d0c6271d3b6f128326172330584b203a8abce",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-candidates-20261004/inputs/youtube/Eq5bHxbsgdU.mp4"
+      ],
+      "group": "original",
+      "source_id": "Eq5bHxbsgdU",
+      "source_url": "https://www.youtube.com/watch?v=Eq5bHxbsgdU"
+    },
+    {
+      "path": "01_암모니아_원본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/13_DYJS5mKY.mp4",
+      "kind": "video",
+      "bytes": 9564852,
+      "sha256": "d81614d9afa9f7159d878b16235c657144a8e7625a2c7ada378a84c024458f13",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/13_DYJS5mKY.mp4"
+      ],
+      "group": "original",
+      "source_id": "13_DYJS5mKY",
+      "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY"
+    },
+    {
+      "path": "01_암모니아_원본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/4ZXBwQ7Fx4c.mp4",
+      "kind": "video",
+      "bytes": 3058350,
+      "sha256": "f038ac0749144c8a5d69d7a2a5ca711ac434eae1a9a36fffa339e0b2fb9c7f9c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/4ZXBwQ7Fx4c.mp4"
+      ],
+      "group": "original",
+      "source_id": "4ZXBwQ7Fx4c",
+      "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c"
+    },
+    {
+      "path": "01_암모니아_원본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/AqPOAPiH0Sk.mp4",
+      "kind": "video",
+      "bytes": 11282477,
+      "sha256": "4214bc56b19651fdacd5e4b7fc89e0b038187c5f64e7595a6afe1a07adfb195c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/AqPOAPiH0Sk.mp4"
+      ],
+      "group": "original",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "01_암모니아_원본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/65M1EurDQV0.mp4",
+      "kind": "video",
+      "bytes": 36269819,
+      "sha256": "3c247bc33cf203442985362fba676164b89b401045d645c6134d4596e8de1058",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/inputs/youtube/65M1EurDQV0.mp4"
+      ],
+      "group": "original",
+      "source_id": "65M1EurDQV0",
+      "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0"
+    },
+    {
+      "path": "01_암모니아_원본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/sNkdAs1e7Cw.mp4",
+      "kind": "video",
+      "bytes": 7133982,
+      "sha256": "bfa1a67ce1a53474e8a161577e18d750ec365a7d4137eeecfd59e83c556f63e7",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/inputs/youtube/sNkdAs1e7Cw.mp4"
+      ],
+      "group": "original",
+      "source_id": "sNkdAs1e7Cw",
+      "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw"
+    },
+    {
+      "path": "01_암모니아_원본/14_NH3 Line Break with COVID Face Mask__4qxowQsJNpg/4qxowQsJNpg.mp4",
+      "kind": "video",
+      "bytes": 9399679,
+      "sha256": "a28b10fe75b7072a94cb1f9572aa8a3268f8efe5939b73f65e8b3ad306675905",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/4qxowQsJNpg.mp4"
+      ],
+      "group": "original",
+      "source_id": "4qxowQsJNpg",
+      "source_url": "https://www.youtube.com/watch?v=4qxowQsJNpg"
+    },
+    {
+      "path": "01_암모니아_원본/11_NH3 Catastrophic Pressure Vessel Fa__8QZW0rKM9Aw/8QZW0rKM9Aw.mp4",
+      "kind": "video",
+      "bytes": 2539324,
+      "sha256": "7f69890282385142896cab3129b6f7fdc52fe0d84fe2bb9f3040bdb02aeb85b8",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/8QZW0rKM9Aw.mp4"
+      ],
+      "group": "original",
+      "source_id": "8QZW0rKM9Aw",
+      "source_url": "https://www.youtube.com/watch?v=8QZW0rKM9Aw"
+    },
+    {
+      "path": "01_암모니아_원본/16_NH3 RV release downward discharge__C_v7wwWawPM/C_v7wwWawPM.mp4",
+      "kind": "video",
+      "bytes": 803787,
+      "sha256": "83ba9b4c2e85625a4285ba50bb2528f91393305bdf4788360a49d38a144c60f1",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/C_v7wwWawPM.mp4"
+      ],
+      "group": "original",
+      "source_id": "C_v7wwWawPM",
+      "source_url": "https://www.youtube.com/watch?v=C_v7wwWawPM"
+    },
+    {
+      "path": "01_암모니아_원본/07_AMMONIA LEAK__HVnb3Rc7it8/HVnb3Rc7it8.mp4",
+      "kind": "video",
+      "bytes": 4239149,
+      "sha256": "c9c9755a0c9d4e6e526589f87d2d291ce81a5208f3bc2b51fb6a7fe0929fd615",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/HVnb3Rc7it8.mp4"
+      ],
+      "group": "original",
+      "source_id": "HVnb3Rc7it8",
+      "source_url": "https://www.youtube.com/watch?v=HVnb3Rc7it8"
+    },
+    {
+      "path": "01_암모니아_원본/03_암모니아 압력용기 파열__NPEcJhbOMWA/NPEcJhbOMWA.mp4",
+      "kind": "video",
+      "bytes": 1440167,
+      "sha256": "c7859d5113a35f71df74d0530cb2b59869b205265076b10246d8cd6dd9ca6ef1",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/NPEcJhbOMWA.mp4"
+      ],
+      "group": "original",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "01_암모니아_원본/09_Catastrophic Failure of an Anhydrou__VRlxKCiikL4/VRlxKCiikL4.mp4",
+      "kind": "video",
+      "bytes": 5640039,
+      "sha256": "4359c2498cffbd0d77b48cf533bd5e45ecbaa904f0165610c45a180b780afbf7",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/VRlxKCiikL4.mp4"
+      ],
+      "group": "original",
+      "source_id": "VRlxKCiikL4",
+      "source_url": "https://www.youtube.com/watch?v=VRlxKCiikL4"
+    },
+    {
+      "path": "01_암모니아_원본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/Ve8c9h0-dbc.mp4",
+      "kind": "video",
+      "bytes": 1487543,
+      "sha256": "dc73d0324372275b7f27e042853038f9b97e3c57e055dfa426fa85e710dd41b9",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/Ve8c9h0-dbc.mp4"
+      ],
+      "group": "original",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q__ac803cc4.mp4",
+      "kind": "video",
+      "bytes": 2223834,
+      "sha256": "ac803cc48750fd28179ac54ab8fa47b1c26cf82f22485bc85afeb6ff5d6dcc6b",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/hX_h8Hk2q4Q.mp4"
+      ],
+      "group": "original",
+      "source_id": "hX_h8Hk2q4Q",
+      "source_url": "https://www.youtube.com/watch?v=hX_h8Hk2q4Q"
+    },
+    {
+      "path": "01_암모니아_원본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/iOcGOilqYeU.mp4",
+      "kind": "video",
+      "bytes": 1369506,
+      "sha256": "34b401598cb3cf14c5a450c077f2e5780a307d6facf7f866aca79725f5e967fb",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/iOcGOilqYeU.mp4"
+      ],
+      "group": "original",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "01_암모니아_원본/10_Cold Storage NH3 Explosion and Leak__tJ_PBcOscoY/tJ_PBcOscoY.mp4",
+      "kind": "video",
+      "bytes": 3945021,
+      "sha256": "fa890bcfbcbece3e32b10d0d32870ef159e602e467097466b606bb8a5ee26716",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/tJ_PBcOscoY.mp4"
+      ],
+      "group": "original",
+      "source_id": "tJ_PBcOscoY",
+      "source_url": "https://www.youtube.com/watch?v=tJ_PBcOscoY"
+    },
+    {
+      "path": "01_암모니아_원본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/uBqybTTIvtQ.mp4",
+      "kind": "video",
+      "bytes": 1699518,
+      "sha256": "a77a537806fce160ea2e236c277471fc0aee2f3354988073467eaef258db39d4",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/uBqybTTIvtQ.mp4"
+      ],
+      "group": "original",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "01_암모니아_원본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/x0vBwzl1Ox4.mp4",
+      "kind": "video",
+      "bytes": 985322,
+      "sha256": "3db3232ed75534d4d412066c418f41efb263c55d6d4619f2eee8b2a51139117c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/x0vBwzl1Ox4.mp4"
+      ],
+      "group": "original",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel.mp4",
+      "kind": "video",
+      "bytes": 1281298,
+      "sha256": "60dd98e78c2433c0026b1f08b592b22681311e55c2004b211c21bbdcded1477f",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/03_nh3_pressure_vessel.mp4",
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_pressure_vessel_failure.mp4"
+      ],
+      "group": "clip",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve.mp4",
+      "kind": "video",
+      "bytes": 1193210,
+      "sha256": "3c52f34d900f0dbf523d28c7996a3c8c5713cbbd5fb99f8ec955571e606db438",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/04_nh3_receiver_valve.mp4",
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_receiver_valve_operation.mp4"
+      ],
+      "group": "clip",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "02_암모니아_발췌본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/05_shanghai_nh3.mp4",
+      "kind": "video",
+      "bytes": 991686,
+      "sha256": "21467930eefa033f76f75f469a52067c575b565e3423064d03b4a781f94056cc",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/05_shanghai_nh3.mp4",
+        "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/shanghai_ammonia_2013_onset.mp4"
+      ],
+      "group": "clip",
+      "source_id": "13_DYJS5mKY",
+      "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY"
+    },
+    {
+      "path": "02_암모니아_발췌본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/06_ochsi_nh3.mp4",
+      "kind": "video",
+      "bytes": 2610094,
+      "sha256": "265d41c4f880b1238a4fb8b5eb289c95b48d33b5cc1f5fccd0c621e4b042f83f",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/06_ochsi_nh3.mp4",
+        "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/ochsi_ammonia_2024_onset.mp4",
+        "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/clips/ochsi_ammonia_before_release.mp4"
+      ],
+      "group": "clip",
+      "source_id": "65M1EurDQV0",
+      "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0"
+    },
+    {
+      "path": "02_암모니아_발췌본/24_중국 공장 흰 분출__y_s8VpQczB8/07_china_factory_nh3.mp4",
+      "kind": "video",
+      "bytes": 493713,
+      "sha256": "4b460a987a75d6fca406e0557c780a73a7775ae17c7e6437a945f591574dd1d9",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/07_china_factory_nh3.mp4"
+      ],
+      "group": "clip",
+      "source_id": "y_s8VpQczB8",
+      "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8"
+    },
+    {
+      "path": "02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/08_elk_grove_nh3.mp4",
+      "kind": "video",
+      "bytes": 594917,
+      "sha256": "d48d1a0f851bedea133be870763aeb962a5bfadf334be855bf0504c5769fc8b0",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/08_elk_grove_nh3.mp4"
+      ],
+      "group": "clip",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "02_암모니아_발췌본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3.mp4",
+      "kind": "video",
+      "bytes": 1651237,
+      "sha256": "88086e6fea29257fbc36cb72fe1ec7f56c597f5ed9e187b11e1e7904432e6e69",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/09_refrigeration_nh3.mp4"
+      ],
+      "group": "clip",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "02_암모니아_발췌본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/10_night_nh3_tank.mp4",
+      "kind": "video",
+      "bytes": 860526,
+      "sha256": "6a598e38bd2f428701e3748cc35cb52327ef506597aa0b206589cf72758a428d",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/10_night_nh3_tank.mp4",
+        "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/night_ammonia_tank_2012_onset.mp4"
+      ],
+      "group": "clip",
+      "source_id": "4ZXBwQ7Fx4c",
+      "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c"
+    },
+    {
+      "path": "02_암모니아_발췌본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/13_seward_nh3_cloud.mp4",
+      "kind": "video",
+      "bytes": 959627,
+      "sha256": "76da159a9b8ef26fba09cfe61c1fd29e0b3ea9a5c5e1622db9d07831e4768194",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/13_seward_nh3_cloud.mp4",
+        "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/clips/seward_ammonia_cloud_arrival.mp4"
+      ],
+      "group": "clip",
+      "source_id": "sNkdAs1e7Cw",
+      "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw"
+    },
+    {
+      "path": "02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_worker_entry_source27s_54s.mp4",
+      "kind": "video",
+      "bytes": 475476,
+      "sha256": "28d8b63a5bb93787842bec03f932bacaa5c9057f6bef69d4d714c492a402798d",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/leak-display/elk_grove_worker_entry_source27s_54s.mp4"
+      ],
+      "group": "clip",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "02_암모니아_발췌본/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia_release.mp4",
+      "kind": "video",
+      "bytes": 1575222,
+      "sha256": "018bbca263dc2cd52d814e13d7a7c38f71b0044c4cb37967fb0b1ba4d60f6339",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-candidates-20261004/clips/weatherford_ammonia_release.mp4"
+      ],
+      "group": "clip",
+      "source_id": "Eq5bHxbsgdU",
+      "source_url": "https://www.youtube.com/watch?v=Eq5bHxbsgdU"
+    },
+    {
+      "path": "02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge.mp4",
+      "kind": "video",
+      "bytes": 210892,
+      "sha256": "ae65126cff2bf535bd2fb8169ee992bf70a6da1c32ee8fff90c3448ee6f5bc5c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_tank_relief_discharge.mp4"
+      ],
+      "group": "clip",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022.mp4",
+      "kind": "video",
+      "bytes": 781723,
+      "sha256": "41bdc1736a0e41453bc5b26d872d8e7b40971e42ec84c2865317bfecfba1dbe0",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/sumykhimprom_ammonia_tank_2022.mp4"
+      ],
+      "group": "clip",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/ammonia_pressure_vessel_failure.mp4",
+      "kind": "video",
+      "bytes": 1512022,
+      "sha256": "fa87ee55448d62360fd90fe6ace50b5438673f1c32e0f0de0f8c401c7298fd6b",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/inputs/ammonia_pressure_vessel_failure.mp4"
+      ],
+      "group": "clip",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/ammonia_receiver_valve_operation.mp4",
+      "kind": "video",
+      "bytes": 1238699,
+      "sha256": "39f87ac2040441c82feb75e6439e3f801ca7560f997506ecafde4e3352d64964",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/inputs/ammonia_receiver_valve_operation.mp4"
+      ],
+      "group": "clip",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge__4ff1bd33.mp4",
+      "kind": "video",
+      "bytes": 240637,
+      "sha256": "4ff1bd333a9cf5e6e9ab09daab7a0c83116dbb79de37700b33cee37dde6abc78",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/inputs/ammonia_tank_relief_discharge.mp4"
+      ],
+      "group": "clip",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022__d3985735.mp4",
+      "kind": "video",
+      "bytes": 965918,
+      "sha256": "d3985735d155e78ec3340b97801521ad6bf61818bd7e29ec1c619a76d5e0eaad",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/inputs/sumykhimprom_ammonia_tank_2022.mp4"
+      ],
+      "group": "clip",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "03_FASDD_탐지결과/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel_smoke.mp4",
+      "kind": "video",
+      "bytes": 1290519,
+      "sha256": "ebbaa7d7f2d0b40bc518544495832b206345d06a812edbcb335b86473a8951f8",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/03_nh3_pressure_vessel_smoke.mp4"
+      ],
+      "group": "fasdd",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve_smoke.mp4",
+      "kind": "video",
+      "bytes": 1311611,
+      "sha256": "b94bd656b83efad75b46851b48db494065f5e626ef3a35be1df65b4757bafc9d",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/04_nh3_receiver_valve_smoke.mp4"
+      ],
+      "group": "fasdd",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_smoke.mp4",
+      "kind": "video",
+      "bytes": 1834707,
+      "sha256": "e1dccb184d1546095f4388561a67919e86981eaf7253b63fdd45e754587cfe94",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/09_refrigeration_nh3_smoke.mp4"
+      ],
+      "group": "fasdd",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "03_FASDD_탐지결과/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_full_leak.mp4",
+      "kind": "video",
+      "bytes": 9513798,
+      "sha256": "6371b9a3af9a46889550a8166bf5f6e7893e6a416f14dd459e795e38467acaf7",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_leak.mp4"
+      ],
+      "group": "fasdd",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_leak.mp4",
+      "kind": "video",
+      "bytes": 1617046,
+      "sha256": "b9594b2a1ffec01450d137ad65037efb6b7c5e1d36a1a9ce2187c47074ca43e1",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_leak.mp4"
+      ],
+      "group": "fasdd",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_leak.mp4",
+      "kind": "video",
+      "bytes": 2297943,
+      "sha256": "a84ffd6851915545b3cb910e4e5eaec2a632db4b1758947e2581f4a8885a3e73",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/leak-display/09_refrigeration_nh3_leak.mp4"
+      ],
+      "group": "fasdd",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_wall_crop_leak.mp4",
+      "kind": "video",
+      "bytes": 1404836,
+      "sha256": "6ea66217ebab2487248d3f9415f3a254b56b6cdf346d6d831e6b8858865a423d",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-wall-crop-20261008/receiver_valve_wall_crop_leak.mp4"
+      ],
+      "group": "fasdd",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/03_nh3_pressure_vessel.mp4",
+      "kind": "video",
+      "bytes": 1112776,
+      "sha256": "01041a3be34e38c66d42922a11a62c6cf7a57f70dade1c38c1bbdf78b2340a23",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/03_nh3_pressure_vessel.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/04_nh3_receiver_valve.mp4",
+      "kind": "video",
+      "bytes": 1434965,
+      "sha256": "213afb9c98bb15bd4f1b1df9b6bf9d2640b5282dc9c8a56a6a605fc974062917",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/04_nh3_receiver_valve.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/05_shanghai_nh3.mp4",
+      "kind": "video",
+      "bytes": 1049180,
+      "sha256": "69751a112fcd94ed147ece69ec62fa05d63a687a214857cd77b68884d6092e20",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/05_shanghai_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "13_DYJS5mKY",
+      "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/06_ochsi_nh3.mp4",
+      "kind": "video",
+      "bytes": 832918,
+      "sha256": "a44a3241fb9a180e4e21563063802dfadf6b080e48a50ebcc6b8fb88d4e0a82e",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/06_ochsi_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "65M1EurDQV0",
+      "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/07_china_factory_nh3.mp4",
+      "kind": "video",
+      "bytes": 837406,
+      "sha256": "e263b747c70bb4210fee539baeec3bfdb1a48ce6345b7f7192ca8f7cc4f52a8b",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/07_china_factory_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "y_s8VpQczB8",
+      "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/08_elk_grove_nh3.mp4",
+      "kind": "video",
+      "bytes": 1050770,
+      "sha256": "0694efabf73f13809fb5a5b76b9d26e46393f39f19eae9f88b2a31dcaf737438",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/08_elk_grove_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/09_refrigeration_nh3.mp4",
+      "kind": "video",
+      "bytes": 1310898,
+      "sha256": "137820bd6334498bdf1258770b6de96f66c08358e858b8220aa70bc27bf513c5",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/09_refrigeration_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/10_night_nh3_tank.mp4",
+      "kind": "video",
+      "bytes": 1031892,
+      "sha256": "6fa02cedb83015fab0f6538b25ff61c12a53786806728fc52964420053eba25d",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/10_night_nh3_tank.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "4ZXBwQ7Fx4c",
+      "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/13_seward_nh3_cloud.mp4",
+      "kind": "video",
+      "bytes": 2071953,
+      "sha256": "dcdf66397506339b64d24a20b94d366f0afa7de3fc9f86ecc440a02f805bb754",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/13_seward_nh3_cloud.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "sNkdAs1e7Cw",
+      "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "kind": "video",
+      "bytes": 1443831,
+      "sha256": "ddb20c78ae054dbdddc160fbe7800f26cbfc66df27dbb40d358e7c82e9828d59",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "04_이전모델_비교/aihub-leak-yolo26-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "kind": "video",
+      "bytes": 639633,
+      "sha256": "66d7d8299dea4a58167d4ea98e201cf194c6f6c8279ef8fc5e91c962e42ce74e",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/03_nh3_pressure_vessel.mp4",
+      "kind": "video",
+      "bytes": 1113836,
+      "sha256": "968b6dc0ff592568703af43a6dd26de4273cfbc35687af1a8765c6189c13a620",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/03_nh3_pressure_vessel.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/04_nh3_receiver_valve.mp4",
+      "kind": "video",
+      "bytes": 1464320,
+      "sha256": "90a0256034e2389882448a8474dd04835324279c925d615a1da616dd59c85f28",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/04_nh3_receiver_valve.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/05_shanghai_nh3.mp4",
+      "kind": "video",
+      "bytes": 1093510,
+      "sha256": "101d8ff6a26028fe4824db19eb91703a7ef55563e02a8ee816d58a36d6d1da8e",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/05_shanghai_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "13_DYJS5mKY",
+      "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/06_ochsi_nh3.mp4",
+      "kind": "video",
+      "bytes": 867054,
+      "sha256": "1d80f35d9024b05be08d8b4c6a72a6276448c2a1eb4864f3ecb58c232da098f8",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/06_ochsi_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "65M1EurDQV0",
+      "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/07_china_factory_nh3.mp4",
+      "kind": "video",
+      "bytes": 861081,
+      "sha256": "ef5157e0d10030cf840e0ff939122c64a688fea42d71ddd1f50592941ece9b84",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/07_china_factory_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "y_s8VpQczB8",
+      "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/08_elk_grove_nh3.mp4",
+      "kind": "video",
+      "bytes": 1054586,
+      "sha256": "d8e9e60b64395e0a061eb85a0e0f14e3949b1470c6c5e275c779877e7902bd99",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/08_elk_grove_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/09_refrigeration_nh3.mp4",
+      "kind": "video",
+      "bytes": 1369205,
+      "sha256": "5697b20e7126c5d1c178e8cb16759cd62551d1f9940495ff776531fe0fa61f01",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/09_refrigeration_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/10_night_nh3_tank.mp4",
+      "kind": "video",
+      "bytes": 1040691,
+      "sha256": "0024936732b45d36c832663ba4b05269db1658a8a2e097af19e1efeff028ee27",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/10_night_nh3_tank.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "4ZXBwQ7Fx4c",
+      "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/13_seward_nh3_cloud.mp4",
+      "kind": "video",
+      "bytes": 2078326,
+      "sha256": "156fc41e6c14eed5b0eed2df2c10357f8b27ded11757c953dcd0a7d5139fb8a5",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/13_seward_nh3_cloud.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "sNkdAs1e7Cw",
+      "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "kind": "video",
+      "bytes": 1469438,
+      "sha256": "7e1d3b01eb5e59604548107f23fd061570f60934676623a2da4c3e186eb054f1",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "04_이전모델_비교/all-gas-leak-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "kind": "video",
+      "bytes": 643742,
+      "sha256": "7970c12d9db1982285764408997b5648786e69266ab87fe031b145c7892f7e10",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/03_nh3_pressure_vessel.mp4",
+      "kind": "video",
+      "bytes": 1116205,
+      "sha256": "a4c7933cfb15e00f1164282ddc8ec09cd46eebcb485867b0c10511f036e65ff2",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/03_nh3_pressure_vessel.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/04_nh3_receiver_valve.mp4",
+      "kind": "video",
+      "bytes": 1453802,
+      "sha256": "698da13d10693206d3f3e9f88387a2e049f70d5970d9a8f1e9214f1d8547fdd1",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/04_nh3_receiver_valve.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/05_shanghai_nh3.mp4",
+      "kind": "video",
+      "bytes": 1058749,
+      "sha256": "3acb05e4da999c93c640aa898f9e38af5f1990bc3d36eacdca78533c7bb40620",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/05_shanghai_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "13_DYJS5mKY",
+      "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/06_ochsi_nh3.mp4",
+      "kind": "video",
+      "bytes": 834261,
+      "sha256": "3d7537acc149cbecc17fbbe0974815ed4fe14af3e3d15a2fc25d62d0b9239b9f",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/06_ochsi_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "65M1EurDQV0",
+      "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/07_china_factory_nh3.mp4",
+      "kind": "video",
+      "bytes": 846468,
+      "sha256": "f780006d1f369331573ae42581ba3fd720badeae0d80d225bc2e4ed8b17c0ae5",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/07_china_factory_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "y_s8VpQczB8",
+      "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/08_elk_grove_nh3.mp4",
+      "kind": "video",
+      "bytes": 1053505,
+      "sha256": "e84e9d0d2443a963a94a0d4cd68b6229a3347d9c2a6ebec1ca7c5303a731b36c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/08_elk_grove_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/09_refrigeration_nh3.mp4",
+      "kind": "video",
+      "bytes": 1309187,
+      "sha256": "195b365dc63c555fc9dc75b6bd4a7b17efb4360e5f13b8ea4e2ca07ce2224e97",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/09_refrigeration_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/10_night_nh3_tank.mp4",
+      "kind": "video",
+      "bytes": 1031772,
+      "sha256": "a18900b7a1b3f1389a12e25d32bd995f14feb0d7c0e6d811c8936ad510dce539",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/10_night_nh3_tank.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "4ZXBwQ7Fx4c",
+      "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/13_seward_nh3_cloud.mp4",
+      "kind": "video",
+      "bytes": 2124691,
+      "sha256": "8048766638c718c8c76250868225098dfe0e7fdb7e1af23a922bef76df27c9b9",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/13_seward_nh3_cloud.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "sNkdAs1e7Cw",
+      "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "kind": "video",
+      "bytes": 1424787,
+      "sha256": "1ae6d546d07a3e20f89e78f143944cb179c18e8e2a99038300b08fa673520aa3",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "04_이전모델_비교/full-gas-yolo26s-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "kind": "video",
+      "bytes": 648125,
+      "sha256": "4ca5eb4713577569cccf859e6d39819c8e91d322dab3ec4a183ecd891b3d32aa",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/03_nh3_pressure_vessel.mp4",
+      "kind": "video",
+      "bytes": 1100538,
+      "sha256": "8c4d4aa2495d44e3c19944904316b075fac50e4862bef1079da3c8914d3f3d01",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/03_nh3_pressure_vessel.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/04_nh3_receiver_valve.mp4",
+      "kind": "video",
+      "bytes": 1412092,
+      "sha256": "2aa83b21701c877d1e3ff2cf61891d386487237f392ad6de4adffc23805523e4",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/04_nh3_receiver_valve.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/05_shanghai_nh3.mp4",
+      "kind": "video",
+      "bytes": 1019582,
+      "sha256": "2b1693a86294eb82a84747bf6249bc3c7a5a7fd0bac19951f069ef1a2aebf10f",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/05_shanghai_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "13_DYJS5mKY",
+      "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/06_ochsi_nh3.mp4",
+      "kind": "video",
+      "bytes": 824568,
+      "sha256": "00912e616d83a86f87a39d7cf11c500ed2f230e33a610fc414d19a6ed115902a",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/06_ochsi_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "65M1EurDQV0",
+      "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/07_china_factory_nh3.mp4",
+      "kind": "video",
+      "bytes": 798209,
+      "sha256": "ecd9d211404550b4d6f6a638ca951690e10fa9c34c7deebf8f35a6e028feec22",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/07_china_factory_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "y_s8VpQczB8",
+      "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/08_elk_grove_nh3.mp4",
+      "kind": "video",
+      "bytes": 1028579,
+      "sha256": "e90f9dec936ec5b13d3beaf3a473acd9eebbbfea3bdd73fff83d76d4b390d627",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/08_elk_grove_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/09_refrigeration_nh3.mp4",
+      "kind": "video",
+      "bytes": 1155742,
+      "sha256": "5e01362de9d967d068f816515f4dcd736b442c62a3bbca865bb8fde7848ceb0f",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/09_refrigeration_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/10_night_nh3_tank.mp4",
+      "kind": "video",
+      "bytes": 1014765,
+      "sha256": "ee0b994e414591d853991970d89d7f52bfd1615b4e6e035abe5def1f7deffbbc",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/10_night_nh3_tank.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "4ZXBwQ7Fx4c",
+      "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/13_seward_nh3_cloud.mp4",
+      "kind": "video",
+      "bytes": 1994840,
+      "sha256": "94f347f1801c31ebd3034f4735bae160c816ae0dfbbcb9b8338093a4c9329e6f",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/13_seward_nh3_cloud.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "sNkdAs1e7Cw",
+      "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "kind": "video",
+      "bytes": 1423227,
+      "sha256": "b6f9eca368c25ebc19c4f0485e9b37512ae9d3017628c41d78dd581a91d8f96e",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "04_이전모델_비교/gas-only-yolo26-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "kind": "video",
+      "bytes": 607973,
+      "sha256": "60f5f7977b27282af6c7d7c92e62b76d33caefbe2c871532e7c0a65fb8a2a732",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/03_nh3_pressure_vessel.mp4",
+      "kind": "video",
+      "bytes": 1125189,
+      "sha256": "b54578835b0f212c744891f32715b0403f09585e70af3637e689fec096feca43",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/03_nh3_pressure_vessel.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/04_nh3_receiver_valve.mp4",
+      "kind": "video",
+      "bytes": 1453975,
+      "sha256": "00ee4de6bdd3135a2d4a64c0a1fc20a838a27174981d4c278f2940b83c3f9ca7",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/04_nh3_receiver_valve.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/05_shanghai_nh3.mp4",
+      "kind": "video",
+      "bytes": 1060006,
+      "sha256": "22b818bd31390601eb19d4a6b6ab67508a21702c4b59319cd521382d6e04fb31",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/05_shanghai_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "13_DYJS5mKY",
+      "source_url": "https://www.youtube.com/watch?v=13_DYJS5mKY"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/06_ochsi_nh3.mp4",
+      "kind": "video",
+      "bytes": 848514,
+      "sha256": "020196161b62779d6a9835c10911dc5b4e80001929d3cce6fedee72bd5d96b43",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/06_ochsi_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "65M1EurDQV0",
+      "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/07_china_factory_nh3.mp4",
+      "kind": "video",
+      "bytes": 834946,
+      "sha256": "a0e71b30d17b7d5cd3391e36fd2d82baca2084e31967b059ad7048fc7fbd2a1e",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/07_china_factory_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "y_s8VpQczB8",
+      "source_url": "https://www.youtube.com/watch?v=y_s8VpQczB8"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/08_elk_grove_nh3.mp4",
+      "kind": "video",
+      "bytes": 1052611,
+      "sha256": "c06187146f5390e4548b0d1268109e2e9140df63b36776e5ebdc5c73adc967da",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/08_elk_grove_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "AqPOAPiH0Sk",
+      "source_url": "https://www.youtube.com/watch?v=AqPOAPiH0Sk"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/09_refrigeration_nh3.mp4",
+      "kind": "video",
+      "bytes": 1177689,
+      "sha256": "7d694fb1b971dfa0ed555662c77cd86b904e7f814539d9d8082be95b76495938",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/09_refrigeration_nh3.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "uBqybTTIvtQ",
+      "source_url": "https://www.youtube.com/watch?v=uBqybTTIvtQ"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/10_night_nh3_tank.mp4",
+      "kind": "video",
+      "bytes": 1037711,
+      "sha256": "23231d36f41725005c98be3a344e8bfbe8cbf7c4b04b5a32bb68063b090c8286",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/10_night_nh3_tank.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "4ZXBwQ7Fx4c",
+      "source_url": "https://www.youtube.com/watch?v=4ZXBwQ7Fx4c"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/13_seward_nh3_cloud.mp4",
+      "kind": "video",
+      "bytes": 2081363,
+      "sha256": "8bffb9ac97ea0719f7b669bd47735aef66e15da1ef0cd1bb5b908926277cf74b",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/13_seward_nh3_cloud.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "sNkdAs1e7Cw",
+      "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "kind": "video",
+      "bytes": 1411325,
+      "sha256": "03249aa3af39f206322b9d1204a6c8e099c7d0f08274d047f3dbd230ef1b6ffe",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "04_이전모델_비교/leak-transfer-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "kind": "video",
+      "bytes": 632483,
+      "sha256": "ea738c36b5dcb09a7eff30b83841f8025aa968c16d7286a693d86a681e694444",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "04_이전모델_비교/tank-transfer-20261004/ammonia_pressure_vessel_failure_annotated.mp4",
+      "kind": "video",
+      "bytes": 1629194,
+      "sha256": "b1f750572cb778f5b70669f17eb1ca67ee3e9e10433d689a8c486681f23f70b4",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/results/ammonia_pressure_vessel_failure_annotated.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "NPEcJhbOMWA",
+      "source_url": "https://www.youtube.com/watch?v=NPEcJhbOMWA"
+    },
+    {
+      "path": "04_이전모델_비교/tank-transfer-20261004/ammonia_receiver_valve_operation_annotated.mp4",
+      "kind": "video",
+      "bytes": 1330046,
+      "sha256": "f8f9c6a31b5b2a63bf6ebc0dd37b871820c38ff227a374b2c00b285660c6013b",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/results/ammonia_receiver_valve_operation_annotated.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "04_이전모델_비교/tank-transfer-20261004/ammonia_tank_relief_discharge_annotated.mp4",
+      "kind": "video",
+      "bytes": 279226,
+      "sha256": "8abebdf49f928f316c82edb318348645b02d08f7b27b48638e0769dae7f3e998",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/results/ammonia_tank_relief_discharge_annotated.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "Ve8c9h0-dbc",
+      "source_url": "https://www.youtube.com/watch?v=Ve8c9h0-dbc"
+    },
+    {
+      "path": "04_이전모델_비교/tank-transfer-20261004/sumykhimprom_ammonia_tank_2022_annotated.mp4",
+      "kind": "video",
+      "bytes": 936241,
+      "sha256": "63e88a3b507ac21d747f1f3ef9c8f377a0dbb4ba8000db6495ff54fd06786bce",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/results/sumykhimprom_ammonia_tank_2022_annotated.mp4"
+      ],
+      "group": "comparison",
+      "source_id": "x0vBwzl1Ox4",
+      "source_url": "https://www.youtube.com/watch?v=x0vBwzl1Ox4"
+    },
+    {
+      "path": "05_이전편집본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_left_wall_removed.mp4",
+      "kind": "video",
+      "bytes": 1234329,
+      "sha256": "5feebcbec6570250fb49dd612c5140d66a18b40c236ae21313b22ffbc6402ecf",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-wall-crop-20261008/receiver_valve_left_wall_removed.mp4"
+      ],
+      "group": "older_edit",
+      "source_id": "iOcGOilqYeU",
+      "source_url": "https://www.youtube.com/watch?v=iOcGOilqYeU"
+    },
+    {
+      "path": "06_기타보관영상/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia.mp4",
+      "kind": "video",
+      "bytes": 21102120,
+      "sha256": "7077d270420803a33396658ca60e8b14debffe715e64fabf3703d263f41797f0",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/gas-candidates-20261004/weatherford_ammonia.mp4"
+      ],
+      "group": "unclassified",
+      "source_id": "Eq5bHxbsgdU",
+      "source_url": "https://www.youtube.com/watch?v=Eq5bHxbsgdU"
+    },
+    {
+      "path": "06_기타보관영상/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/ochsi_ammonia.mp4",
+      "kind": "video",
+      "bytes": 97458337,
+      "sha256": "ba7872aec0a2e0589935d9299bd001b0e609c321fc2012ae0b22fa943495f04c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/ochsi_ammonia.mp4"
+      ],
+      "group": "unclassified",
+      "source_id": "65M1EurDQV0",
+      "source_url": "https://www.youtube.com/watch?v=65M1EurDQV0"
+    },
+    {
+      "path": "06_기타보관영상/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/seward_ammonia.mp4",
+      "kind": "video",
+      "bytes": 4141786,
+      "sha256": "6f6637aca1824ec34987e62912accdabe059dc62f14cb9916bdcd25b89080c80",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/seward_ammonia.mp4"
+      ],
+      "group": "unclassified",
+      "source_id": "sNkdAs1e7Cw",
+      "source_url": "https://www.youtube.com/watch?v=sNkdAs1e7Cw"
+    },
+    {
+      "path": "models/fasdd_yolo26s_leak_best.pt",
+      "kind": "checkpoint",
+      "bytes": 20367179,
+      "sha256": "e9c45758842dcb72072ee4090c967b88452e32e1e48b36071711911fde0c6a2f",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/weights/best_leak.pt"
+      ],
+      "architecture": "YOLO26s",
+      "trained_class": "smoke",
+      "display_names": {
+        "0": "leak"
+      }
+    },
+    {
+      "path": "metadata/FASDD_기존기록/experiment_plan.json",
+      "kind": "evidence",
+      "bytes": 1404,
+      "sha256": "e68ea2d4c896d0924d70d50ae806e97839b6b081ab2838a5b4cfe9a16c9895bb",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/experiment_plan.json"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/training_result.json",
+      "kind": "evidence",
+      "bytes": 750,
+      "sha256": "899f1f90ddfc010cb41a4d4de9a6f743fc415a3a98cc031009e441b82abdc230",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/training_result.json"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/heldout_test.json",
+      "kind": "evidence",
+      "bytes": 613,
+      "sha256": "2af650b549f1c6a6092d90a2a408ff66acb2453ac94a0309280005d35cedda1d",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/heldout_test.json"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/runs/yolo26s_fasdd_smoke/results.csv",
+      "kind": "evidence",
+      "bytes": 8259,
+      "sha256": "8992b2a87e3c47b99ed9d5da80059e2292944d3549943114ad994f026bef8469",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/results.csv"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/runs/yolo26s_fasdd_smoke/args.yaml",
+      "kind": "evidence",
+      "bytes": 1957,
+      "sha256": "4a9c2b613a1360e487c890be77394d903d7364e99ea7c14afdf9f5831658b269",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/args.yaml"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/video-check-20261008/leak-display/label_alias.json",
+      "kind": "evidence",
+      "bytes": 1287,
+      "sha256": "d54c3bf3e7053a408c82f4de282ddcd82b6dd6096d6a2b444e9bdcd5b1bb1ffb",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/leak-display/label_alias.json"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/video-check-20261008/summary.json",
+      "kind": "evidence",
+      "bytes": 7421,
+      "sha256": "6c429deb6e819887ec5f1ce1816c0976962602f70ce6ca5e17cdb86173cd88ce",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/summary.json"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/video-check-20261008/indoor-pair-leak-20261008/summary.json",
+      "kind": "evidence",
+      "bytes": 7185,
+      "sha256": "e2ac7e0e19db87de00683b6b39155ae5faaab35d5c61256fcd028621f34d418c",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/summary.json"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/video-check-20261008/receiver-valve-centered-20261008/summary.json",
+      "kind": "evidence",
+      "bytes": 3429,
+      "sha256": "f4730149fc50a4e170ebb34d1e816b8adffa7f76a71a630016200856bb8714cb",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/summary.json"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_predictions.json",
+      "kind": "evidence",
+      "bytes": 85336,
+      "sha256": "a3422daafb4274138883357cd03acea30b7066439e570d087c1fa1ad1588862f",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_predictions.json"
+      ]
+    },
+    {
+      "path": "metadata/FASDD_기존기록/video-check-20261008/receiver-valve-wall-crop-20261008/summary.json",
+      "kind": "evidence",
+      "bytes": 3458,
+      "sha256": "d776e5bd61cc24615fde05d511918603211cf1d3462087daa91885b01b900195",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-wall-crop-20261008/summary.json"
+      ]
+    },
+    {
+      "path": "00_최신편집_데모/확인사진/receiver_valve_centered_first_detection.jpg",
+      "kind": "image",
+      "bytes": 101116,
+      "sha256": "18bc75370e0893d33defc3e615d45be87ac31a03d4276d5102e9cc6dca8c3731",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_first_detection.jpg"
+      ]
+    },
+    {
+      "path": "00_최신편집_데모/확인사진/receiver_valve_centered_t14.jpg",
+      "kind": "image",
+      "bytes": 62775,
+      "sha256": "38f63edf4d441eda6b3766911973feeb984cd83be4ed937a4900c1d65b6b4c33",
+      "original_paths": [
+        "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_t14.jpg"
+      ]
+    }
+  ],
+  "video_path_mapping": [
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered.mp4",
+      "package_path": "00_최신편집_데모/receiver_valve_centered.mp4",
+      "inventory_kind": "편집본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-centered-20261008/receiver_valve_centered_leak.mp4",
+      "package_path": "00_최신편집_데모/receiver_valve_centered_leak.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/1h3UT_jVDY8.mp4",
+      "package_path": "01_암모니아_원본/12_NH3 Compressed Gas Cylinder Catastr__1h3UT_jVDY8/1h3UT_jVDY8.mp4",
+      "inventory_kind": "원본",
+      "source_id": "1h3UT_jVDY8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/CUWCrNBzLio.mp4",
+      "package_path": "01_암모니아_원본/13_NH3 Explosion @ ice cream plant fat__CUWCrNBzLio/CUWCrNBzLio.mp4",
+      "inventory_kind": "원본",
+      "source_id": "CUWCrNBzLio"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/Hw5vCpmRx6E.mp4",
+      "package_path": "01_암모니아_원본/15_NH3 Purger Safety__Hw5vCpmRx6E/Hw5vCpmRx6E.mp4",
+      "inventory_kind": "원본",
+      "source_id": "Hw5vCpmRx6E"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/gatCSASaFPw.mp4",
+      "package_path": "01_암모니아_원본/06_8 cylinder Vilter slugged with liqu__gatCSASaFPw/gatCSASaFPw.mp4",
+      "inventory_kind": "원본",
+      "source_id": "gatCSASaFPw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/hMVPR8_p-QA.mp4",
+      "package_path": "01_암모니아_원본/17_Pipe Inspections matter in NH3 proc__hMVPR8_p-QA/hMVPR8_p-QA.mp4",
+      "inventory_kind": "원본",
+      "source_id": "hMVPR8_p-QA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/hX_h8Hk2q4Q.mp4",
+      "package_path": "01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q.mp4",
+      "inventory_kind": "원본",
+      "source_id": "hX_h8Hk2q4Q"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/n_jLtrs8iWo.mp4",
+      "package_path": "01_암모니아_원본/08_Ammonia Refrigeration Condenser Tub__n_jLtrs8iWo/n_jLtrs8iWo.mp4",
+      "inventory_kind": "원본",
+      "source_id": "n_jLtrs8iWo"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/inputs/y_s8VpQczB8.mp4",
+      "package_path": "01_암모니아_원본/24_중국 공장 흰 분출__y_s8VpQczB8/y_s8VpQczB8.mp4",
+      "inventory_kind": "원본",
+      "source_id": "y_s8VpQczB8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-candidates-20261004/inputs/youtube/Eq5bHxbsgdU.mp4",
+      "package_path": "01_암모니아_원본/20_weatherford_ammonia__Eq5bHxbsgdU/Eq5bHxbsgdU.mp4",
+      "inventory_kind": "원본",
+      "source_id": "Eq5bHxbsgdU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/13_DYJS5mKY.mp4",
+      "package_path": "01_암모니아_원본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/13_DYJS5mKY.mp4",
+      "inventory_kind": "원본",
+      "source_id": "13_DYJS5mKY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/4ZXBwQ7Fx4c.mp4",
+      "package_path": "01_암모니아_원본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/4ZXBwQ7Fx4c.mp4",
+      "inventory_kind": "원본",
+      "source_id": "4ZXBwQ7Fx4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/inputs/AqPOAPiH0Sk.mp4",
+      "package_path": "01_암모니아_원본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/AqPOAPiH0Sk.mp4",
+      "inventory_kind": "원본",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/inputs/youtube/65M1EurDQV0.mp4",
+      "package_path": "01_암모니아_원본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/65M1EurDQV0.mp4",
+      "inventory_kind": "원본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/inputs/youtube/sNkdAs1e7Cw.mp4",
+      "package_path": "01_암모니아_원본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/sNkdAs1e7Cw.mp4",
+      "inventory_kind": "원본",
+      "source_id": "sNkdAs1e7Cw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/4qxowQsJNpg.mp4",
+      "package_path": "01_암모니아_원본/14_NH3 Line Break with COVID Face Mask__4qxowQsJNpg/4qxowQsJNpg.mp4",
+      "inventory_kind": "원본",
+      "source_id": "4qxowQsJNpg"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/8QZW0rKM9Aw.mp4",
+      "package_path": "01_암모니아_원본/11_NH3 Catastrophic Pressure Vessel Fa__8QZW0rKM9Aw/8QZW0rKM9Aw.mp4",
+      "inventory_kind": "원본",
+      "source_id": "8QZW0rKM9Aw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/CUWCrNBzLio.mp4",
+      "package_path": "01_암모니아_원본/13_NH3 Explosion @ ice cream plant fat__CUWCrNBzLio/CUWCrNBzLio.mp4",
+      "inventory_kind": "원본",
+      "source_id": "CUWCrNBzLio"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/C_v7wwWawPM.mp4",
+      "package_path": "01_암모니아_원본/16_NH3 RV release downward discharge__C_v7wwWawPM/C_v7wwWawPM.mp4",
+      "inventory_kind": "원본",
+      "source_id": "C_v7wwWawPM"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/HVnb3Rc7it8.mp4",
+      "package_path": "01_암모니아_원본/07_AMMONIA LEAK__HVnb3Rc7it8/HVnb3Rc7it8.mp4",
+      "inventory_kind": "원본",
+      "source_id": "HVnb3Rc7it8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/NPEcJhbOMWA.mp4",
+      "package_path": "01_암모니아_원본/03_암모니아 압력용기 파열__NPEcJhbOMWA/NPEcJhbOMWA.mp4",
+      "inventory_kind": "원본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/VRlxKCiikL4.mp4",
+      "package_path": "01_암모니아_원본/09_Catastrophic Failure of an Anhydrou__VRlxKCiikL4/VRlxKCiikL4.mp4",
+      "inventory_kind": "원본",
+      "source_id": "VRlxKCiikL4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/Ve8c9h0-dbc.mp4",
+      "package_path": "01_암모니아_원본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/Ve8c9h0-dbc.mp4",
+      "inventory_kind": "원본",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/hX_h8Hk2q4Q.mp4",
+      "package_path": "01_암모니아_원본/05_2019 NH3 Fertilizer Release 30K__hX_h8Hk2q4Q/hX_h8Hk2q4Q__ac803cc4.mp4",
+      "inventory_kind": "원본",
+      "source_id": "hX_h8Hk2q4Q"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/iOcGOilqYeU.mp4",
+      "package_path": "01_암모니아_원본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/iOcGOilqYeU.mp4",
+      "inventory_kind": "원본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/tJ_PBcOscoY.mp4",
+      "package_path": "01_암모니아_원본/10_Cold Storage NH3 Explosion and Leak__tJ_PBcOscoY/tJ_PBcOscoY.mp4",
+      "inventory_kind": "원본",
+      "source_id": "tJ_PBcOscoY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/uBqybTTIvtQ.mp4",
+      "package_path": "01_암모니아_원본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/uBqybTTIvtQ.mp4",
+      "inventory_kind": "원본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/x0vBwzl1Ox4.mp4",
+      "package_path": "01_암모니아_원본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/x0vBwzl1Ox4.mp4",
+      "inventory_kind": "원본",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inputs/y_s8VpQczB8.mp4",
+      "package_path": "01_암모니아_원본/24_중국 공장 흰 분출__y_s8VpQczB8/y_s8VpQczB8.mp4",
+      "inventory_kind": "원본",
+      "source_id": "y_s8VpQczB8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/03_nh3_pressure_vessel.mp4",
+      "package_path": "02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/04_nh3_receiver_valve.mp4",
+      "package_path": "02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/05_shanghai_nh3.mp4",
+      "package_path": "02_암모니아_발췌본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/05_shanghai_nh3.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "13_DYJS5mKY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/06_ochsi_nh3.mp4",
+      "package_path": "02_암모니아_발췌본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/06_ochsi_nh3.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/07_china_factory_nh3.mp4",
+      "package_path": "02_암모니아_발췌본/24_중국 공장 흰 분출__y_s8VpQczB8/07_china_factory_nh3.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "y_s8VpQczB8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/08_elk_grove_nh3.mp4",
+      "package_path": "02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/08_elk_grove_nh3.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/09_refrigeration_nh3.mp4",
+      "package_path": "02_암모니아_발췌본/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/10_night_nh3_tank.mp4",
+      "package_path": "02_암모니아_발췌본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/10_night_nh3_tank.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "4ZXBwQ7Fx4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/13_seward_nh3_cloud.mp4",
+      "package_path": "02_암모니아_발췌본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/13_seward_nh3_cloud.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "sNkdAs1e7Cw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/leak-display/elk_grove_worker_entry_source27s_54s.mp4",
+      "package_path": "02_암모니아_발췌본/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_worker_entry_source27s_54s.mp4",
+      "inventory_kind": "종류 미확인",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-candidates-20261004/clips/weatherford_ammonia_release.mp4",
+      "package_path": "02_암모니아_발췌본/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia_release.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "Eq5bHxbsgdU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/night_ammonia_tank_2012_onset.mp4",
+      "package_path": "02_암모니아_발췌본/23_야간 암모니아 탱크 조작__4ZXBwQ7Fx4c/10_night_nh3_tank.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "4ZXBwQ7Fx4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/ochsi_ammonia_2024_onset.mp4",
+      "package_path": "02_암모니아_발췌본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/06_ochsi_nh3.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-10plus-20261004/clips/shanghai_ammonia_2013_onset.mp4",
+      "package_path": "02_암모니아_발췌본/21_상하이 냉동공장 배관 사고 · 2013__13_DYJS5mKY/05_shanghai_nh3.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "13_DYJS5mKY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/clips/ochsi_ammonia_before_release.mp4",
+      "package_path": "02_암모니아_발췌본/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/06_ochsi_nh3.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/clips/seward_ammonia_cloud_arrival.mp4",
+      "package_path": "02_암모니아_발췌본/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/13_seward_nh3_cloud.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "sNkdAs1e7Cw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_pressure_vessel_failure.mp4",
+      "package_path": "02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_receiver_valve_operation.mp4",
+      "package_path": "02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/ammonia_tank_relief_discharge.mp4",
+      "package_path": "02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/clips/sumykhimprom_ammonia_tank_2022.mp4",
+      "package_path": "02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022.mp4",
+      "inventory_kind": "발췌본",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/inputs/ammonia_pressure_vessel_failure.mp4",
+      "package_path": "02_암모니아_발췌본/03_암모니아 압력용기 파열__NPEcJhbOMWA/ammonia_pressure_vessel_failure.mp4",
+      "inventory_kind": "발췌본·추론 입력",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/inputs/ammonia_receiver_valve_operation.mp4",
+      "package_path": "02_암모니아_발췌본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/ammonia_receiver_valve_operation.mp4",
+      "inventory_kind": "발췌본·추론 입력",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/inputs/ammonia_tank_relief_discharge.mp4",
+      "package_path": "02_암모니아_발췌본/22_암모니아 탱크 설비 안전밸브 방출__Ve8c9h0-dbc/ammonia_tank_relief_discharge__4ff1bd33.mp4",
+      "inventory_kind": "발췌본·추론 입력",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/inputs/sumykhimprom_ammonia_tank_2022.mp4",
+      "package_path": "02_암모니아_발췌본/19_Sumykhimprom 암모니아 탱크 손상__x0vBwzl1Ox4/sumykhimprom_ammonia_tank_2022__d3985735.mp4",
+      "inventory_kind": "발췌본·추론 입력",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/03_nh3_pressure_vessel_smoke.mp4",
+      "package_path": "03_FASDD_탐지결과/03_암모니아 압력용기 파열__NPEcJhbOMWA/03_nh3_pressure_vessel_smoke.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/04_nh3_receiver_valve_smoke.mp4",
+      "package_path": "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/04_nh3_receiver_valve_smoke.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/09_refrigeration_nh3_smoke.mp4",
+      "package_path": "03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_smoke.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/elk_grove_full_leak.mp4",
+      "package_path": "03_FASDD_탐지결과/02_Elk Grove 냉동 설비실 · 2017__AqPOAPiH0Sk/elk_grove_full_leak.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/indoor-pair-leak-20261008/receiver_valve_leak.mp4",
+      "package_path": "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_leak.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/leak-display/09_refrigeration_nh3_leak.mp4",
+      "package_path": "03_FASDD_탐지결과/04_냉동 설비실 흰 분출__uBqybTTIvtQ/09_refrigeration_nh3_leak.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-wall-crop-20261008/receiver_valve_wall_crop_leak.mp4",
+      "package_path": "03_FASDD_탐지결과/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_wall_crop_leak.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/03_nh3_pressure_vessel.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/03_nh3_pressure_vessel.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/04_nh3_receiver_valve.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/04_nh3_receiver_valve.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/05_shanghai_nh3.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/05_shanghai_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "13_DYJS5mKY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/06_ochsi_nh3.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/06_ochsi_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/07_china_factory_nh3.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/07_china_factory_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "y_s8VpQczB8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/08_elk_grove_nh3.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/08_elk_grove_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/09_refrigeration_nh3.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/09_refrigeration_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/10_night_nh3_tank.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/10_night_nh3_tank.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "4ZXBwQ7Fx4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/13_seward_nh3_cloud.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/13_seward_nh3_cloud.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "sNkdAs1e7Cw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/aihub-leak-yolo26-20261006/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4",
+      "package_path": "04_이전모델_비교/aihub-leak-yolo26-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/03_nh3_pressure_vessel.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/03_nh3_pressure_vessel.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/04_nh3_receiver_valve.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/04_nh3_receiver_valve.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/05_shanghai_nh3.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/05_shanghai_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "13_DYJS5mKY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/06_ochsi_nh3.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/06_ochsi_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/07_china_factory_nh3.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/07_china_factory_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "y_s8VpQczB8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/08_elk_grove_nh3.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/08_elk_grove_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/09_refrigeration_nh3.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/09_refrigeration_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/10_night_nh3_tank.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/10_night_nh3_tank.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "4ZXBwQ7Fx4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/13_seward_nh3_cloud.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/13_seward_nh3_cloud.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "sNkdAs1e7Cw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/all-gas-leak-20261007/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4",
+      "package_path": "04_이전모델_비교/all-gas-leak-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/03_nh3_pressure_vessel.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/03_nh3_pressure_vessel.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/04_nh3_receiver_valve.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/04_nh3_receiver_valve.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/05_shanghai_nh3.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/05_shanghai_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "13_DYJS5mKY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/06_ochsi_nh3.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/06_ochsi_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/07_china_factory_nh3.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/07_china_factory_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "y_s8VpQczB8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/08_elk_grove_nh3.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/08_elk_grove_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/09_refrigeration_nh3.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/09_refrigeration_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/10_night_nh3_tank.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/10_night_nh3_tank.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "4ZXBwQ7Fx4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/13_seward_nh3_cloud.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/13_seward_nh3_cloud.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "sNkdAs1e7Cw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/full-gas-yolo26s-20261007/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4",
+      "package_path": "04_이전모델_비교/full-gas-yolo26s-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/03_nh3_pressure_vessel.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/03_nh3_pressure_vessel.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/04_nh3_receiver_valve.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/04_nh3_receiver_valve.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/05_shanghai_nh3.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/05_shanghai_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "13_DYJS5mKY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/06_ochsi_nh3.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/06_ochsi_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/07_china_factory_nh3.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/07_china_factory_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "y_s8VpQczB8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/08_elk_grove_nh3.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/08_elk_grove_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/09_refrigeration_nh3.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/09_refrigeration_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/10_night_nh3_tank.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/10_night_nh3_tank.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "4ZXBwQ7Fx4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/13_seward_nh3_cloud.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/13_seward_nh3_cloud.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "sNkdAs1e7Cw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-only-yolo26-20261007/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4",
+      "package_path": "04_이전모델_비교/gas-only-yolo26-20261007/25_ammonia_tank_relief_discharge.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/03_nh3_pressure_vessel.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/03_nh3_pressure_vessel.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/04_nh3_receiver_valve.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/04_nh3_receiver_valve.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/05_shanghai_nh3.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/05_shanghai_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "13_DYJS5mKY"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/06_ochsi_nh3.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/06_ochsi_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/07_china_factory_nh3.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/07_china_factory_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "y_s8VpQczB8"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/08_elk_grove_nh3.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/08_elk_grove_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "AqPOAPiH0Sk"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/09_refrigeration_nh3.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/09_refrigeration_nh3.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "uBqybTTIvtQ"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/10_night_nh3_tank.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/10_night_nh3_tank.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "4ZXBwQ7Fx4c"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/13_seward_nh3_cloud.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/13_seward_nh3_cloud.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "sNkdAs1e7Cw"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/24_sumykhimprom_ammonia_tank_2022.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/leak-transfer-20261006/video-eval/comparisons/25_ammonia_tank_relief_discharge.mp4",
+      "package_path": "04_이전모델_비교/leak-transfer-20261006/25_ammonia_tank_relief_discharge.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/results/ammonia_pressure_vessel_failure_annotated.mp4",
+      "package_path": "04_이전모델_비교/tank-transfer-20261004/ammonia_pressure_vessel_failure_annotated.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "NPEcJhbOMWA"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/results/ammonia_receiver_valve_operation_annotated.mp4",
+      "package_path": "04_이전모델_비교/tank-transfer-20261004/ammonia_receiver_valve_operation_annotated.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/results/ammonia_tank_relief_discharge_annotated.mp4",
+      "package_path": "04_이전모델_비교/tank-transfer-20261004/ammonia_tank_relief_discharge_annotated.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "Ve8c9h0-dbc"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/tank-transfer-20261004/inference-20261004/results/sumykhimprom_ammonia_tank_2022_annotated.mp4",
+      "package_path": "04_이전모델_비교/tank-transfer-20261004/sumykhimprom_ammonia_tank_2022_annotated.mp4",
+      "inventory_kind": "추론·분석 재생본",
+      "source_id": "x0vBwzl1Ox4"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/receiver-valve-wall-crop-20261008/receiver_valve_left_wall_removed.mp4",
+      "package_path": "05_이전편집본/01_암모니아 리시버 밸브 작업__iOcGOilqYeU/receiver_valve_left_wall_removed.mp4",
+      "inventory_kind": "편집본",
+      "source_id": "iOcGOilqYeU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/gas-candidates-20261004/weatherford_ammonia.mp4",
+      "package_path": "06_기타보관영상/20_weatherford_ammonia__Eq5bHxbsgdU/weatherford_ammonia.mp4",
+      "inventory_kind": "종류 미확인",
+      "source_id": "Eq5bHxbsgdU"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/ochsi_ammonia.mp4",
+      "package_path": "06_기타보관영상/25_파라과이 Ochsi 공장 · 2024__65M1EurDQV0/ochsi_ammonia.mp4",
+      "inventory_kind": "종류 미확인",
+      "source_id": "65M1EurDQV0"
+    },
+    {
+      "original_path": "/home/giwon/Downloads/models/visible_leak/onset-cctv-20261004/seward_ammonia.mp4",
+      "package_path": "06_기타보관영상/18_Seward 암모니아 구름 · 2007__sNkdAs1e7Cw/seward_ammonia.mp4",
+      "inventory_kind": "종류 미확인",
+      "source_id": "sNkdAs1e7Cw"
+    }
+  ],
+  "verification": {
+    "all_copied_files_sha256_match": true,
+    "symlinks": 0
+  },
+  "portable_sources_catalog": "metadata/sources.json",
+  "existing_evidence_note": "Files under metadata/FASDD_기존기록 preserve original experiment paths; use this manifest for package-relative paths.",
+  "updated_at": "2026-10-08T15:06:10.846138+00:00"
+}

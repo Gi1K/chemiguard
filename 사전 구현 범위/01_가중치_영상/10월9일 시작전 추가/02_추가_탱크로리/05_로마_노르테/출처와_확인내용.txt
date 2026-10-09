@@ -1,0 +1,14 @@
+로마_노르테
+상태: 영상 확보
+확인 내용: Chilango 기사에 연결된 동일 사건의 X 영상 2개. 거리 촬영 시점이 달라 한 폴더에 보존.
+
+영상 파일:
+  roma_norte_20190705_angle1.mp4
+  roma_norte_20190705_angle2.mp4
+
+출처:
+https://www.chilango.com/noticias/falla-en-una-pipa-de-gas/
+https://twitter.com/alvarovr/status/1147188496400076805
+https://twitter.com/alvarovr/status/1147188944569868288
+
+공개 다운로드 및 로컬 검토용. 학습·재배포 허가를 확인한 자료가 아님.

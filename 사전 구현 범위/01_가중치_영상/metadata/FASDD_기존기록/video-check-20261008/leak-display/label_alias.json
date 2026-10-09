@@ -1,0 +1,22 @@
+{
+  "original_checkpoint": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/weights/best.pt",
+  "original_sha256": "c7fa38e55551550e4e6de961a2a947d3e4f6c7e8f7797506bae1cfed5c821dcc",
+  "checkpoint": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/runs/yolo26s_fasdd_smoke/weights/best_leak.pt",
+  "names": {
+    "0": "leak"
+  },
+  "trained_class": "smoke",
+  "model_tensors_unchanged": true,
+  "source": "/home/giwon/Downloads/models/visible_leak/cctv-20-20261004/clips/09_refrigeration_nh3.mp4",
+  "source_predictions": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/09_refrigeration_nh3_predictions.json",
+  "video": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/leak-display/09_refrigeration_nh3_leak.mp4",
+  "preview": "/home/giwon/Downloads/models/visible_leak/fasdd-smoke-yolo26s-20261007/video-check-20261008/leak-display/09_refrigeration_nh3_leak_preview.jpg",
+  "fps": 29.779,
+  "frames": 874,
+  "duration_seconds": 29.349541623291582,
+  "settings": {
+    "imgsz": 960,
+    "confidence": 0.25
+  },
+  "note": "Display-name alias only. Existing boxes and confidences are redrawn without inference or retraining."
+}
