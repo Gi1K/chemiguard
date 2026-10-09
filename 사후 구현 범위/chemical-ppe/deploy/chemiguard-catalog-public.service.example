@@ -1,0 +1,20 @@
+[Unit]
+Description=ChemiGuard temporary public website
+After=network-online.target chemiguard-catalog.service
+Wants=chemiguard-catalog.service
+StartLimitIntervalSec=120
+StartLimitBurst=3
+
+[Service]
+Type=simple
+# Replace with the application directory containing server.py.
+WorkingDirectory=/absolute/path/to/chemical-ppe
+ExecStart=/usr/bin/python3 deploy/public_preview.py
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=15
+UMask=0077
+
+[Install]
+WantedBy=default.target

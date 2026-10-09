@@ -1,0 +1,11 @@
+# Replace api.example.com with the API host's real DNS name.
+api.example.com {
+    request_body {
+        max_size 32KB
+    }
+    reverse_proxy 127.0.0.1:34402 {
+        transport http {
+            response_header_timeout 180s
+        }
+    }
+}
