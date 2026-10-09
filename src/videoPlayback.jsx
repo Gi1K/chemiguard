@@ -14,7 +14,7 @@ export function useNativePlayback(source, run, connected) {
   useEffect(()=>{
     const timer=setInterval(()=>{
       const element=video.current, state=clock.current;
-      if(!element||!state||element.readyState<1) return;
+      if(!element||!state||element.error||element.readyState<1) return;
       const current=state.run;
       setPosition(element.currentTime);
       if(!state.connected||performance.now()-state.received>1800){element.pause();return;}
@@ -50,9 +50,15 @@ export function useNativePlayback(source, run, connected) {
     const element=video.current;
     setDimensions([element.videoWidth,element.videoHeight]);setDuration(Number.isFinite(element.duration)?element.duration:0);setMediaError('');synced.current='';
   };
+  const retry=()=>{
+    const element=video.current;
+    if(!element)return;
+    synced.current='';setMediaError('');setBuffering(true);element.load();
+  };
   return {video,position,dimensions,duration,mediaError,buffering,loaded,
+    retry,
     waiting:()=>setBuffering(true), ready:()=>setBuffering(false),
-    failed:()=>{setBuffering(false);setMediaError('원본 영상 재생 실패 · 연결 또는 영상 코덱을 확인해 주세요.');}};
+    failed:()=>{setBuffering(false);setMediaError({2:'영상 전송이 끊겼습니다. 다시 불러와 주세요.',3:'영상 디코딩에 실패했습니다. 다시 불러와 주세요.',4:'영상을 읽을 수 없습니다. 다시 불러와 주세요.'}[video.current?.error?.code]||'영상 재생에 실패했습니다. 다시 불러와 주세요.');}};
 }
 
 export function TrackingOverlay({video,run,connected,sourceKey,onPresentedFrame}) {
@@ -84,7 +90,7 @@ export function TrackingOverlay({video,run,connected,sourceKey,onPresentedFrame}
       surface.dataset.trackingTime='';surface.dataset.sceneEpoch='';surface.dataset.trackCount='0';
       const active=current?.run;
       const presenting=active?.status==='RUNNING'||active?.status==='FINISHED'&&!element.paused&&!element.ended;
-      if(!current?.connected||performance.now()-current.received>1800||!presenting||element.seeking||element.readyState<2){publish(active,null);return;}
+      if(!current?.connected||performance.now()-current.received>1800||!presenting||element.error||element.seeking||element.readyState<2){publish(active,null);return;}
       const frame=overlayAt(active.overlay_frames||[],position,active.generation);
       if(!frame||!active.source_width||!active.source_height){publish(active,null);return;}
       publish(active,frame);

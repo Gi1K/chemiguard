@@ -3,6 +3,7 @@ import json
 import subprocess
 import threading
 from functools import lru_cache
+from fractions import Fraction
 from pathlib import Path
 
 import cv2
@@ -11,13 +12,14 @@ from .config import ASSETS, DATA, DEMO_MEDIA, PPE_MEDIA
 from .store import store
 
 VIDEO_EXTENSIONS = {'.mp4', '.mov', '.mkv', '.webm', '.avi'}
+PLAYBACK_VERSION = 'h264-30fps-v2'
 
 
 def demo_catalog():
     return [
-        (ASSETS / '00_최신편집_데모/receiver_valve_centered.mp4', 'receiver_valve_centered', '분출·누출 참고'),
         (PPE_MEDIA / 'V08_wide_205_222_5s.mp4', '화학보호복 · 두 사람', '두 사람'),
         (DEMO_MEDIA / 'Tychem4000S_착용_동작_시연.mp4', 'Tychem 4000 S · 착용 동작', '착용 동작'),
+        (ASSETS / '00_최신편집_데모/receiver_valve_centered.mp4', 'receiver_valve_centered', '분출·누출 참고'),
     ]
 
 
@@ -56,7 +58,8 @@ class Sources:
             if path.is_file():
                 entries.append((path, row['name'], '본선 등록 영상', row.get('source', '사용자 업로드')))
         demonstration = demo_catalog()
-        path, label, _ = demonstration[2]
+        path = DEMO_MEDIA / 'Tychem4000S_착용_동작_시연.mp4'
+        label = 'Tychem 4000 S · 착용 동작'
         if path.is_file():
             entries.append((path, label, '제조사 기존 영상 · 본선 발췌',
                             'DuPont Tychem 4000 S | EN · https://www.youtube.com/watch?v=ABFEls_O80Q'))
@@ -68,7 +71,7 @@ class Sources:
             self.metadata[source_id] = {'id': source_id, 'name': label, 'origin': origin, 'source': source,
                                         'case': '두 사람' if '두 사람' in label else '탈의' if '탈의' in label else '착의' if '착의' in label else '작업' if '보호복' in label else '분출·누출 참고',
                                         'preview_url': f'/api/sources/{source_id}/preview',
-                                        'video_url': f'/api/sources/{source_id}/video'}
+                                        'video_url': f'/api/sources/{source_id}/video?v={PLAYBACK_VERSION}'}
             if path.resolve() in selected:
                 order, label, case = selected[path.resolve()]
                 self.metadata[source_id].update(demo_order=order, name=label, case=case)
@@ -96,23 +99,31 @@ class Sources:
         path = Path(filename)
         try:
             probe = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0',
-                                    '-show_entries', 'stream=codec_name,pix_fmt', '-of', 'json', filename],
+                                    '-show_entries', 'stream=codec_name,pix_fmt,level,avg_frame_rate,width,height', '-of', 'json', filename],
                                    capture_output=True, text=True, check=True, timeout=15)
             stream = json.loads(probe.stdout)['streams'][0]
+            try:
+                fps = float(Fraction(stream.get('avg_frame_rate', '0/1')))
+            except (ValueError, ZeroDivisionError):
+                fps = 0
             if (path.suffix.lower() == '.mp4' and stream['codec_name'] == 'h264'
-                    and stream.get('pix_fmt') == 'yuv420p') or (path.suffix.lower() == '.webm'
+                    and stream.get('pix_fmt') == 'yuv420p' and 0 < fps <= 30
+                    and 0 < stream.get('level', 0) <= 41
+                    and stream.get('width', 0) <= 1920 and stream.get('height', 0) <= 1080) or (path.suffix.lower() == '.webm'
                     and stream['codec_name'] in ('vp8', 'vp9')):
                 return path
             folder = DATA / 'playback'
             folder.mkdir(exist_ok=True)
-            key = hashlib.sha256(f'{filename}:{modified}:{size}'.encode()).hexdigest()[:24]
+            key = hashlib.sha256(f'{PLAYBACK_VERSION}:{filename}:{modified}:{size}'.encode()).hexdigest()[:24]
             output = folder / f'{key}.mp4'
             if not output.exists():
                 temporary = folder / f'{key}.partial.mp4'
                 try:
                     subprocess.run(['ffmpeg', '-v', 'error', '-nostdin', '-y', '-i', filename,
                                     '-map', '0:v:0', '-an', '-c:v', 'libx264', '-preset', 'veryfast',
-                                    '-crf', '20', '-pix_fmt', 'yuv420p', '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
+                                    '-crf', '20', '-pix_fmt', 'yuv420p', '-profile:v', 'main', '-level:v', '4.1',
+                                    '-maxrate', '5M', '-bufsize', '10M',
+                                    '-vf', 'scale=w=min(1920\\,iw):h=min(1080\\,ih):force_original_aspect_ratio=decrease:force_divisible_by=2,fps=30',
                                     '-movflags', '+faststart', str(temporary)],
                                    capture_output=True, check=True, timeout=300)
                     temporary.replace(output)
