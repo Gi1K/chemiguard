@@ -13,6 +13,8 @@ from .wearing import PARTS, summarize_parts
 
 IMAGE_DETAIL = 'original'
 INPUT_VERSION = 'original-crops-lossless-head-v1'
+PPE_SELECTION_VERSION = 'ppe-top1-v1'
+PPE_QUESTIONS = frozenset((*PARTS, 'hood', 'closure', 'respirator'))
 
 RULES = (
     'Inspect only the central tracked person in the first image. All detail crops show the same moment. '
@@ -123,8 +125,17 @@ def parse_answers(data, questions):
         chosen = answer['choice']
         margin = distribution[chosen] - max(value for key, value in distribution.items() if key != chosen)
         fallback = 'uncertain' if 'uncertain' in expected[name] else 'unobservable'
-        parsed[name] = chosen if margin >= 0.2 else fallback
-        scores[name] = {'choice': chosen, 'margin': round(margin, 4), 'probabilities': probabilities}
+        top_probability = max(distribution.values())
+        leaders = [value for value, probability in distribution.items() if probability == top_probability]
+        tied = len(leaders) != 1
+        if name in PPE_QUESTIONS:
+            parsed[name] = fallback if tied else leaders[0]
+            method = PPE_SELECTION_VERSION
+        else:
+            parsed[name] = chosen if margin >= 0.2 else fallback
+            method = 'choice-margin-0.2'
+        scores[name] = {'choice': chosen, 'margin': round(margin, 4), 'probabilities': probabilities,
+                        'selected': parsed[name], 'selection_method': method, 'top_tied': tied}
     return parsed, scores
 
 
@@ -139,7 +150,8 @@ def observe(images, policy):
               'respirator_assessment': 'full_face_external_appearance' if respirator_required else 'not_requested',
               'wearing_assessment': policy.get('wearing_assessment', 'all_required'),
               'closure_assessment': policy.get('closure_assessment', 'visible_components')}
-    result.update(input_version=INPUT_VERSION, image_detail=IMAGE_DETAIL, image_inputs=[], timings_ms={})
+    result.update(input_version=INPUT_VERSION, image_detail=IMAGE_DETAIL, image_inputs=[], timings_ms={},
+                  ppe_selection_version=PPE_SELECTION_VERSION)
     key = os.getenv('OPENAI_API_KEY', '').strip()
     if not key:
         return result | {'error': 'OPENAI_API_KEY 미설정', 'latency_ms': 0}

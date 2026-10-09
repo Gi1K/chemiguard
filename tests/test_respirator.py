@@ -77,6 +77,7 @@ class RespiratorRules(unittest.TestCase):
         self.assertTrue(any(text.startswith('Image: head.') for text in labels))
         self.assertEqual(result['parts']['respirator'], 'covered')
         self.assertEqual(result['prompt_version'], 'ppe-observation-v5')
+        self.assertEqual(result['ppe_selection_version'], 'ppe-top1-v1')
         self.assertEqual(result['respirator_assessment'], 'full_face_external_appearance')
         self.assertIsNone(result['error'])
 

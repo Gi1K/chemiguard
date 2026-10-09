@@ -40,14 +40,15 @@ class VisibleWearingRules(unittest.TestCase):
         self.assertTrue(result['review_required'])
         self.assertEqual(len(questions_for(legacy)[0]['choices']), 3)
 
-    def test_weak_not_visible_answer_becomes_uncertain_not_positive(self):
+    def test_top_not_visible_answer_stays_hidden_not_covered(self):
         question = questions_for(POLICY)[-1]
         answer = {'type': 'choice', 'name': 'closure', 'choice': 'not_visible',
                   'probabilities': [{'value': value, 'probability': score} for value, score in
                                     [('closed', .35), ('open', .01), ('not_visible', .45), ('uncertain', .19)]]}
         parts, scores = parse_answers({'answers': [answer]}, [question])
-        self.assertEqual(parts['closure'], 'uncertain')
+        self.assertEqual(parts['closure'], 'not_visible')
         self.assertEqual(scores['closure']['choice'], 'not_visible')
+        self.assertEqual(scores['closure']['selection_method'], 'ppe-top1-v1')
 
     def test_turning_away_does_not_clear_open_closure(self):
         track = {'history': [], 'active_violations': []}
