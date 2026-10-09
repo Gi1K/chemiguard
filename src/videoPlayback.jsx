@@ -109,7 +109,7 @@ export function TrackingOverlay({video,run,connected,sourceKey,onPresentedFrame}
         box(track.bbox,wearing==='NOT_WORN'||alarm?'#c44748':['WORN','VISIBLE_WORN'].includes(wearing)?'#168063':'#a97419',
           `#${track.track_id} ${overlayLabel({...track,wearing})}`);
       }
-      if(frame.scene.processing_state==='RUNNING') for(const item of frame.scene.detections) box(item.bbox,'#a97419','연무·분출 후보');
+      if(frame.scene.processing_state==='RUNNING') for(const item of frame.scene.detections) box(item.bbox,'#a97419','누출');
     };
     handle=requestAnimationFrame(draw);
     return()=>{cancelAnimationFrame(handle);if(frameHandle!==undefined)nativeVideo.cancelVideoFrameCallback(frameHandle);};

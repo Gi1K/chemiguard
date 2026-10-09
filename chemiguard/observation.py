@@ -10,10 +10,16 @@ from .wearing import POSITIVE_STATES, VIOLATION_PARTS
 WINDOW_SECONDS = 0.8
 SCHEDULE = {'first': 0, 'confirm': 1, 'violation': 2, 'worn': 3, 'unknown': 2,
             'change': 1, 'error_max': 10}
+OBSERVATION_CROP_VERSION = 'partial-person-crops-v1'
+
+
+def observation_size_ok(height, width):
+    # Partial shoulders/torso at the frame edge can still establish a visible violation.
+    return min(height, width) >= 32 and height * width >= 2048
 
 
 def image_quality(image, box, shape, confidence):
-    if image is None or image.shape[0] < 100 or image.shape[1] < 35 or confidence < 0.45:
+    if image is None or not observation_size_ok(*image.shape[:2]) or confidence < 0.45:
         return None
     gray = cv2.cvtColor(cv2.resize(image, (64, 128)), cv2.COLOR_BGR2GRAY)
     sharpness = float(cv2.Laplacian(gray, cv2.CV_32F).var())
@@ -21,7 +27,8 @@ def image_quality(image, box, shape, confidence):
     clipped = sum((box[0] <= 1, box[1] <= 1, box[2] >= width-1, box[3] >= height-1))
     score = min(math.log1p(sharpness)/8, 1) + min(image.shape[0]/500, 1) + confidence - clipped*0.15
     return {'score': round(score, 4), 'sharpness': round(sharpness, 2),
-            'clipped_edges': clipped, 'signature': gray}
+            'clipped_edges': clipped, 'signature': gray,
+            'width': image.shape[1], 'height': image.shape[0], 'gate_version': OBSERVATION_CROP_VERSION}
 
 
 def request_due(track, captured, signature):

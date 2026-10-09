@@ -14,7 +14,7 @@ from scenedetect.scene_detector import FlashFilter
 from . import decisions, product_decisions
 from .config import DATA, ROOT, fingerprint
 from .sources import sources
-from .observation import (SCHEDULE, WINDOW_SECONDS, combine_observation, eligible_candidates,
+from .observation import (OBSERVATION_CROP_VERSION, SCHEDULE, WINDOW_SECONDS, combine_observation, eligible_candidates,
                           face_quality, image_quality, request_due, select_candidate)
 from .store import now, store, uid
 from .vision import Vision, crop, identity, jpeg, observation_image
@@ -91,6 +91,7 @@ class Run:
             'status': 'LOADING', 'code_sha': code_sha, 'code_dirty': code_dirty,
             'pipeline_version': 'parallel-product-decisions-v7', 'decision_schedule_s': SCHEDULE,
             'tracking_pipeline_version': 'bounded-observation-worker-v1',
+            'observation_crop_version': OBSERVATION_CROP_VERSION,
             'decision_routing': 'parallel_independent_requests_ppe_gate_on_join',
             'ppe_selection_version': decisions.PPE_SELECTION_VERSION,
             'decision_input_version': decisions.INPUT_VERSION, 'decision_image_detail': decisions.IMAGE_DETAIL,
@@ -339,6 +340,9 @@ class Run:
                         'frame': frame, 'image': image, 'bbox': row['bbox'], 'quality': quality,
                         'confidence': row['confidence']})
                     previous['signature'] = quality['signature']
+                elif not previous['result'] and not previous['pending']:
+                    previous['reason'] = ('사람 검출 불확실 · 확인 필요' if row['confidence'] < 0.45 else
+                                          '관찰 해상도 부족 · 확인 필요')
                 while previous['candidates'] and captured-previous['candidates'][0]['captured'] > WINDOW_SECONDS:
                     previous['candidates'].popleft()
             for key in list(self.tracks):
@@ -706,7 +710,7 @@ class Run:
             store.put('observation', observation)
             with (self.path / 'observations.jsonl').open('a', encoding='utf-8') as log:
                 log.write(json.dumps(observation, ensure_ascii=False) + '\n')
-            self._event('RELEASE_SUSPECTED', '가시적 연무·분출 의심이 연속 관찰되었습니다.', observation, 'scene')
+            self._event('RELEASE_SUSPECTED', '누출 징후가 연속 관찰되었습니다.', observation, 'scene')
 
     def _event(self, kind, reason, observation, key, supporting_observation_ids=None):
         cooldown_key = kind + ':' + key

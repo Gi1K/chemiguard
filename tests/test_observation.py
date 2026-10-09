@@ -38,7 +38,16 @@ class ObservationRules(unittest.TestCase):
                 [(8, 100), (9.3, 2), (9.8, 3), (10, 1), (11, 100)]]
         self.assertEqual(select_candidate(rows, 10, 9.3)['captured'], 9.8)
         self.assertIsNone(select_candidate(rows, 10, 10))
-        self.assertIsNone(image_quality(np.zeros((99, 50, 3), dtype=np.uint8), [0, 0, 50, 99], (500, 500), .9))
+        self.assertIsNone(image_quality(np.zeros((31, 50, 3), dtype=np.uint8), [0, 0, 50, 31], (500, 500), .9))
+
+    def test_partial_crop_can_be_observed_without_relaxing_detection_confidence(self):
+        image = np.zeros((44, 68, 3), dtype=np.uint8)
+        quality = image_quality(image, [0, 314, 68, 358], (360, 448), .65)
+        self.assertIsNotNone(quality)
+        self.assertEqual((quality['width'], quality['height']), (68, 44))
+        self.assertEqual(quality['gate_version'], 'partial-person-crops-v1')
+        self.assertIsNone(image_quality(image, [0, 314, 68, 358], (360, 448), .44))
+        self.assertIsNone(image_quality(image[:32, :32], [0, 0, 32, 32], (360, 448), .9))
 
     def test_alarm_needs_two_observations_and_two_for_recovery(self):
         track = {'history': [], 'active_violations': []}

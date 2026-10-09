@@ -7,7 +7,7 @@ test('partial wearing and full observation have distinct labels',()=>{
   assert.equal(observationLabel({wearing:'WORN'}),'필수 부위 착용 관찰');
 });
 test('specific violation and unresolved alarm stay explicit',()=>{
-  assert.equal(observationLabel({wearing:'NOT_WORN',parts:{hood:'uncovered',closure:'not_visible'}}),'후드 미착용 의심');
+  assert.equal(observationLabel({wearing:'NOT_WORN',parts:{hood:'uncovered',closure:'not_visible'}}),'미착용');
   assert.equal(observationLabel({wearing:'VISIBLE_WORN',active_violations:['필수 여밈 열림']}),'미해제 위반 재확인');
 });
 test('video label is concise without hiding an unresolved alarm',()=>{
@@ -17,7 +17,7 @@ test('video label is concise without hiding an unresolved alarm',()=>{
   assert.equal(overlayLabel({wearing:'UNKNOWN'}),'확인 불가');
 });
 test('full-face respirator has a specific missing-equipment label',()=>{
-  assert.equal(overlayLabel({wearing:'NOT_WORN',parts:{hood:'covered',respirator:'uncovered'}}),'전면형 방독면 미착용 의심');
+  assert.equal(overlayLabel({wearing:'NOT_WORN',parts:{hood:'covered',respirator:'uncovered'}}),'미착용');
   assert.equal(overlayLabel({wearing:'VISIBLE_WORN',active_violations:['필수 전면형 방독면 미착용']}),'미해제 위반 재확인');
 });
 test('product mismatch overrides a wearing label without erasing PPE observations',()=>{
@@ -26,10 +26,10 @@ test('product mismatch overrides a wearing label without erasing PPE observation
   assert.equal(observationLabel(track),'등록 보호복 불일치 의심');
 });
 
-test('a directly observed sustained hood violation is an alarm, not a first suspicion',()=>{
+test('the missing-PPE label is immediate and does not imply an alarm was confirmed',()=>{
   const track={wearing:'NOT_WORN',parts:{hood:'uncovered'},active_violations:['필수 후드 미착용']};
-  assert.equal(overlayLabel(track),'후드 미착용 경보');
-  assert.equal(observationLabel({...track,active_violations:[]}),'후드 미착용 의심');
+  assert.equal(overlayLabel(track),'미착용');
+  assert.equal(observationLabel({...track,active_violations:[],confirmed:false}),'미착용');
   assert.equal(overlayLabel({...track,wearing:'UNKNOWN',parts:{}}),'미해제 위반 재확인');
-  assert.equal(overlayLabel({wearing:'NOT_WORN',active_violations:['몸통 미착용 관찰']}),'미착용 경보');
+  assert.equal(overlayLabel({wearing:'NOT_WORN',active_violations:['몸통 미착용 관찰']}),'미착용');
 });

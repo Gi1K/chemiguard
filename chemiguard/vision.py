@@ -9,6 +9,7 @@ from ultralytics import YOLO
 
 from .config import DEVICE, IDENTITY_MODEL, PERSON_MODELS, POSE_MODEL, RELEASE_MODEL, fingerprint
 from .products import rank_references
+from .observation import observation_size_ok
 
 GPU_LOCK = threading.RLock()
 
@@ -144,11 +145,14 @@ class Vision:
         if person is None:
             return None
         height, width = person.shape[:2]
-        if height < 100 or width < 35:
+        if not observation_size_ok(height, width):
             return None
         body = {'images': {'person': person}, 'boxes': {'person': [0, 0, width, height]},
                 'route': 'person_only', 'reason': '몸통 Pose 불충분 · 사람 영상으로 관찰',
                 'keypoints': [], 'keypoint_confidence': []}
+        if height < 100 or width < 35:
+            body.update(route='partial_person_only', reason='작은 부분 영상 · 보이는 부위만 원본 픽셀로 관찰')
+            return body
         with GPU_LOCK:
             result = self.pose.predict(person, imgsz=640, conf=0.25, device=DEVICE, verbose=False)[0]
         if result.keypoints is None or len(result.keypoints) == 0:
@@ -206,5 +210,5 @@ class Vision:
             result = self.release.predict(image, imgsz=960, conf=0.25, device=DEVICE, verbose=False)[0]
         return [{'bbox': [float(b[0])+box[0], float(b[1])+box[1], float(b[2])+box[0], float(b[3])+box[1]],
                  'confidence': round(float(score), 4), 'native_class': result.names[int(cls)],
-                 'label': '가시적 연무·분출 의심'}
+                 'label': '누출'}
                 for b, score, cls in zip(result.boxes.xyxy.cpu().tolist(), result.boxes.conf.cpu().tolist(), result.boxes.cls.cpu().tolist())]

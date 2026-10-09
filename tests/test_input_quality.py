@@ -14,6 +14,18 @@ from chemiguard.vision import Vision, head_region, observation_image
 
 
 class InputQuality(unittest.TestCase):
+    def test_small_partial_person_uses_original_pixels_without_inventing_body_regions(self):
+        vision = Vision.__new__(Vision)
+        vision.pose = MagicMock()
+        person = np.zeros((44, 68, 3), dtype=np.uint8)
+        body = vision.body(person)
+        self.assertEqual(body['route'], 'partial_person_only')
+        self.assertEqual(list(body['images']), ['person'])
+        self.assertIs(body['images']['person'], person)
+        self.assertEqual(body['keypoints'], [])
+        vision.pose.predict.assert_not_called()
+        self.assertIsNone(vision.body(person[:31]))
+
     def landmarks(self):
         points = np.zeros((17, 2), dtype=np.float32)
         confidence = np.zeros(17, dtype=np.float32)
