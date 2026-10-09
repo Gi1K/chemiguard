@@ -32,17 +32,18 @@ function renderCatalogMaintenance(status) {
   }
   const run = status.last_run;
   const schedule = status.schedule;
+  const collected = run?.checked_sources || [];
+  const manufacturers = [...new Set(collected.map((source) => source.manufacturer))];
   badge.textContent =
-    run?.status === "partial"
-      ? "일부 출처 확인 필요"
-      : run?.status === "failed"
-        ? "최근 확인 실패"
+    collected.length
+      ? `공식 자료 ${collected.length}곳 수집`
+      : run
+        ? "새 수집 자료 없음"
         : schedule
           ? "매일 오전 9시 확인"
           : "정기 확인 설정 전";
   const statusKey = JSON.stringify(status);
   if (statusKey === renderedCatalogStatus) return;
-  const failuresOpen = content.querySelector("details")?.open;
   renderedCatalogStatus = statusKey;
   const when = run?.finished_at
     ? new Date(run.finished_at).toLocaleString("ko-KR", {
@@ -51,7 +52,7 @@ function renderCatalogMaintenance(status) {
     : "아직 실행 전";
   content.innerHTML = `<p><strong>${schedule ? "매일 오전 9시 · 한국 시간" : "정기 일정 설정 전"}</strong><br>최근 확인: ${esc(when)}</p>
     <p>전체 ${status.product_count}개 · 자동 발견 ${status.discovered_count}개${run ? ` · 이번 추가 ${run.added.length}개 · 갱신 ${run.updated.length}개` : ""}</p>
-    ${run ? `<p>공식 페이지 ${run.checked_sources.length}곳 확인${run.failures.length ? ` · 확인하지 못한 항목 ${run.failures.length}개` : ""}</p>` : ""}
+    ${collected.length ? `<p>이번에 수집한 공식 페이지 ${collected.length}곳<br>수집 확인 제조사: ${manufacturers.map(esc).join(" · ")}</p>` : run ? "<p>이번 확인에서 새로 수집한 자료가 없습니다. 저장된 제품 목록을 보여드려요.</p>" : ""}
     ${
       run?.added?.length
         ? `<div class="recent-catalog-products">${run.added
@@ -64,7 +65,6 @@ function renderCatalogMaintenance(status) {
             .join("")}</div>`
         : ""
     }
-    ${run?.failures?.length ? `<details${failuresOpen ? " open" : ""}><summary>확인하지 못한 출처</summary>${run.failures.map((f) => `<p>${link(f.url, f.manufacturer)} · ${esc(f.reason)}</p>`).join("")}</details>` : ""}
     <p class="small muted">자동 발견은 출시일 확인이나 현장 사용 승인을 뜻하지 않습니다. 기본 정보만 확인한 제품은 성능 검토 전으로 표시합니다.</p>
     ${schedule ? '<p class="small muted">현재 정기 확인은 이 PC와 Codex 앱이 켜져 있을 때 실행됩니다.</p>' : ""}`;
 }
