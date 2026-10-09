@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ChemiGuard — 근거로 고르는 화학보호구</title>
+    <meta
+      name="description"
+      content="44개 화학보호구의 제조사 근거와 국내 구매 경로를 비교하고, 사용 물질과 작업별 검토 조합을 만드세요."
+    />
+    <!-- API_CONFIG -->
+    <link rel="stylesheet" href="style.css" />
+    <script src="core.js" defer></script>
+    <script src="drafts.js" defer></script>
+    <script src="catalog.js" defer></script>
+    <script src="counselor.js" defer></script>
+    <script src="bootstrap.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#mainContent">본문으로 건너뛰기</a>
+    <div class="utility-bar">
+      <span>CHEMICAL SAFETY, WITH EVIDENCE</span
+      ><a href="criteria.html" target="_blank" rel="noopener"
+        >자료·선정 기준 ↗</a
+      >
+    </div>
+    <header class="shop-header">
+      <button
+        type="button"
+        class="wordmark"
+        data-open="products"
+        aria-label="ChemiGuard 제품 홈"
+      >
+        <span class="brand-symbol" aria-hidden="true">C<span>+</span></span
+        >ChemiGuard<span class="brand-dot">.</span>
+      </button>
+      <nav class="main-nav" aria-label="화학보호구 탐색" role="tablist">
+        <button
+          type="button"
+          role="tab"
+          data-tab="products"
+          aria-selected="true"
+        >
+          제품</button
+        ><button type="button" role="tab" data-tab="sets" aria-selected="false">
+          사업장 조합</button
+        ><button type="button" role="tab" data-tab="chat" aria-selected="false">
+          물질로 추천</button
+        ><button type="button" role="tab" data-tab="kit" aria-selected="false">
+          내 조합 <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </nav>
+      <label class="search-pill"
+        ><span class="search-icon" aria-hidden="true">⌕</span
+        ><span class="sr-only">제품 검색</span
+        ><input
+          id="searchInput"
+          type="search"
+          placeholder="모델·품목 검색"
+          autocomplete="off"
+      /></label>
+    </header>
+    <main id="mainContent">
+      <div id="loadError" class="message error" role="alert" hidden></div>
+      <section id="storeHero" class="hero" aria-label="보호구 컬렉션 소개">
+        <div class="hero-copy">
+          <p class="section-kicker">FOR THE PEOPLE ON SITE · 01</p>
+          <h1>작업을 이해하고,<br />보호구를 <em>고르다.</em></h1>
+          <p class="hero-subtitle">선택의 시작은, 정확한 근거.</p>
+          <p class="hero-description">
+            물질과 작업 조건에서 출발해 제조사 자료를 확인합니다.<br />보호복부터
+            장갑까지, 우리 현장에 필요한 검토 조합을 만드세요.
+          </p>
+          <div class="hero-actions">
+            <button type="button" class="primary" data-open="chat">
+              물질로 조합 만들기</button
+            ><a class="button-secondary" href="#catalogProducts"
+              >제품 둘러보기 ↓</a
+            >
+          </div>
+        </div>
+        <div
+          id="heroGallery"
+          class="hero-gallery"
+          aria-label="보호구 검토 흐름"
+        ></div>
+      </section>
+      <div
+        id="catalogMetrics"
+        class="catalog-metrics"
+        aria-label="카탈로그 자료 현황"
+      ></div>
+      <section id="productsPanel" class="panel" aria-label="제품과 구매처">
+        <div id="catalogProducts" class="section-heading">
+          <div>
+            <p class="section-kicker">EXPLORE THE CATALOG</p>
+            <h2>
+              보호구를 찾아보세요
+              <span
+                id="productCount"
+                class="muted small"
+                aria-live="polite"
+              ></span>
+            </h2>
+          </div>
+          <button type="button" class="button-secondary" data-open="chat">
+            물질을 입력해 추천받기 ↗
+          </button>
+        </div>
+        <div
+          id="categoryChips"
+          class="category-chips"
+          aria-label="품목 빠른 필터"
+        ></div>
+        <p id="catalogNotice" class="sr-only" role="status"></p>
+        <div class="shop-layout">
+          <aside class="filter-rail" aria-label="제품 필터">
+            <h3>필터</h3>
+            <label for="categoryFilter"
+              >품목<select id="categoryFilter">
+                <option value="all">모든 품목</option>
+              </select></label
+            >
+            <label for="typeFilter"
+              >보호복 형식<select id="typeFilter">
+                <option value="all">모든 형식</option>
+                <option value="1">1형식</option>
+                <option value="2">2형식</option>
+                <option value="3">3형식</option>
+                <option value="4">4형식</option>
+                <option value="5">5형식</option>
+                <option value="6">6형식</option>
+              </select></label
+            >
+            <label for="colourFilter"
+              >제품 색상<select id="colourFilter">
+                <option value="all">모든 색상</option>
+              </select></label
+            >
+            <label class="checkbox-label"
+              ><input id="domesticOnly" type="checkbox" />국내 판매·견적
+              경로</label
+            >
+            <button type="button" id="resetFilters" class="text-button">
+              필터 초기화
+            </button>
+            <p class="small muted">
+              제품 사진과 핵심 정보를 비교하세요. 인증 근거와 구매 경로는 상세
+              보기에서 확인할 수 있습니다.
+            </p>
+          </aside>
+          <div id="products" class="product-grid"></div>
+        </div>
+      </section>
+      <section
+        id="setsPanel"
+        class="panel"
+        aria-label="사업장 보호구 조합"
+        hidden
+      >
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">BUILT FOR YOUR WORK</p>
+            <h2>우리 사업장의 보호구 조합</h2>
+            <p>
+              물질·농도·작업으로 만든 조합 선택지를 비교하세요. 선택한 구성은 내
+              조합에서 검토하고 저장할 수 있습니다.
+            </p>
+          </div>
+          <button type="button" class="primary" data-open="chat">
+            사용 물질 입력하기
+          </button>
+        </div>
+        <div id="worksiteKits" class="worksite-kits"></div>
+        <details class="type-guide">
+          <summary>보호복 형식과 구성품 기준 보기</summary>
+          <div id="typeGuide"></div>
+        </details>
+      </section>
+      <section
+        id="chatPanel"
+        class="panel"
+        aria-label="보호구 추천 챗봇"
+        hidden
+      >
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">FIND YOUR GEAR</p>
+            <h2>사용하는 물질부터 알려주세요.</h2>
+            <p>
+              물질과 작업을 입력하면 근거가 있는 조합 선택지를 자동으로
+              보여드립니다. 듀폰 보호복 3종은 공식 물질시험표를 바로 조회하며,
+              다른 품목은 등록 자료로 검토합니다.
+            </p>
+          </div>
+          <span id="chatStatus" class="badge neutral" role="status"
+            >챗봇 연결 확인 중</span
+          >
+        </div>
+        <details class="access-panel" id="accessPanel">
+          <summary>
+            상담 접근 설정 <span id="accessLabel">시연 코드를 입력하세요</span>
+          </summary>
+          <form id="accessForm">
+            <label for="accessToken"
+              >담당자에게 받은 시연 코드<input
+                id="accessToken"
+                type="password"
+                autocomplete="off"
+                maxlength="200"
+                placeholder="시연 코드" /></label
+            ><button class="primary" type="submit">상담 연결</button
+            ><button type="button" id="forgetAccess">코드 지우기</button>
+          </form>
+          <p class="small muted">
+            코드는 이 탭의 메모리에만 보관됩니다. 새로고침하면 다시 입력하세요.
+          </p>
+        </details>
+        <div class="chat-layout">
+          <div class="card chat-card">
+            <div class="section-heading compact">
+              <h3>보호구 선정 상담</h3>
+              <button type="button" id="newChat" class="text-button">
+                새 대화
+              </button>
+            </div>
+            <div id="chatWelcome" class="chat-welcome">
+              <p>
+                물질을 줄마다 적고, 같은 작업에서 함께 노출되는지 알려주세요.
+              </p>
+              <div class="example-prompts">
+                <button
+                  type="button"
+                  data-example="황산 30% 탱크 이송과 암모니아수 25% 설비 세척은 서로 다른 구역의 작업입니다. 각각 실외 20℃에서 10분 정도 진행하고 연결·분리 중 비말이 생길 수 있습니다. 두 작업의 보호구 조합을 국내 제품으로 구성해 주세요. 가능한 적합 제품이 있으면 보호복 색상도 구분해 주세요."
+                >
+                  황산·암모니아수 · 별도 작업</button
+                ><button
+                  type="button"
+                  data-example="세척 작업에 톨루엔과 아세톤을 사용합니다. 실제 혼합물인지, 농도와 SDS는 아직 확인하지 못했습니다. 국내 제품에서 검토할 보호구 조합과 필요한 정보를 알려 주세요."
+                >
+                  여러 용제 · 세척 작업</button
+                ><button
+                  type="button"
+                  data-example="우리 사업장은 황산 30%를 사용합니다. 국내 구매 경로가 있는 보호복·장갑·장화·호흡보호구·눈 및 안면보호구를 검토 조합으로 구성해 주세요."
+                >
+                  황산 · 전체 조합
+                </button>
+              </div>
+              <small>예시는 입력창에만 채워집니다.</small>
+            </div>
+            <div
+              id="chatMessages"
+              class="chat-messages"
+              aria-live="polite"
+            ></div>
+            <form id="chatForm">
+              <label for="chatInput">회사에서 사용하는 물질과 작업</label
+              ><textarea
+                id="chatInput"
+                rows="3"
+                maxlength="6000"
+                placeholder="예: 황산 30% — 실외 탱크 이송
+암모니아수 25% — 별도 구역 세척
+온도·작업시간·비말·환기 조건도 알려주세요."
+                required
+              ></textarea>
+              <div class="composer-actions">
+                <span id="chatProgress" class="muted small" role="status"
+                  >물질을 입력하면 대화를 시작할 수 있어요.</span
+                ><button type="submit" id="chatSend" class="primary" disabled>
+                  보내기 ↑
+                </button>
+              </div>
+            </form>
+          </div>
+          <aside class="card chat-note">
+            <p class="section-kicker">MATERIALS FIRST</p>
+            <div id="selectionSummary">
+              <p>물질과 작업 입력 → 조합 선택지 비교 → 내 조합에 넣기</p>
+              <p class="small muted">
+                확인된 제품만 묶습니다. 자료가 부족한 품목은 남은 확인으로
+                표시하고, 한 조합만 제시할 수도 있습니다.
+              </p>
+            </div>
+            <label class="checkbox-label"
+              ><input
+                id="distinguishColours"
+                type="checkbox"
+                checked
+                disabled
+              />사용 형식과 별도 작업별 보호복 색상 구분</label
+            >
+            <p id="chatExistingColours" class="small muted"></p>
+            <p id="catalogScope" class="muted small"></p>
+            <details>
+              <summary>추천의 근거</summary>
+              <p class="small">
+                형식과 색상으로 물질별 보호성능을 확정하지 않습니다. 답변에서
+                확인한 자료와 남은 조건을 함께 보여줍니다.
+              </p>
+              <a href="criteria.html" target="_blank" rel="noopener"
+                >자료·선정 기준 ↗</a
+              >
+            </details>
+          </aside>
+        </div>
+      </section>
+      <section id="kitPanel" class="panel" aria-label="검토용 조합" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">YOUR PPE KIT</p>
+            <h2>내 조합</h2>
+            <p>추천받은 제품을 한 번에 넣고, 작업에 맞게 검토하세요.</p>
+          </div>
+          <span class="badge neutral">검토용 초안</span>
+        </div>
+        <div class="kit-layout">
+          <div class="card form-card">
+            <label for="companyType"
+              >조합 이름<input
+                id="companyType"
+                placeholder="예: 황산 이송 작업용"
+                autocomplete="off"
+            /></label>
+            <label for="workZone"
+              >사용 물질과 작업<textarea
+                id="workZone"
+                rows="3"
+                placeholder="물질, 함량, 작업을 적어주세요."
+              ></textarea>
+            </label>
+            <label for="useType"
+              >사용 형식<select id="useType" aria-describedby="useTypeNote">
+                <option value="">미선택 · 확인 전</option>
+                <option value="1">1형식</option>
+                <option value="2">2형식</option>
+                <option value="3">3형식</option>
+                <option value="4">4형식</option>
+                <option value="5">5형식</option>
+                <option value="6">6형식</option></select
+              ><span id="useTypeNote" class="small muted"
+                >이 조합을 사용할 형식입니다. 선택은 보호성능 승인이나 인증
+                판정이 아닙니다.</span
+              ></label
+            >
+            <label for="workGroup"
+              >작업 구분<input
+                id="workGroup"
+                aria-describedby="workGroupNote"
+                placeholder="예: 산 이송 / 알칼리 세척 / 혼합액 세척"
+                maxlength="80"
+                autocomplete="off"
+              /><span id="workGroupNote" class="small muted"
+                >작업 목적명을 입력하세요. 같은 작업의 대안에는 같은 이름을
+                사용합니다. 실제 혼합액은 하나의 작업 조건으로 검토합니다.</span
+              ></label
+            >
+            <label for="coverall"
+              >보호복<select id="coverall">
+                <option value="">제품 선택</option>
+              </select></label
+            >
+            <details class="component-selectors" open>
+              <summary>함께 쓸 보호구</summary>
+              <label for="gloves"
+                >화학장갑<select id="gloves">
+                  <option value="">미선정</option>
+                </select></label
+              >
+              <label for="respirator"
+                >호흡보호구<select id="respirator">
+                  <option value="">미선정</option>
+                </select></label
+              >
+              <label for="respiratorAccessory"
+                >정화통·필터·연결 부품<select id="respiratorAccessory">
+                  <option value="">호흡 부품 선택</option>
+                </select></label
+              ><button
+                type="button"
+                id="addRespiratorAccessory"
+                class="text-button"
+              >
+                호흡 부품 추가
+              </button>
+              <div id="respiratoryParts" class="accessory-chips"></div>
+              <label for="eye_protection"
+                >눈 보호구<select id="eye_protection">
+                  <option value="">미선정</option>
+                </select></label
+              >
+              <label for="face_shield"
+                >안면보호구<select id="face_shield">
+                  <option value="">미선정</option>
+                </select></label
+              >
+              <label for="boots"
+                >화학장화<select id="boots">
+                  <option value="">미선정</option>
+                </select></label
+              >
+            </details>
+            <label for="exposureNote"
+              >검토 메모<textarea
+                id="exposureNote"
+                rows="3"
+                placeholder="농도·온도·노출조건, 담당자 메모"
+              ></textarea>
+            </label>
+          </div>
+          <div>
+            <div class="card preview-card">
+              <div class="section-heading compact">
+                <h3>조합 미리보기</h3>
+                <span id="colourBadge" class="badge neutral">제품 선택 전</span>
+              </div>
+              <p id="criteriaNote" class="small muted"></p>
+              <div id="kitPreview" class="kit-preview"></div>
+            </div>
+            <div class="card readiness">
+              <p id="reviewNote" class="muted small"></p>
+              <div class="actions">
+                <button type="button" id="saveDraft" class="primary" disabled>
+                  초안 저장</button
+                ><button type="button" id="loadDraft" disabled>
+                  저장 초안 불러오기</button
+                ><button type="button" id="exportDraft" disabled>
+                  JSON 보기
+                </button>
+              </div>
+              <p id="savedStatus" class="muted small" role="status"></p>
+              <div id="draftExport" hidden>
+                <label for="draftJson"
+                  >검토용 초안 JSON<textarea
+                    id="draftJson"
+                    rows="10"
+                    readonly
+                  ></textarea></label
+                ><a id="draftDownload" download="ppe-kit-review-draft.json"
+                  >JSON 파일 내려받기 ↗</a
+                >
+              </div>
+              <p class="small muted future-note">
+                이 조합은 검토용 초안입니다. 사용 승인·감지 등록·합성 사진
+                생성은 수행하지 않습니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <div>
+          <strong class="footer-brand">ChemiGuard.</strong>
+          <p>사용 물질을 입력하고, 작업에 맞는 보호구를 고르세요.</p>
+        </div>
+        <div>
+          <a href="criteria.html" target="_blank" rel="noopener">선정 기준 ↗</a
+          ><a href="catalog-data.json" target="_blank" rel="noopener"
+            >제품·출처 자료 ↗</a
+          ><span class="small muted">현장을 위한 근거 있는 선택</span>
+        </div>
+        <p class="footer-fine">
+          자료 검토일 <span id="reviewDate">2026-10-04</span> · 국내 판매 목록과
+          실제 재고는 다를 수 있습니다. 물질별 성능과 판매 실물의 인증은 함께
+          확인합니다.
+        </p>
+      </footer>
+      <div id="compareTray" class="compare-tray" hidden>
+        <div>
+          <strong id="compareCount"></strong><span id="compareNames"></span>
+        </div>
+        <button id="openComparison" type="button" class="primary">
+          선택한 제품 비교하기</button
+        ><button
+          id="clearComparison"
+          type="button"
+          aria-label="비교 선택 지우기"
+        >
+          ×
+        </button>
+      </div>
+      <dialog id="productDialog" class="product-dialog">
+        <button
+          type="button"
+          class="dialog-close"
+          id="closeProductDialog"
+          aria-label="상세 닫기"
+        >
+          ×
+        </button>
+        <div id="productDetail"></div>
+      </dialog>
+      <dialog id="photoDialog" class="photo-dialog">
+        <button
+          type="button"
+          class="dialog-close"
+          id="closePhotoDialog"
+          aria-label="사진 닫기"
+        >
+          ×
+        </button>
+        <div id="photoDetail"></div>
+      </dialog>
+    </main>
+  </body>
+</html>
