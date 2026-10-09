@@ -142,7 +142,7 @@ function App(){
               <button className="button primary start" disabled={busy || running || !sourceId || !policyId} onClick={start}>{busy || run?.status==='LOADING'?<LoaderCircle className="spin" size={18}/>:<Play size={18}/>}분석 시작</button>
             </section>
             {!boot.system.api_configured && <div className="notice warning"><AlertTriangle size={17}/>Luna 연결 대기 · 서버에 OPENAI_API_KEY를 설정해 주세요.</div>}
-            <section className="metrics-band"><Metric label="현재 추적" value={visibleTracks.length} unit="명" icon={Users}/><Metric label="이번 실행 사건" value={currentEvents.length} unit="건" icon={Bell}/><Metric label="로컬 처리" value={run?.status==='RUNNING'?run.metrics.processing_fps:'-'} unit="FPS" icon={Activity}/><Metric label="착용 관찰 응답" value={run?.metrics.api_mean_ms? (run.metrics.api_mean_ms/1000).toFixed(2):'-'} unit="초" icon={Clock3}/></section>
+            <section className="metrics-band"><Metric label="현재 추적" value={visibleTracks.length} unit="명" icon={Users}/><Metric label="이번 실행 사건" value={currentEvents.length} unit="건" icon={Bell}/><Metric label="로컬 처리" value={run?.status==='RUNNING'?run.metrics.processing_fps:'-'} unit="FPS" icon={Activity}/><Metric label="Decisions 응답" value={run?.metrics.api_mean_ms? (run.metrics.api_mean_ms/1000).toFixed(2):'-'} unit="초" icon={Clock3}/></section>
             <div className="monitor-grid">
               <section className="video-section"><div className="section-title"><h2><Video size={18}/>시연 영상</h2><span className="subtle">{run?.id ? '파일 실시간 분석' : source?.case}</span></div>
                 <VideoPanel source={source} run={run} connected={connected} control={control} busy={busy} onStart={start} canStart={!running&&Boolean(sourceId&&policyId)} onPresentedFrame={setPresented}/>
@@ -214,7 +214,7 @@ function Person({person,fresh}){
     {person.active_violations?.length>0&&<div className="person-reason red">미해제 경보 · {person.active_violations.join(' · ')}</div>}
     <ProductCheck check={fresh?person.product_check:{state:'STALE'}} alerts={person.product_alerts}/>
     <div className="person-meta"><Badge value={fresh?person.processing_state:'STALE'}/><span>{person.pending?'관찰 요청 중':person.confirmed?'연속 2회 관찰':'합의 대기'}</span>{person.latency_ms!=null&&<span>{(person.latency_ms/1000).toFixed(2)}s</span>}</div>
-    <div className="identity-line"><span>등록 제품 외형</span>{person.identity.candidates?.length?<><strong>{person.identity.candidates[0].name}</strong><small>후보 · 미확정</small></>:<small>{person.identity.reason||'참고 사진 없음'}</small>}</div>
+    <div className="identity-line"><span>{person.product_check?.primary_backend==='decisions'?'Decisions 제품':'등록 제품 외형'}</span>{person.product_check?.primary_backend==='decisions'?<small>{fresh&&person.product_check.candidate?`${person.product_check.candidate.name} ${person.product_check.candidate.designation_basis==='site_standard_color_and_form'?'등록 표준':'계열 후보'}`:'제품 미확정'}</small>:person.identity.candidates?.length?<><strong>{person.identity.candidates[0].name}</strong><small>후보 · 미확정</small></>:<small>{person.identity.reason||'참고 사진 없음'}</small>}</div>
   </article>;
 }
 

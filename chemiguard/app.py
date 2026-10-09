@@ -337,10 +337,10 @@ def identity_history(run_id: str):
         raise HTTPException(404, '실행을 찾을 수 없습니다.')
     from collections import deque
     path = DATA / 'runs' / record['id'] / 'identity.jsonl'
-    if not path.is_file():
-        return []
-    with path.open(encoding='utf-8') as source:
-        lines = deque(source, maxlen=200)
+    lines = []
+    if path.is_file():
+        with path.open(encoding='utf-8') as source:
+            lines = deque(source, maxlen=200)
     rows = []
     for line in lines:
         try:
@@ -354,8 +354,10 @@ def identity_history(run_id: str):
                                           'identity': row, 'saved_comparison': True}
     for observation in sorted(store.related('observation', 'run_id', run_id), key=lambda row: row.get('source_time_s', 0)):
         token = observation.get('track_token')
-        if token in latest and observation.get('applied') and observation['result'].get('product_check'):
+        if token and observation.get('applied') and observation['result'].get('product_check'):
             check = observation['result']['product_check']
+            latest.setdefault(token, {'track_id': observation['track_id'], 'track_token': token,
+                                      'identity': {}, 'saved_comparison': True})
             latest[token].update(product_check=check, product_alerts=check.get('active_alerts', {}))
             if check.get('identity', {}).get('candidates'):
                 latest[token]['identity'] = check['identity']

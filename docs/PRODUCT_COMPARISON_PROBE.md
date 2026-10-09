@@ -83,3 +83,27 @@ PYTHONPATH=. .venv/bin/python scripts/compare_product_decisions.py \
 명령은 새 유료 API 호출을 실행한다. 기존 로컬 환경의 OPENAI_API_KEY가 필요하다. 출력 폴더가 있으면 덮어쓰지 않고 종료한다. manifest는 cases(id/query/optional context/combined), product_order, references(기존 embedding와 image_path), site_products, policy를 포함한다. 시험용 snapshot은 운영 DB를 읽기 전용으로 준비했으며 스크립트는 DB에 쓰지 않는다.
 
 private 근거: `.data/product-comparison/manifest.json`, `run-1/results.jsonl`, `run-1/summary.json`, `diagnostic-input.json`, `context-diagnostic.json`. Manifest SHA-256: `50e7da41f601f4e9745b7f07781567396e3e5b2804b5c3b887894019b9bda3ae`. 원본·DB·API 키·개인 crop·원응답은 공개 커밋에 포함하지 않는다. 기존 사전 자료와 예측 기록은 삭제·수정하지 않았다.
+
+## 후속 사용자 승인과 분리 적용
+
+위 표는 초기 reference-membership-probe-v1의 고정 비교 결과다. 이후 사용자가 Decisions 메인 사용을 승인하여 product-decisions-separated-v1을 운영에 적용했다. **참고 사진을 PPE 질문과 같은 요청에 섞는 방식은 채택하지 않았다.** PPE를 먼저 적용하고 제품은 별도 작업자에서 호출하며, 몸통 미착용/판독 불가는 제품 호출을 생략한다. SigLIP은 보조 표시에만 남았다. 새 실제 확인(제품 평균 약 0.41초), 유사 흰색 판단 불가 및 채택의 한계는 DEVELOPMENT_LOG.md의 'OpenAI 우선: Decisions 제품 메인 적용' 절에 별도로 기록한다. 초기 시험과 다른 입력/프롬프트의 결과를 한 정확도 표로 섞지 않는다.
+
+## 최신 기준: 색상 표준화와 호출 방식 비교
+
+사용자는 비슷한 흰색 제품을 구분할 필요 없이 현장 색상별 대표로 표준화한다고 정했다. 따라서 최신 product-decisions-site-standard-v2는 같은 흰색/보호복 형태를 P11 등록 표준으로 분류한다. 기존 v1 표의 exact-family 목표와 혼합하지 않는다. 지정한 이전 세션의 PPE 프롬프트(top1, 전면형 방독면, 보이는 부위, 후드/외관상 여밈)는 그대로 유지했다.
+
+2026-10-09 동일 사진 4조건, 각 방식 1회, 새 HTTP 요청 20회(오류 0)의 제한된 개발 비교:
+
+| 방식 | 두 결과 완료 중앙값 | 범위 | 전체 입력 토큰 |
+|---|---:|---:|---:|
+| 순차 별도 요청 | 942.4ms | 742.7~1682.6ms | 24,768 |
+| 병렬 별도 요청 | 586.2ms | 387.3~916.2ms | 24,768 |
+| 한 요청 통합 | 583.5ms | 408.7~774.2ms | 21,386 |
+
+토큰은 4조건 합계다. 순차도 두 질문을 모두 호출해 작업량을 맞췄다. 모든 지연은 네트워크/인코딩 포함이며 검출부터 경보까지의 지연이 아니다. PPE 결과만의 중앙값은 순차 472.9ms/병렬 586.2ms이므로 병렬이 모든 개별 호출을 가속한다고 해석하지 않는다.
+
+- 흰 Tyvek 측면과 V08은 세 방식 모두 흰 등록 표준 후보. 색상 표준 분류이지 실제 제품 정답 확인이 아니다.
+- 노란 AlphaTec은 순차/병렬 none, 통합 uncertain. V08 방독면은 독립 요청 uncertain, 통합 covered. 어느 판정이 정답인지 이 비교만으로 확정하지 않는다.
+- 검은 셔츠는 세 방식 모두 PPE torso uncovered지만 제품 원응답은 회색 P04로 잘못 분류했다. 독립 PPE gate를 적용해야 제품 후보를 제외할 수 있다.
+
+**채택은 독립 병렬 요청**이다. 통합은 이 표본에서 입력 토큰 13.7% 절약, 지연은 병렬과 비슷했지만 PPE 질문에 참고 사진을 넣는 영향이 남는다. 제품 결과는 정확히 같은 부모 PPE 결과와 결합하고 미착용/불확실이면 사용하지 않는다. 이미 선행 호출된 제품 비용은 발생할 수 있다. 새 실제 두 영상의 API 중첩·미해당 HIGH 검증과 잔여 한계는 DEVELOPMENT_LOG.md 마지막 절에 기록했다. 재현 코드는 scripts/compare_decision_routing.py, 원본/원응답은 Git 제외 경로에만 보관한다.

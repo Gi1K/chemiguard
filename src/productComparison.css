@@ -1,4 +1,5 @@
 .product-section{border-top:1px solid var(--line);padding:22px 0;margin-top:22px}
+.supporting-comparison{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}.supporting-comparison>summary{cursor:pointer;font-size:11px;color:#697977;margin-bottom:12px}
 .product-comparisons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .product-comparison{min-width:0}.product-comparison+ .product-comparison{border-left:1px solid var(--line);padding-left:24px}
 .product-comparison header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}

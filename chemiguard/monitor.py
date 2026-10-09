@@ -11,7 +11,7 @@ import cv2
 from scenedetect.detectors import ContentDetector
 from scenedetect.scene_detector import FlashFilter
 
-from . import decisions
+from . import decisions, product_decisions
 from .config import DATA, ROOT, fingerprint
 from .sources import sources
 from .observation import (SCHEDULE, WINDOW_SECONDS, combine_observation, eligible_candidates,
@@ -19,7 +19,7 @@ from .observation import (SCHEDULE, WINDOW_SECONDS, combine_observation, eligibl
 from .store import now, store, uid
 from .vision import Vision, crop, identity, jpeg, observation_image
 from .products import current_site_products
-from .product_alerts import VERSION as PRODUCT_ALERT_VERSION, assess_product, combine_product_check
+from .product_alerts import DECISIONS_VERSION as PRODUCT_ALERT_VERSION, assess_decisions_product, combine_product_check
 
 OBSERVATION_TTL = 5.0
 TRACK_TTL = 1.2
@@ -59,6 +59,9 @@ class Run:
         self.cooldowns = {}
         self.future = None
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='decisions')
+        self.product_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='product-decisions')
+        self.product_future = None
+        self.product_catalog = None
         self.width = self.height = 0
         self.source_time = self.duration = 0
         self.playback_time = 0
@@ -67,6 +70,8 @@ class Run:
         self.started = time.monotonic()
         self.last_processed = 0
         self.metrics = {'processed_frames': 0, 'api_calls': 0, 'api_errors': 0, 'api_discarded': 0,
+                        'product_api_calls': 0, 'product_api_errors': 0, 'product_api_discarded': 0,
+                        'product_busy_skipped': 0, 'product_api_latency_ms': [], 'paired_ready_ms': [],
                         'api_latency_ms': [], 'input_tokens': 0, 'output_tokens': 0, 'events': 0,
                         'local_frame_ms': [],
                         'local_latency_ms': 0, 'processing_fps': 0}
@@ -80,7 +85,8 @@ class Run:
             'source': sources.metadata[source_id], 'source_mode': 'live_file_processing',
             'policy': policy, 'person_size': size, 'generation': self.generation,
             'status': 'LOADING', 'code_sha': code_sha, 'code_dirty': code_dirty,
-            'pipeline_version': 'face-quality-top1-v5', 'decision_schedule_s': SCHEDULE,
+            'pipeline_version': 'parallel-product-decisions-v7', 'decision_schedule_s': SCHEDULE,
+            'decision_routing': 'parallel_independent_requests_ppe_gate_on_join',
             'ppe_selection_version': decisions.PPE_SELECTION_VERSION,
             'decision_input_version': decisions.INPUT_VERSION, 'decision_image_detail': decisions.IMAGE_DETAIL,
             'evidence_window_s': WINDOW_SECONDS, 'shot_changes': [],
@@ -91,6 +97,8 @@ class Run:
         self.record['site_products'] = self.site_products
         self.record['product_alert_version'] = PRODUCT_ALERT_VERSION
         self.record['product_alarm_severity'] = 'HIGH'
+        self.record['product_primary_backend'] = 'decisions'
+        self.record['product_decision_version'] = product_decisions.VERSION
         self.thread = threading.Thread(target=self._work, daemon=True, name=self.id)
         self.thread.start()
 
@@ -202,9 +210,16 @@ class Run:
             self.record['input_sha256'] = fingerprint(video)
             vision = Vision(self.size, self.policy['release_monitoring'])
             self.record['models'] = vision.manifest
+            self.product_catalog = product_decisions.prepare_catalog(self.references, self.site_products)
+            self.record['product_reference_inputs'] = self.product_catalog['image_inputs']
+            self.record['product_reference_error'] = self.product_catalog['error']
             if self.references:
-                identity.load()
-                self.record['models']['identity'] = {'model': 'siglip2-base-patch16-384', 'sha256': identity.model_hash}
+                try:
+                    identity.load()
+                    self.record['models']['identity'] = {'model': 'siglip2-base-patch16-384',
+                                                         'sha256': identity.model_hash, 'role': 'supporting_only'}
+                except Exception as exc:
+                    self.record['models']['identity'] = {'role': 'supporting_only', 'error': type(exc).__name__}
             capture = cv2.VideoCapture(str(video))
             if not capture.isOpened():
                 raise ValueError('영상을 열 수 없습니다.')
@@ -273,6 +288,7 @@ class Run:
             if reader:
                 reader.join(timeout=3)
             self.pool.shutdown(wait=True, cancel_futures=True)
+            self.product_pool.shutdown(wait=True, cancel_futures=True)
             self._save()
 
     def _process(self, vision, frame, seq, timestamp, captured, epoch, scene_epoch):
@@ -427,8 +443,22 @@ class Run:
                     person.update(pending=True, last_requested=captured, last_observed=selected['captured'],
                                   requested_signature=selected['quality']['signature'], trigger_reason=trigger)
                     self.metrics['api_calls'] += 1
-                self.future = self.pool.submit(decisions.observe, body['images'], self.policy, bool(self.site_products))
-                self.future.add_done_callback(lambda future, env=envelope: self._answer(future, env))
+                self._dispatch_decisions(envelope, body['images'])
+
+    def _dispatch_decisions(self, envelope, images):
+        with self.lock:
+            product_future = None
+            self.future = self.pool.submit(decisions.observe, images, self.policy, bool(self.site_products))
+            if self.site_products:
+                if self.product_future is not None and not self.product_future.done():
+                    self.metrics['product_busy_skipped'] += 1
+                else:
+                    product_future = self.product_pool.submit(product_decisions.timed_observe_product,
+                                                              images, self.product_catalog)
+                    self.product_future = product_future
+            # Both independent requests are submitted before registering callbacks.
+            # PPE is applied immediately; product may join only this exact PPE observation.
+            self.future.add_done_callback(lambda future: self._answer(future, envelope, product_future))
 
     def _identify(self, body, selected, person, epoch, scene_epoch):
         image = body['images'].get('identity_torso')
@@ -456,7 +486,7 @@ class Run:
         names = {}
         hashes = {}
         for name, image in {'frame': frame, **images}.items():
-            encoded, extension = (observation_image(image, name) if name in ('person', 'torso', 'legs', 'head')
+            encoded, extension = (observation_image(image, name) if name in ('person', 'torso', 'legs', 'head', 'identity_torso')
                                   else (jpeg(image), 'jpg'))
             filename = f'{observation_id}_{name}.{extension}'
             path = self.path / 'evidence' / filename
@@ -467,7 +497,7 @@ class Run:
                 'source_time_s': round(timestamp, 3), 'source_width': frame.shape[1], 'source_height': frame.shape[0],
                 'bbox': bbox, 'images': names, 'image_hashes': hashes}
 
-    def _answer(self, future, envelope):
+    def _answer(self, future, envelope, product_future):
         try:
             result = future.result()
         except Exception as exc:
@@ -493,12 +523,6 @@ class Run:
             observation = envelope | {'completed_at': now(), 'completed_monotonic': completed,
                                       'result': result, 'applied': discarded is None, 'discard_reason': discarded}
             if not discarded:
-                product_check = assess_product(result.get('garment_color', 'uncertain'),
-                                                envelope.get('identity', {}), self.site_products, result.get('error'))
-                product_check['source_time_s'] = envelope['source_time_s']
-                product_transition = combine_product_check(track, product_check, envelope['observed_monotonic'], envelope['id'])
-                result['product_check'] = product_check
-                observation['product_transition'] = product_transition
                 transition = combine_observation(track, result, envelope['observed_monotonic'], envelope['id'],
                                                  OBSERVATION_TTL, CONSENSUS_WINDOW)
                 observation['transition'] = transition | {
@@ -516,17 +540,13 @@ class Run:
                 self.metrics['api_errors'] += 1
             if discarded:
                 self.metrics['api_discarded'] += 1
+                self._join_product(product_future, envelope, result, discarded)
                 return
             track['result'] = result | {'observed_monotonic': envelope['observed_monotonic'],
                                         'source_time_s': envelope['source_time_s'], 'observation_id': envelope['id']}
             track['processing_state'] = result['processing_state']
             track['reason'] = result.get('reason') or result.get('error')
             track['errors'] = track.get('errors', 0)+1 if result.get('error') else 0
-            if product_transition['new_alerts']:
-                self._event('PRODUCT_MISMATCH_SUSPECTED',
-                            ' · '.join(product_check['active_alerts'][key] for key in product_transition['new_alerts']),
-                            observation, track['token']+':'+envelope['id'],
-                            product_transition['supporting_observation_ids'])
             if transition['new_violations']:
                 self._event('VIOLATION_SUSPECTED', ' · '.join(transition['new_violations']), observation,
                             str(track['token'])+':'+','.join(transition['new_violations']),
@@ -538,6 +558,81 @@ class Run:
                         del self.cooldowns[key]
             if not transition['usable'] or self.policy['identity_required']:
                 self._event('REVIEW_REQUIRED', track['reason'] if not transition['usable'] else '등록 제품 확인 필요 · 외형 후보 미확정', observation, str(track['token']))
+            self._join_product(product_future, envelope, result)
+
+    def _join_product(self, future, envelope, ppe, ppe_discard_reason=None):
+        if not self.site_products:
+            return
+        if future is None:
+            decision = {'version': product_decisions.VERSION, 'membership': 'uncertain', 'reason': '제품 작업 중 · 대기열 생략',
+                        'candidate': None, 'api_called': False, 'latency_ms': 0}
+            self._product_answer(None, envelope, ppe, decision, ppe_discard_reason)
+            return
+        future.add_done_callback(lambda completed: self._product_answer(completed, envelope, ppe,
+                                                                        ppe_discard_reason=ppe_discard_reason))
+
+    def _product_answer(self, future, envelope, ppe, decision=None, ppe_discard_reason=None):
+        try:
+            decision = future.result() if future is not None else decision
+        except Exception as exc:
+            decision = {'version': product_decisions.VERSION, 'membership': 'uncertain', 'candidate': None,
+                        'error': f'제품 관찰 실패: {type(exc).__name__}', 'api_called': False}
+        completed = time.monotonic()
+        decision = product_decisions.apply_ppe_gate(ppe, decision)
+        decision.setdefault('timings_ms', {})['paired_ready_after_dispatch'] = round(
+            (completed-envelope['requested_monotonic'])*1000, 1)
+        with self.lock:
+            track = self.tracks.get(envelope['track_id'])
+            discarded = None
+            if ppe_discard_reason:
+                discarded = 'ppe_' + ppe_discard_reason
+            elif self.state != 'RUNNING':
+                discarded = 'run_not_running'
+            elif envelope['generation'] != self.generation:
+                discarded = 'generation_changed'
+            elif envelope['scene_epoch'] != self.scene_epoch:
+                discarded = 'scene_changed'
+            elif track is None or track['token'] != envelope['track_token'] or completed-track['last_seen'] > TRACK_TTL:
+                discarded = 'track_expired'
+            elif completed-envelope['observed_monotonic'] > OBSERVATION_TTL:
+                discarded = 'observation_expired'
+            elif max((track.get('product_result') or {}).get('observed_monotonic', 0),
+                     (track.get('result') or {}).get('observed_monotonic', 0)) > envelope['observed_monotonic']:
+                discarded = 'newer_observation'
+            decision['query_url'] = envelope['images'].get('identity_torso')
+            check = assess_decisions_product(ppe, decision, envelope.get('identity', {}), self.site_products)
+            check['source_time_s'] = envelope['source_time_s']
+            observation = envelope | {'id': uid('product_observation'), 'observation_kind': 'product',
+                'ppe_observation_id': envelope['id'], 'created_at': now(), 'completed_at': now(),
+                'completed_monotonic': completed, 'applied': discarded is None, 'discard_reason': discarded,
+                'result': {'product_check': check, 'product_decision': decision, 'wearing': ppe.get('wearing'),
+                           'parts': ppe.get('parts'), 'latency_ms': decision.get('latency_ms')}}
+            if not discarded:
+                transition = combine_product_check(track, check, envelope['observed_monotonic'], observation['id'])
+                observation['product_transition'] = transition
+                track['product_result'] = {'check': check, 'observed_monotonic': envelope['observed_monotonic']}
+            store.put('observation', observation)
+            with (self.path / 'observations.jsonl').open('a', encoding='utf-8') as log:
+                log.write(json.dumps(observation, ensure_ascii=False) + '\n')
+            if decision.get('api_called'):
+                self.metrics['api_calls'] += 1
+                self.metrics['product_api_calls'] += 1
+                self.metrics['product_api_latency_ms'].append(decision['latency_ms'])
+                self.metrics['paired_ready_ms'].append(decision['timings_ms']['paired_ready_after_dispatch'])
+                self.metrics['api_latency_ms'].append(decision['latency_ms'])
+                usage = decision.get('usage') or {}
+                self.metrics['input_tokens'] += usage.get('input_tokens', 0)
+                self.metrics['output_tokens'] += usage.get('output_tokens', 0)
+            if decision.get('error'):
+                self.metrics['product_api_errors'] += 1
+                self.metrics['api_errors'] += int(bool(decision.get('api_called')))
+            if discarded:
+                self.metrics['product_api_discarded'] += int(bool(decision.get('api_called')))
+                self.metrics['api_discarded'] += int(bool(decision.get('api_called')))
+            elif transition['new_alerts']:
+                self._event('PRODUCT_MISMATCH_SUSPECTED',
+                            ' · '.join(check['active_alerts'][key] for key in transition['new_alerts']),
+                            observation, track['token']+':'+observation['id'], transition['supporting_observation_ids'])
 
     def _scene_result(self, detections, frame, seq, timestamp, captured):
         self.last_scene = time.monotonic()
@@ -602,6 +697,11 @@ class Run:
             if not self.policy['coverall_required']:
                 state, wearing = 'DISABLED', 'UNKNOWN'
             matching = track['identity']
+            product_result = track.get('product_result') or {}
+            product_check = product_result.get('check', {})
+            if (halted or current-product_result.get('observed_monotonic', 0) > OBSERVATION_TTL
+                    or source_time is not None and product_check.get('source_time_s', 0) > source_time):
+                product_check = {'state': 'STALE', 'primary_backend': 'decisions'}
             if matching.get('candidates') and (halted
                     or current-matching.get('observed_monotonic', 0) > 3
                     or source_time is not None and matching.get('source_time_s', 0) > source_time):
@@ -612,7 +712,7 @@ class Run:
                            'all_required_observed': bool(valid and track.get('complete_confirmed')),
                            'violations': result.get('violations', []) if valid else [],
                            'active_violations': track['active_violations'], 'reason': reason,
-                           'product_check': result.get('product_check', {}) if valid else {'state': 'STALE'},
+                           'product_check': product_check,
                            'product_alerts': dict(track.get('product_alerts', {})),
                            'trigger_reason': track.get('trigger_reason'),
                            'source_time_s': result.get('source_time_s'), 'latency_ms': result.get('latency_ms')}))
@@ -627,6 +727,10 @@ class Run:
                 scene.update(processing_state='STALE', suspected=False)
             metrics = copy.deepcopy(self.metrics)
             latency = metrics.pop('api_latency_ms')
+            product_latency = metrics.pop('product_api_latency_ms')
+            metrics['product_api_mean_ms'] = round(sum(product_latency)/len(product_latency), 1) if product_latency else None
+            paired_latency = metrics.pop('paired_ready_ms')
+            metrics['paired_ready_mean_ms'] = round(sum(paired_latency)/len(paired_latency), 1) if paired_latency else None
             local_latency = metrics.pop('local_frame_ms')
             metrics['local_mean_ms'] = round(sum(local_latency)/len(local_latency), 1) if local_latency else None
             metrics['api_mean_ms'] = round(sum(latency)/len(latency), 1) if latency else None
@@ -642,6 +746,7 @@ class Run:
                     'person_size': self.size, 'people_state': self.record.get('people_state', 'WAITING'),
                     'tracks': tracks, 'scene': scene, 'metrics': metrics, 'policy': self.policy,
                     'site_products': self.site_products,
+                    'product_primary_backend': 'decisions',
                     'frame_url': f'/api/runs/{self.id}/frame?generation={image_key[0]}&seq={image_key[1]}' if image_key else None,
                     'updated_at': now(), 'frame_age_s': round(current-self.last_processed, 2) if self.last_processed else None}
 
