@@ -1,0 +1,16 @@
+[Unit]
+Description=ChemiGuard hackathon public HTTPS demo through Nginx
+After=network-online.target chemiguard-monitor.service
+Requires=chemiguard-monitor.service
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/docker start chemiguard-public-nginx
+ExecStart=%h/.local/bin/cloudflared tunnel --no-autoupdate --protocol http2 --url http://127.0.0.1:18865
+ExecStopPost=/usr/bin/docker stop chemiguard-public-nginx
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+
+[Install]
+WantedBy=default.target
