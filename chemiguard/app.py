@@ -215,7 +215,7 @@ def upload_source(video: UploadFile = File(...), source: str = Form(...)):
         destination.unlink(missing_ok=True)
         raise
     sources.refresh()
-    return next(row for row in sources.list() if sources.path(row['id']) == destination)
+    return next(row for row in sources.list(include_archive=True) if sources.path(row['id']) == destination)
 
 
 @app.get('/api/policies')

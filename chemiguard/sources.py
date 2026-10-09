@@ -7,10 +7,18 @@ from pathlib import Path
 
 import cv2
 
-from .config import ASSETS, DATA, PPE_MEDIA
+from .config import ASSETS, DATA, DEMO_MEDIA, PPE_MEDIA
 from .store import store
 
 VIDEO_EXTENSIONS = {'.mp4', '.mov', '.mkv', '.webm', '.avi'}
+
+
+def demo_catalog():
+    return [
+        (ASSETS / '00_최신편집_데모/receiver_valve_centered.mp4', 'receiver_valve_centered', '분출·누출 참고'),
+        (PPE_MEDIA / 'V08_wide_205_222_5s.mp4', '화학보호복 · 두 사람', '두 사람'),
+        (DEMO_MEDIA / 'Tychem4000S_착용_동작_시연.mp4', 'Tychem 4000 S · 착용 동작', '착용 동작'),
+    ]
 
 
 class Sources:
@@ -47,6 +55,13 @@ class Sources:
             path = DATA / row['file']
             if path.is_file():
                 entries.append((path, row['name'], '본선 등록 영상', row.get('source', '사용자 업로드')))
+        demonstration = demo_catalog()
+        path, label, _ = demonstration[2]
+        if path.is_file():
+            entries.append((path, label, '제조사 기존 영상 · 본선 발췌',
+                            'DuPont Tychem 4000 S | EN · https://www.youtube.com/watch?v=ABFEls_O80Q'))
+        selected = {path.resolve(): (order, label, case)
+                    for order, (path, label, case) in enumerate(demonstration)}
         for path, label, origin, source in entries:
             source_id = hashlib.sha256(str(path.resolve()).encode()).hexdigest()[:16]
             self.paths[source_id] = path.resolve()
@@ -54,12 +69,16 @@ class Sources:
                                         'case': '두 사람' if '두 사람' in label else '탈의' if '탈의' in label else '착의' if '착의' in label else '작업' if '보호복' in label else '분출·누출 참고',
                                         'preview_url': f'/api/sources/{source_id}/preview',
                                         'video_url': f'/api/sources/{source_id}/video'}
+            if path.resolve() in selected:
+                order, label, case = selected[path.resolve()]
+                self.metadata[source_id].update(demo_order=order, name=label, case=case)
 
-    def list(self):
+    def list(self, include_archive=False):
         self.refresh()
-        return sorted(self.metadata.values(), key=lambda row: (
-            0 if row['name'] == '화학보호복 착의 · 부분 착용' else 1 if '보호복' in row['name'] else 2,
-            row['name']))
+        rows = self.metadata.values()
+        if not include_archive:
+            rows = [row for row in rows if 'demo_order' in row and self.paths[row['id']].is_file()]
+        return sorted(rows, key=lambda row: (row.get('demo_order', 99), row['name']))
 
     def path(self, source_id):
         if source_id not in self.paths:

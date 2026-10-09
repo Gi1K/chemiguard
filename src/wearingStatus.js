@@ -7,7 +7,11 @@ const PART_NAMES = {torso:'몸통',left_arm:'왼팔',right_arm:'오른팔',left_
 
 export function observationLabel(track) {
   if(Object.keys(track.product_alerts||{}).length) return '등록 보호복 불일치 의심';
-  if(track.active_violations?.length) return '미해제 위반 재확인';
+  if(track.active_violations?.length) {
+    if(track.wearing!=='NOT_WORN') return '미해제 위반 재확인';
+    if(track.parts?.hood==='uncovered'&&track.active_violations.includes('필수 후드 미착용')) return '후드 미착용 경보';
+    return '미착용 경보';
+  }
   if(track.wearing==='NOT_WORN') {
     const missing=Object.entries(track.parts||{}).filter(([,state])=>state==='uncovered'||state==='open');
     if(missing.length===1) return `${PART_NAMES[missing[0][0]]||'부위'} ${missing[0][1]==='open'?'열림':'미착용'} 의심`;

@@ -25,3 +25,11 @@ test('product mismatch overrides a wearing label without erasing PPE observation
   assert.equal(overlayLabel(track),'등록 보호복 불일치 의심');
   assert.equal(observationLabel(track),'등록 보호복 불일치 의심');
 });
+
+test('a directly observed sustained hood violation is an alarm, not a first suspicion',()=>{
+  const track={wearing:'NOT_WORN',parts:{hood:'uncovered'},active_violations:['필수 후드 미착용']};
+  assert.equal(overlayLabel(track),'후드 미착용 경보');
+  assert.equal(observationLabel({...track,active_violations:[]}),'후드 미착용 의심');
+  assert.equal(overlayLabel({...track,wearing:'UNKNOWN',parts:{}}),'미해제 위반 재확인');
+  assert.equal(overlayLabel({wearing:'NOT_WORN',active_violations:['몸통 미착용 관찰']}),'미착용 경보');
+});

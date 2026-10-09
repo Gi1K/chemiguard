@@ -76,7 +76,7 @@ class RespiratorRules(unittest.TestCase):
         labels = [part['text'] for part in request['input'][0]['content'] if part['type'] == 'input_text']
         self.assertTrue(any(text.startswith('Image: head.') for text in labels))
         self.assertEqual(result['parts']['respirator'], 'covered')
-        self.assertEqual(result['prompt_version'], 'ppe-observation-v7-viewpoint')
+        self.assertEqual(result['prompt_version'], 'ppe-observation-v8-garment-hood')
         self.assertEqual(result['ppe_selection_version'], 'ppe-top1-v1')
         self.assertEqual(result['respirator_assessment'], 'full_face_external_appearance')
         self.assertIsNone(result['error'])
@@ -88,11 +88,24 @@ class RespiratorRules(unittest.TestCase):
         self.assertIn('A cartridge or dark silhouette alone is not enough', questions['respirator']['instructions'])
         self.assertIn('Reserve uncertain for an inspectable face', questions['respirator']['instructions'])
         self.assertIn('choose not_visible, not uncertain or open', questions['closure']['instructions'])
-        self.assertEqual(prompt_version_for(POLICY, True), 'ppe-observation-v7-viewpoint-color')
+        self.assertEqual(prompt_version_for(POLICY, True), 'ppe-observation-v8-garment-hood-color')
         legacy = POLICY | {'wearing_assessment': 'all_required'}
         self.assertEqual(prompt_version_for(legacy), 'ppe-observation-v5')
         self.assertNotIn('visor edge/side lens joined', next(row for row in questions_for(legacy)
                                                             if row['name'] == 'respirator')['instructions'])
+
+    def test_ordinary_garments_and_lowered_hoods_are_not_chemical_ppe(self):
+        from chemiguard.decisions import VISIBLE_RULES
+        questions = {row['name']: row for row in questions_for(POLICY)}
+        self.assertIn('not whether the person is merely clothed', VISIBLE_RULES)
+        self.assertIn('Color alone neither proves nor disproves', VISIBLE_RULES)
+        for name in PARTS:
+            self.assertIn('not just any clothes', questions[name]['instructions'])
+            self.assertIn('choose uncertain', questions[name]['instructions'])
+        hood = questions['hood']['instructions']
+        self.assertIn('cap, hat, helmet', hood)
+        self.assertIn('hood hanging behind the neck/on the shoulders', hood)
+        self.assertIn('A face opening or respirator does not mean the hood is off', hood)
 
     def test_policy_default_and_disabled_observation_validation(self):
         self.assertTrue(PolicyInput(name='test', zone_id='test').respirator_required)

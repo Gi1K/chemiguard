@@ -14,7 +14,7 @@ from .wearing import PARTS, summarize_parts
 IMAGE_DETAIL = 'original'
 INPUT_VERSION = 'original-crops-lossless-head-v1'
 PPE_SELECTION_VERSION = 'ppe-top1-v1'
-VISIBLE_PROMPT_VERSION = 'ppe-observation-v7-viewpoint'
+VISIBLE_PROMPT_VERSION = 'ppe-observation-v8-garment-hood'
 PPE_QUESTIONS = frozenset((*PARTS, 'hood', 'closure', 'respirator'))
 
 RULES = (
@@ -34,6 +34,12 @@ VISIBLE_RULES = (
     'Inspect only the central tracked person in the first image. Detail crops show the same moment. '
     'Use the first person image for context; a detail crop can omit a visible body part. '
     'Ignore helpers and their limbs. Pose and crop labels do not establish visibility. '
+    'This is chemical-protective coverall coverage, not whether the person is merely clothed. '
+    'Ordinary jackets, coats, hoodies, shirts, jeans and separate everyday trousers are not a protective coverall. '
+    'Clearly ordinary clothing means uncovered for that region, even if no skin is exposed. '
+    'Distinguish garment construction using the whole person image before judging detail crops. '
+    'Color alone neither proves nor disproves a protective coverall; its brand and certification are not being verified. '
+    'If garment type is genuinely indistinguishable because of image quality, choose uncertain, not covered. '
     'Judge each target body region only to the extent directly visible from this camera viewpoint. '
     'First separate a hidden inspection surface from visible but ambiguous evidence. '
     'Side and rear views are valid evidence of the visible garment; a frontal view is not required. '
@@ -57,12 +63,21 @@ def questions_for(policy, product_check=False):
                           if visible else 'If hidden or ambiguous choose unobservable.')
     questions = [
         {'type': 'choice', 'name': name,
-         'instructions': f'Which coverall coverage state is directly observable on the target\'s own {name.replace("_", " ")}?',
+         'instructions': (f'Which coverall coverage state is directly observable on the target\'s own {name.replace("_", " ")}?'
+                          + (' Covered requires visibly worn chemical-protective coverall fabric, not just any clothes. '
+                             'Choose uncovered for clearly ordinary jacket/shirt/trouser fabric or exposed skin; '
+                             'do not count everyday clothing as coverall coverage. '
+                             + hidden_instruction if visible else '')),
          'choices': [{'value': state} for state in ('covered', 'uncovered', *unknown_states)]}
         for name in PARTS
     ]
     if policy['hood_required']:
-        hood_instruction = ('Is a protective hood worn around the target head? A face opening or respirator does not mean the hood is off. '
+        hood_instruction = ('Is the chemical-protective coverall hood actually pulled up over the target head? '
+                            'A cap, hat, helmet, hair, ordinary hoodie or jacket collar is not this protective hood. '
+                            'A hood hanging behind the neck/on the shoulders is not worn over the head: choose uncovered. '
+                            'A visible cap or uncovered head above a lowered hood establishes uncovered, even from behind. '
+                            'Covered requires recognizable protective hood fabric surrounding the head, not merely any head covering. '
+                            'A face opening or respirator does not mean the hood is off. '
                             'Use the person image if the head detail is cut off. A visibly bare crown means uncovered. ' + hidden_instruction
                             if visible else 'Is the protective hood worn over the target head? If hidden use unobservable.')
         questions.append({'type': 'choice', 'name': 'hood',

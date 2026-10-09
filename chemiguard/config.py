@@ -12,6 +12,7 @@ if os.getenv('CHEMIGUARD_ENV_FILE'):
 
 ASSETS = Path(os.getenv('CHEMIGUARD_ASSETS_DIR') or ROOT.parents[1] / '사전 구현 범위/01_가중치_영상').resolve()
 PPE_MEDIA = Path(os.getenv('CHEMIGUARD_PPE_MEDIA_DIR') or ROOT.parents[2] / 'ppe-reference-poc/demo/adaptive-ppe/video').resolve()
+DEMO_MEDIA = Path(os.getenv('CHEMIGUARD_DEMO_MEDIA_DIR') or ROOT.parents[1] / '시연영상').resolve()
 DATA = Path(os.getenv('CHEMIGUARD_DATA_DIR') or ROOT / '.data').resolve()
 for directory in ('references', 'uploads', 'runs', 'models', 'previews'):
     (DATA / directory).mkdir(parents=True, exist_ok=True)

@@ -58,7 +58,8 @@ function App(){
   const runVersion=useRef(0);
   const load = async () => {
     const data=await api('/bootstrap'); setBoot(data); setRun(data.active);
-    setSourceId(id=>id || data.active?.source_id || data.sources[0]?.id || '');
+    setSourceId(id=>data.sources.some(row=>row.id===id)?id:
+      data.sources.some(row=>row.id===data.active?.source_id)?data.active.source_id:data.sources[0]?.id||'');
     setPolicyId(id=>id || (activeStatus(data.active?.status)?data.active.policy.id:data.policies[0]?.id) || '');
     if(data.active) setSize(data.active.person_size);
   };
@@ -128,8 +129,7 @@ function App(){
         {!connected && <div className="notice error"><AlertTriangle size={18}/>서버 연결이 끊겼습니다. 표시된 관측은 최신 상태가 아닙니다.</div>}
         {!boot ? <Empty icon={LoaderCircle}>관제 환경 불러오는 중</Empty> : <>
           <div className="page-heading"><div><div className="eyebrow">CHEMIGUARD / {page==='monitor'?'LIVE MONITORING':page.toUpperCase()}</div><h1>{NAV.find(item=>item.id===page).title}</h1></div>
-            <div className="heading-actions">{page==='monitor' && <><Badge value={!connected?'ERROR':run?.status || 'WAITING'}/><button className="button" onClick={()=>setModal('upload')}><Plus size={16}/>영상 등록</button></>}
-              {page==='sources' && <button className="button primary" onClick={()=>setModal('upload')}><Plus size={16}/>영상 등록</button>}
+            <div className="heading-actions">{page==='monitor' && <Badge value={!connected?'ERROR':run?.status || 'WAITING'}/>}
               {page==='policies' && <button className="button primary" onClick={()=>setModal('policy')}><Plus size={16}/>기준 만들기</button>}
               {page==='references' && <button className="button primary" disabled={running} onClick={()=>setModal('reference')}><ImagePlus size={17}/>사진 등록</button>}
             </div>
@@ -233,7 +233,7 @@ function ReferenceSelection({references,siteProducts}){
 function SourcesView({sources,choose}){
   const [query,setQuery]=useState(''),[filter,setFilter]=useState('전체');
   const list=sources.filter(row=>(filter==='전체'||row.case===filter)&&`${row.name} ${row.source}`.toLowerCase().includes(query.toLowerCase()));
-  return <><div className="view-toolbar"><div className="tabs">{['전체','착의','탈의','두 사람','작업','분출·누출 참고'].map(value=><button key={value} className={filter===value?'active':''} onClick={()=>setFilter(value)}>{value}</button>)}</div><div className="search"><Search size={16}/><input aria-label="영상 검색" placeholder="영상 검색" value={query} onChange={e=>setQuery(e.target.value)}/></div></div>
+  return <><div className="view-toolbar"><div className="tabs">{['전체',...new Set(sources.map(row=>row.case))].map(value=><button key={value} className={filter===value?'active':''} onClick={()=>setFilter(value)}>{value}</button>)}</div><div className="search"><Search size={16}/><input aria-label="영상 검색" placeholder="영상 검색" value={query} onChange={e=>setQuery(e.target.value)}/></div></div>
     <div className="source-grid">{list.map(row=><article key={row.id} className="source-item"><div className="source-picture"><img src={row.preview_url} alt={row.name} loading="lazy"/><span>{row.case}</span></div><div className="source-content"><small>{row.origin}</small><h3 title={row.name}>{row.name}</h3><button className="button" onClick={()=>choose(row.id)}><Play size={15}/>관제에서 열기</button></div></article>)}</div>{!list.length&&<Empty icon={FileVideo}>해당하는 영상이 없습니다</Empty>}</>;
 }
 function PoliciesView({policies,edit}){return <div className="policy-list">{policies.map(row=><article key={row.id} className="policy-row"><div className="policy-symbol"><SlidersHorizontal size={22}/></div><div className="policy-description"><h3>{row.name}<span>v{row.revision}</span></h3><p>{row.zone_id}</p><div className="policy-tags"><span>{row.wearing_assessment==='visible_regions'?'보이는 범위 관찰':'전체 부위 확인'}</span>{row.coverall_required&&<span>화학복 필수</span>}{row.hood_required&&<span>후드 필수</span>}{row.respirator_required&&<span>전면형 방독면 필수</span>}{row.closure_required&&<span>여밈 필수</span>}{row.identity_required&&<span>등록 제품 확인</span>}{row.release_monitoring&&<span>장면 관찰</span>}</div></div><div className="policy-version"><small>사진 revision {row.reference_revision}</small><span>{date(row.created_at)}</span></div><button className="button" onClick={()=>edit(row)}><Settings2 size={16}/>새 버전</button></article>)}</div>;}
