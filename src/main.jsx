@@ -215,7 +215,7 @@ function Person({person,fresh}){
     {fresh&&person.wearing==='VISIBLE_WORN'&&<div className="person-reason">전체 필수 부위 · 미확인 항목 있음</div>}
     {person.active_violations?.length>0&&<div className="person-reason red">미해제 경보 · {person.active_violations.join(' · ')}</div>}
     <ProductCheck check={fresh?person.product_check:{state:'STALE'}} alerts={person.product_alerts}/>
-    <div className="person-meta"><Badge value={fresh?person.processing_state:'STALE'}/><span>{person.pending?'관찰 요청 중':person.confirmed?'연속 2회 관찰':'합의 대기'}</span>{person.latency_ms!=null&&<span>{(person.latency_ms/1000).toFixed(2)}s</span>}</div>
+    <div className="person-meta"><Badge value={fresh?person.processing_state:'STALE'}/><span>{person.pending?'관찰 요청 중':person.confirmed?'연속 2회 관찰':['WORN','VISIBLE_WORN'].includes(wearing)?'착용 관찰 · 재확인 중':'합의 대기'}</span>{person.latency_ms!=null&&<span>{(person.latency_ms/1000).toFixed(2)}s</span>}</div>
     <div className="identity-line"><span>{person.product_check?.primary_backend==='decisions'?'Decisions 제품':'등록 제품 외형'}</span>{person.product_check?.primary_backend==='decisions'?<small>{fresh&&person.product_check.candidate?`${person.product_check.candidate.name} ${person.product_check.candidate.designation_basis==='site_standard_color_and_form'?'등록 표준':'계열 후보'}`:'제품 미확정'}</small>:person.identity.candidates?.length?<><strong>{person.identity.candidates[0].name}</strong><small>후보 · 미확정</small></>:<small>{person.identity.reason||'참고 사진 없음'}</small>}</div>
   </article>;
 }

@@ -373,3 +373,13 @@
 - 실제 확인: receiver 새 실행 run_b76e6e719ce44006에서 110 프레임/16 API, 두 사람 run_b699c25d92e14c2a에서 87 프레임/25 API를 처리했고 각 오류/폐기 0이었다. 브라우저에서 첫 미착용 1명·경보 전, 이후 미해제 경보 인원과 누출 빨간 표시를 확인했다. 두 사람 영상은 지정 보호구 1/2명·보이는 범위 1명 포함, 미착용 1명, 누출 미관측을 실제 박스와 함께 확인했다. 이는 기존 개발 영상의 UI 동작 확인이며 독립 모델 평가가 아니다.
 - 검증: 새 집계 경계 조건 8개와 기존 라벨/시간축 11개로 Node 19개 통과, production build 통과. 1440x1080 데스크톱, 전체 화면, 390x844 및 320x740 모바일에서 상태 띠/문구 영역을 확인했다. 콘솔 경고/오류 0. UI 근거 화면은 Git 제외 .data/video-status-verification에 보존한다. 서비스 재시작·실제 전화 발신은 하지 않았다.
 - 잔여/범위: 데이터가 없거나 시점이 만료되면 대기/재확인이 표시될 수 있다. 미관측은 영상에서 관찰되지 않았다는 뜻이며 누출/화학 적합성 안전 보증이 아니다. 다른 세션의 전화·발표·라이선스·서버 증빙 변경과 원본/개인 근거는 이번 공개 커밋에서 제외한다.
+
+
+## 2026-10-09 - 첫 착용 응답 즉시 표시 및 두 사람 영상 확인
+
+- 요청/원인: 사용자가 첫 착용 판정도 즉시 표시하도록 요청했다. monitor._public_tracks가 첫 WORN/VISIBLE_WORN을 confirmed=false일 때 UNKNOWN으로, 단일 WORN을 VISIBLE_WORN으로 낮추고 있었으며 상단 집계도 confirmed를 요구했다. API 분류와 화면 표시의 합의 대기 조건이 원인이었다.
+- 변경: chemiguard/monitor.py에서 이 표시 대기를 제거하고 새 실행에 wearing_display_version=first-valid-observation-v1을 남긴다. all_required_observed는 현재 유효 응답의 범위로 표시하고 별도 complete_confirmed/confirmed는 실제 2회 합의로 보존한다. src/videoStatus.js는 첫 착용과 유효 제품 표준 분류를 집계하며 src/main.jsx는 단일 착용을 재확인 중으로 표기한다. 명시 오류/유효 결과 없음/처리 오류를 착용 표시에서 제외하는 조건도 유지·명확화했다.
+- 보존: combine_observation, Decisions 프롬프트·질문·모델·필수 기준, 입력 crop, 요청 재확인 주기, 제품 관찰과 2회 경보/직접 복구는 변경하지 않았다. 기존 미해제 경보가 있으면 첫 착용 결과만으로 녹색 착용/지정 보호구 승인으로 바뀌지 않는다. 파일명·track ID에 따른 예외는 없다. 기존 실행/원응답을 수정하지 않았다.
+- 검증: 첫 WORN/측면 VISIBLE_WORN, 단일 미착용과 2회 경보/복구, 숨은 여밈의 미해제, 오류·만료·미래·일시정지·비활성 표시를 포함한 새 Python 4개와 기존 visible_wearing 8개/observation 6개 등 18개 통과. 상단 즉시 집계/경보 우선과 기존 라벨/시점 정렬 Node 20개 통과. production build 및 diff 공백 검사 통과.
+- 실제 확인: 분석 FINISHED/전화 completed/automatic=false를 확인한 뒤 서비스를 재시작했다. 두 사람 Large/정책 v6의 새 run_a2e8c7c447354f2a는 25 API, 오류/폐기 0이었다. 실제 착용자 #2의 첫 유효 PPE 원본 3.28초 응답은 VISIBLE_WORN, API 328.6ms, 근거 ID 1개/confirmed=false였고 4.48초 표시 프레임부터 동일 상태와 제품 CANDIDATE가 전달됐다. 원본 5.92초의 두 번째 관찰에서만 confirmed=true가 됐다. 브라우저에서 지정 보호구 1/2명·미착용 1명과 박스의 착용 표시, 콘솔 경고/오류 0을 확인했다. 실제 전화는 발신하지 않았다.
+- 근거/한계: .data/first-wearing-verification에 실제 snapshot·화면을 Git 제외 저장했다. 즉시는 첫 유효 응답 후 별도 2회 대기를 없앤 의미이며 프레임 0부터의 분류·지연 0·독립 정확도 보장이 아니다. 보이는 범위 착용의 숨은 부위/제품 적합성 미확정은 유지한다. 다른 세션의 전화·발표·증빙 등 변경은 이번 커밋에서 제외한다.

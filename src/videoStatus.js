@@ -27,14 +27,14 @@ export function videoStatus({sourceId, run, connected, presented}) {
     if (active) alarms++;
     if (wearing === 'NOT_WORN') missing++;
     else if (active) unresolved++;
-    else if (!['WORN', 'VISIBLE_WORN'].includes(wearing) || !track.confirmed) unknown++;
+    else if (!['WORN', 'VISIBLE_WORN'].includes(wearing)) unknown++;
 
     const product = track.product_check || {};
     const productFresh = fresh(product.source_time_s, presented.source_time_s);
     const productAlarm = hasAlerts(track.product_alerts) || hasAlerts(product.active_alerts);
     if (productAlarm || productFresh && product.state === 'MISMATCH') mismatch++;
     // A registered appearance alone cannot establish that the PPE is being worn.
-    if (['WORN','VISIBLE_WORN'].includes(wearing) && track.confirmed && !active && !productAlarm
+    if (['WORN','VISIBLE_WORN'].includes(wearing) && !active && !productAlarm
         && productFresh && product.primary_backend === 'decisions' && product.state === 'CANDIDATE'
         && product.membership === 'candidate' && product.candidate?.designation_basis === 'site_standard_color_and_form') {
       designated++;

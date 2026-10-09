@@ -10,15 +10,27 @@ const input = (tracks=[], scene={processing_state:'RUNNING', detections:[]}) => 
   run:{id:'run', source_id:'source', generation:1, status:'RUNNING'},
   presented:{run_id:'run', generation:1, source_time_s:3, tracks, scene}});
 
-test('registered appearance and confirmed wearing are both required', () => {
+test('registered appearance and a valid wearing observation are both required', () => {
   const state=videoStatus(input([worn]));
   assert.equal(state.designated.value, '1 / 1명');
   assert.equal(state.designated.tone, 'good');
   assert.match(state.designated.detail, /보이는 범위/);
-  for (const override of [{confirmed:false}, {wearing:'UNKNOWN'}, {product_check:{}},
+  for (const override of [{wearing:'UNKNOWN'}, {product_check:{}},
     {product_check:{...candidate, primary_backend:'siglip'}},
     {product_check:{...candidate, candidate:{designation_basis:'appearance'}}}]) {
     assert.equal(videoStatus(input([{...worn,...override}])).designated.tone, 'caution');
+  }
+});
+test('first wearing observation immediately counts without pretending it has consensus', () => {
+  for (const wearing of ['WORN','VISIBLE_WORN']) {
+    const track={...worn, wearing, confirmed:false};
+    const state=videoStatus(input([track]));
+    assert.equal(state.designated.value, '1 / 1명');
+    assert.equal(state.designated.tone, 'good');
+    assert.equal(state.missing.value, '미관측');
+    assert.equal(track.confirmed, false);
+    assert.equal(videoStatus(input([{...track,active_violations:['hood']}])).designated.value, '0 / 1명');
+    assert.equal(videoStatus(input([{...track,active_violations:['hood']}])).missing.value, '재확인');
   }
 });
 test('first missing observation is red but does not manufacture an alarm', () => {

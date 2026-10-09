@@ -92,6 +92,7 @@ class Run:
             'pipeline_version': 'parallel-product-decisions-v7', 'decision_schedule_s': SCHEDULE,
             'tracking_pipeline_version': 'bounded-observation-worker-v1',
             'observation_crop_version': OBSERVATION_CROP_VERSION,
+            'wearing_display_version': 'first-valid-observation-v1',
             'decision_routing': 'parallel_independent_requests_ppe_gate_on_join',
             'ppe_selection_version': decisions.PPE_SELECTION_VERSION,
             'decision_input_version': decisions.INPUT_VERSION, 'decision_image_detail': decisions.IMAGE_DETAIL,
@@ -736,16 +737,13 @@ class Run:
             expired = current-result.get('observed_monotonic', 0) > OBSERVATION_TTL
             future = source_time is not None and result.get('source_time_s', 0) > source_time
             halted = self.state != 'RUNNING'
-            valid = not expired and not halted and not future
+            valid = (bool(result) and not result.get('error') and track['processing_state'] == 'RUNNING'
+                     and not expired and not halted and not future)
             state = ('STALE' if expired and result else track['processing_state']) if not halted else 'STALE'
             wearing = result.get('wearing', 'UNKNOWN') if valid else 'UNKNOWN'
             confirmed = track.get('confirmed', False) and valid
             reason = '관측 만료' if expired and result else track.get('reason')
-            if wearing in ('WORN', 'VISIBLE_WORN') and not confirmed:
-                wearing, reason = 'UNKNOWN', '착용 재확인 중 · 연속 2회 필요'
-            elif (wearing == 'WORN' and self.policy.get('wearing_assessment') == 'visible_regions'
-                  and not track.get('complete_confirmed')):
-                wearing, reason = 'VISIBLE_WORN', '보이는 범위 착용 · 전체 필수 부위 재확인 중'
+            # Display the current observation; consensus still controls alarms and recovery.
             if not self.policy['coverall_required']:
                 state, wearing = 'DISABLED', 'UNKNOWN'
             matching = track['identity']
@@ -761,7 +759,8 @@ class Run:
             tracks.append(copy.deepcopy({key: track[key] for key in ('track_id', 'bbox', 'confidence', 'pending')} |
                           {'identity': matching, 'track_token': track['token'], 'wearing': wearing, 'processing_state': state,
                            'parts': result.get('parts', {}) if valid else {}, 'confirmed': confirmed,
-                           'all_required_observed': bool(valid and track.get('complete_confirmed')),
+                           'all_required_observed': bool(valid and result.get('all_required_observed')),
+                           'complete_confirmed': bool(valid and track.get('complete_confirmed')),
                            'violations': result.get('violations', []) if valid else [],
                            'active_violations': track['active_violations'], 'reason': reason,
                            'product_check': product_check,
