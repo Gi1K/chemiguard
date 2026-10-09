@@ -47,7 +47,7 @@ function App(){
   const [sourceId,setSourceId]=useState(''), [policyId,setPolicyId]=useState(''), [size,setSize]=useState('large');
   const [busy,setBusy]=useState(false), [error,setError]=useState(''), [toast,setToast]=useState(''), [connected,setConnected]=useState(true);
   const [modal,setModal]=useState(null), [eventDetail,setEventDetail]=useState(null), [sound,setSound]=useState(false);
-  const eventIds=useRef(new Set()), initialized=useRef(false);
+  const eventIds=useRef(new Set()), initialized=useRef(false), syncedRun=useRef(null);
   const load = async () => {
     const data=await api('/bootstrap'); setBoot(data); setRun(data.active);
     setSourceId(id=>id || data.active?.source_id || data.sources[0]?.id || '');
@@ -63,6 +63,14 @@ function App(){
         const [next,list]=await Promise.all([api('/runs/active'),api('/events')]);
         if(disposed) return;
         setRun(next); setEvents(list); setConnected(true);
+        if(activeStatus(next?.status)){
+          setSourceId(next.source_id);setPolicyId(next.policy.id);setSize(next.person_size);
+          if(syncedRun.current!==next.id){
+            const data=await api('/bootstrap');
+            if(disposed) return;
+            setBoot(data);syncedRun.current=next.id;
+          }
+        }
         const fresh=list.filter(item=>!eventIds.current.has(item.id));
         if(initialized.current && fresh.length){
           setToast(`${LABEL[fresh[0].kind]} · ${fresh[0].reason}`);
@@ -114,7 +122,7 @@ function App(){
             <section className="metrics-band"><Metric label="현재 추적" value={connected && run?.status==='RUNNING'?run.tracks.length:0} unit="명" icon={Users}/><Metric label="이번 실행 사건" value={currentEvents.length} unit="건" icon={Bell}/><Metric label="로컬 처리" value={run?.status==='RUNNING'?run.metrics.processing_fps:'-'} unit="FPS" icon={Activity}/><Metric label="착용 관찰 응답" value={run?.metrics.api_mean_ms? (run.metrics.api_mean_ms/1000).toFixed(2):'-'} unit="초" icon={Clock3}/></section>
             <div className="monitor-grid">
               <section className="video-section"><div className="section-title"><h2><Video size={18}/>시연 영상</h2><span className="subtle">{run?.id ? '파일 실시간 분석' : source?.case}</span></div>
-                <VideoPanel source={source} run={run} connected={connected} control={control} busy={busy}/>
+                <VideoPanel source={source} run={run} connected={connected} control={control} busy={busy} onStart={start} canStart={!running&&Boolean(sourceId&&policyId)}/>
                 <div className="pipeline-strip"><span><i className={run?.people_state==='RUNNING'?'online':'idle'}/>YOLO26 {size==='large'?'L':'M'} · ByteTrack</span><ChevronRight size={13}/><span><i className={boot.system.api_configured?'online':'offline'}/>Luna Decisions</span><ChevronRight size={13}/><span><i className={currentEvents.length?'online':'idle'}/>사건 · 근거</span></div>
                 <div className="scene-line"><div><span className="mini-label">장면 관찰</span><strong>{run?.scene.error || (run?.scene.suspected?'가시적 연무·분출 의심':run?.scene.processing_state==='RUNNING'?'현재 연속 의심 없음':'관찰 대기')}</strong></div><Badge value={run?.scene.processing_state || 'WAITING'}/><span className="subtle">{run?.scene.detections?.length || 0}개 후보</span></div>
               </section>
@@ -144,11 +152,13 @@ function App(){
 }
 
 function Metric({label,value,unit,icon:Icon}){return <div className="metric"><div className="metric-label"><Icon size={16}/>{label}</div><div className="metric-number">{value}<span>{unit}</span></div></div>;}
-function VideoPanel({source,run,connected,control,busy}){
+function VideoPanel({source,run,connected,control,busy,onStart,canStart}){
   const [seek,setSeek]=useState(null), [overlay,setOverlay]=useState(null); const panel=useRef();
   const current=run && run.source_id===source?.id;
   const frame=current?run.frame_url:source?.preview_url;
   const playing=current&&['RUNNING','PAUSED'].includes(run.status);
+  const playTitle=playing?(run.status==='RUNNING'?'일시정지':'재개'):current?'처음부터 분석':'분석 시작';
+  const togglePlayback=()=>playing?control(run.status==='RUNNING'?'pause':'resume'):onStart();
   const commitSeek=()=>{if(seek!==null&&playing){control('seek',Math.min(seek,Math.max(0,run.duration_s-0.2)));setSeek(null);}};
   return <div className="video-tool" ref={panel}>
     <div className="video-stage" style={{aspectRatio:current&&run.source_width?`${run.source_width}/${run.source_height}`:'16/9'}}>
@@ -159,7 +169,7 @@ function VideoPanel({source,run,connected,control,busy}){
       {current&&(run.status==='LOADING'||!frame)&&<div className="video-loading"><LoaderCircle size={27} className="spin"/><span>{run.status==='LOADING'?'분석 모델 준비 중':'프레임 대기'}</span></div>}
       {current&&run.error&&<div className="video-error"><AlertTriangle size={18}/>{run.error}</div>}
     </div>
-    <div className="video-controls"><IconButton icon={current&&run.status==='RUNNING'?Pause:Play} title={run?.status==='RUNNING'?'일시정지':'재개'} disabled={!playing||busy} onClick={()=>control(run.status==='RUNNING'?'pause':'resume')}/><IconButton icon={Square} title="분석 중지" disabled={!current||!activeStatus(run.status)||busy} onClick={()=>control('stop')}/><span className="duration">{timecode(current?run.source_time_s:0)}</span><input aria-label="영상 위치" type="range" min="0" max={current?run.duration_s||1:1} step="0.1" value={seek??(current?run.source_time_s:0)} disabled={!playing} onChange={e=>setSeek(Number(e.target.value))} onPointerUp={commitSeek} onKeyUp={commitSeek}/><span className="duration">{timecode(current?run.duration_s:0)}</span><IconButton icon={Maximize2} title="전체 화면" onClick={()=>{if(document.fullscreenElement)document.exitFullscreen();else panel.current.requestFullscreen?.();}}/></div>
+    <div className="video-controls"><IconButton icon={current&&run.status==='RUNNING'?Pause:Play} title={playTitle} disabled={busy||(!playing&&!canStart)} onClick={togglePlayback}/><IconButton icon={Square} title="분석 중지" disabled={!current||!activeStatus(run.status)||busy} onClick={()=>control('stop')}/><span className="duration">{timecode(current?run.source_time_s:0)}</span><input aria-label="영상 위치" type="range" min="0" max={current?run.duration_s||1:1} step="0.1" value={seek??(current?run.source_time_s:0)} disabled={!playing} onChange={e=>setSeek(Number(e.target.value))} onPointerUp={commitSeek} onKeyUp={commitSeek}/><span className="duration">{timecode(current?run.duration_s:0)}</span><IconButton icon={Maximize2} title="전체 화면" onClick={()=>{if(document.fullscreenElement)document.exitFullscreen();else panel.current.requestFullscreen?.();}}/></div>
   </div>;
 }
 function Box({box,width,height,color,label}){return <div className={`bounding-box ${color}`} style={{left:`${box[0]/width*100}%`,top:`${box[1]/height*100}%`,width:`${(box[2]-box[0])/width*100}%`,height:`${(box[3]-box[1])/height*100}%`}}><span>{label}</span></div>;}
