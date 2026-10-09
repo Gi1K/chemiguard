@@ -9,6 +9,7 @@ import {TrackingOverlay, useNativePlayback} from './videoPlayback';
 import {ProductCheck,ProductComparisons} from './productComparison';
 import {SiteCatalog,siteReferences} from './siteCatalog';
 import {observationLabel, WEARING_LABELS} from './wearingStatus';
+import {VideoStatus} from './videoStatus.jsx';
 
 const LABEL = {
   RUNNING: '분석 중', WAITING: '대기', LOADING: '모델 준비 중', PAUSED: '일시정지', STOPPED: '중지',
@@ -145,7 +146,7 @@ function App(){
             <section className="metrics-band"><Metric label="현재 추적" value={visibleTracks.length} unit="명" icon={Users}/><Metric label="이번 실행 사건" value={currentEvents.length} unit="건" icon={Bell}/><Metric label="로컬 처리" value={run?.status==='RUNNING'?run.metrics.processing_fps:'-'} unit="FPS" icon={Activity}/><Metric label="Decisions 응답" value={run?.metrics.api_mean_ms? (run.metrics.api_mean_ms/1000).toFixed(2):'-'} unit="초" icon={Clock3}/></section>
             <div className="monitor-grid">
               <section className="video-section"><div className="section-title"><h2><Video size={18}/>시연 영상</h2><span className="subtle">{run?.id ? '파일 실시간 분석' : source?.case}</span></div>
-                <VideoPanel source={source} run={run} connected={connected} control={control} busy={busy} onStart={start} canStart={!running&&Boolean(sourceId&&policyId)} onPresentedFrame={setPresented}/>
+                <VideoPanel source={source} run={run} connected={connected} control={control} busy={busy} onStart={start} canStart={!running&&Boolean(sourceId&&policyId)} onPresentedFrame={setPresented} presented={presented}/>
                 <div className="pipeline-strip"><span><i className={run?.people_state==='RUNNING'?'online':'idle'}/>YOLO26 {size==='large'?'L':'M'} · ByteTrack</span><ChevronRight size={13}/><span><i className={boot.system.api_configured?'online':'offline'}/>Luna Decisions</span><ChevronRight size={13}/><span><i className={currentEvents.length?'online':'idle'}/>사건 · 근거</span></div>
                 <div className="scene-line"><div><span className="mini-label">누출 관찰</span><strong>{visibleScene?.error || (visibleScene?.detections?.length?'누출':visibleScene?.processing_state==='RUNNING'?'누출 미관측':'관찰 대기')}</strong></div><Badge value={visibleScene?.processing_state || 'WAITING'}/><span className="subtle">{visibleScene?.detections?.length || 0}개 영역</span></div>
               </section>
@@ -176,7 +177,7 @@ function App(){
 }
 
 function Metric({label,value,unit,icon:Icon}){return <div className="metric"><div className="metric-label"><Icon size={16}/>{label}</div><div className="metric-number">{value}<span>{unit}</span></div></div>;}
-function VideoPanel({source,run,connected,control,busy,onStart,canStart,onPresentedFrame}){
+function VideoPanel({source,run,connected,control,busy,onStart,canStart,onPresentedFrame,presented}){
   const [seek,setSeek]=useState(null); const panel=useRef();
   const current=run && run.source_id===source?.id;
   const playback=useNativePlayback(source,current?run:null,connected);
@@ -190,6 +191,7 @@ function VideoPanel({source,run,connected,control,busy,onStart,canStart,onPresen
   };
   const commitSeek=()=>{if(seek!==null&&playing){control('seek',Math.min(seek,Math.max(0,run.duration_s-0.2)));setSeek(null);}};
   return <div className="video-tool" ref={panel}>
+    <VideoStatus sourceId={source?.id} run={run} connected={connected} presented={presented}/>
     <div className="video-stage" style={{aspectRatio:dimensions?`${dimensions[0]}/${dimensions[1]}`:current&&run.source_width?`${run.source_width}/${run.source_height}`:'16/9'}}>
       {source?<video ref={video} key={source.id} src={source.video_url} poster={source.preview_url} aria-label={source.name}
         muted playsInline preload="metadata" onLoadedMetadata={playback.loaded} onWaiting={playback.waiting}
