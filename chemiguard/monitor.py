@@ -8,10 +8,13 @@ from collections import deque
 from concurrent.futures import ThreadPoolExecutor
 
 import cv2
+from scenedetect.detectors import ContentDetector
+from scenedetect.scene_detector import FlashFilter
 
 from . import decisions
 from .config import DATA, ROOT, fingerprint
 from .sources import sources
+from .observation import SCHEDULE, WINDOW_SECONDS, combine_observation, image_quality, request_due, select_candidate
 from .store import now, store, uid
 from .vision import Vision, crop, identity, jpeg
 
@@ -39,10 +42,12 @@ class Run:
         self.state = 'LOADING'
         self.error = None
         self.generation = 1
+        self.scene_epoch = 0
         self.seek_to = None
         self.slot = None
         self.reader_done = False
         self.frames = deque(maxlen=12)
+        self.overlay_frames = deque(maxlen=20)
         self.tracks = {}
         self.scene = {'processing_state': 'WAITING', 'detections': [], 'suspected': False}
         self.scene_chain = None
@@ -53,6 +58,8 @@ class Run:
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='decisions')
         self.width = self.height = 0
         self.source_time = self.duration = 0
+        self.playback_time = 0
+        self.playback_epoch_start = 0
         self.frame_seq = 0
         self.started = time.monotonic()
         self.last_processed = 0
@@ -69,7 +76,10 @@ class Run:
             'source': sources.metadata[source_id], 'source_mode': 'live_file_processing',
             'policy': policy, 'person_size': size, 'generation': self.generation,
             'status': 'LOADING', 'code_sha': code_sha, 'code_dirty': code_dirty,
-            'pipeline_version': 'target-associated-pose-v2', 'implementation': 'hackathon-finals-2026-10-09'})
+            'pipeline_version': 'adaptive-observation-native-video-v3', 'decision_schedule_s': SCHEDULE,
+            'evidence_window_s': WINDOW_SECONDS, 'shot_changes': [],
+            'scene_detector': {'library': 'scenedetect-0.6.6', 'detector': 'ContentDetector', 'threshold': 27},
+            'implementation': 'hackathon-finals-2026-10-09'})
         self.references = [row for row in store.list('reference') if row['revision'] <= policy['reference_revision']]
         self.thread = threading.Thread(target=self._work, daemon=True, name=self.id)
         self.thread.start()
@@ -91,6 +101,9 @@ class Run:
                 raise ValueError('실행 중인 영상에서만 사용할 수 있습니다.')
             elif action == 'pause':
                 self.state = 'PAUSED'
+                if position is not None and 0 <= position < self.duration:
+                    self.seek_to = float(position)
+                    self.source_time = self.playback_time = float(position)
             elif action == 'resume':
                 self.state = 'RUNNING'
             elif action == 'seek':
@@ -98,11 +111,15 @@ class Run:
                     raise ValueError('영상 범위를 벗어난 위치입니다.')
                 self.seek_to = float(position)
                 self.source_time = float(position)
+                self.playback_time = float(position)
                 self.slot = None
                 self.frames.clear()
             else:
                 raise ValueError('지원하지 않는 동작입니다.')
             self.generation += 1
+            self.playback_epoch_start = self.playback_time
+            self.slot = None
+            self.overlay_frames.clear()
             self.tracks.clear()
             self.scene_chain = None
             self.scene = {'processing_state': 'STALE', 'detections': [], 'suspected': False}
@@ -112,6 +129,8 @@ class Run:
     def _read(self, capture, fps):
         frame_index = 0
         deadline = time.monotonic()
+        detector = None
+        detector_epoch = None
         try:
             while not self.stop_event.is_set():
                 with self.lock:
@@ -129,6 +148,7 @@ class Run:
                                 if seek_epoch == self.generation:
                                     self.frames.append((seek_epoch, frame_index, jpeg(frame, 80)))
                                     self.source_time, self.frame_seq = frame_index/fps, frame_index
+                                    self.playback_time = frame_index/fps
                             frame_index += 1
                 if paused:
                     deadline = time.monotonic()
@@ -142,9 +162,23 @@ class Run:
                 if not ok:
                     break
                 captured = time.monotonic()
+                if detector_epoch != epoch:
+                    detector = ContentDetector(min_scene_len=1, filter_mode=FlashFilter.Mode.SUPPRESS)
+                    detector_epoch = epoch
+                cuts = detector.process_frame(frame_index, cv2.resize(frame, (320, 180)))
                 with self.lock:
                     if epoch == self.generation and self.state == 'RUNNING':
-                        self.slot = (epoch, frame_index, frame_index/fps, captured, frame)
+                        if cuts:
+                            self.scene_epoch += 1
+                            self.tracks.clear()
+                            self.scene_chain = None
+                            self.scene = {'processing_state': 'WAITING', 'detections': [], 'suspected': False}
+                            self.record['shot_changes'].append({'generation': epoch, 'scene_epoch': self.scene_epoch,
+                                                                'source_time_s': frame_index/fps})
+                            self.overlay_frames.append({'generation': epoch, 'scene_epoch': self.scene_epoch,
+                                'source_time_s': frame_index/fps, 'tracks': [], 'scene': copy.deepcopy(self.scene)})
+                        self.slot = (epoch, self.scene_epoch, frame_index, frame_index/fps, captured, frame)
+                        self.playback_time = frame_index/fps
                 frame_index += 1
                 deadline += 1/fps
         finally:
@@ -181,6 +215,7 @@ class Run:
             reader.start()
             previous = None
             epoch = self.generation
+            scene_epoch = self.scene_epoch
             last_save = time.monotonic()
             last_tick = None
             while not self.stop_event.is_set():
@@ -190,23 +225,24 @@ class Run:
                 if paused:
                     self.stop_event.wait(0.08)
                     continue
-                if slot is None or (slot[0], slot[1]) == previous:
+                if slot is None or slot[:3] == previous:
                     if self.reader_done:
                         break
                     self.stop_event.wait(0.015)
                     continue
-                current_epoch, seq, timestamp, captured, frame = slot
+                current_epoch, current_scene, seq, timestamp, captured, frame = slot
                 if current_epoch != self.generation:
                     continue
-                if epoch != current_epoch:
+                if epoch != current_epoch or scene_epoch != current_scene:
                     vision.reset_tracking()
                     epoch = current_epoch
-                previous = (current_epoch, seq)
+                    scene_epoch = current_scene
+                previous = (current_epoch, current_scene, seq)
                 tick = time.monotonic()
                 if last_tick is not None:
                     self.metrics['processing_fps'] = round(1/max(0.001, tick-last_tick), 1)
                 last_tick = tick
-                self._process(vision, frame, seq, timestamp, captured, current_epoch)
+                self._process(vision, frame, seq, timestamp, captured, current_epoch, current_scene)
                 self.metrics['local_latency_ms'] = round((time.monotonic()-tick)*1000, 1)
                 self.metrics['processed_frames'] += 1
                 if time.monotonic()-last_save >= 5:
@@ -216,6 +252,8 @@ class Run:
             with self.lock:
                 if self.state != 'ERROR':
                     self.state = 'STOPPED' if self.stop_event.is_set() else 'FINISHED'
+                    if self.state == 'FINISHED':
+                        self.playback_time = self.duration
         except Exception as exc:
             with self.lock:
                 self.state, self.error = 'ERROR', f'{type(exc).__name__}: {str(exc)[:250]}'
@@ -226,7 +264,7 @@ class Run:
             self.pool.shutdown(wait=True, cancel_futures=True)
             self._save()
 
-    def _process(self, vision, frame, seq, timestamp, captured, epoch):
+    def _process(self, vision, frame, seq, timestamp, captured, epoch, scene_epoch):
         people_error = None
         try:
             detected = vision.people(frame)
@@ -242,7 +280,7 @@ class Run:
                                   'error': f'장면 분석 실패: {type(exc).__name__}'}
                     self.scene_chain = None
         with self.lock:
-            if epoch != self.generation or self.state != 'RUNNING':
+            if epoch != self.generation or scene_epoch != self.scene_epoch or self.state != 'RUNNING':
                 return
             self.source_time, self.frame_seq = timestamp, seq
             self.last_processed = time.monotonic()
@@ -254,10 +292,21 @@ class Run:
                 if previous is None or captured-previous['last_seen'] > TRACK_TTL:
                     previous = {'track_id': key, 'token': uid('track'), 'result': None, 'history': [],
                                 'last_requested': 0, 'last_identity': 0, 'processing_state': 'WAITING',
+                                'last_attempt': 0, 'last_observed': 0, 'candidates': deque(maxlen=5),
+                                'active_violations': [], 'errors': 0,
                                 'identity': {'state': 'UNAVAILABLE', 'candidates': []}, 'pending': False,
                                 'reason': '착용 관찰 대기' if self.policy['coverall_required'] else '착용 관찰 비활성'}
                 previous.update(row, last_seen=captured)
                 self.tracks[key] = previous
+                image = crop(frame, row['bbox'])
+                quality = image_quality(image, row['bbox'], frame.shape, row['confidence'])
+                if quality is not None:
+                    previous['candidates'].append({'captured': captured, 'seq': seq, 'timestamp': timestamp,
+                        'frame': frame, 'image': image, 'bbox': row['bbox'], 'quality': quality,
+                        'confidence': row['confidence']})
+                    previous['signature'] = quality['signature']
+                while previous['candidates'] and captured-previous['candidates'][0]['captured'] > WINDOW_SECONDS:
+                    previous['candidates'].popleft()
             for key in list(self.tracks):
                 if captured-self.tracks[key]['last_seen'] > TRACK_TTL:
                     del self.tracks[key]
@@ -266,36 +315,49 @@ class Run:
                 self._scene_result(scene_result, frame, seq, timestamp, captured)
             elif not self.policy['release_monitoring']:
                 self.scene = {'processing_state': 'DISABLED', 'detections': [], 'suspected': False}
+            self.overlay_frames.append({'generation': epoch, 'scene_epoch': scene_epoch, 'source_time_s': timestamp,
+                'tracks': [row for row in self._public_tracks(time.monotonic(), timestamp)
+                           if row['track_id'] in {item['track_id'] for item in detected}],
+                'scene': copy.deepcopy(self.scene)})
             candidates = sorted([self.tracks[row['track_id']] for row in detected], key=lambda row: row['last_requested'])
-        for person in candidates[:2]:
-            needs_api = self.policy['coverall_required'] and not person['pending'] and captured-person['last_requested'] >= 2
+        identity_checks = 0
+        for person in candidates:
+            trigger = request_due(person, captured, person.get('signature')) if person.get('signature') is not None else None
+            needs_api = self.policy['coverall_required'] and trigger is not None
             api_available = self.future is None or self.future.done()
-            needs_identity = bool(self.references) and captured-person['last_identity'] >= 1
+            needs_identity = bool(self.references) and identity_checks < 2 and captured-person['last_identity'] >= 1
             if not (needs_api and api_available or needs_identity):
                 continue
             if person['confidence'] < 0.45:
                 with self.lock:
-                    person.update(reason='사람 검출 불확실 · 확인 필요', last_requested=captured,
+                    person.update(reason='사람 검출 불확실 · 확인 필요', last_attempt=captured,
                                   last_identity=captured, processing_state='WAITING')
                 continue
-            image = crop(frame, person['bbox'])
+            selected = select_candidate(person['candidates'], captured, person['last_observed'])
+            if selected is None:
+                continue
+            if trigger == 'appearance_change':
+                selected = person['candidates'][-1]
+            with self.lock:
+                person['last_attempt'] = captured
             try:
-                body = vision.body(image)
+                body = vision.body(selected['image'])
             except Exception as exc:
                 with self.lock:
-                    person.update(reason=f'부위 추정 오류: {type(exc).__name__}', last_requested=captured,
+                    person.update(reason=f'부위 추정 오류: {type(exc).__name__}', last_attempt=captured,
                                   last_identity=captured, processing_state='ERROR')
                 continue
             with self.lock:
-                if epoch != self.generation or person['track_id'] not in self.tracks or self.state != 'RUNNING':
+                if epoch != self.generation or scene_epoch != self.scene_epoch or self.tracks.get(person['track_id']) is not person or self.state != 'RUNNING':
                     return
                 if body is None:
                     person['reason'] = '관찰 해상도 부족 · 확인 필요'
                     person['processing_state'] = 'WAITING'
-                    person['last_requested'] = captured
+                    person['last_attempt'] = captured
                     person['last_identity'] = captured
                     continue
             if needs_identity:
+                identity_checks += 1
                 try:
                     matching = (identity.search(body['images']['torso'], self.references)
                                 if 'torso' in body['images'] else
@@ -306,18 +368,26 @@ class Run:
                     person['identity'] = matching
                     person['last_identity'] = captured
             if needs_api and api_available:
-                envelope = self._evidence(frame, body['images'], seq, timestamp, person['bbox'])
+                envelope = self._evidence(selected['frame'], body['images'], selected['seq'], selected['timestamp'], selected['bbox'])
                 envelope.update(track_id=person['track_id'], track_token=person['token'],
-                                generation=epoch, observed_monotonic=captured,
+                                generation=epoch, scene_epoch=scene_epoch, observed_monotonic=selected['captured'],
+                                trigger_reason=trigger, requested_monotonic=time.monotonic(),
+                                selection={'window_s': WINDOW_SECONDS, 'candidate_count': len(person['candidates']),
+                                           'strategy': 'changed_frame' if trigger == 'appearance_change' else 'quality_and_recency',
+                                           'age_s': round(captured-selected['captured'], 3),
+                                           **{key: value for key, value in selected['quality'].items() if key != 'signature'}},
                                 region_boxes=body['boxes'], coordinate_system='original_frame_pixel_xyxy',
                                 region_coordinate_system='person_crop_pixel_xyxy', input_route=body['route'],
                                 input_reason=body['reason'], keypoints=body['keypoints'],
                                 keypoint_confidence=body['keypoint_confidence'],
                                 pose_match_scores=body.get('pose_match_scores'),
-                                detection_confidence=person['confidence'],
+                                detection_confidence=selected['confidence'],
                                 policy_revision=self.policy['revision'], reference_revision=self.policy['reference_revision'])
                 with self.lock:
-                    person.update(pending=True, last_requested=captured)
+                    if epoch != self.generation or scene_epoch != self.scene_epoch or self.state != 'RUNNING':
+                        return
+                    person.update(pending=True, last_requested=captured, last_observed=selected['captured'],
+                                  requested_signature=selected['quality']['signature'], trigger_reason=trigger)
                     self.metrics['api_calls'] += 1
                 self.future = self.pool.submit(decisions.observe, body['images'], self.policy)
                 self.future.add_done_callback(lambda future, env=envelope: self._answer(future, env))
@@ -349,6 +419,8 @@ class Run:
                 discarded = 'run_not_running'
             elif envelope['generation'] != self.generation:
                 discarded = 'generation_changed'
+            elif envelope['scene_epoch'] != self.scene_epoch:
+                discarded = 'scene_changed'
             elif track is None or track['token'] != envelope['track_token'] or completed-track['last_seen'] > TRACK_TTL:
                 discarded = 'track_expired'
             elif completed-envelope['observed_monotonic'] > OBSERVATION_TTL:
@@ -376,24 +448,20 @@ class Run:
                                         'source_time_s': envelope['source_time_s'], 'observation_id': envelope['id']}
             track['processing_state'] = result['processing_state']
             track['reason'] = result.get('reason') or result.get('error')
-            violations = set(result.get('violations', []))
-            usable = not result.get('error') and (bool(result.get('violations')) or result['wearing'] == 'WORN' and not result.get('review_required'))
-            history = track['history']
-            if not usable or history and envelope['observed_monotonic']-history[-1]['time'] > OBSERVATION_TTL:
-                history.clear()
-            if usable:
-                history.append({'violations': sorted(violations), 'wearing': result['wearing'],
-                                'time': envelope['observed_monotonic'], 'observation_id': envelope['id']})
-                history[:] = history[-2:]
-            sustained = violations.intersection(history[0]['violations']) if len(history) == 2 else set()
-            confirmed = len(history) == 2 and history[-1]['time']-history[0]['time'] <= CONSENSUS_WINDOW and (
-                bool(sustained) or all(row['wearing'] == 'WORN' and not row['violations'] for row in history))
-            track['confirmed'] = confirmed
-            if sustained and confirmed:
-                self._event('VIOLATION_SUSPECTED', ' · '.join(sorted(sustained)), observation, str(track['token']),
-                            [row['observation_id'] for row in history])
-            elif not usable or self.policy['identity_required']:
-                self._event('REVIEW_REQUIRED', track['reason'] if not usable else '등록 제품 확인 필요 · 외형 후보 미확정', observation, str(track['token']))
+            track['errors'] = track.get('errors', 0)+1 if result.get('error') else 0
+            transition = combine_observation(track, result, envelope['observed_monotonic'], envelope['id'],
+                                             OBSERVATION_TTL, CONSENSUS_WINDOW)
+            if transition['new_violations']:
+                self._event('VIOLATION_SUSPECTED', ' · '.join(transition['new_violations']), observation,
+                            str(track['token'])+':'+','.join(transition['new_violations']),
+                            transition['supporting_observation_ids'])
+            if transition['cleared']:
+                # A later recurrence is a new episode, not a repeated alarm for this episode.
+                for key in list(self.cooldowns):
+                    if key.startswith('VIOLATION_SUSPECTED:'+track['token']+':'):
+                        del self.cooldowns[key]
+            if not transition['usable'] or self.policy['identity_required']:
+                self._event('REVIEW_REQUIRED', track['reason'] if not transition['usable'] else '등록 제품 확인 필요 · 외형 후보 미확정', observation, str(track['token']))
 
     def _scene_result(self, detections, frame, seq, timestamp, captured):
         self.last_scene = time.monotonic()
@@ -435,26 +503,37 @@ class Run:
                             'preview_url': observation['images']['frame'], 'review_status': 'OPEN'})
         self.metrics['events'] += 1
 
+    def _public_tracks(self, current, source_time=None):
+        tracks = []
+        for track in self.tracks.values():
+            if current-track['last_seen'] > TRACK_TTL and self.state == 'RUNNING':
+                continue
+            result = track.get('result') or {}
+            expired = current-result.get('observed_monotonic', 0) > OBSERVATION_TTL
+            future = source_time is not None and result.get('source_time_s', 0) > source_time
+            halted = self.state != 'RUNNING'
+            valid = not expired and not halted and not future
+            state = ('STALE' if expired and result else track['processing_state']) if not halted else 'STALE'
+            wearing = result.get('wearing', 'UNKNOWN') if valid else 'UNKNOWN'
+            confirmed = track.get('confirmed', False) and valid
+            reason = '관측 만료' if expired and result else track.get('reason')
+            if wearing == 'WORN' and not confirmed:
+                wearing, reason = 'UNKNOWN', '착용 재확인 중 · 연속 2회 필요'
+            if not self.policy['coverall_required']:
+                state, wearing = 'DISABLED', 'UNKNOWN'
+            tracks.append(copy.deepcopy({key: track[key] for key in ('track_id', 'bbox', 'confidence', 'identity', 'pending')} |
+                          {'track_token': track['token'], 'wearing': wearing, 'processing_state': state,
+                           'parts': result.get('parts', {}) if valid else {}, 'confirmed': confirmed,
+                           'violations': result.get('violations', []) if valid else [],
+                           'active_violations': track['active_violations'], 'reason': reason,
+                           'trigger_reason': track.get('trigger_reason'),
+                           'source_time_s': result.get('source_time_s'), 'latency_ms': result.get('latency_ms')}))
+        return tracks
+
     def snapshot(self):
         current = time.monotonic()
         with self.lock:
-            tracks = []
-            for track in self.tracks.values():
-                if current-track['last_seen'] > TRACK_TTL and self.state == 'RUNNING':
-                    continue
-                result = copy.deepcopy(track.get('result')) or {}
-                expired = current-result.get('observed_monotonic', 0) > OBSERVATION_TTL
-                halted = self.state != 'RUNNING'
-                state = ('STALE' if expired and result else track['processing_state']) if not halted else 'STALE'
-                wearing = result.get('wearing', 'UNKNOWN') if not expired and not halted else 'UNKNOWN'
-                if not self.policy['coverall_required']:
-                    state, wearing = 'DISABLED', 'UNKNOWN'
-                tracks.append({key: track[key] for key in ('track_id', 'bbox', 'confidence', 'identity', 'pending')} |
-                              {'wearing': wearing, 'processing_state': state, 'parts': result.get('parts', {}) if not expired and not halted else {},
-                               'confirmed': track.get('confirmed', False) and not expired and not halted,
-                               'violations': result.get('violations', []) if not expired and not halted else [],
-                               'reason': '관측 만료' if expired and result else track.get('reason'),
-                               'source_time_s': result.get('source_time_s'), 'latency_ms': result.get('latency_ms')})
+            tracks = self._public_tracks(current)
             scene = copy.deepcopy(self.scene)
             if scene['processing_state'] == 'RUNNING' and (current-self.last_scene > 2 or self.state != 'RUNNING'):
                 scene.update(processing_state='STALE', suspected=False)
@@ -465,7 +544,11 @@ class Run:
             return {'id': self.id, 'status': self.state, 'error': self.error, 'source_id': self.source_id,
                     'source_name': sources.metadata[self.source_id]['name'], 'source_mode': 'live_file_processing',
                     'source_time_s': round(self.source_time, 3), 'duration_s': self.duration,
+                    'playback_time_s': round(self.playback_time, 3),
+                    'playback_epoch_start_s': self.playback_epoch_start,
+                    'overlay_frames': copy.deepcopy(list(self.overlay_frames)),
                     'source_width': self.width, 'source_height': self.height, 'generation': self.generation,
+                    'scene_epoch': self.scene_epoch,
                     'person_size': self.size, 'people_state': self.record.get('people_state', 'WAITING'),
                     'tracks': tracks, 'scene': scene, 'metrics': metrics, 'policy': self.policy,
                     'frame_url': f'/api/runs/{self.id}/frame?generation={image_key[0]}&seq={image_key[1]}' if image_key else None,

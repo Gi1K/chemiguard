@@ -1,4 +1,8 @@
 import hashlib
+import json
+import subprocess
+import threading
+from functools import lru_cache
 from pathlib import Path
 
 import cv2
@@ -13,6 +17,7 @@ class Sources:
     def __init__(self):
         self.paths = {}
         self.metadata = {}
+        self.playback_lock = threading.Lock()
         self.refresh()
 
     def refresh(self):
@@ -60,6 +65,43 @@ class Sources:
         if source_id not in self.paths:
             raise ValueError('등록된 영상을 선택해 주세요.')
         return self.paths[source_id]
+
+    def playback(self, source_id):
+        path = self.path(source_id)
+        stat = path.stat()
+        with self.playback_lock:
+            return self._playback(str(path), stat.st_mtime_ns, stat.st_size)
+
+    @lru_cache(maxsize=128)
+    def _playback(self, filename, modified, size):
+        path = Path(filename)
+        try:
+            probe = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0',
+                                    '-show_entries', 'stream=codec_name,pix_fmt', '-of', 'json', filename],
+                                   capture_output=True, text=True, check=True, timeout=15)
+            stream = json.loads(probe.stdout)['streams'][0]
+            if (path.suffix.lower() == '.mp4' and stream['codec_name'] == 'h264'
+                    and stream.get('pix_fmt') == 'yuv420p') or (path.suffix.lower() == '.webm'
+                    and stream['codec_name'] in ('vp8', 'vp9')):
+                return path
+            folder = DATA / 'playback'
+            folder.mkdir(exist_ok=True)
+            key = hashlib.sha256(f'{filename}:{modified}:{size}'.encode()).hexdigest()[:24]
+            output = folder / f'{key}.mp4'
+            if not output.exists():
+                temporary = folder / f'{key}.partial.mp4'
+                try:
+                    subprocess.run(['ffmpeg', '-v', 'error', '-nostdin', '-y', '-i', filename,
+                                    '-map', '0:v:0', '-an', '-c:v', 'libx264', '-preset', 'veryfast',
+                                    '-crf', '20', '-pix_fmt', 'yuv420p', '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
+                                    '-movflags', '+faststart', str(temporary)],
+                                   capture_output=True, check=True, timeout=300)
+                    temporary.replace(output)
+                finally:
+                    temporary.unlink(missing_ok=True)
+            return output
+        except (FileNotFoundError, subprocess.SubprocessError, ValueError, KeyError, IndexError) as exc:
+            raise ValueError('브라우저용 영상 준비 실패. ffmpeg/ffprobe 설치와 영상 코덱을 확인해 주세요.') from exc
 
     def preview(self, source_id):
         path = DATA / 'previews' / f'{source_id}.jpg'

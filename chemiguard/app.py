@@ -28,6 +28,8 @@ class PolicyInput(BaseModel):
     hood_required: bool = True
     closure_required: bool = True
     closure_location: str = Field(default='앞 중앙 지퍼 및 덮개', max_length=200)
+    closure_assessment: Literal['external_appearance', 'visible_components'] = 'external_appearance'
+    ppe_scope: Literal['camera_view'] = 'camera_view'
     identity_required: bool = False
     required_product_id: str | None = None
     release_monitoring: bool = True
@@ -81,6 +83,13 @@ async def lifespan(app):
     if not store.list('policy'):
         store.put('policy', PolicyInput(name='화학보호복 기본 관찰', zone_id='시연 구역').model_dump() |
                   {'revision': 1, 'reference_revision': store.revision()})
+    defaults = [row for row in store.list('policy') if row['name'] == '화학보호복 기본 관찰']
+    latest = max(defaults, key=lambda row: row['revision'], default=None)
+    if latest and 'closure_assessment' not in latest:
+        fields = {key: value for key, value in latest.items() if key in PolicyInput.model_fields}
+        store.put('policy', PolicyInput(**fields).model_dump() |
+                  {'revision': latest['revision']+1, 'reference_revision': store.revision(),
+                   'supersedes': latest['id']})
     yield
     if monitor.busy():
         monitor.active.control('stop')
@@ -133,7 +142,8 @@ def source_preview(source_id: str):
 
 @app.get('/api/sources/{source_id}/video')
 def source_video(source_id: str):
-    return FileResponse(sources.path(source_id))
+    path = sources.playback(source_id)
+    return FileResponse(path, media_type='video/webm' if path.suffix.lower() == '.webm' else 'video/mp4')
 
 
 @app.post('/api/sources')

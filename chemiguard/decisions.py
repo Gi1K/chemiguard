@@ -38,9 +38,17 @@ def questions_for(policy):
         questions.append({'type': 'choice', 'name': 'hood', 'instructions': 'Is the protective hood worn over the target head? If hidden use unobservable.',
                           'choices': [{'value': state} for state in ('covered', 'uncovered', 'unobservable')]})
     if policy['closure_required']:
+        external = policy.get('closure_assessment') == 'external_appearance'
+        instructions = 'Observe the garment closure at this specified location: ' + policy['closure_location'] + '. '
+        if external:
+            instructions += ('Judge visible external closure only. A visibly closed outer flap covering the zipper counts as closed; '
+                             'do not require seeing the zipper underneath. Choose open for a visible opening, undone zipper, '
+                             'or open required flap. This does not verify hidden fastening or leak tightness. '
+                             'If the external closure area itself is hidden or ambiguous choose unobservable. ')
+        else:
+            instructions += 'If its location is unknown or hidden choose unobservable. '
         questions.append({'type': 'choice', 'name': 'closure',
-                          'instructions': 'Observe the garment closure at this specified location: ' + policy['closure_location'] + '. '
-                          'If its location is unknown or hidden choose unobservable. Never assume a front zipper.',
+                          'instructions': instructions + 'Never assume a front zipper.',
                           'choices': [{'value': state} for state in ('closed', 'open', 'unobservable')]})
     return questions
 
@@ -76,7 +84,8 @@ def parse_answers(data, questions):
 def observe(images, policy):
     start = time.monotonic()
     result = {'backend': 'decisions', 'model': API_MODEL, 'wearing': 'UNKNOWN', 'parts': {},
-              'processing_state': 'ERROR', 'raw_result': None, 'usage': None}
+              'processing_state': 'ERROR', 'raw_result': None, 'usage': None,
+              'prompt_version': 'ppe-observation-v3', 'closure_assessment': policy.get('closure_assessment', 'visible_components')}
     key = os.getenv('OPENAI_API_KEY', '').strip()
     if not key:
         return result | {'error': 'OPENAI_API_KEY 미설정', 'latency_ms': 0}
