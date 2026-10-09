@@ -127,6 +127,11 @@ async def check_agents_transport():
             assert body['environment'] == {'type': 'none'} and not body['agent']['tools']
             assert body['agent']['multi_agent']['enabled'] is False
             assert body['agent']['text']['format']['type'] == 'json_schema'
+            if isinstance(body['input'], list):
+                content = body['input'][0]['content']
+                assert body['input'][0]['role'] == 'user'
+                assert content[0]['type'] == 'input_text'
+                assert content[1] == {'type': 'input_image', 'image_url': 'data:image/jpeg;base64,/9j/'}
             assert ('spend_control' in body) is settings.agent_budget_enabled
             if settings.agent_budget_enabled:
                 assert body['spend_control']['limit'] == 5
@@ -156,6 +161,9 @@ async def check_agents_transport():
             value = await gateway.generate(messages=[{'role': 'user', 'content': 'fixture'}], instructions='fixture', schema=schema, spend_cents=5)
             assert value == {'status': 'connected'} and not gateway.pending()
             assert methods[-1] == ('DELETE', '/v1/agents/sessions/sess_fixture')
+            image_value = await gateway.generate(messages=[{'role': 'user', 'content': 'fixture'}],
+                instructions='fixture', schema=schema, spend_cents=5, images=['data:image/jpeg;base64,/9j/'])
+            assert image_value == {'status': 'connected'} and not gateway.pending()
             mode[0] = 'incomplete'
             settings.agent_budget_enabled = False
             try:

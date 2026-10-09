@@ -23,6 +23,8 @@ from fastapi.responses import JSONResponse, RedirectResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from jsonschema import validate, ValidationError
 from agents_backend import AgentsGateway, AgentServiceError
+from counseling_policy import NOVICE_GUIDANCE
+from photo_inputs import prepare_photos, PHOTO_SCHEMA, PHOTO_INSTRUCTIONS, MAX_PHOTO_BODY
 
 ROOT = Path(__file__).resolve().parent
 PREWORK = ROOT.parent.parent / '사전 구현 범위/04_화학보호복_기존페이지'
@@ -59,7 +61,7 @@ INSTRUCTIONS = contract.instructions()
 ANSWER_SCHEMA = contract.output_schema()
 ANSWER_SCHEMA['properties']['kits']['maxItems'] = 3
 ANSWER_SCHEMA['properties']['candidates']['maxItems'] = 20
-ANSWER_SCHEMA['properties']['questions']['maxItems'] = 2
+ANSWER_SCHEMA['properties']['questions']['maxItems'] = 1
 PLAN_SCHEMA = {'type': 'object', 'additionalProperties': False, 'properties': {
     'cas_numbers': {'type': 'array', 'maxItems': 6, 'items': {'type': 'string'}}}, 'required': ['cas_numbers']}
 
@@ -156,11 +158,21 @@ def valid_cas(value):
 
 
 def validate_request(body):
-    if not isinstance(body, dict) or set(body) - {'session_id', 'message', 'auto_kit_options', 'existing_kits'}:
+    if not isinstance(body, dict) or set(body) - {'session_id', 'message', 'auto_kit_options', 'existing_kits', 'photos', 'photo_confirmation'}:
         raise PublicError('요청 형식이 올바르지 않습니다.')
-    message = body.get('message')
-    if not isinstance(message, str) or not 1 <= len(message.strip()) <= 6000:
-        raise PublicError('물질과 작업을 1~6000자로 입력하세요.')
+    photos = body.get('photos', [])
+    if not isinstance(photos, list) or len(photos) > 2:
+        raise PublicError('사진은 한 번에 2장까지 첨부할 수 있습니다.')
+    message = body.get('message', '')
+    if not isinstance(message, str) or len(message.strip()) > 6000 or (not message.strip() and not photos):
+        raise PublicError('질문을 입력하거나 라벨 사진을 첨부해 주세요. 글은 6000자까지 입력할 수 있습니다.')
+    confirmation = body.get('photo_confirmation')
+    if confirmation is not None:
+        if (photos or not isinstance(confirmation, dict) or set(confirmation) != {'review_id', 'text'}
+                or not isinstance(confirmation['review_id'], str)
+                or not re.fullmatch(r'[a-f0-9-]{36}', confirmation['review_id'])
+                or not isinstance(confirmation['text'], str) or not 1 <= len(confirmation['text'].strip()) <= 2000):
+            raise PublicError('사진에서 읽은 내용을 확인하거나 수정한 뒤 다시 보내 주세요.')
     session = body.get('session_id')
     if session is not None and (not isinstance(session, str) or not re.fullmatch(r'[a-f0-9-]{36}', session)):
         raise PublicError('대화 식별자가 올바르지 않습니다.')
@@ -180,7 +192,7 @@ def validate_request(body):
         clean.append({'name': str(kit.get('name', ''))[:100], 'work_group': str(kit['work_group'])[:80] if kit.get('work_group') else None,
                       'use_type': kit.get('use_type') if type(kit.get('use_type')) is int and kit['use_type'] in range(1, 7) else None,
                       'product_ids': ids, 'coverall_colour': coverall.get('appearance', {}).get('color', {}).get('id') if coverall else None})
-    return message.strip(), session, clean, body.get('auto_kit_options', True)
+    return message.strip(), session, clean, body.get('auto_kit_options', True), photos, confirmation
 
 
 def normalize_answer(answer, evidence):
@@ -251,19 +263,20 @@ class Counselor:
         self.sessions = {}
         self.agents = AgentsGateway(settings)
 
-    async def model_call(self, messages, schema, max_output, instructions=INSTRUCTIONS):
+    async def model_call(self, messages, schema, max_output, instructions=INSTRUCTIONS, *, images=None):
         if not self.settings.ready():
             raise PublicError('상담이 중지되었거나 서버 설정이 필요합니다.', 503, 'unavailable')
+        # Images are reserved separately; their base64 representation is not text tokens.
+        estimate = len(json.dumps([messages, instructions, schema], ensure_ascii=False).encode()) + 4096 + max_output + 32000 * len(images or [])
         if self.settings.backend == 'agents':
             # Agents has no max_output_tokens field. Local token reservations are
             # estimates, not a remote output or dollar cap. Session budgets are
             # opt-in: the current account rejects spend_control as not enabled.
-            estimate = len(json.dumps([messages, instructions, schema], ensure_ascii=False).encode()) + 4096 + max_output
             self.ledger.reserve(tokens=estimate,
                 cents=self.settings.agent_session_cents if self.settings.agent_budget_enabled else 0)
             try:
                 return await self.agents.generate(messages=messages, instructions=instructions,
-                    schema=schema, spend_cents=self.settings.agent_session_cents)
+                    schema=schema, spend_cents=self.settings.agent_session_cents, images=images)
             except AgentServiceError as error:
                 messages_by_code = {
                     'access_denied': 'Agents API 또는 모델 접근 권한을 확인하세요. 키에 Agents 읽기·쓰기와 Responses 쓰기 권한이 필요합니다.',
@@ -276,9 +289,13 @@ class Counselor:
         payload = {'model': self.settings.model, 'store': False, 'instructions': instructions,
                    'input': messages, 'max_output_tokens': max_output,
                    'text': {'format': {'type': 'json_schema', 'name': 'ppe_review', 'strict': True, 'schema': schema}}}
+        if images:
+            payload['input'] = messages[:-1] + [{**messages[-1], 'content': [
+                {'type': 'input_text', 'text': messages[-1]['content']},
+                *[{'type': 'input_image', 'image_url': image, 'detail': 'high'} for image in images]]}]
         # UTF-8 byte count + framing allowance conservatively reserves input tokens;
         # output reservation includes reasoning. Failed requests are not refunded.
-        self.ledger.reserve(tokens=len(json.dumps(payload, ensure_ascii=False).encode()) + 4096 + max_output)
+        self.ledger.reserve(tokens=estimate)
         async with httpx.AsyncClient(timeout=httpx.Timeout(100, connect=10), follow_redirects=False) as client:
             response = await client.post('https://api.openai.com/v1/responses',
                                          headers={'Authorization': f'Bearer {self.settings.api_key}'}, json=payload)
@@ -295,7 +312,7 @@ class Counselor:
         return answer
 
     async def chat(self, body):
-        message, session_id, kits, auto = validate_request(body)
+        message, session_id, kits, auto, raw_photos, confirmation = validate_request(body)
         if self.lock.locked():
             raise PublicError('다른 상담을 처리 중입니다. 잠시 후 직접 다시 요청하세요.', 429, 'busy')
         async with self.lock:
@@ -308,9 +325,33 @@ class Counselor:
             session = self.sessions.get(session_id, {'history': [], 'last_used': now})
             if len(session['history']) >= 12:
                 raise PublicError('이 대화의 6회 상담을 마쳤습니다. 조건을 정리해 새 대화를 시작하세요.', 409, 'conversation_limit')
+            if confirmation:
+                pending = session.get('pending_photo')
+                if not pending or pending['review_id'] != confirmation['review_id']:
+                    raise PublicError('이 사진 확인은 만료되었습니다. 사진을 다시 첨부해 주세요.', 409, 'photo_review_expired')
+                message += '\n사용자가 라벨과 대조해 확인·수정한 사진 판독 내용(제조사 시험 근거 아님):\n' + confirmation['text'].strip()
+            try:
+                photos = prepare_photos(raw_photos)
+            except ValueError as error:
+                raise PublicError(str(error), 400, 'invalid_photo') from None
             self.ledger.reserve(request=True)
             async with asyncio.timeout(TURN_SECONDS):
                 history = session['history']
+                if photos:
+                    reading = await self.model_call([{'role': 'user', 'content': '첨부 사진에서 라벨 정보를 읽어 주세요.'}],
+                        PHOTO_SCHEMA, 1800, PHOTO_INSTRUCTIONS, images=photos)
+                    validate(reading, PHOTO_SCHEMA)
+                    readable = reading['status'] in ('readable', 'partial') and bool(reading['visible_text'].strip())
+                    review = {'review_id': str(uuid.uuid4()), **reading} if readable else None
+                    answer = {'reply': '사진에서 읽은 내용을 아래에 정리했어요. 틀린 글자는 고친 뒤 확인해 주세요.' if readable
+                              else '이 사진에서는 제품 라벨의 글자를 확인하기 어려워요. 제품명이나 성분이 적힌 부분을 가까이 찍어 주세요.',
+                              'questions': ['아래 내용이 실제 라벨과 맞나요?'] if readable else ['글자가 선명한 라벨 사진을 다시 첨부해 주실 수 있나요?'],
+                              'candidates': [], 'kits': [], 'source_ids': [], 'live_sources': []}
+                    result = normalize_answer(answer, {'queries': [], 'sources': []})
+                    result['photo_reading'] = {**reading, 'review_id': review['review_id'] if review else None,
+                                               'photo_count': len(photos), 'confirmed': False}
+                    session_id = self.save_turn(session_id, session, message or '첨부한 사진을 확인해 주세요.', answer, pending_photo=review)
+                    return {**result, 'session_id': session_id, 'backend': 'openai-' + self.settings.backend, 'model': self.settings.model}
                 plan = await self.model_call(history + [{'role': 'user', 'content': message}], PLAN_SCHEMA, 800,
                     '한국어 화학보호구 상담의 물질 조회 계획을 만드세요. 이번 질문과 대화에 실제로 나온 물질만 CAS로 정리하세요. '
                     '명시된 CAS 또는 정확히 알고 있는 단일물질 CAS만 최대 6개. 미상 상품명·혼합물·불확실한 CAS는 추정하지 말고 빈 배열. '
@@ -325,16 +366,23 @@ class Counselor:
                 content = (message + '\n조합 요청 조건: ' + json.dumps({'auto_kit_options': auto, 'existing_kits': kits}, ensure_ascii=False)
                            + '\n이번 제조사 원문 조회(원단 시험이며 적합 미평가):\n' + evidence_text)
                 answer = await self.model_call(history + [{'role': 'user', 'content': content}], ANSWER_SCHEMA, self.settings.max_output,
-                    INSTRUCTIONS + '\n모든 조합 구성 제품은 candidates에도 review_candidate와 이유를 기재하세요. 최대 3개 조합과 2개 질문. '
-                    'CAS 미상은 질문하고 제품을 임의 배정하지 마세요. live_sources에는 이번 서버가 성공적으로 조회한 URL만 사용하세요.')
+                    INSTRUCTIONS + '\n모든 조합 구성 제품은 candidates에도 review_candidate와 이유를 기재하세요. 최대 3개 조합. '
+                    '물질 미상은 제품을 임의 배정하지 마세요. live_sources에는 이번 서버가 성공적으로 조회한 URL만 사용하세요.' + NOVICE_GUIDANCE)
                 result = normalize_answer(answer, evidence)
-            session_id = session_id or str(uuid.uuid4())
-            if session_id not in self.sessions and len(self.sessions) >= 24:
-                self.sessions.pop(min(self.sessions, key=lambda key: self.sessions[key]['last_used']))
-            # Keep bounded conversational context; never store API keys or raw pages.
-            self.sessions[session_id] = {'last_used': time.monotonic(), 'history': history + [
-                {'role': 'user', 'content': message}, {'role': 'assistant', 'content': json.dumps(answer, ensure_ascii=False)}]}
+            session_id = self.save_turn(session_id, session, message, answer,
+                                        pending_photo=None if confirmation else session.get('pending_photo'))
             return {**result, 'session_id': session_id, 'backend': 'openai-' + self.settings.backend, 'model': self.settings.model}
+
+    def save_turn(self, session_id, session, message, answer, *, pending_photo):
+        session_id = session_id or str(uuid.uuid4())
+        if session_id not in self.sessions and len(self.sessions) >= 24:
+            self.sessions.pop(min(self.sessions, key=lambda key: self.sessions[key]['last_used']))
+        # No pixels or unconfirmed OCR in model history. Retain only temporary
+        # review text; it reaches consultation after an explicit user confirmation.
+        self.sessions[session_id] = {'last_used': time.monotonic(), 'pending_photo': pending_photo,
+                                    'history': session['history'] + [
+            {'role': 'user', 'content': message}, {'role': 'assistant', 'content': json.dumps(answer, ensure_ascii=False)}]}
+        return session_id
 
 
 def create_app(settings=None):
@@ -427,12 +475,16 @@ def create_app(settings=None):
         raw = bytearray()
         async for chunk in request.stream():
             raw.extend(chunk)
-            if len(raw) > MAX_BODY:
+            if len(raw) > MAX_PHOTO_BODY:
                 raise PublicError('입력 크기 제한을 초과했습니다.', 413, 'body_limit')
         try:
             body = json.loads(raw)
         except (ValueError, UnicodeError):
+            if len(raw) > MAX_BODY:
+                raise PublicError('입력 크기 제한을 초과했습니다.', 413, 'body_limit') from None
             raise PublicError('JSON 요청을 읽지 못했습니다.') from None
+        if len(raw) > MAX_BODY and (not isinstance(body, dict) or not body.get('photos')):
+            raise PublicError('입력 크기 제한을 초과했습니다.', 413, 'body_limit')
         return await counselor.chat(body)
 
     @app.get('/')

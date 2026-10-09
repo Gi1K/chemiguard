@@ -129,6 +129,13 @@ async function init() {
     }
   });
   $("chatForm").addEventListener("submit", submitChat);
+  $("attachPhoto").addEventListener("click", () => $("chatPhotoInput").click());
+  $("chatPhotoInput").addEventListener("change", selectChatPhotos);
+  $("unknownMaterial").addEventListener("click", () => {
+    $("chatInput").value =
+      "처음이라 제품명과 성분을 잘 모르겠어요. 무엇부터 확인하면 될까요?";
+    $("chatInput").focus();
+  });
   document.querySelectorAll("[data-example]").forEach((b) =>
     b.addEventListener("click", () => {
       $("chatInput").value = b.dataset.example;
@@ -143,6 +150,7 @@ async function init() {
     $("chatMessages").replaceChildren();
     $("chatWelcome").hidden = false;
     $("chatInput").value = "";
+    clearChatPhotos();
     checkBackend();
   });
   try {

@@ -65,10 +65,13 @@ class AgentsGateway:
                 pass  # Deletion still attempts to terminate and remove the session.
         await self.delete_session(client, session_id)
 
-    async def generate(self, *, messages, instructions, schema, spend_cents):
+    async def generate(self, *, messages, instructions, schema, spend_cents, images=None):
         # Agents API input messages are user-only. Pass bounded prior turns as
         # labelled data, rather than pretending they are new instructions.
         task = json.dumps({'conversation': messages}, ensure_ascii=False)
+        if images:
+            task = [{'role': 'user', 'content': [{'type': 'input_text', 'text': task}]
+                     + [{'type': 'input_image', 'image_url': image} for image in images]}]
         settings = self.settings
         session_id, completed, terminal = None, False, False
         async with AsyncOpenAI(api_key=settings.api_key, max_retries=0, timeout=100) as client:

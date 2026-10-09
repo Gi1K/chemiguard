@@ -93,11 +93,23 @@ systemctl --user status chemiguard-catalog.service --no-pager
 
 ## 요청과 제한
 
+### 처음 사용하는 사람의 상담 흐름
+
+`처음이라면 상담부터` → `처음이라 잘 모르겠어요` → 보내기로 시작한다. 한 번에 질문 하나를 받으며, 제품명·성분을 모르면 라벨 사진을 첨부할 수 있는지 묻는다. 사진이 없으면 라벨의 글자나 담당자에게 요청하는 문장으로 안내한다.
+
+`사진 첨부`에서 JPG·PNG·WebP를 최대 2장 선택한다. 브라우저 선택 한도는 장당 10MB이며 긴 변 2048px, JPEG 700KB 이하로 줄인다. 글 없이 사진만 보낼 수 있고 전송 전 미리보기·제거가 가능하다. HEIC는 JPG로 변환해야 한다.
+
+사진 요청은 Luna 이미지 입력으로 라벨 글자만 읽는 세션 1개를 사용한다. 읽은 내용과 불확실한 부분을 표시하고, 사용자가 수정 후 `이 내용으로 상담하기`를 눌렀을 때 확인한 텍스트로 기존 물질 조회·상담을 진행한다. 확인 전에는 후보나 조합을 생성하지 않고 대화 이력에 판독 내용을 넣지 않는다. 흐리거나 라벨이 아닌 사진은 재촬영을 안내한다. 사진만으로 성분·적합성·착용 가능 시간을 확정하지 않는다.
+
+전송 시 사진은 OpenAI로 전달된다. 앱 서버는 허용한 data URL의 실제 이미지 형식·바이트·픽셀 수를 검사하고 메타데이터를 제거해 메모리에서만 처리한다. 원본·변환 사진을 파일이나 대화 저장소에 보관하지 않는다. 임시 판독 텍스트는 대화 메모리에 보관하며, 확인한 텍스트는 이후 대화 맥락에 포함된다. 브라우저 사진 미리보기도 새 대화·새로고침 시 사라진다. 외부 Agents 세션은 아래 정리 정책을 따른다.
+
+### API와 운영 제한
+
 - `GET /api/ppe/status`: 상담 준비 상태와 허용된 로컬 사진 목록. 키·시연 코드 값은 반환하지 않는다.
 - `GET /api/ppe/local-media/{product_id}`: 위 로컬 조건을 만족한 등록 사진만 반환.
-- `POST /api/ppe/chat`: `Authorization: Bearer <시연 코드>`와 JSON. `message`, `session_id`, `auto_kit_options`, `existing_kits`를 받는다.
-- 브라우저 Origin이 있으면 허용 목록과 대조하고, 모든 요청의 시연 코드를 확인한다. Origin은 인증 대용이 아니다. 입력 최대 32KB, 메시지 6000자.
-- 한 번에 상담 1건, 기본 분당 4건/UTC 일당 30건, 일일 예약 토큰 150만. 입력 UTF-8 바이트 수와 출력 예상량을 예약하며 실패해도 환급하지 않는다. 실제 청구 토큰/금액의 측정치나 엄격한 비용 상한은 아니다.
+- `POST /api/ppe/chat`: `Authorization: Bearer <시연 코드>`와 JSON. `message`, `session_id`, `auto_kit_options`, `existing_kits`, 선택적 `photos`(data URL 배열), `photo_confirmation`(`review_id`, 수정한 `text`)을 받는다. 사진과 확인 텍스트를 같은 요청에 보내지 않는다.
+- 브라우저 Origin이 있으면 허용 목록과 대조하고, 모든 요청의 시연 코드를 확인한다. Origin은 인증 대용이 아니다. 글 요청 최대 32KB, 메시지 6000자. 사진 요청 본문은 2,000,000바이트, 장당 실제 파일 700,000바이트·1600만 픽셀, 최대 2장. 사진 확인 텍스트는 2000자까지다. 임의 원격 이미지 URL은 받지 않는다.
+- 한 번에 상담 1건, 기본 분당 4건/UTC 일당 30건, 일일 예약 토큰 150만. 텍스트 입력 UTF-8 바이트 수와 출력 예상량, 이미지 장당 32,000토큰을 예약하며 실패해도 환급하지 않는다. 이미지 base64는 텍스트로 계산하지 않는다. 실제 청구 토큰/금액의 측정치나 엄격한 비용 상한은 아니다.
 - `PPE_MAX_OUTPUT_TOKENS=5000`은 Responses 모드의 출력 상한이다. Agents API에는 동일 필드가 없으므로 Agents 모드에서는 예약량 산정에만 쓴다. 요청당 최대 2개 세션·145초 처리 제한·자동 재시도 없음·실패 시 취소/삭제를 적용한다. 원격 작업 정리에 최대 약 20초가 추가될 수 있다.
 - Agents 세션은 sandbox·추가 도구·하위 에이전트를 사용하지 않는다. 현재 계정에서는 `spend_control` 요청에 `Session budget configuration is not enabled`가 반환되어 `PPE_AGENT_BUDGET_ENABLED=false`로 둔다. 이 상태에서 금액 상한이 적용된다고 주장하지 않는다. 계정에서 지원이 활성화된 뒤 true로 설정하면 세션당 50센트·일일 예약 500센트 기본값을 사용한다. 이 옵션을 거절해도 자동으로 제한을 제거해 재시도하지 않는다.
 - `.runtime/usage.sqlite3`는 요청/토큰 **숫자만** 저장한다. 회사 DB나 초안 저장소가 아니며 재시작 후에도 제한을 유지한다. 서버 디스크에 이 경로를 보존한다.
@@ -123,8 +135,9 @@ Vercel에 올라가는 것은 `dist/`의 공개 파일뿐이다. Python API·환
 npm run build
 for file in dist/kit-catalog/*.js; do node --check "$file"; done
 .venv/bin/python check_contract.py
+.venv/bin/python check_photo_flow.py
 ```
 
-`check_contract.py`는 외부 API와 제조사 조회를 메모리에서 모의 처리한다. 실제 Agents SDK의 이벤트 파싱·미완료 스트림 거부·취소/삭제도 오프라인으로 검사한다. 실제 모델 품질 검증을 대신하지 않는다. 실행 결과와 PRD 완료 상태는 [구현 기록](IMPLEMENTATION.md)에 구분했다.
+`check_contract.py`는 외부 API와 제조사 조회를 메모리에서 모의 처리한다. 실제 Agents SDK의 이미지 입력·이벤트 파싱·미완료 스트림 거부·취소/삭제도 오프라인으로 검사한다. `check_photo_flow.py`는 사진 검증, 메타데이터 제거, 확인 전 추천 방지, 수정한 판독 텍스트 반영을 확인한다. 실제 모델 품질 검증을 대신하지 않는다. 실행 결과와 PRD 완료 상태는 [구현 기록](IMPLEMENTATION.md)에 구분했다.
 
 기술 참조: [Agents API 시작](https://developers.openai.com/api/docs/guides/agents-api/quickstart), [세션 설정](https://developers.openai.com/api/reference/resources/beta/subresources/agents/subresources/sessions/methods/create), [세션 정리](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage), [Luna](https://developers.openai.com/api/docs/models/gpt-6-luna), [Sol](https://developers.openai.com/api/docs/models/gpt-6-sol), [Responses 구조화 출력](https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=responses), [Vercel 원본 경로 설정](https://vercel.com/docs/monorepos/monorepo-faq).

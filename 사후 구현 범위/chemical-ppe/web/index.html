@@ -13,6 +13,7 @@
     <script src="core.js" defer></script>
     <script src="drafts.js" defer></script>
     <script src="catalog.js" defer></script>
+    <script src="photo-upload.js" defer></script>
     <script src="counselor.js" defer></script>
     <script src="bootstrap.js" defer></script>
   </head>
@@ -73,7 +74,7 @@
           </p>
           <div class="hero-actions">
             <button type="button" class="primary" data-open="chat">
-              물질로 조합 만들기</button
+              처음이라면 상담부터</button
             ><a class="button-secondary" href="#catalogProducts"
               >제품 둘러보기 ↓</a
             >
@@ -186,11 +187,10 @@
         <div class="section-heading">
           <div>
             <p class="section-kicker">FIND YOUR GEAR</p>
-            <h2>사용하는 물질부터 알려주세요.</h2>
+            <h2>처음이어도, 하나씩 함께 확인해요.</h2>
             <p>
-              물질과 작업을 입력하면 근거가 있는 조합 선택지를 자동으로
-              보여드립니다. 듀폰 보호복 3종은 공식 물질시험표를 바로 조회하며,
-              다른 품목은 등록 자료로 검토합니다.
+              아는 내용만 편하게 말해 주세요. 제품명을 모르면 통에 붙은 라벨
+              사진으로 시작할 수 있어요.
             </p>
           </div>
           <span id="chatStatus" class="badge neutral" role="status"
@@ -225,28 +225,22 @@
               </button>
             </div>
             <div id="chatWelcome" class="chat-welcome">
-              <p>
-                물질을 줄마다 적고, 같은 작업에서 함께 노출되는지 알려주세요.
-              </p>
+              <p><strong>어디서 시작할지 모르겠다면</strong></p>
               <div class="example-prompts">
+                <button type="button" id="unknownMaterial">
+                  처음이라 잘 모르겠어요
+                </button>
                 <button
                   type="button"
-                  data-example="황산 30% 탱크 이송과 암모니아수 25% 설비 세척은 서로 다른 구역의 작업입니다. 각각 실외 20℃에서 10분 정도 진행하고 연결·분리 중 비말이 생길 수 있습니다. 두 작업의 보호구 조합을 국내 제품으로 구성해 주세요. 가능한 적합 제품이 있으면 보호복 색상도 구분해 주세요."
+                  data-example="제가 사용하는 제품 이름은 [여기에 제품명]이에요. 어떤 보호구가 필요한지 함께 확인해 주세요."
                 >
-                  황산·암모니아수 · 별도 작업</button
-                ><button
-                  type="button"
-                  data-example="세척 작업에 톨루엔과 아세톤을 사용합니다. 실제 혼합물인지, 농도와 SDS는 아직 확인하지 못했습니다. 국내 제품에서 검토할 보호구 조합과 필요한 정보를 알려 주세요."
-                >
-                  여러 용제 · 세척 작업</button
-                ><button
-                  type="button"
-                  data-example="우리 사업장은 황산 30%를 사용합니다. 국내 구매 경로가 있는 보호복·장갑·장화·호흡보호구·눈 및 안면보호구를 검토 조합으로 구성해 주세요."
-                >
-                  황산 · 전체 조합
+                  제품명은 알고 있어요
                 </button>
               </div>
-              <small>예시는 입력창에만 채워집니다.</small>
+              <small
+                >문장을 고른 뒤 보내기를 누르세요. 아래에서 사진만 보내도
+                돼요.</small
+              >
             </div>
             <div
               id="chatMessages"
@@ -254,19 +248,45 @@
               aria-live="polite"
             ></div>
             <form id="chatForm">
-              <label for="chatInput">회사에서 사용하는 물질과 작업</label
+              <label for="chatInput">궁금한 점이나 작업 이야기</label
               ><textarea
                 id="chatInput"
                 rows="3"
                 maxlength="6000"
-                placeholder="예: 황산 30% — 실외 탱크 이송
-암모니아수 25% — 별도 구역 세척
-온도·작업시간·비말·환기 조건도 알려주세요."
-                required
+                placeholder="예: 공장에서 세척할 때 입을 보호복이 필요한데, 처음이라 뭘 골라야 할지 모르겠어요."
               ></textarea>
+              <div class="photo-attachment">
+                <input
+                  id="chatPhotoInput"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  multiple
+                  hidden
+                />
+                <button type="button" id="attachPhoto">사진 첨부</button>
+                <span class="small muted"
+                  >라벨 앞·뒷면 또는 안전보건자료 · 최대 2장</span
+                >
+              </div>
+              <p class="photo-help small muted">
+                JPG·PNG·WebP, 한 장당 10MB까지. 보내기를 누르면 사진이 AI 분석을
+                위해 OpenAI에 전달됩니다. 이 앱 서버는 사진 파일을 보관하지
+                않습니다.
+              </p>
+              <div
+                id="chatPhotoPreview"
+                class="chat-photo-previews"
+                hidden
+              ></div>
+              <p
+                id="photoFeedback"
+                class="small"
+                role="status"
+                aria-live="polite"
+              ></p>
               <div class="composer-actions">
                 <span id="chatProgress" class="muted small" role="status"
-                  >물질을 입력하면 대화를 시작할 수 있어요.</span
+                  >한 문장이나 사진 한 장으로 시작해 보세요.</span
                 ><button type="submit" id="chatSend" class="primary" disabled>
                   보내기 ↑
                 </button>
@@ -274,26 +294,39 @@
             </form>
           </div>
           <aside class="card chat-note">
-            <p class="section-kicker">MATERIALS FIRST</p>
+            <p class="section-kicker">한 번에 하나씩</p>
             <div id="selectionSummary">
-              <p>물질과 작업 입력 → 조합 선택지 비교 → 내 조합에 넣기</p>
+              <ol class="beginner-steps">
+                <li>
+                  <strong>아는 내용 알려주기</strong
+                  ><span>글이나 제품 라벨 사진으로 시작해요.</span>
+                </li>
+                <li>
+                  <strong>질문 하나에 답하기</strong
+                  ><span>모르는 내용은 확인할 방법을 안내해요.</span>
+                </li>
+                <li>
+                  <strong>보호구 후보 비교하기</strong
+                  ><span>정보가 모이면 근거와 함께 살펴봐요.</span>
+                </li>
+              </ol>
               <p class="small muted">
-                확인된 제품만 묶습니다. 자료가 부족한 품목은 남은 확인으로
-                표시하고, 한 조합만 제시할 수도 있습니다.
+                사진을 보내면 읽은 글자를 먼저 확인해 주세요. 성분을 모를 때는
+                보호구를 추측해 추천하지 않아요.
               </p>
             </div>
-            <label class="checkbox-label"
-              ><input
-                id="distinguishColours"
-                type="checkbox"
-                checked
-                disabled
-              />사용 형식과 별도 작업별 보호복 색상 구분</label
-            >
-            <p id="chatExistingColours" class="small muted"></p>
-            <p id="catalogScope" class="muted small"></p>
             <details>
               <summary>추천의 근거</summary>
+              <label class="checkbox-label"
+                ><input
+                  id="distinguishColours"
+                  type="checkbox"
+                  checked
+                  disabled
+                />사용 형식과 별도 작업별 보호복 색상 구분</label
+              >
+              <p id="chatExistingColours" class="small muted"></p>
+              <p id="catalogScope" class="muted small"></p>
               <p class="small">
                 형식과 색상으로 물질별 보호성능을 확정하지 않습니다. 답변에서
                 확인한 자료와 남은 조건을 함께 보여줍니다.

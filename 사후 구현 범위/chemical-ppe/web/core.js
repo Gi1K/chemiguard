@@ -330,6 +330,7 @@ function setBusy(value) {
   $("chatInput").disabled = busy;
   $("newChat").disabled = busy;
   $("chatForm").setAttribute("aria-busy", String(busy));
+  refreshPhotoControls();
 }
 
 function addMessage(role, text) {
@@ -347,7 +348,7 @@ function renderAnswerBase(el, response) {
   if (response.questions?.length)
     el.insertAdjacentHTML(
       "beforeend",
-      `<div class="followup-questions"><strong>추가로 알려주세요</strong><ul>${response.questions.map((q) => `<li>${esc(q)}</li>`).join("")}</ul></div>`,
+      `<div class="followup-questions"><strong>이것 하나만 알려주세요</strong><ul>${response.questions.map((q) => `<li>${esc(q)}</li>`).join("")}</ul></div>`,
     );
   const evidence = {
     backend: response.backend,
@@ -389,7 +390,7 @@ function renderAnswerBase(el, response) {
       b.addEventListener("click", () => chooseProduct(b.dataset.product)),
     );
   }
-  if (response.live_lookup) {
+  if (response.live_lookup && response.live_lookup.status !== "not_requested") {
     const l = response.live_lookup;
     el.insertAdjacentHTML(
       "beforeend",

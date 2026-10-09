@@ -42,7 +42,14 @@ if (apiBase) {
 }
 await rm(path.join(root, "dist"), { recursive: true, force: true });
 await mkdir(out, { recursive: true });
-for (const name of ["core", "drafts", "catalog", "counselor", "bootstrap"]) {
+for (const name of [
+  "core",
+  "drafts",
+  "catalog",
+  "photo-upload",
+  "counselor",
+  "bootstrap",
+]) {
   await copyFile(
     path.join(root, `web/${name}.js`),
     path.join(out, `${name}.js`),

@@ -26,7 +26,7 @@ async function checkBackend() {
         ? "시연 코드 필요"
         : "상담 설정 대기";
     $("chatProgress").textContent = ready
-      ? "물질·농도·온도·작업·노출 조건을 입력하세요."
+      ? "아는 내용만 편하게 적어 주세요. 제품명을 모르면 라벨 사진으로 시작해도 돼요."
       : serverReady
         ? "상담 접근 설정에 시연 코드를 입력하세요."
         : status.message ||
@@ -43,6 +43,7 @@ async function checkBackend() {
 }
 function renderAnswer(el, response) {
   renderAnswerBase(el, response);
+  renderPhotoReading(el, response.photo_reading);
   for (const source of response.live_lookup?.sources || []) {
     const rows = source.rows || [];
     const conditions = (source.notes || [])
@@ -57,15 +58,46 @@ function renderAnswer(el, response) {
     );
   }
 }
-async function submitChat(event) {
+async function submitChat(event, confirmation = null) {
   event.preventDefault();
-  const message = $("chatInput").value.trim();
-  if (!message || busy || !ready) return;
-  addMessage("user", message);
+  const message = confirmation
+    ? "사진에서 읽은 내용을 확인했어요. 이 내용으로 상담을 이어가 주세요."
+    : $("chatInput").value.trim();
+  if ((!message && !chatPhotos.length) || busy || preparingPhotos || !ready)
+    return;
+  if (confirmation && chatPhotos.length) {
+    $("photoFeedback").textContent =
+      "새 사진이 준비되어 있어요. 보내기로 사진을 먼저 확인하거나 사진을 제거해 주세요.";
+    return;
+  }
+  const sentPhotos = [...chatPhotos];
+  const userEntry = addMessage(
+    "user",
+    message || "사진으로 어떤 제품인지 확인하고 싶어요.",
+  );
+  if (sentPhotos.length) {
+    const previews = document.createElement("div");
+    previews.className = "sent-chat-photos";
+    sentPhotos.forEach((photo, index) => {
+      const img = document.createElement("img");
+      img.src = photo.dataUrl;
+      img.alt = `전송한 라벨 사진 ${index + 1}`;
+      previews.append(img);
+    });
+    userEntry.append(previews);
+  }
+  if (confirmation) {
+    const confirmed = document.createElement("p");
+    confirmed.className = "confirmed-photo-text";
+    confirmed.textContent = confirmation.text;
+    userEntry.append(confirmed);
+  }
   $("chatInput").value = "";
   const answer = addMessage(
     "assistant",
-    "물질과 작업 조건을 확인하고 제조사 근거를 조회하고 있습니다.",
+    sentPhotos.length
+      ? "사진에서 읽을 수 있는 라벨 내용을 확인하고 있어요."
+      : "말씀해 주신 내용을 확인하고 있어요.",
   );
   answer
     .querySelector("strong")
@@ -74,8 +106,9 @@ async function submitChat(event) {
       '<span class="loading-dot" aria-hidden="true"></span>',
     );
   setBusy(true);
-  $("chatProgress").textContent =
-    "근거 조회 및 조합 검토 중 · 최대 약 3분";
+  $("chatProgress").textContent = sentPhotos.length
+    ? "사진의 글자를 확인 중 · 최대 약 3분"
+    : "답변을 준비 중 · 최대 약 3분";
   try {
     const r = await fetch(`${apiBase}/api/ppe/chat`, {
       method: "POST",
@@ -87,16 +120,16 @@ async function submitChat(event) {
       body: JSON.stringify({
         session_id: chatSession,
         message,
+        photos: sentPhotos.map((p) => p.dataUrl),
+        ...(confirmation ? { photo_confirmation: confirmation } : {}),
         auto_kit_options: true,
-        existing_kits: savedKits
-          .slice(-20)
-          .map((k) => ({
-            name: k.company_set_name,
-            use_type: kitUseType(k),
-            work_group: kitWorkGroup(k),
-            coverall_colour: k.selected_coverall_colour,
-            product_ids: idsOfKit(k),
-          })),
+        existing_kits: savedKits.slice(-20).map((k) => ({
+          name: k.company_set_name,
+          use_type: kitUseType(k),
+          work_group: kitWorkGroup(k),
+          coverall_colour: k.selected_coverall_colour,
+          product_ids: idsOfKit(k),
+        })),
       }),
     });
     let response;
@@ -116,11 +149,25 @@ async function submitChat(event) {
       throw new Error(response.error || "상담 요청을 완료하지 못했습니다.");
     }
     chatSession = response.session_id;
-    userMessages.push(message);
+    userMessages.push(message || "라벨 사진 첨부");
+    if (confirmation || response.photo_reading) {
+      document.querySelectorAll("[data-photo-review]").forEach((button) => {
+        button.dataset.consumed = "true";
+        button.disabled = true;
+        button.textContent =
+          confirmation && button.dataset.photoReview === confirmation.review_id
+            ? "확인한 내용으로 상담 중"
+            : "이전 사진 확인";
+      });
+    }
+    clearChatPhotos();
     renderAnswer(answer, response);
     $("chatStatus").textContent = "상담 연결됨";
-    $("chatProgress").textContent =
-      "조합의 근거와 남은 확인을 검토하세요. 추가 조건을 같은 대화에서 입력할 수 있습니다.";
+    $("chatProgress").textContent = response.photo_reading?.review_id
+      ? "사진에서 읽은 글자를 확인하고 ‘이 내용으로 상담하기’를 눌러 주세요."
+      : response.questions?.length
+        ? "위 질문 하나에만 답해 주세요. 모르겠으면 그대로 말씀해도 괜찮아요."
+        : "아는 내용이나 궁금한 점을 이어서 적어 주세요.";
   } catch (error) {
     answer.classList.add("chat-error");
     answer.querySelector(".message-text").textContent =
