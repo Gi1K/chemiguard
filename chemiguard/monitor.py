@@ -17,6 +17,7 @@ from .sources import sources
 from .observation import SCHEDULE, WINDOW_SECONDS, combine_observation, image_quality, request_due, select_candidate
 from .store import now, store, uid
 from .vision import Vision, crop, identity, jpeg
+from .products import current_site_products
 
 OBSERVATION_TTL = 5.0
 TRACK_TTL = 1.2
@@ -81,6 +82,8 @@ class Run:
             'scene_detector': {'library': 'scenedetect-0.6.6', 'detector': 'ContentDetector', 'threshold': 27},
             'implementation': 'hackathon-finals-2026-10-09'})
         self.references = [row for row in store.list('reference') if row['revision'] <= policy['reference_revision']]
+        self.site_products = copy.deepcopy(current_site_products(store.list('site_product')))
+        self.record['site_products'] = self.site_products
         self.thread = threading.Thread(target=self._work, daemon=True, name=self.id)
         self.thread.start()
 
@@ -359,12 +362,13 @@ class Run:
             if needs_identity:
                 identity_checks += 1
                 try:
-                    matching = (identity.search(body['images']['torso'], self.references)
-                                if 'torso' in body['images'] else
-                                {'state': 'UNAVAILABLE', 'candidates': [], 'reason': '몸통 대상 연결 불충분'})
+                    matching = self._identify(body, selected, person, epoch, scene_epoch)
                 except Exception as exc:
                     matching = {'state': 'UNAVAILABLE', 'candidates': [], 'reason': f'외형 검색 오류: {type(exc).__name__}'}
                 with self.lock:
+                    if (epoch != self.generation or scene_epoch != self.scene_epoch
+                            or self.tracks.get(person['track_id']) is not person or self.state != 'RUNNING'):
+                        return
                     person['identity'] = matching
                     person['last_identity'] = captured
             if needs_api and api_available:
@@ -391,6 +395,27 @@ class Run:
                     self.metrics['api_calls'] += 1
                 self.future = self.pool.submit(decisions.observe, body['images'], self.policy)
                 self.future.add_done_callback(lambda future, env=envelope: self._answer(future, env))
+
+    def _identify(self, body, selected, person, epoch, scene_epoch):
+        image = body['images'].get('identity_torso')
+        if image is None:
+            return {'state': 'UNAVAILABLE', 'candidates': [], 'reason': '비교 가능한 몸통 영역 부족'}
+        started = time.monotonic()
+        matching = identity.search(image, self.references, self.site_products)
+        evidence_id = uid('identity')
+        image_path = self.path / 'evidence' / f'{evidence_id}.jpg'
+        image_path.write_bytes(jpeg(image))
+        matching.update(id=evidence_id, source_time_s=selected['timestamp'],
+                        source_frame=selected['seq'], observed_monotonic=selected['captured'],
+                        query_url=f'/media/runs/{self.id}/evidence/{evidence_id}.jpg',
+                        query_box=body['boxes']['identity_torso'], person_box=selected['bbox'],
+                        crop_method='pose-torso-context-v1', model_sha256=identity.model_hash,
+                        reference_revision=self.policy['reference_revision'],
+                        latency_ms=round((time.monotonic()-started)*1000, 1))
+        with (self.path / 'identity.jsonl').open('a', encoding='utf-8') as log:
+            log.write(json.dumps(matching | {'track_id': person['track_id'], 'track_token': person['token'],
+                                            'generation': epoch, 'scene_epoch': scene_epoch}, ensure_ascii=False)+'\n')
+        return matching
 
     def _evidence(self, frame, images, seq, timestamp, bbox=None):
         observation_id = uid('observation')
@@ -528,8 +553,13 @@ class Run:
                 wearing, reason = 'VISIBLE_WORN', '보이는 범위 착용 · 전체 필수 부위 재확인 중'
             if not self.policy['coverall_required']:
                 state, wearing = 'DISABLED', 'UNKNOWN'
-            tracks.append(copy.deepcopy({key: track[key] for key in ('track_id', 'bbox', 'confidence', 'identity', 'pending')} |
-                          {'track_token': track['token'], 'wearing': wearing, 'processing_state': state,
+            matching = track['identity']
+            if matching.get('candidates') and (halted
+                    or current-matching.get('observed_monotonic', 0) > 3
+                    or source_time is not None and matching.get('source_time_s', 0) > source_time):
+                matching = {'state': 'STALE', 'candidates': [], 'reason': '외형 비교 관측 만료'}
+            tracks.append(copy.deepcopy({key: track[key] for key in ('track_id', 'bbox', 'confidence', 'pending')} |
+                          {'identity': matching, 'track_token': track['token'], 'wearing': wearing, 'processing_state': state,
                            'parts': result.get('parts', {}) if valid else {}, 'confirmed': confirmed,
                            'all_required_observed': bool(valid and track.get('complete_confirmed')),
                            'violations': result.get('violations', []) if valid else [],

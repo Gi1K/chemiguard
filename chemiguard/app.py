@@ -18,6 +18,7 @@ from .monitor import monitor
 from .sources import VIDEO_EXTENSIONS, sources
 from .store import now, store, uid
 from .vision import identity
+from .products import current_site_products, product_profile
 
 
 class PolicyInput(BaseModel):
@@ -74,11 +75,22 @@ class ReferenceInput(BaseModel):
     model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
     product_id: str = Field(min_length=1, max_length=80, pattern=r'^[A-Za-z0-9_-]+$')
     product_name: str = Field(min_length=1, max_length=150)
+    reference_kind: Literal['product_photo', 'scene_demo'] = 'product_photo'
     source: str = Field(min_length=1, max_length=1000)
     usage_scope: str = Field(min_length=1, max_length=500)
     view: Literal['front', 'back', 'side', 'other'] = 'front'
     region: Literal['torso'] = 'torso'
     bbox: list[int] = Field(min_length=4, max_length=4)
+
+
+class SiteProductInput(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    purpose: Literal['acid', 'alkali', 'acid_alkali', 'other']
+    protection_type: Literal['Type 1', 'Type 2', 'Type 3', 'Type 4', 'Type 5', 'Type 6', '기타']
+    color: Literal['white', 'yellow', 'orange', 'green', 'blue', 'gray', 'black', 'other']
+    product_id: str = Field(min_length=1, max_length=80)
+    enabled: bool = True
+    note: str = Field(default='', max_length=500)
 
 
 @asynccontextmanager
@@ -109,7 +121,8 @@ async def value_error(request, exc):
 
 
 def public_reference(row):
-    return {key: value for key, value in row.items() if key != 'embedding'}
+    return {key: value for key, value in row.items() if key != 'embedding'} | {
+        'product': product_profile(row['product_id']) if row.get('reference_kind') == 'product_photo' else None}
 
 
 def system_status():
@@ -201,6 +214,30 @@ def list_references():
     return [public_reference(row) for row in store.list('reference')]
 
 
+@app.get('/api/site-products')
+def list_site_products():
+    return current_site_products(store.list('site_product'))
+
+
+@app.post('/api/site-products')
+def add_site_product(payload: SiteProductInput):
+    if not any(row['product_id'] == payload.product_id and row.get('reference_kind') == 'product_photo'
+               for row in store.list('reference')):
+        raise HTTPException(400, '해당 제품의 제품 사진을 먼저 등록해 주세요.')
+    profile = product_profile(payload.product_id)
+    if profile and payload.protection_type != '기타':
+        declared_type = payload.protection_type.removeprefix('Type ')
+        if declared_type not in {value.split('-')[0] for value in profile['types']}:
+            raise HTTPException(400, '선택한 형식이 등록 제품의 제조사 자료와 다릅니다.')
+    with store.lock:
+        previous = [row for row in store.list('site_product')
+                    if row['purpose'] == payload.purpose and row['protection_type'] == payload.protection_type]
+        latest = max(previous, key=lambda row: row['revision'], default=None)
+        return store.put('site_product', payload.model_dump() | {
+            'revision': latest['revision']+1 if latest else 1, 'supersedes': latest['id'] if latest else None,
+            'designation_basis': 'user_site_assignment', 'chemical_suitability': 'NOT_ASSESSED'})
+
+
 @app.post('/api/references')
 def add_reference(image: UploadFile = File(...), metadata: str = Form(...)):
     if monitor.busy():
@@ -281,6 +318,31 @@ def run_frame(run_id: str, generation: int, seq: int):
     if data is None:
         raise HTTPException(404, '프레임이 갱신되었습니다.')
     return Response(data, media_type='image/jpeg', headers={'Cache-Control': 'private, max-age=60'})
+
+
+@app.get('/api/runs/{run_id}/identity')
+def identity_history(run_id: str):
+    record = store.get('run', run_id)
+    if not record:
+        raise HTTPException(404, '실행을 찾을 수 없습니다.')
+    from collections import deque
+    path = DATA / 'runs' / record['id'] / 'identity.jsonl'
+    if not path.is_file():
+        return []
+    with path.open(encoding='utf-8') as source:
+        lines = deque(source, maxlen=200)
+    rows = []
+    for line in lines:
+        try:
+            rows.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue  # A current writer may not have finished its last line yet.
+    latest = {}
+    for row in rows:
+        if row.get('candidates'):
+            latest[row['track_token']] = {'track_id': row['track_id'], 'track_token': row['track_token'],
+                                          'identity': row, 'saved_comparison': True}
+    return list(latest.values())[-6:]
 
 
 @app.get('/api/runs/{run_id}/export')

@@ -6,6 +6,8 @@ import { Activity, AlertTriangle, ArrowDownToLine, ArrowLeft, Bell, Camera, Chec
   Video, Volume2, VolumeX, X, XCircle, Eye, ExternalLink } from 'lucide-react';
 import './style.css';
 import {TrackingOverlay, useNativePlayback} from './videoPlayback';
+import {ProductComparisons} from './productComparison';
+import {SiteCatalog} from './siteCatalog';
 import {observationLabel, WEARING_LABELS} from './wearingStatus';
 
 const LABEL = {
@@ -151,12 +153,13 @@ function App(){
                 <div className="observation-note"><Eye size={15}/><span>영상 관찰 · 최종 판단은 담당자 확인</span></div>
               </section>
             </div>
+            <ProductComparisons tracks={visibleTracks} references={boot.references} run={run}/>
             <section className="recent-events"><div className="section-title"><h2>이번 실행 사건</h2><button className="text-button" onClick={()=>setPage('events')}>전체 사건<ChevronRight size={15}/></button></div><EventTable events={currentEvents.slice(0,6)} open={openEvent}/></section>
           </>}
           {page==='sources' && <SourcesView sources={boot.sources} choose={chooseSource}/>}
           {page==='events' && <EventsView events={events} open={openEvent}/>}
           {page==='policies' && <PoliciesView policies={boot.policies} edit={(value)=>{setEventDetail(value);setModal('policy-edit');}}/>}
-          {page==='references' && <ReferencesView references={boot.references}/>}
+          {page==='references' && <><SiteCatalog references={boot.references}/><ReferencesView references={boot.references}/></>}
           {page==='runs' && <RunsView runs={runs} showEvents={(id)=>{setPage('events');setToast(`실행 ${id}의 사건은 목록에서 확인할 수 있습니다.`);}}/>}
         </>}
       </main>

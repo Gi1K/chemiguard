@@ -184,3 +184,22 @@
 - 실제 화면: 관제 사람별 전면형 방독면 행, 경보 사건 `event_eb2781cb951340d2`와 원본·머리/안면 근거, 정책 v6의 필수 표시와 v1~v5 보존을 확인했다. 390x844 설정 모달에서 전면형 필수 체크와 가로 넘침 없음(문서 폭 375px)을 확인했다. 비공개 캡처는 `.data/respirator-{policy,event,mobile}.png`이며 공개 커밋에서 제외한다. 확인 후 다른 창에서 시작한 실행은 중지하거나 이번 검증으로 집계하지 않았다.
 - 최소 검사: 신규 Python 6개를 포함한 관련 규칙/정책 19개, JavaScript 라벨/시간 정렬 7개, production build, compileall, diff 공백 검사 통과. 오프라인 모의 API 검사는 실제 호출 성공과 구분하며 라이브 실행은 위 1회다. 서비스에 적용했고 원격 Mac/Safari 직접 검증은 아니다.
 - 남은 문제: 왼쪽의 좁은 옆모습/저해상도에서 장비 유형이 불확실하고 단발 미착용 추정도 남는다. 실제 입력을 육안 확인했으나 전면형 정답 확정·착용 양성 검증·독립 정확도 평가·전수 케이스 평가는 하지 않았다. 확인 불가를 성공 표시로 바꾸지 않는다. 공식 API 계약은 https://developers.openai.com/api/docs/guides/decisions 를 확인했고 gpt-6-luna를 유지했다. 다른 제품 비교·현장 제품 설정·발표·사후 카탈로그 작업의 파일/DB/이력은 보존하고 이번 커밋에는 섞지 않는다.
+
+## 현장 대표 보호복 등록과 실제 SigLIP2 비교 (2026-10-09)
+
+- 사용자 확정: 지금은 제품 정보만 표시하고 정확 모델을 모르면 계열로 표시한다. 이후 현장에서 색상으로 구분해 용도·형식별 대표 제품 하나를 쓴다. 색상→용도 매핑은 미정이므로 임의 등록 없이 기능부터 구현한다.
+- 근거/사전 범위: 종전 DEMO 참고는 영상 프레임이며 실제 제품 사진과 구분되지 않았다. 사전 pose_direct_similarity 실험에도 제품 간 혼동이 있고 소수 사례의 결과를 독립 정확도로 사용할 수 없다. 기존 두 사람 관찰의 옆모습 몸통 폭 46px 문제를 참고했다. 사전 영상/사진/Pose/SigLIP2는 준비물이고 아래 코드는 빈 저장소 등록 이후 새 구현이다.
+- 변경 파일: products.py에 출처 있는 제조사 프로필과 제품별 상위 최대 2장 코사인 평균 순위, app.py에 제품 사진 구분·현장 등록 revision API·저장된 비교 조회, vision.py에 별도 identity_torso 맥락 crop, monitor.py에 실행별 현장 목록 snapshot·비교 입력/시각/모델/순위 기록·만료 방지. productComparison.jsx/css와 siteCatalog.jsx를 main.jsx에 연결했다. Luna용 기존 torso/head/legs crop과 착용 기준은 이 작업에서 바꾸지 않았다.
+- 현장 등록: 내산/내염기/내산·내염기/기타, Type 1~6/기타, 색상, 대표 제품, 활성 여부, 메모를 등록한다. 같은 용도·형식 수정은 새 revision/supersedes로 추가한다. 제조사 프로필이 있는 제품은 충돌하는 Type을 거부한다. 용도·색상 지정은 성능 인증이 아니며 chemical_suitability=NOT_ASSESSED다. 비교는 등록된 활성 제품으로 제한하고 전부 비활성화 시 임의 참고 목록으로 복귀하지 않는다. 실제 운영 목록은 []로 보존했다.
+- 사진 반영: 로컬 사전 reference_expansion_rois.json와 hard_negative_rois.json의 allow_embedding=true/local_poc_only 범위를 확인하고 I044/I045/I050(P11), I023/I024(P04), I051(P12)을 import_product_references.py로 새 Pose crop·SigLIP2 임베딩 처리했다. 3개 제품 6장, 전체 reference revision 7이다. permission_pending/no redistribution/source_group를 로컬 등록에 유지했다. 기존 DEMO 1장은 삭제하지 않고 제품 순위에서 제외한다. 소스 매니페스트·원본·기존 예측은 변경/복제하지 않았다. 최초 호출은 서버 재시작 직후 준비 전 connection refused였고 health 확인 후 재시도해 6장 등록을 완료했다.
+- 제조사 자료: DuPont Tychem 4000 S CHZ5(SLCHZ5TWH00), Tychem 6000 F CHA5(TFCHA5TGY00), Tyvek 500 Xpert CHF5(TYCHF5SWHXP / TYCHF5SWHXB)의 공식 페이지를 2026-10-09 확인했다. 각각 Type 3-B/4-B/5-B/6-B, 3-B/4-B/5-B/6-B, 5-B/6-B이며 세 페이지의 황산 30%·수산화나트륨 10% EN ISO 6530 침투 <1%·반발 >95%를 조건과 함께 표시한다. 원단 침투/반발이지 투과 파과시간·안전 착용시간이 아니다. 영상 출처의 제품 계열 설명만으로 두 사람의 정확 SKU를 확정하지 않는다.
+- 실제 실행 1: run_f604a2d0625540e1, 두 사람 17.52초, Large/v5(policy_29793c1df1724a03, reference 7), 86 처리 프레임, Decisions 14회/오류 0/폐기 0, 사건 2, FINISHED. 새 SigLIP2 비교 26회(오른쪽 track 1:16, 왼쪽 track 2:10). 모두 P12가 1위였고 왼쪽의 gap은 0.000277~0.01281로 작았다. 기대 계열에 맞춰 임계값을 조절하지 않고 계열 구분 보류 표시와 근거 비교를 추가했다.
+- 실제 실행 2: run_f8099c396b504ead, 같은 두 사람 17.52초, Large/v5/reference 7, 85 처리 프레임, Decisions 11회/오류 0/폐기 0, 사건 1, FINISHED. 새 SigLIP2 비교 27회: 오른쪽 16회 모두 P12 1위(gap 0.011465~0.033120), 왼쪽 11회 중 P11 1회/P12 10회(gap 0.002727~0.013578). 비교 구간 평균 20.733ms는 임베딩/검색/로컬 crop 저장 구간이며 Pose·전체 지연 또는 정확도가 아니다. 실험 결과를 이전 저장 예측으로 재생하지 않았다.
+- 실제 UI 확인: 로컬 8765에서 두 사람 실제 query/제품 사진과 코사인 점수, 다른 계열 후보 선택 시 제조사 Type/SKU/시험 정보 변경, 종료 후 '저장된 관측 · 실시간 아님', 빈 현장 등록 폼을 확인했다. 390x844 모바일 가로 넘침 없음, 비교 이미지 로드 정상, 브라우저 콘솔 오류 0. 원격 Mac의 18765 터널/Safari 직접 확인은 아니다. 비공개 캡처는 .data/product-comparison-{final-desktop,mobile,saved}.png와 .data/site-registration-desktop.png다.
+- 최소 검사: 제품 순위/DEMO 제외/모델·crop 조건/후보 격차/등록 대상 제한/단일 후보 미확정 등 5개 검사와 격리 SQLite TestClient에서 등록·비활성화 revision 보존/미등록·Type 충돌 거부 2개를 통과했다. 운영 등록 DB에 가상 매핑을 쓰지 않았다. Python compileall, production build를 통과했다. 새로운 대규모 시험·학습·다른 외부 AI는 추가하지 않았다. 최종 재확인에서 tests를 패키지로 지정한 명령은 import 오류로 실행되지 않았고, unittest discover -s tests -p 'test*products.py'로 다시 실행해 7개 통과를 확인했다.
+- 한계/다음 근거: 비슷한 흰색 계열의 모델 구분은 아직 신뢰할 수 없다. 0.03 gap은 검토용 미검증 휴리스틱이며 단일 후보도 확정하지 않는다. 실제 색상 구분 제품과 현장 사진/매핑이 없으므로 해당 조건의 식별 정확도는 미검증이다. 현재 색상은 등록 메타데이터이며 독립 색상 분류기를 만들지 않았다. Luna 착용과 제품 외형 후보·제조사 성능 정보·작업 적합성은 분리한다. 임의 '내산 가능/내염기 가능'이나 안전 승인으로 표시하지 않는다.
+- 기록/커밋 범위: 이 제품 비교·등록 코드와 본 절, AGENTS/범위의 해당 추가 사항만 별도 커밋한다. 동시에 진행되는 방독면·발표·라이선스·별도 사후 카탈로그 변경은 섞지 않는다. 키·DB·원본·임베딩·실행 근거·캡처는 공개 커밋에서 제외하고 기존 커밋/LFS 이력을 보존한다.
+- 공식 출처:
+  - https://www.dupont.co.uk/products/tychem-4000-s-slchz5twh00.html
+  - https://www.dupont.co.uk/products/tychem-6000-f-tfcha5tgy00.html
+  - https://www.dupont.co.uk/products/tyvek-500-xpert-tychf5swhxp-tychf5swhxb.html

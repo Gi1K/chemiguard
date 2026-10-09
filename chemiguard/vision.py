@@ -8,6 +8,7 @@ from transformers import AutoImageProcessor, SiglipVisionModel
 from ultralytics import YOLO
 
 from .config import DEVICE, IDENTITY_MODEL, PERSON_MODELS, POSE_MODEL, RELEASE_MODEL, fingerprint
+from .products import rank_references
 
 GPU_LOCK = threading.RLock()
 
@@ -56,28 +57,11 @@ class Identity:
             vector = vector / vector.norm().clamp(min=1e-8)
             return vector.cpu().numpy().tolist()
 
-    def search(self, image, references):
+    def search(self, image, references, site_products=None):
         if not references:
             return {'state': 'UNAVAILABLE', 'candidates': [], 'reason': '등록 사진 없음'}
         vector = np.array(self.embed(image), dtype=np.float32)
-        products = {}
-        for reference in references:
-            if reference['model_sha256'] != self.model_hash or reference['region'] != 'torso':
-                continue
-            score = float(np.dot(vector, np.array(reference['embedding'], dtype=np.float32)))
-            product = products.setdefault(reference['product_id'], {
-                'product_id': reference['product_id'], 'name': reference['product_name'], 'scores': [],
-                'reference_url': reference['crop_url'], 'reference_count': 0})
-            product['scores'].append(score)
-            product['reference_count'] += 1
-        candidates = []
-        for product in products.values():
-            product['score'] = float(np.mean(sorted(product.pop('scores'), reverse=True)[:2]))
-            candidates.append(product)
-        candidates.sort(key=lambda row: row['score'], reverse=True)
-        return {'state': 'CANDIDATE' if candidates else 'UNAVAILABLE', 'candidates': candidates[:3],
-                'gap': candidates[0]['score'] - candidates[1]['score'] if len(candidates) > 1 else None,
-                'reason': '외형 참고 후보 · 제품 미확정'}
+        return rank_references(vector, references, self.model_hash, site_products)
 
 
 identity = Identity()
@@ -159,6 +143,12 @@ class Vision:
                  'torso': bounded_box([left-pad_x, top-pad_y, right+pad_x, bottom+pad_y], width, height),
                  'legs': bounded_box([0, max(0, top + (bottom-top)*0.75), width, height], width, height),
                  'head': bounded_box([0, 0, width, min(height, top+pad_y)], width, height)}
+        # Keep torso context for side views; do not change the Decisions detail crops.
+        center_x = float((left + right) / 2)
+        half_width = max(float((right-left)*0.65), float((bottom-top)*0.35))
+        identity_box = bounded_box([center_x-half_width, top-pad_y, center_x+half_width, bottom+pad_y], width, height)
+        if identity_box[2]-identity_box[0] >= 35 and identity_box[3]-identity_box[1] >= 60:
+            boxes['identity_torso'] = identity_box
         images = {name: crop(person, box) for name, box in boxes.items()}
         body.update(images={key: value for key, value in images.items() if value is not None and value.size},
                     boxes=boxes, route='pose_regions', reason='대상 연결 Pose 영역과 사람 영상으로 관찰')
