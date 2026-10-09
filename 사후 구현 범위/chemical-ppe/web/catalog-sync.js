@@ -1,5 +1,6 @@
 // Postwork: one live catalog snapshot drives cards, pickers and counseling.
 let catalogRefreshInFlight = false;
+let renderedCatalogStatus = "";
 
 async function fetchCatalog() {
   const response = await fetch(`${apiBase}/api/ppe/catalog`, {
@@ -23,6 +24,7 @@ function renderCatalogMaintenance(status) {
     ? `${apiBase}/api/ppe/catalog`
     : "catalog-data.json";
   if (!status) {
+    renderedCatalogStatus = "";
     badge.textContent = "저장된 기본 목록";
     content.textContent =
       "제품 DB에 연결하지 못해 저장된 기본 목록을 보여주고 있어요. 자동 업데이트 상태는 확인할 수 없습니다.";
@@ -38,6 +40,10 @@ function renderCatalogMaintenance(status) {
         : schedule
           ? "매일 오전 9시 확인"
           : "정기 확인 설정 전";
+  const statusKey = JSON.stringify(status);
+  if (statusKey === renderedCatalogStatus) return;
+  const failuresOpen = content.querySelector("details")?.open;
+  renderedCatalogStatus = statusKey;
   const when = run?.finished_at
     ? new Date(run.finished_at).toLocaleString("ko-KR", {
         timeZone: "Asia/Seoul",
@@ -58,7 +64,7 @@ function renderCatalogMaintenance(status) {
             .join("")}</div>`
         : ""
     }
-    ${run?.failures?.length ? `<details><summary>확인하지 못한 출처</summary>${run.failures.map((f) => `<p>${link(f.url, f.manufacturer)} · ${esc(f.reason)}</p>`).join("")}</details>` : ""}
+    ${run?.failures?.length ? `<details${failuresOpen ? " open" : ""}><summary>확인하지 못한 출처</summary>${run.failures.map((f) => `<p>${link(f.url, f.manufacturer)} · ${esc(f.reason)}</p>`).join("")}</details>` : ""}
     <p class="small muted">자동 발견은 출시일 확인이나 현장 사용 승인을 뜻하지 않습니다. 기본 정보만 확인한 제품은 성능 검토 전으로 표시합니다.</p>
     ${schedule ? '<p class="small muted">현재 정기 확인은 이 PC와 Codex 앱이 켜져 있을 때 실행됩니다.</p>' : ""}`;
 }
