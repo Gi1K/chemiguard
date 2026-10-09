@@ -51,7 +51,7 @@ function App(){
   const load = async () => {
     const data=await api('/bootstrap'); setBoot(data); setRun(data.active);
     setSourceId(id=>id || data.active?.source_id || data.sources[0]?.id || '');
-    setPolicyId(id=>id || data.active?.policy?.id || data.policies[0]?.id || '');
+    setPolicyId(id=>id || (activeStatus(data.active?.status)?data.active.policy.id:data.policies[0]?.id) || '');
     if(data.active) setSize(data.active.person_size);
   };
   useEffect(()=>{load().catch(e=>setError(e.message));},[]);
@@ -82,7 +82,7 @@ function App(){
   const source=boot?.sources.find(row=>row.id===sourceId);
   const running=activeStatus(run?.status);
   const currentEvents=events.filter(row=>row.run_id===run?.id);
-  const chooseSource=(id)=>{setSourceId(id);setPage('monitor');};
+  const chooseSource=(id)=>{if(running){setError('현재 분석을 중지한 뒤 영상을 변경해 주세요.');return;}setSourceId(id);setPage('monitor');};
   return <div className="app-shell">
     <aside className="sidebar">
       <a className="brand" href="#" onClick={e=>{e.preventDefault();setPage('monitor');}}><span className="brand-icon"><ShieldCheck size={24}/></span><div>ChemiGuard<small>SAFETY OPERATIONS</small></div></a>
@@ -107,7 +107,7 @@ function App(){
             <section className="setup-bar">
               <Field label="시연 영상"><select aria-label="시연 영상" value={sourceId} disabled={running} onChange={e=>setSourceId(e.target.value)}>{boot.sources.map(row=><option key={row.id} value={row.id}>{row.name}</option>)}</select></Field>
               <Field label="작업 기준"><select aria-label="작업 기준" value={policyId} disabled={running} onChange={e=>setPolicyId(e.target.value)}>{boot.policies.map(row=><option key={row.id} value={row.id}>{row.name} · v{row.revision}</option>)}</select></Field>
-              <Field label="사람 감지"><div className="segmented">{['medium','large'].map(value=><button key={value} aria-pressed={size===value} disabled={running} className={size===value?'active':''} onClick={()=>setSize(value)}>{value==='medium'?'Medium':'Large'}</button>)}</div></Field>
+              <div className="field"><span>사람 감지</span><div className="segmented" role="group" aria-label="사람 감지 모델">{['medium','large'].map(value=><button key={value} aria-label={value==='medium'?'Medium':'Large'} aria-pressed={size===value} disabled={running} className={size===value?'active':''} onClick={()=>setSize(value)}>{value==='medium'?'Medium':'Large'}</button>)}</div></div>
               <button className="button primary start" disabled={busy || running || !sourceId || !policyId} onClick={start}>{busy || run?.status==='LOADING'?<LoaderCircle className="spin" size={18}/>:<Play size={18}/>}분석 시작</button>
             </section>
             {!boot.system.api_configured && <div className="notice warning"><AlertTriangle size={17}/>Luna 연결 대기 · 서버에 OPENAI_API_KEY를 설정해 주세요.</div>}
@@ -116,7 +116,7 @@ function App(){
               <section className="video-section"><div className="section-title"><h2><Video size={18}/>시연 영상</h2><span className="subtle">{run?.id ? '파일 실시간 분석' : source?.case}</span></div>
                 <VideoPanel source={source} run={run} connected={connected} control={control} busy={busy}/>
                 <div className="pipeline-strip"><span><i className={run?.people_state==='RUNNING'?'online':'idle'}/>YOLO26 {size==='large'?'L':'M'} · ByteTrack</span><ChevronRight size={13}/><span><i className={boot.system.api_configured?'online':'offline'}/>Luna Decisions</span><ChevronRight size={13}/><span><i className={currentEvents.length?'online':'idle'}/>사건 · 근거</span></div>
-                <div className="scene-line"><div><span className="mini-label">장면 관찰</span><strong>{run?.scene.suspected?'가시적 연무·분출 의심':run?.scene.processing_state==='RUNNING'?'현재 연속 의심 없음':'관찰 대기'}</strong></div><Badge value={run?.scene.processing_state || 'WAITING'}/><span className="subtle">{run?.scene.detections?.length || 0}개 후보</span></div>
+                <div className="scene-line"><div><span className="mini-label">장면 관찰</span><strong>{run?.scene.error || (run?.scene.suspected?'가시적 연무·분출 의심':run?.scene.processing_state==='RUNNING'?'현재 연속 의심 없음':'관찰 대기')}</strong></div><Badge value={run?.scene.processing_state || 'WAITING'}/><span className="subtle">{run?.scene.detections?.length || 0}개 후보</span></div>
               </section>
               <section className="people-section"><div className="section-title"><h2><Users size={18}/>사람별 관찰</h2><span className="count">{run?.tracks.length || 0}</span></div>
                 <div className="people-list">{run?.tracks.length?run.tracks.map(person=><Person key={person.track_id} person={person} fresh={connected && run.status==='RUNNING'}/>):<Empty icon={UserRound}>{run?.status==='LOADING'?'모델을 준비하고 있습니다':'관찰 중인 사람이 없습니다'}</Empty>}</div>
@@ -135,6 +135,7 @@ function App(){
       <footer className="footer"><span>ChemiGuard <b>MONITOR</b></span><span>본선 구현 · 사전 자산 사용</span></footer>
     </div>
     {toast && <div className="toast" role="status"><Bell size={17}/><span>{toast}</span><IconButton icon={X} title="알림 닫기" onClick={()=>setToast('')}/></div>}
+    {error && modal && <div className="toast error-toast" role="alert"><AlertTriangle size={17}/><span>{error}</span><IconButton icon={X} title="오류 닫기" onClick={()=>setError('')}/></div>}
     {modal==='upload' && <UploadModal onClose={()=>setModal(null)} submit={(form)=>perform(async()=>{const row=await api('/sources',{method:'POST',body:form});await load();setSourceId(row.id);setModal(null);setToast('영상이 등록되었습니다.');})} busy={busy}/>}
     {['policy','policy-edit'].includes(modal) && <PolicyModal initial={modal==='policy-edit'?eventDetail:null} references={boot.references} onClose={()=>setModal(null)} busy={busy} submit={value=>perform(async()=>{const row=await api('/policies',{method:'POST',body:JSON.stringify(value)});await load();setPolicyId(row.id);setModal(null);setToast(`작업 기준 v${row.revision} 저장됨`);})}/>}
     {modal==='reference' && <ReferenceModal onClose={()=>setModal(null)} busy={busy} submit={form=>perform(async()=>{await api('/references',{method:'POST',body:form});await load();setModal(null);setToast('사진과 임베딩이 등록되었습니다. 작업 기준을 새 버전으로 저장해 주세요.');})}/>}
@@ -146,7 +147,7 @@ function Metric({label,value,unit,icon:Icon}){return <div className="metric"><di
 function VideoPanel({source,run,connected,control,busy}){
   const [seek,setSeek]=useState(null), [overlay,setOverlay]=useState(null); const panel=useRef();
   const current=run && run.source_id===source?.id;
-  const frame=current&&run.frame_url?run.frame_url:source?.preview_url;
+  const frame=current?run.frame_url:source?.preview_url;
   const playing=current&&['RUNNING','PAUSED'].includes(run.status);
   const commitSeek=()=>{if(seek!==null&&playing){control('seek',Math.min(seek,Math.max(0,run.duration_s-0.2)));setSeek(null);}};
   return <div className="video-tool" ref={panel}>
@@ -155,7 +156,7 @@ function VideoPanel({source,run,connected,control,busy}){
       <div className="video-tag"><i className={current&&run.status==='RUNNING'&&connected?'online':'idle'}/>{current?LABEL[run.status]:'시연 원본'}</div>
       <span className="video-time">{timecode(current?run.source_time_s:0)}</span>
       {current&&connected&&run.status==='RUNNING'&&overlay?.source_width&&<div className="overlays">{overlay.tracks.map(person=><Box key={person.track_id} box={person.bbox} width={overlay.source_width} height={overlay.source_height} color={tone(person.wearing)} label={`#${person.track_id} ${LABEL[person.wearing]}`}/>)}{overlay.scene.detections.map((item,i)=><Box key={`scene${i}`} box={item.bbox} width={overlay.source_width} height={overlay.source_height} color="amber" label="연무·분출 후보"/>)}</div>}
-      {current&&run.status==='LOADING'&&<div className="video-loading"><LoaderCircle size={27} className="spin"/><span>분석 모델 준비 중</span></div>}
+      {current&&(run.status==='LOADING'||!frame)&&<div className="video-loading"><LoaderCircle size={27} className="spin"/><span>{run.status==='LOADING'?'분석 모델 준비 중':'프레임 대기'}</span></div>}
       {current&&run.error&&<div className="video-error"><AlertTriangle size={18}/>{run.error}</div>}
     </div>
     <div className="video-controls"><IconButton icon={current&&run.status==='RUNNING'?Pause:Play} title={run?.status==='RUNNING'?'일시정지':'재개'} disabled={!playing||busy} onClick={()=>control(run.status==='RUNNING'?'pause':'resume')}/><IconButton icon={Square} title="분석 중지" disabled={!current||!activeStatus(run.status)||busy} onClick={()=>control('stop')}/><span className="duration">{timecode(current?run.source_time_s:0)}</span><input aria-label="영상 위치" type="range" min="0" max={current?run.duration_s||1:1} step="0.1" value={seek??(current?run.source_time_s:0)} disabled={!playing} onChange={e=>setSeek(Number(e.target.value))} onPointerUp={commitSeek} onKeyUp={commitSeek}/><span className="duration">{timecode(current?run.duration_s:0)}</span><IconButton icon={Maximize2} title="전체 화면" onClick={()=>{if(document.fullscreenElement)document.exitFullscreen();else panel.current.requestFullscreen?.();}}/></div>
@@ -189,8 +190,8 @@ function RunsView({runs}){return runs.length?<div className="table-wrap"><table>
 
 function UploadModal({onClose,submit,busy}){return <Modal title="시연 영상 등록" onClose={onClose}><form onSubmit={e=>{e.preventDefault();submit(new FormData(e.currentTarget));}}><div className="form-grid"><Field label="영상 파일" wide><input name="video" type="file" accept="video/*,.mkv" required/></Field><Field label="출처 / 촬영자" wide><input name="source" required placeholder="직접 촬영 또는 원출처" maxLength={1000}/></Field></div><div className="modal-actions"><button type="button" className="button" onClick={onClose}>취소</button><button className="button primary" disabled={busy}>{busy?<LoaderCircle size={16} className="spin"/>:<Plus size={16}/>}등록</button></div></form></Modal>;}
 function PolicyModal({initial,references,onClose,submit,busy}){
-  const [value,setValue]=useState({name:initial?.name||'',zone_id:initial?.zone_id||'',coverall_required:initial?.coverall_required??true,hood_required:initial?.hood_required??false,closure_required:initial?.closure_required??false,closure_location:initial?.closure_location||'unknown',identity_required:initial?.identity_required??false,required_product_id:initial?.required_product_id||null,release_monitoring:initial?.release_monitoring??true,scene_roi:initial?.scene_roi||[0,0,1,1]});
-  const set=(key,val)=>setValue(old=>({...old,[key]:val}));
+  const [value,setValue]=useState({name:initial?.name||'',zone_id:initial?.zone_id||'',coverall_required:initial?.coverall_required??true,hood_required:initial?.hood_required??true,closure_required:initial?.closure_required??true,closure_location:initial?.closure_location||'앞 중앙 지퍼 및 덮개',identity_required:initial?.identity_required??false,required_product_id:initial?.required_product_id||null,release_monitoring:initial?.release_monitoring??true,scene_roi:initial?.scene_roi||[0,0,1,1]});
+  const set=(key,val)=>setValue(old=>({...old,...(key==='coverall_required'&&!val?{hood_required:false,closure_required:false,identity_required:false}:{}),...(val&&['hood_required','closure_required','identity_required'].includes(key)?{coverall_required:true}:{}),[key]:val}));
   const products=Object.values(Object.fromEntries(references.map(row=>[row.product_id,row])));
   return <Modal title={initial?'작업 기준 새 버전':'작업 기준 만들기'} onClose={onClose}><form onSubmit={e=>{e.preventDefault();submit(value);}}><div className="form-grid"><Field label="작업명"><input value={value.name} onChange={e=>set('name',e.target.value)} required maxLength={100}/></Field><Field label="감시 구역"><input value={value.zone_id} onChange={e=>set('zone_id',e.target.value)} required maxLength={100}/></Field><div className="check-list wide">{[['coverall_required','화학보호복 필수'],['hood_required','후드 착용 필수'],['closure_required','여밈 닫힘 필수'],['identity_required','등록 제품 확인 필수'],['release_monitoring','가시적 연무·분출 관찰']].map(([key,label])=><label key={key}><input type="checkbox" checked={value[key]} onChange={e=>set(key,e.target.checked)}/><span>{label}</span></label>)}</div>{value.closure_required&&<Field label="여밈 위치" wide><input value={value.closure_location==='unknown'?'':value.closure_location} placeholder="예: 앞 중앙 지퍼와 덮개" required onChange={e=>set('closure_location',e.target.value)}/></Field>}{value.identity_required&&<Field label="등록 제품" wide><select required value={value.required_product_id||''} onChange={e=>set('required_product_id',e.target.value)}><option value="">제품 선택</option>{products.map(row=><option value={row.product_id} key={row.product_id}>{row.product_name}</option>)}</select></Field>}{value.release_monitoring&&<div className="wide"><span className="input-label">장면 감시 영역 (%)</span><div className="roi-fields">{['왼쪽','위쪽','오른쪽','아래쪽'].map((label,i)=><Field key={label} label={label}><input type="number" min="0" max="100" step="1" value={Math.round(value.scene_roi[i]*100)} onChange={e=>set('scene_roi',value.scene_roi.map((v,j)=>i===j?Number(e.target.value)/100:v))}/></Field>)}</div></div>}</div><div className="modal-actions"><button type="button" className="button" onClick={onClose}>취소</button><button className="button primary" disabled={busy}><Check size={16}/>기준 저장</button></div></form></Modal>;
 }
@@ -211,7 +212,7 @@ function EventModal({detail,onClose,submit,busy}){
       <div className="review-panel"><h3>관찰 정보</h3><dl><dt>입력 영상</dt><dd>{event.source_name}</dd><dt>작업 기준</dt><dd>{run.policy.name} · v{event.policy_revision}</dd><dt>관찰 결과</dt><dd>{LABEL[result.wearing]||'가시적 장면 후보'}</dd><dt>관측 시각</dt><dd>{date(observation.created_at)}</dd><dt>API 응답</dt><dd>{result.latency_ms!=null?`${(result.latency_ms/1000).toFixed(3)}초`:'로컬 분석'}</dd></dl>
       <h3>담당자 검토</h3><form onSubmit={e=>{e.preventDefault();const form=new FormData(e.currentTarget);submit({reviewer:form.get('reviewer'),action,note:form.get('note')});}}><div className="review-actions">{[['ACKNOWLEDGED','확인',CheckCircle2],['DISMISSED','반려',XCircle],['DEFERRED','보류',Clock3]].map(([id,label,Icon])=><button type="button" key={id} className={action===id?'active':''} onClick={()=>setAction(id)}><Icon size={16}/>{label}</button>)}</div><Field label="담당자"><input name="reviewer" required defaultValue={reviews[0]?.reviewer||''}/></Field><Field label="검토 의견"><textarea name="note" required rows="3" maxLength={2000}/></Field><button className="button primary full" disabled={busy}><Check size={16}/>검토 기록 저장</button></form>
       <div className="review-history"><h3>검토 이력 <span>{reviews.length}</span></h3>{reviews.length?reviews.map(review=><div className="review-record" key={review.id}><div><Badge value={review.action}/><strong>{review.reviewer}</strong></div><p>{review.note}</p><small>{date(review.created_at)}</small></div>):<p className="subtle">아직 검토 기록이 없습니다.</p>}</div></div></div>
-      <details className="raw-result"><summary>원시 관찰 · 요청 추적 정보</summary><pre>{JSON.stringify(observation,null,2)}</pre></details>
+      <details className="raw-result"><summary>원시 관찰 · 요청 추적 정보</summary><pre>{JSON.stringify({observation,supporting_observations:detail.supporting_observations},null,2)}</pre></details>
   </Modal>;
 }
 

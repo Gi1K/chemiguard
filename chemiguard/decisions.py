@@ -105,7 +105,6 @@ def observe(images, policy):
             result['usage'] = data.get('usage')
             parts, scores = parse_answers(data, questions)
             uncovered = [name for name in PARTS if parts[name] == 'uncovered']
-            wearing = 'NOT_WORN' if uncovered else 'WORN' if all(parts[name] == 'covered' for name in PARTS) else 'UNKNOWN'
             violations = [PART_NAMES[name] + ' 미착용 관찰' for name in uncovered]
             if policy['hood_required'] and parts.get('hood') == 'uncovered':
                 violations.append('필수 후드 미착용')
@@ -113,6 +112,7 @@ def observe(images, policy):
                 violations.append('필수 여밈 열림')
             unknown = [PART_NAMES.get(name, {'hood': '후드', 'closure': '여밈'}.get(name, name))
                        for name, state in parts.items() if state == 'unobservable']
+            wearing = 'NOT_WORN' if violations else 'UNKNOWN' if unknown else 'WORN'
             result.update(parts=parts, choice_scores=scores, wearing=wearing, violations=violations,
                           reason=' · '.join(violations) if violations else '확인 불가: ' + ', '.join(unknown) if unknown else '필수 부위 착용 관찰',
                           processing_state='RUNNING', review_required=bool(unknown), error=None)

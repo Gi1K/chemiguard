@@ -25,9 +25,9 @@ class PolicyInput(BaseModel):
     name: str = Field(min_length=1, max_length=100)
     zone_id: str = Field(min_length=1, max_length=100)
     coverall_required: bool = True
-    hood_required: bool = False
-    closure_required: bool = False
-    closure_location: str = Field(default='unknown', max_length=200)
+    hood_required: bool = True
+    closure_required: bool = True
+    closure_location: str = Field(default='앞 중앙 지퍼 및 덮개', max_length=200)
     identity_required: bool = False
     required_product_id: str | None = None
     release_monitoring: bool = True
@@ -276,8 +276,10 @@ def export_run(run_id: str):
     record = store.get('run', run_id)
     if not record:
         raise HTTPException(404, '실행을 찾을 수 없습니다.')
-    events = [row for row in list_events() if row['run_id'] == run_id]
-    return JSONResponse({'run': record, 'events': events}, headers={
+    events = store.related('event', 'run_id', run_id)
+    return JSONResponse({'run': record, 'events': events,
+                         'observations': store.related('observation', 'run_id', run_id),
+                         'reviews': [review for event in events for review in store.related('review', 'event_id', event['id'])]}, headers={
         'Content-Disposition': f'attachment; filename="{run_id}.json"'})
 
 
@@ -300,7 +302,8 @@ def event_detail(event_id: str):
     if not event:
         raise HTTPException(404, '사건을 찾을 수 없습니다.')
     return {'event': event, 'observation': store.get('observation', event['observation_id']),
-            'reviews': [row for row in store.list('review', 5000) if row['event_id'] == event_id],
+            'supporting_observations': [store.get('observation', key) for key in event.get('supporting_observation_ids', [])],
+            'reviews': store.related('review', 'event_id', event_id),
             'run': store.get('run', event['run_id'])}
 
 

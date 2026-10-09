@@ -55,5 +55,11 @@ class Store:
         with self.lock:
             return self.db.execute("SELECT count(*) FROM records WHERE kind='reference'").fetchone()[0]
 
+    def related(self, kind, field, value):
+        with self.lock:
+            rows = self.db.execute('SELECT payload FROM records WHERE kind=? AND json_extract(payload, ?)=? ORDER BY created_at DESC',
+                                   (kind, '$.' + field, value)).fetchall()
+        return [json.loads(row['payload']) for row in rows]
+
 
 store = Store()

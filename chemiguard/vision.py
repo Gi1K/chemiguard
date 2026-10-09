@@ -117,34 +117,52 @@ class Vision:
                 for box, track, score in zip(boxes.xyxy.cpu().tolist(), boxes.id.cpu().tolist(), boxes.conf.cpu().tolist())]
 
     def body(self, person):
+        if person is None:
+            return None
         height, width = person.shape[:2]
         if height < 100 or width < 35:
             return None
+        body = {'images': {'person': person}, 'boxes': {'person': [0, 0, width, height]},
+                'route': 'person_only', 'reason': '몸통 Pose 불충분 · 사람 영상으로 관찰',
+                'keypoints': [], 'keypoint_confidence': []}
         with GPU_LOCK:
             result = self.pose.predict(person, imgsz=640, conf=0.25, device=DEVICE, verbose=False)[0]
         if result.keypoints is None or len(result.keypoints) == 0:
-            return None
-        # Multiple people in a crop are ambiguous; do not attach a helper's limbs to the target.
-        if len(result.keypoints) != 1:
-            return None
-        points = result.keypoints.xy[0].cpu().numpy()
-        confidence = result.keypoints.conf[0].cpu().numpy()
+            return body
+        # Associate Pose with the detector crop; an extra helper must not veto all observations.
+        boxes = result.boxes.xyxy.cpu().numpy()
+        scores = []
+        for box in boxes:
+            x1, y1, x2, y2 = bounded_box(box, width, height)
+            intersection = max(0, x2-x1) * max(0, y2-y1)
+            area = max(0, box[2]-box[0]) * max(0, box[3]-box[1])
+            scores.append(float(intersection / max(1, width*height + area-intersection)))
+        order = np.argsort(scores)[::-1]
+        index = int(order[0])
+        body['pose_match_scores'] = scores
+        if scores[index] < 0.45 or len(order) > 1 and scores[index]-scores[int(order[1])] < 0.15:
+            body['reason'] = '몸통 대상 연결 불확실 · 사람 영상으로 관찰'
+            return body
+        points = result.keypoints.xy[index].cpu().numpy()
+        confidence = result.keypoints.conf[index].cpu().numpy()
+        body.update(keypoints=points.tolist(), keypoint_confidence=confidence.tolist())
         torso_ids = [5, 6, 11, 12]
         if not all(confidence[index] >= 0.4 for index in torso_ids):
-            return None
+            return body
         torso_points = points[torso_ids]
         left, top = torso_points.min(axis=0)
         right, bottom = torso_points.max(axis=0)
         if right - left < 12 or bottom - top < 20:
-            return None
+            return body
         pad_x, pad_y = (right - left) * 0.15, (bottom - top) * 0.1
         boxes = {'person': [0, 0, width, height],
                  'torso': bounded_box([left-pad_x, top-pad_y, right+pad_x, bottom+pad_y], width, height),
                  'legs': bounded_box([0, max(0, top + (bottom-top)*0.75), width, height], width, height),
                  'head': bounded_box([0, 0, width, min(height, top+pad_y)], width, height)}
         images = {name: crop(person, box) for name, box in boxes.items()}
-        return {'images': {key: value for key, value in images.items() if value is not None and value.size},
-                'boxes': boxes, 'keypoints': points.tolist(), 'keypoint_confidence': confidence.tolist()}
+        body.update(images={key: value for key, value in images.items() if value is not None and value.size},
+                    boxes=boxes, route='pose_regions', reason='대상 연결 Pose 영역과 사람 영상으로 관찰')
+        return body
 
     def scene(self, frame, roi):
         height, width = frame.shape[:2]

@@ -61,12 +61,15 @@ class Run:
                         'local_latency_ms': 0, 'processing_fps': 0}
         try:
             code_sha = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+            code_dirty = bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())
         except (subprocess.SubprocessError, FileNotFoundError):
             code_sha = 'uncommitted'
+            code_dirty = True
         self.record = store.put('run', {'id': self.id, 'source_id': source_id,
             'source': sources.metadata[source_id], 'source_mode': 'live_file_processing',
             'policy': policy, 'person_size': size, 'generation': self.generation,
-            'status': 'LOADING', 'code_sha': code_sha, 'implementation': 'hackathon-finals-2026-10-09'})
+            'status': 'LOADING', 'code_sha': code_sha, 'code_dirty': code_dirty,
+            'pipeline_version': 'target-associated-pose-v2', 'implementation': 'hackathon-finals-2026-10-09'})
         self.references = [row for row in store.list('reference') if row['revision'] <= policy['reference_revision']]
         self.thread = threading.Thread(target=self._work, daemon=True, name=self.id)
         self.thread.start()
@@ -96,6 +99,7 @@ class Run:
                 self.seek_to = float(position)
                 self.source_time = float(position)
                 self.slot = None
+                self.frames.clear()
             else:
                 raise ValueError('지원하지 않는 동작입니다.')
             self.generation += 1
@@ -111,13 +115,21 @@ class Run:
         try:
             while not self.stop_event.is_set():
                 with self.lock:
-                    target, paused = self.seek_to, self.state == 'PAUSED'
+                    target, paused, seek_epoch = self.seek_to, self.state == 'PAUSED', self.generation
                     if target is not None:
                         self.seek_to = None
                 if target is not None:
                     frame_index = int(target * fps)
                     capture.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
                     deadline = time.monotonic()
+                    if paused:
+                        ok, frame = capture.read()
+                        if ok:
+                            with self.lock:
+                                if seek_epoch == self.generation:
+                                    self.frames.append((seek_epoch, frame_index, jpeg(frame, 80)))
+                                    self.source_time, self.frame_seq = frame_index/fps, frame_index
+                            frame_index += 1
                 if paused:
                     deadline = time.monotonic()
                     self.stop_event.wait(0.05)
@@ -261,20 +273,33 @@ class Run:
             needs_identity = bool(self.references) and captured-person['last_identity'] >= 1
             if not (needs_api and api_available or needs_identity):
                 continue
+            if person['confidence'] < 0.45:
+                with self.lock:
+                    person.update(reason='사람 검출 불확실 · 확인 필요', last_requested=captured,
+                                  last_identity=captured, processing_state='WAITING')
+                continue
             image = crop(frame, person['bbox'])
-            body = vision.body(image)
+            try:
+                body = vision.body(image)
+            except Exception as exc:
+                with self.lock:
+                    person.update(reason=f'부위 추정 오류: {type(exc).__name__}', last_requested=captured,
+                                  last_identity=captured, processing_state='ERROR')
+                continue
             with self.lock:
                 if epoch != self.generation or person['track_id'] not in self.tracks or self.state != 'RUNNING':
                     return
                 if body is None:
-                    person['reason'] = '몸통 근거 부족 · 확인 필요'
+                    person['reason'] = '관찰 해상도 부족 · 확인 필요'
                     person['processing_state'] = 'WAITING'
                     person['last_requested'] = captured
                     person['last_identity'] = captured
                     continue
             if needs_identity:
                 try:
-                    matching = identity.search(body['images']['torso'], self.references)
+                    matching = (identity.search(body['images']['torso'], self.references)
+                                if 'torso' in body['images'] else
+                                {'state': 'UNAVAILABLE', 'candidates': [], 'reason': '몸통 대상 연결 불충분'})
                 except Exception as exc:
                     matching = {'state': 'UNAVAILABLE', 'candidates': [], 'reason': f'외형 검색 오류: {type(exc).__name__}'}
                 with self.lock:
@@ -285,6 +310,11 @@ class Run:
                 envelope.update(track_id=person['track_id'], track_token=person['token'],
                                 generation=epoch, observed_monotonic=captured,
                                 region_boxes=body['boxes'], coordinate_system='original_frame_pixel_xyxy',
+                                region_coordinate_system='person_crop_pixel_xyxy', input_route=body['route'],
+                                input_reason=body['reason'], keypoints=body['keypoints'],
+                                keypoint_confidence=body['keypoint_confidence'],
+                                pose_match_scores=body.get('pose_match_scores'),
+                                detection_confidence=person['confidence'],
                                 policy_revision=self.policy['revision'], reference_revision=self.policy['reference_revision'])
                 with self.lock:
                     person.update(pending=True, last_requested=captured)
@@ -346,18 +376,22 @@ class Run:
                                         'source_time_s': envelope['source_time_s'], 'observation_id': envelope['id']}
             track['processing_state'] = result['processing_state']
             track['reason'] = result.get('reason') or result.get('error')
-            signature = '|'.join(sorted(result.get('violations', []))) or result['wearing']
+            violations = set(result.get('violations', []))
             usable = not result.get('error') and (bool(result.get('violations')) or result['wearing'] == 'WORN' and not result.get('review_required'))
             history = track['history']
-            if not usable or history and (history[-1]['signature'] != signature or envelope['observed_monotonic']-history[-1]['time'] > OBSERVATION_TTL):
+            if not usable or history and envelope['observed_monotonic']-history[-1]['time'] > OBSERVATION_TTL:
                 history.clear()
             if usable:
-                history.append({'signature': signature, 'time': envelope['observed_monotonic']})
+                history.append({'violations': sorted(violations), 'wearing': result['wearing'],
+                                'time': envelope['observed_monotonic'], 'observation_id': envelope['id']})
                 history[:] = history[-2:]
-            confirmed = len(history) == 2 and history[-1]['time']-history[0]['time'] <= CONSENSUS_WINDOW
+            sustained = violations.intersection(history[0]['violations']) if len(history) == 2 else set()
+            confirmed = len(history) == 2 and history[-1]['time']-history[0]['time'] <= CONSENSUS_WINDOW and (
+                bool(sustained) or all(row['wearing'] == 'WORN' and not row['violations'] for row in history))
             track['confirmed'] = confirmed
-            if result.get('violations') and confirmed:
-                self._event('VIOLATION_SUSPECTED', track['reason'], observation, str(track['token']))
+            if sustained and confirmed:
+                self._event('VIOLATION_SUSPECTED', ' · '.join(sorted(sustained)), observation, str(track['token']),
+                            [row['observation_id'] for row in history])
             elif not usable or self.policy['identity_required']:
                 self._event('REVIEW_REQUIRED', track['reason'] if not usable else '등록 제품 확인 필요 · 외형 후보 미확정', observation, str(track['token']))
 
@@ -383,9 +417,11 @@ class Run:
                                       'processing_state': 'RUNNING'}, 'applied': True, 'discard_reason': None,
                                       'generation': self.generation, 'coordinate_system': 'original_frame_pixel_xyxy'}
             store.put('observation', observation)
+            with (self.path / 'observations.jsonl').open('a', encoding='utf-8') as log:
+                log.write(json.dumps(observation, ensure_ascii=False) + '\n')
             self._event('RELEASE_SUSPECTED', '가시적 연무·분출 의심이 연속 관찰되었습니다.', observation, 'scene')
 
-    def _event(self, kind, reason, observation, key):
+    def _event(self, kind, reason, observation, key, supporting_observation_ids=None):
         cooldown_key = kind + ':' + key
         timestamp = time.monotonic()
         if timestamp-self.cooldowns.get(cooldown_key, 0) < 15:
@@ -394,6 +430,7 @@ class Run:
         store.put('event', {'run_id': self.id, 'kind': kind, 'reason': reason,
                             'source_time_s': observation['source_time_s'], 'track_id': observation.get('track_id'),
                             'observation_id': observation['id'], 'policy_id': self.policy['id'],
+                            'supporting_observation_ids': supporting_observation_ids or [observation['id']],
                             'policy_revision': self.policy['revision'], 'source_name': sources.metadata[self.source_id]['name'],
                             'preview_url': observation['images']['frame'], 'review_status': 'OPEN'})
         self.metrics['events'] += 1
