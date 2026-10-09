@@ -107,6 +107,7 @@ class Settings:
     agent_session_cents: int = 50
     agent_daily_cents: int = 500
     agent_budget_enabled: bool = False
+    require_demo_code: bool = True
 
     @classmethod
     def from_env(cls):
@@ -129,10 +130,12 @@ class Settings:
                    ROOT / os.environ.get('PPE_USAGE_DB', '.runtime/usage.sqlite3'),
                    ROOT / os.environ.get('PPE_STOP_FILE', '.runtime/STOP'), backend,
                    positive('PPE_AGENT_SESSION_CENTS', 50), positive('PPE_AGENT_DAILY_CENTS', 500),
-                   os.environ.get('PPE_AGENT_BUDGET_ENABLED', 'false').lower() == 'true')
+                   os.environ.get('PPE_AGENT_BUDGET_ENABLED', 'false').lower() == 'true',
+                   os.environ.get('PPE_REQUIRE_DEMO_CODE', 'true').lower() != 'false')
 
     def ready(self):
-        return bool(self.api_key and self.model and len(self.demo_token) >= 16 and self.origins and self.enabled and not self.stop_file.exists())
+        access_ready = not self.require_demo_code or len(self.demo_token) >= 16
+        return bool(self.api_key and self.model and access_ready and self.origins and self.enabled and not self.stop_file.exists())
 
 
 class UsageLedger:
@@ -476,9 +479,10 @@ def create_app(settings=None):
 
     @app.get('/api/ppe/status')
     async def status(request: Request):
-        return {'ready': settings.ready(), 'backend': 'openai-' + settings.backend, 'access_required': True,
+        return {'ready': settings.ready(), 'backend': 'openai-' + settings.backend, 'access_required': settings.require_demo_code,
                 'local_photos': {pid: f'/api/ppe/local-media/{pid}' for pid in contract.products if local_photo(pid)} if local_media_allowed(request) else {},
-                'message': '서버 키·모델·시연 코드 설정 또는 상담 재개가 필요합니다. 제품 탐색과 초안 저장은 사용할 수 있습니다.' if not settings.ready() else '시연 코드를 입력해 상담할 수 있습니다.'}
+                'message': '상담 서버 설정 또는 상담 재개가 필요합니다. 제품 탐색과 초안 저장은 사용할 수 있습니다.' if not settings.ready()
+                else '시연 코드를 입력해 상담할 수 있습니다.' if settings.require_demo_code else '코드 없이 바로 상담할 수 있습니다.'}
 
     @app.get('/api/ppe/catalog')
     async def catalog():
@@ -508,10 +512,12 @@ def create_app(settings=None):
             public_origin_allowed = bool(
                 re.fullmatch(r'https://[a-z0-9-]+\.trycloudflare\.com', public_origin)
                 and hmac.compare_digest(origin.encode(), public_origin.encode()))
-        if origin is not None and origin not in settings.origins and not public_origin_allowed:
+        if ((not settings.require_demo_code and not origin)
+                or (origin is not None and origin not in settings.origins and not public_origin_allowed)):
             raise PublicError('허용되지 않은 페이지의 요청입니다.', 403, 'origin_denied')
         auth = request.headers.get('authorization', '')
-        if len(settings.demo_token) < 16 or not hmac.compare_digest(auth.encode(), ('Bearer ' + settings.demo_token).encode()):
+        if settings.require_demo_code and (len(settings.demo_token) < 16
+                or not hmac.compare_digest(auth.encode(), ('Bearer ' + settings.demo_token).encode())):
             raise PublicError('시연 코드가 올바르지 않습니다.', 401, 'unauthorized')
         if not settings.ready():
             raise PublicError('상담이 중지되었거나 서버 설정이 필요합니다.', 503, 'unavailable')

@@ -1,6 +1,7 @@
 """Bounded offline check of public access and opt-in catalog photo delivery."""
 
 import asyncio
+from dataclasses import replace
 from pathlib import Path
 import tempfile
 from unittest.mock import patch
@@ -28,6 +29,8 @@ async def main():
             'PPE_PUBLIC_CATALOG_PHOTOS': 'false',
         }):
             app = server.create_app(settings)
+            public_settings = replace(settings, require_demo_code=False, demo_token='', daily_requests=1)
+            public_app = server.create_app(public_settings)
             with patch.dict(server.os.environ, {'PPE_PUBLIC_CATALOG_PHOTOS': 'true'}):
                 photo_app = server.create_app(settings)
 
@@ -65,7 +68,29 @@ async def main():
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=photo_app, client=('203.0.113.10', 12345)),
                                      base_url='http://public-preview.invalid') as client:
             assert (await client.get(f'/api/ppe/local-media/{pid}')).status_code == 404
-        print('Public origin, authentication, opt-in catalog photos, file isolation, and local access checks passed; paid calls: 0.')
+        # Public demo skips visitor codes, while origin checks and global limits remain.
+        state.write_text(public_origin + '\n')
+        async def limited_offline_chat(_body):
+            public_app.state.counselor.ledger.reserve(request=True)
+            return {'reply': 'public demo route check; no model request'}
+
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=public_app, client=('127.0.0.1', 12345)),
+                                     base_url='http://public-preview.invalid') as client:
+            with patch.object(server, 'ROOT', root), patch.object(public_app.state.counselor, 'chat', limited_offline_chat):
+                status = (await client.get('/api/ppe/status')).json()
+                assert status['ready'] and status['access_required'] is False
+                assert public_settings.api_key not in str(status)
+                assert (await client.post('/api/ppe/chat', json={})).status_code == 403
+                assert (await client.post('/api/ppe/chat', headers={'Origin': 'https://other.trycloudflare.com'}, json={})).status_code == 403
+                assert (await client.post('/api/ppe/chat', headers=public, content='not JSON')).status_code == 415
+                assert (await client.post('/api/ppe/chat', headers=public, json={'message': '사진 없이 시작할게요.'})).status_code == 200
+                assert (await client.post('/api/ppe/chat', headers=public, json={'message': '두 번째 요청'})).status_code == 429
+                public_settings.stop_file.touch()
+                assert (await client.post('/api/ppe/chat', headers=public, json={})).status_code == 503
+                public_settings.stop_file.unlink()
+                state.unlink()
+                assert (await client.post('/api/ppe/chat', headers=public, json={})).status_code == 403
+        print('Code-protected/public demo access, origins, shared request limit, stop switch, photos, and file isolation passed; paid calls: 0.')
 
 
 if __name__ == '__main__':

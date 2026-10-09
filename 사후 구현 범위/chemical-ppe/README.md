@@ -16,7 +16,7 @@ bash run.sh
 
 화면: `http://127.0.0.1:34402/kit-catalog/`. API 키 없이 검색·필터·수동 조합·초안 저장/복원·JSON 내보내기를 사용할 수 있다. 상담은 설정 대기로 표시한다. `.env`는 `run.sh`가 읽는 셸 환경 파일이므로 공백이 포함된 값은 따옴표로 감싼다.
 
-`.env`에 `OPENAI_API_KEY`, `OPENAI_MODEL=gpt-6-luna`, 16자 이상의 임의 `PPE_DEMO_TOKEN`을 설정하고 서버를 재시작한다. `PPE_BACKEND=agents`가 기본이다. 모델은 `gpt-6-sol`로 바꿀 수 있다. 시연 참여자에게는 `PPE_DEMO_TOKEN`만 전달하고, 화면의 **상담 접근 설정**에서 입력한다. 모델 키는 화면에 입력하지 않는다. 개인 Codex 인증으로 우회하지 않는다.
+`.env`에 `OPENAI_API_KEY`, `OPENAI_MODEL=gpt-6-luna`를 설정하고 서버를 재시작한다. `PPE_BACKEND=agents`가 기본이다. 모델은 `gpt-6-sol`로 바꿀 수 있다. 현재 공개 시연은 사용자 요청으로 `PPE_REQUIRE_DEMO_CODE=false`다. 방문자는 코드 없이 바로 상담하며 새로고침 뒤에도 동일하다. 기본값 true로 운영하려면 16자 이상 `PPE_DEMO_TOKEN`을 설정하고 참여자가 **상담 접근 설정**에 입력한다. 모델 키는 화면에 입력하지 않는다. 개인 Codex 인증으로 우회하지 않는다.
 
 키에는 `api.agents.read`, `api.agents.write`, `api.responses.write` 권한이 필요하다. 기존 직접 Responses 연결은 `PPE_BACKEND=responses`로 명시할 때만 사용하며, Agents 실패 후 자동 전환하거나 유료 재시도하지 않는다.
 
@@ -55,7 +55,7 @@ bash run.sh
 
 ## 사진 표시
 
-상담의 사진 첨부는 선택 사항이다. 글만 입력해도 전송할 수 있다. 코드가 없는 상태의 `상담 코드 입력` 버튼은 작성한 글을 보존하고 시연 코드 입력란으로 이동한다. 운영자는 로컬 `.env`의 `PPE_DEMO_TOKEN` 값을 사용한다(외부 OpenAI API 키가 아님). 새로고침하면 코드를 다시 입력해야 한다. 일일 요청/예약량 한도에 걸린 상담은 사진을 추가해도 재개되지 않으며, 한도 변경은 운영 설정에서 별도로 처리한다.
+상담의 사진 첨부는 선택 사항이다. 글만 입력해도 전송할 수 있다. 현재 공개 시연은 코드 입력란을 표시하지 않는다. 코드 사용 모드에서만 `상담 코드 입력`으로 입력란을 안내하며 새로고침 후 재입력이 필요하다. API 키와 선택적 시연 코드는 서버에만 보관한다. 일일 요청/예약량 한도에 걸린 상담은 사진을 추가해도 재개되지 않으며, 한도 변경은 운영 설정에서 별도로 처리한다.
 
 기존 사진 44개는 `allow_local_preview=true`, `allow_redistribution=false`인 자료다. 기존 원본이 있는 PC에서는 `.env`의 `PPE_LOCAL_PHOTOS_DIR`에 원본 `kit-catalog` 폴더의 절대 경로를 지정한다. 이 폴더 아래 `assets`의 등록된 파일만 읽는다. 사진을 저장소나 `dist`로 복사하지 않는다.
 
@@ -73,7 +73,7 @@ bash run.sh
 ssh -N -T -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -L 127.0.0.1:34402:127.0.0.1:34402 your-user@your-server
 ```
 
-인증한 뒤 터미널이 아무 출력 없이 대기하면 연결이 유지되는 정상 상태다. 같은 맥/PC의 브라우저에서 `http://127.0.0.1:34402/kit-catalog/`를 연다. `Ctrl+C`로 터널을 종료할 수 있다. 사진·API 요청은 이 터널을 함께 통과하며 기존 로컬 Origin과 사진 접근 조건을 만족한다. 상담은 기존 시연 코드가 필요하다. SSH 터널 자체에는 Tailscale Serve 설정이나 sudo가 필요 없다.
+인증한 뒤 터미널이 아무 출력 없이 대기하면 연결이 유지되는 정상 상태다. 같은 맥/PC의 브라우저에서 `http://127.0.0.1:34402/kit-catalog/`를 연다. `Ctrl+C`로 터널을 종료할 수 있다. 사진·API 요청은 이 터널을 함께 통과하며 기존 로컬 Origin과 사진 접근 조건을 만족한다. 상담 코드 요구 여부는 `PPE_REQUIRE_DEMO_CODE` 설정을 따른다. SSH 터널 자체에는 Tailscale Serve 설정이나 sudo가 필요 없다.
 
 `Address already in use`라면 접속 기기의 34402 포트가 사용 중이다. 자신이 띄운 기존 터널이면 해당 터미널에서 종료하고 다시 연결한다. 임의로 다른 프로세스를 종료하지 않는다. 다른 로컬 포트를 사용할 경우에는 서버 `PPE_ALLOWED_ORIGINS`에도 그 로컬 주소를 추가해야 상담이 동작한다. SSH 로그인 실패는 서버 계정/키/암호 문제이며 홈페이지 API 키와 별개다.
 
@@ -94,7 +94,7 @@ tailscale serve --bg --https=9443 http://127.0.0.1:34402
 tailscale serve status
 ```
 
-접속 주소는 `https://your-device.your-tailnet.ts.net:9443/kit-catalog/`다. 화면과 API가 같은 출처이므로 `PUBLIC_API_BASE`는 비워 둔다. 상담 시연 코드는 이 주소의 **상담 접근 설정**에도 입력한다. 브라우저의 초안·설정은 주소별로 저장되므로 기존 로컬 주소와 자동 공유되지 않는다.
+접속 주소는 `https://your-device.your-tailnet.ts.net:9443/kit-catalog/`다. 화면과 API가 같은 출처이므로 `PUBLIC_API_BASE`는 비워 둔다. 코드 사용 모드에서만 이 주소의 **상담 접근 설정**에도 시연 코드를 입력한다. 브라우저의 초안·설정은 주소별로 저장되므로 기존 로컬 주소와 자동 공유되지 않는다.
 
 사진은 정확한 Host와 허용한 `Tailscale-User-Login`이 모두 일치하고 실제 프록시 연결이 loopback일 때만 표시한다. `run.sh`는 Tailscale 사진 설정 시 `127.0.0.1` 바인딩을 강제하고, 전달 헤더로 접속 IP를 바꾸는 동작을 끈다. 수동으로 서버를 띄워도 `--host 127.0.0.1 --no-proxy-headers`를 유지해야 한다. [Tailscale Serve](https://tailscale.com/docs/features/tailscale-serve)는 클라이언트가 보낸 신원 헤더를 제거하고 실제 사용자 신원을 붙인다. 태그된 기기는 사용자 신원이 없어 사진을 표시하지 않는다. 공개 Funnel로 전환하지 않는다.
 
@@ -126,12 +126,12 @@ systemctl --user status chemiguard-catalog.service --no-pager
 
 ### API와 운영 제한
 
-- `GET /api/ppe/status`: 상담 준비 상태와 허용된 로컬 사진 목록. 키·시연 코드 값은 반환하지 않는다.
+- `GET /api/ppe/status`: 상담 준비 상태, `access_required` 코드 요구 여부와 허용된 등록 사진 목록. 키·시연 코드 값은 반환하지 않는다.
 - `GET /api/ppe/catalog`: 로컬 경로·비공개 사진 정보를 제거한 최신 제품·출처 목록. `GET /api/ppe/catalog/status`: 최근 수집 결과와 등록 일정. 두 응답 모두 캐시하지 않는다.
 - `GET /api/ppe/local-media/{product_id}`: 위 로컬 조건을 만족한 등록 사진만 반환.
-- `POST /api/ppe/chat`: `Authorization: Bearer <시연 코드>`와 JSON. `message`, `session_id`, `auto_kit_options`, `existing_kits`, 선택적 `photos`(data URL 배열), `photo_confirmation`(`review_id`, 수정한 `text`)을 받는다. 사진과 확인 텍스트를 같은 요청에 보내지 않는다.
-- 브라우저 Origin이 있으면 허용 목록과 대조하고, 모든 요청의 시연 코드를 확인한다. Origin은 인증 대용이 아니다. 글 요청 최대 32KB, 메시지 6000자. 사진 요청 본문은 2,000,000바이트, 장당 실제 파일 700,000바이트·1600만 픽셀, 최대 2장. 사진 확인 텍스트는 2000자까지다. 임의 원격 이미지 URL은 받지 않는다.
-- 한 번에 상담 1건, 기본 분당 4건/UTC 일당 30건, 일일 예약 토큰 150만. 텍스트 입력 UTF-8 바이트 수와 출력 예상량, 이미지 장당 32,000토큰을 예약하며 실패해도 환급하지 않는다. 이미지 base64는 텍스트로 계산하지 않는다. 실제 청구 토큰/금액의 측정치나 엄격한 비용 상한은 아니다.
+- `POST /api/ppe/chat`: JSON 요청이며 코드 사용 모드에서만 `Authorization: Bearer <시연 코드>`를 요구한다. `message`, `session_id`, `auto_kit_options`, `existing_kits`, 선택적 `photos`(data URL 배열), `photo_confirmation`(`review_id`, 수정한 `text`)을 받는다. 사진과 확인 텍스트를 같은 요청에 보내지 않는다.
+- Origin을 허용 목록과 대조하며 공개 상담 모드에서는 누락된 Origin도 거절한다. 코드 사용 모드에서는 모든 요청의 시연 코드를 확인한다. Origin은 사용자 인증 대용이 아니며 공개 모드는 주소에 접속한 누구나 상담할 수 있다. 글 요청 최대 32KB, 메시지 6000자. 사진 요청 본문은 2,000,000바이트, 장당 실제 파일 700,000바이트·1600만 픽셀, 최대 2장. 사진 확인 텍스트는 2000자까지다. 임의 원격 이미지 URL은 받지 않는다.
+- 한 번에 상담 1건, 기본 분당 4건/UTC 일당 30건, 일일 예약량 기본 150만(현재 시연은 사용자 승인으로 300만). 텍스트 입력 UTF-8 바이트 수와 출력 예상량, 이미지 장당 32,000토큰을 예약하며 실패해도 환급하지 않는다. 이미지 base64는 텍스트로 계산하지 않는다. 실제 청구 토큰/금액의 측정치나 엄격한 비용 상한은 아니다.
 - `PPE_MAX_OUTPUT_TOKENS=5000`은 Responses 모드의 출력 상한이다. Agents API에는 동일 필드가 없으므로 Agents 모드에서는 예약량 산정에만 쓴다. 요청당 최대 2개 세션·145초 처리 제한·자동 재시도 없음·실패 시 취소/삭제를 적용한다. 원격 작업 정리에 최대 약 20초가 추가될 수 있다.
 - Agents 세션은 sandbox·추가 도구·하위 에이전트를 사용하지 않는다. 현재 계정에서는 `spend_control` 요청에 `Session budget configuration is not enabled`가 반환되어 `PPE_AGENT_BUDGET_ENABLED=false`로 둔다. 이 상태에서 금액 상한이 적용된다고 주장하지 않는다. 계정에서 지원이 활성화된 뒤 true로 설정하면 세션당 50센트·일일 예약 500센트 기본값을 사용한다. 이 옵션을 거절해도 자동으로 제한을 제거해 재시도하지 않는다.
 - `.runtime/usage.sqlite3`는 요청/토큰 **숫자만** 저장한다. 회사 DB나 초안 저장소가 아니며 재시작 후에도 제한을 유지한다. 서버 디스크에 이 경로를 보존한다.
@@ -154,9 +154,9 @@ cat .runtime/public-preview/url.txt
 
 출력한 HTTPS 주소는 방문자 계정이나 Tailscale 설치 없이 열 수 있다. 종료는 `systemctl --user disable --now chemiguard-catalog-public.service`다. 이 작업은 기존 Tailscale/SSH 설정을 변경하지 않는다. PC가 꺼지면 접속할 수 없고, 터널 재생성 시 주소가 바뀌므로 위 파일을 다시 확인한다. Quick Tunnel은 임시 시연용이며 운영 가용성을 보장하지 않는다.
 
-터널은 동일한 `127.0.0.1:34402` 앱과 제품 DB를 연결한다. 키를 터널 프로세스에 전달하지 않고 HTTP Host를 `public-preview.invalid`로 고정한다. 등록 제품 사진은 `PPE_PUBLIC_CATALOG_PHOTOS=true`일 때 제공한다. 시연 코드와 기존 전역 상담 예산 제한은 그대로 적용된다. 홈페이지와 상담 API가 같은 공개 출처를 사용하므로 `PUBLIC_API_BASE`는 비워 둔다.
+터널은 동일한 `127.0.0.1:34402` 앱과 제품 DB를 연결한다. 키를 터널 프로세스에 전달하지 않고 HTTP Host를 `public-preview.invalid`로 고정한다. 등록 제품 사진은 `PPE_PUBLIC_CATALOG_PHOTOS=true`일 때 제공한다. 현재 공개 시연은 `PPE_REQUIRE_DEMO_CODE=false`로 코드 없이 상담하며 기존 전역 요청·예약량 제한은 유지한다. 홈페이지와 상담 API가 같은 공개 출처를 사용하므로 `PUBLIC_API_BASE`는 비워 둔다.
 
-`deploy/public_preview.py`는 생성된 정확한 HTTPS Origin을 비공개 실행 폴더에 기록한다. 서버는 고정 Host·loopback 연결에서 이 Origin만 추가로 허용하고 기존 시연 코드도 확인한다. 임의의 `*.trycloudflare.com` 전체를 허용하지 않는다. 터널을 정상 종료하면 해당 Origin 허용도 제거된다. 매일 오전 9시 제품 수집은 기존 로컬 Codex 자동화를 계속 사용하므로 PC와 Codex 앱이 켜져 있어야 한다.
+`deploy/public_preview.py`는 생성된 정확한 HTTPS Origin을 비공개 실행 폴더에 기록한다. 서버는 고정 Host·loopback 연결에서 이 Origin만 추가로 허용한다. 코드 사용 모드에서는 시연 코드도 확인한다. 임의의 `*.trycloudflare.com` 전체를 허용하지 않는다. 터널을 정상 종료하면 해당 Origin 허용도 제거된다. 매일 오전 9시 제품 수집은 기존 로컬 Codex 자동화를 계속 사용하므로 PC와 Codex 앱이 켜져 있어야 한다.
 
 ### 별도 서버와 Vercel 구성
 

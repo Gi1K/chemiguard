@@ -1,6 +1,7 @@
 // Public counselor client (Agents or Responses) and evidence presentation.
 let demoToken = "";
 let serverReady = false;
+let accessRequired = true;
 const apiBase = window.PPE_CONFIG?.apiBase || "";
 async function checkBackend() {
   try {
@@ -18,10 +19,15 @@ async function checkBackend() {
       renderWorksiteKits();
     }
     serverReady = status.ready === true;
-    ready = serverReady && Boolean(demoToken);
+    accessRequired = status.access_required !== false;
+    if (!accessRequired) demoToken = "";
+    $("accessPanel").hidden = !accessRequired;
+    ready = serverReady && (!accessRequired || Boolean(demoToken));
     $("chatStatus").className = `badge ${ready ? "good" : "pending"}`;
     $("chatStatus").textContent = ready
-      ? "상담 준비됨 · 시연 코드 확인 후 요청"
+      ? accessRequired
+        ? "상담 준비됨 · 시연 코드 확인 후 요청"
+        : "바로 상담할 수 있어요"
       : serverReady
         ? "시연 코드 필요"
         : "상담 설정 대기";
@@ -31,7 +37,7 @@ async function checkBackend() {
         ? "사진 없이 상담할 수 있어요. 먼저 ‘상담 코드 입력’을 눌러 연결해 주세요."
         : status.message ||
           "서버 상담 설정이 필요합니다. 제품 검색과 초안 저장은 사용할 수 있습니다.";
-    $("accessPanel").open = serverReady && !demoToken;
+    $("accessPanel").open = serverReady && accessRequired && !demoToken;
   } catch {
     serverReady = ready = false;
     $("chatStatus").className = "badge pending";
@@ -128,7 +134,7 @@ async function submitChat(event, confirmation = null) {
       signal: AbortSignal.timeout(175000),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${demoToken}`,
+        ...(accessRequired ? { Authorization: `Bearer ${demoToken}` } : {}),
       },
       body: JSON.stringify({
         session_id: chatSession,
@@ -154,7 +160,9 @@ async function submitChat(event, confirmation = null) {
     if (!r.ok) {
       if (r.status === 401) {
         demoToken = "";
+        accessRequired = true;
         ready = false;
+        $("accessPanel").hidden = false;
         $("accessPanel").open = true;
         $("accessLabel").textContent = "시연 코드를 다시 확인하세요";
         $("chatStatus").textContent = "시연 코드 확인 필요";
