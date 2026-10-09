@@ -109,7 +109,7 @@ function App(){
   const openEvent=(id)=>perform(async()=>{setEventDetail(await api(`/events/${id}`));setModal('event');});
   const source=boot?.sources.find(row=>row.id===sourceId);
   const running=activeStatus(run?.status);
-  const aligned=connected&&run?.status==='RUNNING'&&presented?.run_id===run.id&&presented.generation===run.generation;
+  const aligned=connected&&['RUNNING','FINISHED'].includes(run?.status)&&presented?.run_id===run.id&&presented.generation===run.generation;
   const visibleTracks=aligned?presented.tracks:[];
   const visibleScene=aligned?presented.scene:null;
   const currentEvents=events.filter(row=>row.run_id===run?.id);

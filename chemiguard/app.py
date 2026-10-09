@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from PIL import Image, ImageOps, UnidentifiedImageError
 from pydantic import BaseModel, ConfigDict, Field, model_validator
+from starlette.middleware.gzip import GZipMiddleware
 
 from .config import API_MODEL, ASSETS, DATA, DEVICE, IDENTITY_MODEL, PERSON_MODELS, ROOT, fingerprint
 from .monitor import monitor
@@ -121,7 +122,19 @@ async def lifespan(app):
         monitor.active.thread.join(timeout=10)
 
 
+class TrackingCompressionMiddleware:
+    def __init__(self, app):
+        self.app = app
+        self.compressed = GZipMiddleware(app, minimum_size=1024, compresslevel=1)
+
+    async def __call__(self, scope, receive, send):
+        # Compress repeated tracking metadata, never the original video or range responses.
+        handler = self.compressed if scope['type'] == 'http' and scope['path'] == '/api/runs/active' else self.app
+        await handler(scope, receive, send)
+
+
 app = FastAPI(title='ChemiGuard', lifespan=lifespan)
+app.add_middleware(TrackingCompressionMiddleware)
 
 
 @app.exception_handler(ValueError)
@@ -295,7 +308,8 @@ def start_run(payload: RunInput):
 
 @app.get('/api/runs/active')
 def active_run():
-    return monitor.active.snapshot() if monitor.active else None
+    # Snapshots already contain JSON primitives; avoid a second recursive conversion at 4 Hz.
+    return JSONResponse(monitor.active.snapshot() if monitor.active else None)
 
 
 @app.get('/api/runs')

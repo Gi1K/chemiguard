@@ -1,8 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {overlayAt} from './videoTimeline';
+import {overlayAt, PLAYBACK_DELAY} from './videoTimeline';
 import {overlayLabel} from './wearingStatus';
-
-const PLAYBACK_DELAY = 0.55;
 
 export function useNativePlayback(source, run, connected) {
   const video=useRef(null), clock=useRef(null), synced=useRef('');
@@ -62,7 +60,7 @@ export function TrackingOverlay({video,run,connected,sourceKey,onPresentedFrame}
   useEffect(()=>{
     let handle,frameHandle,presentedTime=null,notified;
     const publish=(active,frame)=>{
-      const key=frame?`${active.id}:${active.generation}:${frame.source_time_s}:${frame.scene_epoch}`:'none';
+      const key=frame?`${active.id}:${active.generation}:${frame.source_time_s}:${frame.scene_epoch}:${frame.tracks.map(track=>track.track_token).join(',')}`:'none';
       if(key!==notified){notified=key;onPresentedFrame(frame?{...frame,run_id:active.id}:null);}
     };
     const nativeVideo=video.current;
@@ -84,7 +82,8 @@ export function TrackingOverlay({video,run,connected,sourceKey,onPresentedFrame}
       surface.dataset.videoTime=position.toFixed(3);
       surface.dataset.trackingTime='';surface.dataset.sceneEpoch='';surface.dataset.trackCount='0';
       const active=current?.run;
-      if(!current?.connected||performance.now()-current.received>1800||active?.status!=='RUNNING'||element.seeking||element.readyState<2){publish(active,null);return;}
+      const presenting=active?.status==='RUNNING'||active?.status==='FINISHED'&&!element.paused&&!element.ended;
+      if(!current?.connected||performance.now()-current.received>1800||!presenting||element.seeking||element.readyState<2){publish(active,null);return;}
       const frame=overlayAt(active.overlay_frames||[],position,active.generation);
       if(!frame||!active.source_width||!active.source_height){publish(active,null);return;}
       publish(active,frame);

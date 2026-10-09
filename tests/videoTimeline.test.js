@@ -24,3 +24,24 @@ test('never display future, expired or other-generation boxes',()=>{
   assert.equal(overlayAt(frames,1.31,1),null);
   assert.equal(overlayAt(frames,1,2),null);
 });
+
+test('bridge bounded tracking jitter only when both measured endpoints exist',()=>{
+  const first={...person('one',0),wearing:'UNKNOWN'};
+  const next={...person('one',40),wearing:'WORN'};
+  const frames=[sample(1,0,[first,person('gone',150)]),sample(1.8,0,[next])];
+  frames[0].scene={processing_state:'RUNNING',detections:[{bbox:[0,0,10,10]}]};
+  const aligned=overlayAt(frames,1.4,1);
+  assert.equal(aligned.tracks.length,1);
+  assert.ok(Math.abs(aligned.tracks[0].bbox[0]-20)<0.001);
+  assert.equal(aligned.tracks[0].wearing,'UNKNOWN');
+  assert.equal(aligned.scene.processing_state,'STALE');
+  assert.deepEqual(aligned.scene.detections,[]);
+});
+
+test('never bridge absence, token changes, shot changes, jumps or long outages',()=>{
+  for(const right of [sample(1.6,0,[]),sample(1.6,0,[person('new',10)]),
+    sample(1.6,1,[person('one',10)]),sample(1.6,0,[person('one',300)]),
+    sample(1.9,0,[person('one',10)]),{...sample(1.6,0,[person('one',10)]),generation:2}]) {
+    assert.equal(overlayAt([sample(1,0,[person('one',0)]),right],1.4,1),null);
+  }
+});

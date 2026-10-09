@@ -61,6 +61,8 @@ class Run:
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='decisions')
         self.product_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='product-decisions')
         self.product_future = None
+        self.preparation_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='observation-preparation')
+        self.preparation_future = None
         self.product_catalog = None
         self.width = self.height = 0
         self.source_time = self.duration = 0
@@ -74,6 +76,8 @@ class Run:
                         'product_busy_skipped': 0, 'product_api_latency_ms': [], 'paired_ready_ms': [],
                         'api_latency_ms': [], 'input_tokens': 0, 'output_tokens': 0, 'events': 0,
                         'local_frame_ms': [],
+                        'preparation_jobs': 0, 'preparation_busy_skipped': 0,
+                        'preparation_errors': 0, 'preparation_latency_ms': 0,
                         'local_latency_ms': 0, 'processing_fps': 0}
         try:
             code_sha = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
@@ -86,6 +90,7 @@ class Run:
             'policy': policy, 'person_size': size, 'generation': self.generation,
             'status': 'LOADING', 'code_sha': code_sha, 'code_dirty': code_dirty,
             'pipeline_version': 'parallel-product-decisions-v7', 'decision_schedule_s': SCHEDULE,
+            'tracking_pipeline_version': 'bounded-observation-worker-v1',
             'decision_routing': 'parallel_independent_requests_ppe_gate_on_join',
             'ppe_selection_version': decisions.PPE_SELECTION_VERSION,
             'decision_input_version': decisions.INPUT_VERSION, 'decision_image_detail': decisions.IMAGE_DETAIL,
@@ -288,6 +293,7 @@ class Run:
             self.stop_event.set()
             if reader:
                 reader.join(timeout=3)
+            self.preparation_pool.shutdown(wait=True, cancel_futures=True)
             self.pool.shutdown(wait=True, cancel_futures=True)
             self.product_pool.shutdown(wait=True, cancel_futures=True)
             self._save()
@@ -348,41 +354,82 @@ class Run:
                            if row['track_id'] in {item['track_id'] for item in detected}],
                 'scene': copy.deepcopy(self.scene)})
             candidates = sorted([self.tracks[row['track_id']] for row in detected], key=lambda row: row['last_requested'])
+        self._schedule_observations(vision, candidates, epoch, scene_epoch)
+
+    def _schedule_observations(self, vision, candidates, epoch, scene_epoch):
+        # Keep tracking responsive; a busy worker drops this tick instead of queuing old frames.
+        with self.lock:
+            if epoch != self.generation or scene_epoch != self.scene_epoch or self.state != 'RUNNING':
+                return
+            if self.preparation_future is not None and not self.preparation_future.done():
+                self.metrics['preparation_busy_skipped'] += 1
+                return
+            if candidates:
+                self.preparation_future = self.preparation_pool.submit(
+                    self._prepare_observations, vision, candidates, epoch, scene_epoch)
+
+    def _current_person(self, person, epoch, scene_epoch):
+        return (self.state == 'RUNNING' and epoch == self.generation and scene_epoch == self.scene_epoch
+                and self.tracks.get(person['track_id']) is person
+                and time.monotonic()-person['last_seen'] <= TRACK_TTL)
+
+    def _prepare_observations(self, vision, candidates, epoch, scene_epoch):
+        started = time.monotonic()
+        try:
+            self._observe_people(vision, candidates, epoch, scene_epoch)
+        except Exception as exc:
+            with self.lock:
+                self.metrics['preparation_errors'] += 1
+                self.metrics['preparation_last_error'] = type(exc).__name__
+        finally:
+            with self.lock:
+                self.metrics['preparation_jobs'] += 1
+                self.metrics['preparation_latency_ms'] = round((time.monotonic()-started)*1000, 1)
+
+    def _observe_people(self, vision, candidates, epoch, scene_epoch):
         identity_checks = 0
         for person in candidates:
-            trigger = request_due(person, captured, person.get('signature')) if person.get('signature') is not None else None
-            needs_api = self.policy['coverall_required'] and trigger is not None
-            api_available = self.future is None or self.future.done()
-            needs_identity = bool(self.references) and ((needs_api and api_available)
-                             or identity_checks < 2 and captured-person['last_identity'] >= 1)
-            if not (needs_api and api_available or needs_identity):
-                continue
-            if person['confidence'] < 0.45:
-                with self.lock:
+            with self.lock:
+                if not self._current_person(person, epoch, scene_epoch):
+                    continue
+                captured = time.monotonic()
+                trigger = request_due(person, captured, person.get('signature')) if person.get('signature') is not None else None
+                needs_api = self.policy['coverall_required'] and trigger is not None
+                api_available = self.future is None or self.future.done()
+                needs_identity = bool(self.references) and ((needs_api and api_available)
+                                 or identity_checks < 2 and captured-person['last_identity'] >= 1)
+                if not (needs_api and api_available or needs_identity):
+                    continue
+                if person['confidence'] < 0.45:
                     person.update(reason='사람 검출 불확실 · 확인 필요', last_attempt=captured,
                                   last_identity=captured, processing_state='WAITING')
-                continue
-            selected = select_candidate(person['candidates'], captured, person['last_observed'])
+                    continue
+                # Detection appends to the deque concurrently. Hold a bounded snapshot for this preparation.
+                candidate_frames = list(person['candidates'])
+                last_observed = person['last_observed']
+                person['last_attempt'] = captured
+            selected = select_candidate(candidate_frames, captured, last_observed)
             if selected is None:
                 continue
             if trigger == 'appearance_change':
-                selected = person['candidates'][-1]
+                selected = candidate_frames[-1]
             prefer_face = (needs_api and api_available
                            and (self.policy['hood_required'] or self.policy.get('respirator_required', False)))
-            eligible = eligible_candidates(person['candidates'], captured, person['last_observed'])
-            with self.lock:
-                person['last_attempt'] = captured
+            eligible = eligible_candidates(candidate_frames, captured, last_observed)
             preparation_start = time.monotonic()
             pose_calls = 0
             try:
                 for candidate in eligible if prefer_face and trigger != 'appearance_change' else [selected]:
+                    with self.lock:
+                        if not self._current_person(person, epoch, scene_epoch):
+                            return
                     if 'body' not in candidate:
                         pose_calls += 1
                         candidate['body'] = vision.body(candidate['image'])
                         candidate['face_quality'] = face_quality(candidate['body'])
                 if prefer_face and trigger != 'appearance_change':
                     selected = select_candidate([row for row in eligible if row.get('body') is not None],
-                                                captured, person['last_observed'], prefer_face=True)
+                                                captured, last_observed, prefer_face=True)
                 body = selected['body'] if selected is not None else None
                 preparation_ms = round((time.monotonic()-preparation_start)*1000, 1)
             except Exception as exc:
@@ -391,8 +438,8 @@ class Run:
                                   last_identity=captured, processing_state='ERROR')
                 continue
             with self.lock:
-                if epoch != self.generation or scene_epoch != self.scene_epoch or self.tracks.get(person['track_id']) is not person or self.state != 'RUNNING':
-                    return
+                if not self._current_person(person, epoch, scene_epoch):
+                    continue
                 if body is None:
                     person['reason'] = '관찰 해상도 부족 · 확인 필요'
                     person['processing_state'] = 'WAITING'
@@ -406,9 +453,8 @@ class Run:
                 except Exception as exc:
                     matching = {'state': 'UNAVAILABLE', 'candidates': [], 'reason': f'외형 검색 오류: {type(exc).__name__}'}
                 with self.lock:
-                    if (epoch != self.generation or scene_epoch != self.scene_epoch
-                            or self.tracks.get(person['track_id']) is not person or self.state != 'RUNNING'):
-                        return
+                    if not self._current_person(person, epoch, scene_epoch):
+                        continue
                     person['identity'] = matching
                     person['last_identity'] = captured
             if needs_api and api_available:
@@ -420,7 +466,7 @@ class Run:
                                 identity=copy.deepcopy(matching) if needs_identity else {},
                                 generation=epoch, scene_epoch=scene_epoch, observed_monotonic=selected['captured'],
                                 trigger_reason=trigger, requested_monotonic=time.monotonic(),
-                                selection={'window_s': WINDOW_SECONDS, 'candidate_count': len(person['candidates']),
+                                selection={'window_s': WINDOW_SECONDS, 'candidate_count': len(candidate_frames),
                                            'strategy': 'changed_frame' if trigger == 'appearance_change' else (
                                                'face_quality_and_recency' if prefer_face else 'quality_and_recency'),
                                            'face_quality': selected.get('face_quality'),
@@ -439,12 +485,13 @@ class Run:
                                 detection_confidence=selected['confidence'],
                                 policy_revision=self.policy['revision'], reference_revision=self.policy['reference_revision'])
                 with self.lock:
-                    if epoch != self.generation or scene_epoch != self.scene_epoch or self.state != 'RUNNING':
-                        return
+                    if (not self._current_person(person, epoch, scene_epoch)
+                            or time.monotonic()-selected['captured'] > OBSERVATION_TTL):
+                        continue
                     person.update(pending=True, last_requested=captured, last_observed=selected['captured'],
                                   requested_signature=selected['quality']['signature'], trigger_reason=trigger)
                     self.metrics['api_calls'] += 1
-                self._dispatch_decisions(envelope, body['images'])
+                    self._dispatch_decisions(envelope, body['images'])
 
     def _dispatch_decisions(self, envelope, images):
         with self.lock:
