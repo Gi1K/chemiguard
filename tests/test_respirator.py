@@ -7,7 +7,7 @@ import numpy as np
 from pydantic import ValidationError
 
 from chemiguard.app import PolicyInput, lifespan
-from chemiguard.decisions import observe, questions_for
+from chemiguard.decisions import observe, prompt_version_for, questions_for
 from chemiguard.observation import combine_observation
 from chemiguard.wearing import PARTS, summarize_parts
 
@@ -76,10 +76,23 @@ class RespiratorRules(unittest.TestCase):
         labels = [part['text'] for part in request['input'][0]['content'] if part['type'] == 'input_text']
         self.assertTrue(any(text.startswith('Image: head.') for text in labels))
         self.assertEqual(result['parts']['respirator'], 'covered')
-        self.assertEqual(result['prompt_version'], 'ppe-observation-v5')
+        self.assertEqual(result['prompt_version'], 'ppe-observation-v7-viewpoint')
         self.assertEqual(result['ppe_selection_version'], 'ppe-top1-v1')
         self.assertEqual(result['respirator_assessment'], 'full_face_external_appearance')
         self.assertIsNone(result['error'])
+
+    def test_viewpoint_prompt_keeps_face_and_closure_visibility_distinct(self):
+        questions = {row['name']: row for row in questions_for(POLICY, True)}
+        self.assertEqual(len(questions), 9)
+        self.assertIn('visor edge/side lens joined', questions['respirator']['instructions'])
+        self.assertIn('A cartridge or dark silhouette alone is not enough', questions['respirator']['instructions'])
+        self.assertIn('Reserve uncertain for an inspectable face', questions['respirator']['instructions'])
+        self.assertIn('choose not_visible, not uncertain or open', questions['closure']['instructions'])
+        self.assertEqual(prompt_version_for(POLICY, True), 'ppe-observation-v7-viewpoint-color')
+        legacy = POLICY | {'wearing_assessment': 'all_required'}
+        self.assertEqual(prompt_version_for(legacy), 'ppe-observation-v5')
+        self.assertNotIn('visor edge/side lens joined', next(row for row in questions_for(legacy)
+                                                            if row['name'] == 'respirator')['instructions'])
 
     def test_policy_default_and_disabled_observation_validation(self):
         self.assertTrue(PolicyInput(name='test', zone_id='test').respirator_required)

@@ -14,6 +14,7 @@ from .wearing import PARTS, summarize_parts
 IMAGE_DETAIL = 'original'
 INPUT_VERSION = 'original-crops-lossless-head-v1'
 PPE_SELECTION_VERSION = 'ppe-top1-v1'
+VISIBLE_PROMPT_VERSION = 'ppe-observation-v7-viewpoint'
 PPE_QUESTIONS = frozenset((*PARTS, 'hood', 'closure', 'respirator'))
 
 RULES = (
@@ -34,10 +35,13 @@ VISIBLE_RULES = (
     'Use the first person image for context; a detail crop can omit a visible body part. '
     'Ignore helpers and their limbs. Pose and crop labels do not establish visibility. '
     'Judge each target body region only to the extent directly visible from this camera viewpoint. '
+    'First separate a hidden inspection surface from visible but ambiguous evidence. '
+    'Side and rear views are valid evidence of the visible garment; a frontal view is not required. '
     'covered: visible portions of this region are inside worn protective coverall fabric, with no visible uncovered segment. '
     'Do not require seeing the hidden side or the entire length of a limb. '
     'uncovered: a visible segment of the named region is outside the suit, showing skin or ordinary clothes. '
     'not_visible: the region cannot be seen due to viewpoint, occlusion or framing. '
+    'A far-side arm hidden behind the torso is not_visible, not uncertain merely because its coverage is unknown. '
     'uncertain: it is in view but blur, small size, ambiguous fabric or target association prevents judgment. '
     'For arms judge shoulder to wrist, not hands or gloves. Bare hands do not mean uncovered arms. '
     'For legs judge hip to ankle, not feet or boots. A bent limb is not uncovered merely because it is bent. '
@@ -73,6 +77,10 @@ def questions_for(policy, product_check=False):
                              'or open required flap. This does not verify hidden fastening or leak tightness. '
                              + (hidden_instruction + ' ' if visible else
                                 'If the external closure area itself is hidden or ambiguous choose unobservable. '))
+            if visible:
+                instructions += ('In a side or rear view, when the specified closure surface faces away, '
+                                 'choose not_visible, not uncertain or open. A visible closed side/back panel '
+                                 'does not establish that the front closure is closed. ')
         else:
             instructions += hidden_instruction + ' ' if visible else 'If its location is unknown or hidden choose unobservable. '
         questions.append({'type': 'choice', 'name': 'closure',
@@ -92,6 +100,16 @@ def questions_for(policy, product_check=False):
                               'Do not mistake a transparent respirator visor with visible eyes for absence. '
                               'Use the person image for context when the head crop is incomplete. '
                               'Do not require a frontal view if the visible profile establishes the worn facepiece. '
+                              + ('In profile, a visible visor edge/side lens joined to the nose-mouth facepiece '
+                                 'is evidence of a full-face respirator; seeing both eyes or both sides is unnecessary. '
+                                 'A cartridge or dark silhouette alone is not enough. When the face inspection surface '
+                                 'is turned away or blocked by a hood/arm and only the back/edge or cartridge is visible, '
+                                 'choose not_visible. This is a viewpoint limitation, not visible equipment ambiguity. '
+                                 'Reserve uncertain for an inspectable face with equipment whose type/coverage is '
+                                 'ambiguous or too blurred to judge. Never call it uncovered merely because the '
+                                 'visor is edge-on or hidden; uncovered requires direct evidence of an unprotected '
+                                 'face region, not a transparent lens or a hood opening. ' if visible else '')
+                              +
                               'Do not infer presence or absence from a rear-facing hood or hidden face. '
                               + hidden_instruction + ' If the visible equipment type cannot be distinguished, choose '
                               + ('uncertain. ' if visible else 'unobservable. ')
@@ -111,6 +129,13 @@ def questions_for(policy, product_check=False):
             'choices': [{'value': value} for value in ('white', 'gray', 'yellow', 'orange', 'green',
                         'blue', 'black', 'other', 'no_coverall', 'not_visible', 'uncertain')]})
     return questions
+
+
+def prompt_version_for(policy, product_check=False):
+    if policy.get('wearing_assessment') == 'visible_regions':
+        return VISIBLE_PROMPT_VERSION + ('-color' if product_check else '')
+    return ('ppe-observation-v6-color' if product_check else
+            'ppe-observation-v5' if policy.get('respirator_required', False) else 'ppe-observation-v3')
 
 
 def parse_answers(data, questions):
@@ -157,15 +182,14 @@ def observe(images, policy, product_check=False):
     respirator_required = policy.get('respirator_required', False)
     result = {'backend': 'decisions', 'model': API_MODEL, 'wearing': 'UNKNOWN', 'parts': {},
               'processing_state': 'ERROR', 'raw_result': None, 'usage': None,
-              'prompt_version': 'ppe-observation-v5' if respirator_required else (
-                  'ppe-observation-v4' if visible else 'ppe-observation-v3'),
+              'prompt_version': prompt_version_for(policy, product_check),
               'respirator_assessment': 'full_face_external_appearance' if respirator_required else 'not_requested',
               'wearing_assessment': policy.get('wearing_assessment', 'all_required'),
               'closure_assessment': policy.get('closure_assessment', 'visible_components')}
     result.update(input_version=INPUT_VERSION, image_detail=IMAGE_DETAIL, image_inputs=[], timings_ms={},
                   ppe_selection_version=PPE_SELECTION_VERSION)
     if product_check:
-        result.update(prompt_version='ppe-observation-v6-color', garment_color='uncertain')
+        result.update(garment_color='uncertain')
     key = os.getenv('OPENAI_API_KEY', '').strip()
     if not key:
         return result | {'error': 'OPENAI_API_KEY 미설정', 'latency_ms': 0}

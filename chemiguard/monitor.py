@@ -94,6 +94,7 @@ class Run:
             'implementation': 'hackathon-finals-2026-10-09'})
         self.references = [row for row in store.list('reference') if row['revision'] <= policy['reference_revision']]
         self.site_products = copy.deepcopy(current_site_products(store.list('site_product')))
+        self.record['ppe_prompt_version'] = decisions.prompt_version_for(policy, bool(self.site_products))
         self.record['site_products'] = self.site_products
         self.record['product_alert_version'] = PRODUCT_ALERT_VERSION
         self.record['product_alarm_severity'] = 'HIGH'
