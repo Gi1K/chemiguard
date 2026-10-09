@@ -7,7 +7,16 @@ const PHOTO_MAX_BYTES = 700000;
 function refreshPhotoControls() {
   $("attachPhoto").disabled = busy || preparingPhotos || chatPhotos.length >= 2;
   $("chatPhotoInput").disabled = busy || preparingPhotos;
-  $("chatSend").disabled = busy || preparingPhotos || !ready;
+  $("chatSend").disabled = busy || preparingPhotos;
+  $("chatSend").textContent = busy
+    ? "검토 중…"
+    : preparingPhotos
+      ? "사진 준비 중…"
+      : ready
+        ? "보내기 ↑"
+        : serverReady
+          ? "상담 코드 입력"
+          : "연결 다시 확인";
   document
     .querySelectorAll("[data-remove-chat-photo], .photo-review button")
     .forEach((b) => {

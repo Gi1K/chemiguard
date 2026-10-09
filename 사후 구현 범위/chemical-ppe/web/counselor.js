@@ -26,9 +26,9 @@ async function checkBackend() {
         ? "시연 코드 필요"
         : "상담 설정 대기";
     $("chatProgress").textContent = ready
-      ? "아는 내용만 편하게 적어 주세요. 제품명을 모르면 라벨 사진으로 시작해도 돼요."
+      ? "글만 적어 보내도 됩니다. 사진 첨부는 선택 사항이에요."
       : serverReady
-        ? "상담 접근 설정에 시연 코드를 입력하세요."
+        ? "사진 없이 상담할 수 있어요. 먼저 ‘상담 코드 입력’을 눌러 연결해 주세요."
         : status.message ||
           "서버 상담 설정이 필요합니다. 제품 검색과 초안 저장은 사용할 수 있습니다.";
     $("accessPanel").open = serverReady && !demoToken;
@@ -60,11 +60,24 @@ function renderAnswer(el, response) {
 }
 async function submitChat(event, confirmation = null) {
   event.preventDefault();
+  if (busy || preparingPhotos) return;
+  if (!ready) {
+    if (!serverReady) await checkBackend();
+    if (serverReady && !ready) {
+      $("accessPanel").open = true;
+      $("accessToken").focus();
+    }
+    return;
+  }
   const message = confirmation
     ? "사진에서 읽은 내용을 확인했어요. 이 내용으로 상담을 이어가 주세요."
     : $("chatInput").value.trim();
-  if ((!message && !chatPhotos.length) || busy || preparingPhotos || !ready)
+  if (!message && !chatPhotos.length) {
+    $("chatProgress").textContent =
+      "궁금한 점을 한 문장 적어 주세요. 사진은 없어도 됩니다.";
+    $("chatInput").focus();
     return;
+  }
   if (confirmation && chatPhotos.length) {
     $("photoFeedback").textContent =
       "새 사진이 준비되어 있어요. 보내기로 사진을 먼저 확인하거나 사진을 제거해 주세요.";
@@ -144,6 +157,8 @@ async function submitChat(event, confirmation = null) {
         ready = false;
         $("accessPanel").open = true;
         $("accessLabel").textContent = "시연 코드를 다시 확인하세요";
+        $("chatStatus").textContent = "시연 코드 확인 필요";
+        $("chatStatus").className = "badge pending";
       }
       if (r.status === 410) chatSession = null;
       throw new Error(response.error || "상담 요청을 완료하지 못했습니다.");

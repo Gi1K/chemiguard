@@ -69,6 +69,14 @@ async def main():
                 assert huge.status_code == 413
                 assert not calls
 
+                # Starting a conversation never requires a photo or OCR review.
+                text_only = await client.post('/api/ppe/chat', headers=headers,
+                    json={'message': '사진은 없고 처음이라 무엇부터 확인할지 모르겠어요.'})
+                assert text_only.status_code == 200, text_only.text
+                assert text_only.json()['session_id'] and 'photo_reading' not in text_only.json()
+                assert len(calls) == 2 and all(not call.get('images') for call in calls)
+                calls.clear()
+
                 result = await client.post('/api/ppe/chat', headers=headers, json={'photos': [original]})
                 assert result.status_code == 200, result.text
                 photo_answer = result.json()

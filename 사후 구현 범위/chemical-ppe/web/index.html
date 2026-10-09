@@ -200,8 +200,8 @@
             <p class="section-kicker">FIND YOUR GEAR</p>
             <h2>처음이어도, 하나씩 함께 확인해요.</h2>
             <p>
-              아는 내용만 편하게 말해 주세요. 제품명을 모르면 통에 붙은 라벨
-              사진으로 시작할 수 있어요.
+              글만 입력해도 상담할 수 있어요. 사진은 선택 사항이며, 제품명을
+              모를 때 라벨 사진을 보내도 됩니다.
             </p>
           </div>
           <span id="chatStatus" class="badge neutral" role="status"
@@ -218,13 +218,15 @@
                 id="accessToken"
                 type="password"
                 autocomplete="off"
+                required
                 maxlength="200"
                 placeholder="시연 코드" /></label
             ><button class="primary" type="submit">상담 연결</button
             ><button type="button" id="forgetAccess">코드 지우기</button>
           </form>
           <p class="small muted">
-            코드는 이 탭의 메모리에만 보관됩니다. 새로고침하면 다시 입력하세요.
+            AI 상담에는 시연 코드가 필요합니다. 사진 첨부 여부와는 관계없어요.
+            코드는 이 탭에서만 사용하며 새로고침하면 다시 입력하세요.
           </p>
         </details>
         <div class="chat-layout">
@@ -249,7 +251,7 @@
                 </button>
               </div>
               <small
-                >문장을 고른 뒤 보내기를 누르세요. 아래에서 사진만 보내도
+                >문장을 고른 뒤 보내기를 누르세요. 사진 없이 글만 보내도
                 돼요.</small
               >
             </div>
@@ -274,7 +276,7 @@
                   multiple
                   hidden
                 />
-                <button type="button" id="attachPhoto">사진 첨부</button>
+                <button type="button" id="attachPhoto">사진 첨부 (선택)</button>
                 <span class="small muted"
                   >라벨 앞·뒷면 또는 안전보건자료 · 최대 2장</span
                 >
@@ -297,8 +299,14 @@
               ></p>
               <div class="composer-actions">
                 <span id="chatProgress" class="muted small" role="status"
-                  >한 문장이나 사진 한 장으로 시작해 보세요.</span
-                ><button type="submit" id="chatSend" class="primary" disabled>
+                  >글만 입력해도 됩니다. 사진 첨부는 선택 사항이에요.</span
+                ><button
+                  type="submit"
+                  id="chatSend"
+                  class="primary"
+                  aria-describedby="chatProgress"
+                  disabled
+                >
                   보내기 ↑
                 </button>
               </div>

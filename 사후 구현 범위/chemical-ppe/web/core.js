@@ -325,8 +325,6 @@ function renderTypeGuide() {
 
 function setBusy(value) {
   busy = value;
-  $("chatSend").disabled = busy || !ready;
-  $("chatSend").textContent = busy ? "검토 중…" : "보내기 ↑";
   $("chatInput").disabled = busy;
   $("newChat").disabled = busy;
   $("chatForm").setAttribute("aria-busy", String(busy));
