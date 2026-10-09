@@ -9,9 +9,8 @@ import httpx
 
 from .config import API_ENDPOINT, API_MODEL
 from .vision import jpeg
+from .wearing import PARTS, summarize_parts
 
-PARTS = ('torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg')
-PART_NAMES = {'torso': '몸통', 'left_arm': '왼팔', 'right_arm': '오른팔', 'left_leg': '왼다리', 'right_leg': '오른다리'}
 RULES = (
     'Inspect only the central tracked person in the first image. All detail crops show the same moment. '
     'Ignore helpers, other people, equipment and background. Crop labels and pose estimates do not prove visibility. '
@@ -25,18 +24,41 @@ RULES = (
     'do not infer a hidden far-side limb from symmetry. Hands, gloves, feet, boots, head and hood are separate. '
     'Do not identify people or infer product model, chemical resistance, certification, chemical type or safety.'
 )
+VISIBLE_RULES = (
+    'Inspect only the central tracked person in the first image. Detail crops show the same moment. '
+    'Use the first person image for context; a detail crop can omit a visible body part. '
+    'Ignore helpers and their limbs. Pose and crop labels do not establish visibility. '
+    'Judge each target body region only to the extent directly visible from this camera viewpoint. '
+    'covered: visible portions of this region are inside worn protective coverall fabric, with no visible uncovered segment. '
+    'Do not require seeing the hidden side or the entire length of a limb. '
+    'uncovered: a visible segment of the named region is outside the suit, showing skin or ordinary clothes. '
+    'not_visible: the region cannot be seen due to viewpoint, occlusion or framing. '
+    'uncertain: it is in view but blur, small size, ambiguous fabric or target association prevents judgment. '
+    'For arms judge shoulder to wrist, not hands or gloves. Bare hands do not mean uncovered arms. '
+    'For legs judge hip to ankle, not feet or boots. A bent limb is not uncovered merely because it is bent. '
+    'Never infer a hidden limb from symmetry or label a hidden closure closed. '
+    'Do not identify people or infer product model, protection level, internal fastening, leak tightness or safety.'
+)
 
 
 def questions_for(policy):
+    visible = policy.get('wearing_assessment') == 'visible_regions'
+    unknown_states = ('not_visible', 'uncertain') if visible else ('unobservable',)
+    hidden_instruction = ('If hidden by viewpoint or occlusion choose not_visible; if visible but ambiguous choose uncertain.'
+                          if visible else 'If hidden or ambiguous choose unobservable.')
     questions = [
         {'type': 'choice', 'name': name,
          'instructions': f'Which coverall coverage state is directly observable on the target\'s own {name.replace("_", " ")}?',
-         'choices': [{'value': state} for state in ('covered', 'uncovered', 'unobservable')]}
+         'choices': [{'value': state} for state in ('covered', 'uncovered', *unknown_states)]}
         for name in PARTS
     ]
     if policy['hood_required']:
-        questions.append({'type': 'choice', 'name': 'hood', 'instructions': 'Is the protective hood worn over the target head? If hidden use unobservable.',
-                          'choices': [{'value': state} for state in ('covered', 'uncovered', 'unobservable')]})
+        hood_instruction = ('Is a protective hood worn around the target head? A face opening or respirator does not mean the hood is off. '
+                            'Use the person image if the head detail is cut off. A visibly bare crown means uncovered. ' + hidden_instruction
+                            if visible else 'Is the protective hood worn over the target head? If hidden use unobservable.')
+        questions.append({'type': 'choice', 'name': 'hood',
+                          'instructions': hood_instruction,
+                          'choices': [{'value': state} for state in ('covered', 'uncovered', *unknown_states)]})
     if policy['closure_required']:
         external = policy.get('closure_assessment') == 'external_appearance'
         instructions = 'Observe the garment closure at this specified location: ' + policy['closure_location'] + '. '
@@ -44,12 +66,13 @@ def questions_for(policy):
             instructions += ('Judge visible external closure only. A visibly closed outer flap covering the zipper counts as closed; '
                              'do not require seeing the zipper underneath. Choose open for a visible opening, undone zipper, '
                              'or open required flap. This does not verify hidden fastening or leak tightness. '
-                             'If the external closure area itself is hidden or ambiguous choose unobservable. ')
+                             + (hidden_instruction + ' ' if visible else
+                                'If the external closure area itself is hidden or ambiguous choose unobservable. '))
         else:
-            instructions += 'If its location is unknown or hidden choose unobservable. '
+            instructions += hidden_instruction + ' ' if visible else 'If its location is unknown or hidden choose unobservable. '
         questions.append({'type': 'choice', 'name': 'closure',
                           'instructions': instructions + 'Never assume a front zipper.',
-                          'choices': [{'value': state} for state in ('closed', 'open', 'unobservable')]})
+                          'choices': [{'value': state} for state in ('closed', 'open', *unknown_states)]})
     return questions
 
 
@@ -76,21 +99,25 @@ def parse_answers(data, questions):
         distribution = {p['value']: p['probability'] for p in probabilities}
         chosen = answer['choice']
         margin = distribution[chosen] - max(value for key, value in distribution.items() if key != chosen)
-        parsed[name] = chosen if margin >= 0.2 else 'unobservable'
+        fallback = 'uncertain' if 'uncertain' in expected[name] else 'unobservable'
+        parsed[name] = chosen if margin >= 0.2 else fallback
         scores[name] = {'choice': chosen, 'margin': round(margin, 4), 'probabilities': probabilities}
     return parsed, scores
 
 
 def observe(images, policy):
     start = time.monotonic()
+    visible = policy.get('wearing_assessment') == 'visible_regions'
     result = {'backend': 'decisions', 'model': API_MODEL, 'wearing': 'UNKNOWN', 'parts': {},
               'processing_state': 'ERROR', 'raw_result': None, 'usage': None,
-              'prompt_version': 'ppe-observation-v3', 'closure_assessment': policy.get('closure_assessment', 'visible_components')}
+              'prompt_version': 'ppe-observation-v4' if visible else 'ppe-observation-v3',
+              'wearing_assessment': policy.get('wearing_assessment', 'all_required'),
+              'closure_assessment': policy.get('closure_assessment', 'visible_components')}
     key = os.getenv('OPENAI_API_KEY', '').strip()
     if not key:
         return result | {'error': 'OPENAI_API_KEY 미설정', 'latency_ms': 0}
     questions = questions_for(policy)
-    content = [{'type': 'input_text', 'text': RULES}]
+    content = [{'type': 'input_text', 'text': VISIBLE_RULES if visible else RULES}]
     for name in ('person', 'torso', 'legs', 'head'):
         if name not in images or (name == 'head' and not policy['hood_required']):
             continue
@@ -113,18 +140,8 @@ def observe(images, policy):
             result['raw_result'] = data
             result['usage'] = data.get('usage')
             parts, scores = parse_answers(data, questions)
-            uncovered = [name for name in PARTS if parts[name] == 'uncovered']
-            violations = [PART_NAMES[name] + ' 미착용 관찰' for name in uncovered]
-            if policy['hood_required'] and parts.get('hood') == 'uncovered':
-                violations.append('필수 후드 미착용')
-            if policy['closure_required'] and parts.get('closure') == 'open':
-                violations.append('필수 여밈 열림')
-            unknown = [PART_NAMES.get(name, {'hood': '후드', 'closure': '여밈'}.get(name, name))
-                       for name, state in parts.items() if state == 'unobservable']
-            wearing = 'NOT_WORN' if violations else 'UNKNOWN' if unknown else 'WORN'
-            result.update(parts=parts, choice_scores=scores, wearing=wearing, violations=violations,
-                          reason=' · '.join(violations) if violations else '확인 불가: ' + ', '.join(unknown) if unknown else '필수 부위 착용 관찰',
-                          processing_state='RUNNING', review_required=bool(unknown), error=None)
+            result.update(summarize_parts(parts, policy), parts=parts, choice_scores=scores,
+                          processing_state='RUNNING', error=None)
     except httpx.TimeoutException:
         result['error'] = 'Decisions 응답 시간 초과'
     except httpx.HTTPError:

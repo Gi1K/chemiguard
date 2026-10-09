@@ -431,6 +431,12 @@ class Run:
                 track['pending'] = False
             observation = envelope | {'completed_at': now(), 'completed_monotonic': completed,
                                       'result': result, 'applied': discarded is None, 'discard_reason': discarded}
+            if not discarded:
+                transition = combine_observation(track, result, envelope['observed_monotonic'], envelope['id'],
+                                                 OBSERVATION_TTL, CONSENSUS_WINDOW)
+                observation['transition'] = transition | {
+                    'active_violations': track['active_violations'].copy(),
+                    'confirmed': track['confirmed'], 'complete_confirmed': track['complete_confirmed']}
             store.put('observation', observation)
             with (self.path / 'observations.jsonl').open('a', encoding='utf-8') as log:
                 log.write(json.dumps(observation, ensure_ascii=False) + '\n')
@@ -449,8 +455,6 @@ class Run:
             track['processing_state'] = result['processing_state']
             track['reason'] = result.get('reason') or result.get('error')
             track['errors'] = track.get('errors', 0)+1 if result.get('error') else 0
-            transition = combine_observation(track, result, envelope['observed_monotonic'], envelope['id'],
-                                             OBSERVATION_TTL, CONSENSUS_WINDOW)
             if transition['new_violations']:
                 self._event('VIOLATION_SUSPECTED', ' · '.join(transition['new_violations']), observation,
                             str(track['token'])+':'+','.join(transition['new_violations']),
@@ -517,13 +521,17 @@ class Run:
             wearing = result.get('wearing', 'UNKNOWN') if valid else 'UNKNOWN'
             confirmed = track.get('confirmed', False) and valid
             reason = '관측 만료' if expired and result else track.get('reason')
-            if wearing == 'WORN' and not confirmed:
+            if wearing in ('WORN', 'VISIBLE_WORN') and not confirmed:
                 wearing, reason = 'UNKNOWN', '착용 재확인 중 · 연속 2회 필요'
+            elif (wearing == 'WORN' and self.policy.get('wearing_assessment') == 'visible_regions'
+                  and not track.get('complete_confirmed')):
+                wearing, reason = 'VISIBLE_WORN', '보이는 범위 착용 · 전체 필수 부위 재확인 중'
             if not self.policy['coverall_required']:
                 state, wearing = 'DISABLED', 'UNKNOWN'
             tracks.append(copy.deepcopy({key: track[key] for key in ('track_id', 'bbox', 'confidence', 'identity', 'pending')} |
                           {'track_token': track['token'], 'wearing': wearing, 'processing_state': state,
                            'parts': result.get('parts', {}) if valid else {}, 'confirmed': confirmed,
+                           'all_required_observed': bool(valid and track.get('complete_confirmed')),
                            'violations': result.get('violations', []) if valid else [],
                            'active_violations': track['active_violations'], 'reason': reason,
                            'trigger_reason': track.get('trigger_reason'),

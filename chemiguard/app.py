@@ -29,6 +29,7 @@ class PolicyInput(BaseModel):
     closure_required: bool = True
     closure_location: str = Field(default='앞 중앙 지퍼 및 덮개', max_length=200)
     closure_assessment: Literal['external_appearance', 'visible_components'] = 'external_appearance'
+    wearing_assessment: Literal['visible_regions', 'all_required'] = 'visible_regions'
     ppe_scope: Literal['camera_view'] = 'camera_view'
     identity_required: bool = False
     required_product_id: str | None = None
@@ -85,7 +86,7 @@ async def lifespan(app):
                   {'revision': 1, 'reference_revision': store.revision()})
     defaults = [row for row in store.list('policy') if row['name'] == '화학보호복 기본 관찰']
     latest = max(defaults, key=lambda row: row['revision'], default=None)
-    if latest and 'closure_assessment' not in latest:
+    if latest and ('closure_assessment' not in latest or 'wearing_assessment' not in latest):
         fields = {key: value for key, value in latest.items() if key in PolicyInput.model_fields}
         store.put('policy', PolicyInput(**fields).model_dump() |
                   {'revision': latest['revision']+1, 'reference_revision': store.revision(),

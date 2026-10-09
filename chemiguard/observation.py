@@ -5,6 +5,8 @@ import math
 import cv2
 import numpy as np
 
+from .wearing import POSITIVE_STATES, VIOLATION_PARTS
+
 WINDOW_SECONDS = 0.8
 SCHEDULE = {'first': 0, 'confirm': 1, 'violation': 2, 'worn': 3, 'unknown': 2,
             'change': 1, 'error_max': 10}
@@ -38,9 +40,11 @@ def request_due(track, captured, signature):
         if difference >= 0.16:
             return 'appearance_change'
     wearing = result.get('wearing', 'UNKNOWN')
-    if wearing in ('WORN', 'NOT_WORN') and not track.get('confirmed'):
+    if wearing in (*POSITIVE_STATES, 'NOT_WORN') and not track.get('confirmed'):
         interval, reason = SCHEDULE['confirm'], 'state_confirmation'
-    elif wearing == 'WORN':
+    elif track.get('active_violations'):
+        interval, reason = SCHEDULE['violation'], 'unresolved_violation'
+    elif wearing in POSITIVE_STATES:
         interval, reason = SCHEDULE['worn'], 'stable_worn'
     elif wearing == 'NOT_WORN':
         interval, reason = SCHEDULE['violation'], 'continuing_violation'
@@ -57,26 +61,36 @@ def select_candidate(candidates, captured, last_observed):
 
 
 def combine_observation(track, result, observed, observation_id, ttl, consensus_window):
+    visible_mode = result.get('wearing_assessment') == 'visible_regions'
     violations = set(result.get('violations', []))
     usable = not result.get('error') and (bool(violations) or
-        result['wearing'] == 'WORN' and not result.get('review_required'))
+        result['wearing'] in POSITIVE_STATES and not result.get('review_required'))
     history = track['history']
-    if not usable or history and observed-history[-1]['time'] > ttl:
+    if (result.get('error') or not visible_mode and not usable or
+            history and (observed <= history[-1]['time'] or observed-history[-1]['time'] > ttl)):
         history.clear()
-    if usable:
+    if usable or visible_mode and not result.get('error'):
         history.append({'violations': sorted(violations), 'wearing': result['wearing'],
+                        'parts': result.get('parts', {}).copy(),
                         'time': observed, 'observation_id': observation_id})
         history[:] = history[-2:]
-    sustained = violations.intersection(history[0]['violations']) if len(history) == 2 else set()
-    confirmed = len(history) == 2 and history[-1]['time']-history[0]['time'] <= consensus_window and (
-        bool(sustained) or all(row['wearing'] == 'WORN' and not row['violations'] for row in history))
+    consecutive = len(history) == 2 and history[-1]['time']-history[0]['time'] <= consensus_window
+    sustained = violations.intersection(history[0]['violations']) if consecutive else set()
+    confirmed = consecutive and (bool(sustained) or
+        all(row['wearing'] in POSITIVE_STATES and not row['violations'] for row in history))
     track['confirmed'] = confirmed
+    track['complete_confirmed'] = consecutive and all(row['wearing'] == 'WORN' for row in history)
     previous = set(track['active_violations'])
     new_violations = sustained-previous if confirmed else set()
-    cleared = bool(previous) and confirmed and result['wearing'] == 'WORN'
-    if sustained and confirmed:
-        track['active_violations'] = sorted(previous | sustained)
-    elif cleared:
-        track['active_violations'] = []
-    return {'usable': usable, 'new_violations': sorted(new_violations), 'cleared': cleared,
+    cleared = set()
+    if visible_mode and consecutive:
+        # Recovery must observe the exact previously violated part, never just another view.
+        cleared = {violation for violation in previous if violation in VIOLATION_PARTS and
+                   all(row['parts'].get(VIOLATION_PARTS[violation]) ==
+                       ('closed' if VIOLATION_PARTS[violation] == 'closure' else 'covered') for row in history)}
+    elif not visible_mode and confirmed and result['wearing'] == 'WORN':
+        cleared = previous
+    track['active_violations'] = sorted((previous | new_violations)-cleared)
+    return {'usable': usable, 'new_violations': sorted(new_violations), 'cleared': bool(cleared),
+            'cleared_violations': sorted(cleared),
             'supporting_observation_ids': [row['observation_id'] for row in history]}

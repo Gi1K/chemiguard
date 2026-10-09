@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {overlayAt} from './videoTimeline';
+import {overlayLabel} from './wearingStatus';
 
 const PLAYBACK_DELAY = 0.55;
 
@@ -106,8 +107,8 @@ export function TrackingOverlay({video,run,connected,sourceKey,onPresentedFrame}
         const fresh=track.source_time_s!=null&&position-track.source_time_s<=5;
         const wearing=fresh?track.wearing:'UNKNOWN';
         const alarm=track.active_violations?.length>0;
-        box(track.bbox,wearing==='NOT_WORN'||alarm?'#c44748':wearing==='WORN'?'#168063':'#a97419',
-          `#${track.track_id} ${alarm?'위반 재확인':wearing==='WORN'?'착용 관찰':wearing==='NOT_WORN'?'미착용 관찰':'확인 불가'}`);
+        box(track.bbox,wearing==='NOT_WORN'||alarm?'#c44748':['WORN','VISIBLE_WORN'].includes(wearing)?'#168063':'#a97419',
+          `#${track.track_id} ${overlayLabel({...track,wearing})}`);
       }
       if(frame.scene.processing_state==='RUNNING') for(const item of frame.scene.detections) box(item.bbox,'#a97419','연무·분출 후보');
     };
