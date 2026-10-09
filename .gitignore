@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+.venv/
+.data/
+node_modules/
+dist/
+__pycache__/
+*.pyc
+*.pt
+*.onnx
+*.safetensors
+*.mp4
+*.mov
+*.sqlite*
+output/
+

@@ -1,0 +1,1 @@
+"""ChemiGuard hackathon monitoring application."""
