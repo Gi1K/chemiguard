@@ -14,9 +14,10 @@ from scenedetect.scene_detector import FlashFilter
 from . import decisions
 from .config import DATA, ROOT, fingerprint
 from .sources import sources
-from .observation import SCHEDULE, WINDOW_SECONDS, combine_observation, image_quality, request_due, select_candidate
+from .observation import (SCHEDULE, WINDOW_SECONDS, combine_observation, eligible_candidates,
+                          face_quality, image_quality, request_due, select_candidate)
 from .store import now, store, uid
-from .vision import Vision, crop, identity, jpeg
+from .vision import Vision, crop, identity, jpeg, observation_image
 from .products import current_site_products
 
 OBSERVATION_TTL = 5.0
@@ -66,6 +67,7 @@ class Run:
         self.last_processed = 0
         self.metrics = {'processed_frames': 0, 'api_calls': 0, 'api_errors': 0, 'api_discarded': 0,
                         'api_latency_ms': [], 'input_tokens': 0, 'output_tokens': 0, 'events': 0,
+                        'local_frame_ms': [],
                         'local_latency_ms': 0, 'processing_fps': 0}
         try:
             code_sha = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
@@ -77,7 +79,8 @@ class Run:
             'source': sources.metadata[source_id], 'source_mode': 'live_file_processing',
             'policy': policy, 'person_size': size, 'generation': self.generation,
             'status': 'LOADING', 'code_sha': code_sha, 'code_dirty': code_dirty,
-            'pipeline_version': 'adaptive-observation-native-video-v3', 'decision_schedule_s': SCHEDULE,
+            'pipeline_version': 'face-quality-original-input-v4', 'decision_schedule_s': SCHEDULE,
+            'decision_input_version': decisions.INPUT_VERSION, 'decision_image_detail': decisions.IMAGE_DETAIL,
             'evidence_window_s': WINDOW_SECONDS, 'shot_changes': [],
             'scene_detector': {'library': 'scenedetect-0.6.6', 'detector': 'ContentDetector', 'threshold': 27},
             'implementation': 'hackathon-finals-2026-10-09'})
@@ -247,6 +250,7 @@ class Run:
                 last_tick = tick
                 self._process(vision, frame, seq, timestamp, captured, current_epoch, current_scene)
                 self.metrics['local_latency_ms'] = round((time.monotonic()-tick)*1000, 1)
+                self.metrics['local_frame_ms'].append(self.metrics['local_latency_ms'])
                 self.metrics['processed_frames'] += 1
                 if time.monotonic()-last_save >= 5:
                     self._save()
@@ -341,10 +345,24 @@ class Run:
                 continue
             if trigger == 'appearance_change':
                 selected = person['candidates'][-1]
+            prefer_face = (needs_api and api_available
+                           and (self.policy['hood_required'] or self.policy.get('respirator_required', False)))
+            eligible = eligible_candidates(person['candidates'], captured, person['last_observed'])
             with self.lock:
                 person['last_attempt'] = captured
+            preparation_start = time.monotonic()
+            pose_calls = 0
             try:
-                body = vision.body(selected['image'])
+                for candidate in eligible if prefer_face and trigger != 'appearance_change' else [selected]:
+                    if 'body' not in candidate:
+                        pose_calls += 1
+                        candidate['body'] = vision.body(candidate['image'])
+                        candidate['face_quality'] = face_quality(candidate['body'])
+                if prefer_face and trigger != 'appearance_change':
+                    selected = select_candidate([row for row in eligible if row.get('body') is not None],
+                                                captured, person['last_observed'], prefer_face=True)
+                body = selected['body'] if selected is not None else None
+                preparation_ms = round((time.monotonic()-preparation_start)*1000, 1)
             except Exception as exc:
                 with self.lock:
                     person.update(reason=f'부위 추정 오류: {type(exc).__name__}', last_attempt=captured,
@@ -372,12 +390,21 @@ class Run:
                     person['identity'] = matching
                     person['last_identity'] = captured
             if needs_api and api_available:
+                evidence_start = time.monotonic()
                 envelope = self._evidence(selected['frame'], body['images'], selected['seq'], selected['timestamp'], selected['bbox'])
+                envelope['timings_ms'] = {'candidate_preparation': preparation_ms, 'pose_calls': pose_calls,
+                                          'evidence_encoding_and_save': round((time.monotonic()-evidence_start)*1000, 1)}
                 envelope.update(track_id=person['track_id'], track_token=person['token'],
                                 generation=epoch, scene_epoch=scene_epoch, observed_monotonic=selected['captured'],
                                 trigger_reason=trigger, requested_monotonic=time.monotonic(),
                                 selection={'window_s': WINDOW_SECONDS, 'candidate_count': len(person['candidates']),
-                                           'strategy': 'changed_frame' if trigger == 'appearance_change' else 'quality_and_recency',
+                                           'strategy': 'changed_frame' if trigger == 'appearance_change' else (
+                                               'face_quality_and_recency' if prefer_face else 'quality_and_recency'),
+                                           'face_quality': selected.get('face_quality'),
+                                           'candidates': [{'source_time_s': row['timestamp'],
+                                                           'quality_score': row['quality']['score'],
+                                                           'face_quality': row.get('face_quality')}
+                                                          for row in eligible],
                                            'age_s': round(captured-selected['captured'], 3),
                                            **{key: value for key, value in selected['quality'].items() if key != 'signature'}},
                                 region_boxes=body['boxes'], coordinate_system='original_frame_pixel_xyxy',
@@ -385,6 +412,7 @@ class Run:
                                 input_reason=body['reason'], keypoints=body['keypoints'],
                                 keypoint_confidence=body['keypoint_confidence'],
                                 pose_match_scores=body.get('pose_match_scores'),
+                                head_region=body.get('head_region'),
                                 detection_confidence=selected['confidence'],
                                 policy_revision=self.policy['revision'], reference_revision=self.policy['reference_revision'])
                 with self.lock:
@@ -422,9 +450,11 @@ class Run:
         names = {}
         hashes = {}
         for name, image in {'frame': frame, **images}.items():
-            filename = f'{observation_id}_{name}.jpg'
+            encoded, extension = (observation_image(image, name) if name in ('person', 'torso', 'legs', 'head')
+                                  else (jpeg(image), 'jpg'))
+            filename = f'{observation_id}_{name}.{extension}'
             path = self.path / 'evidence' / filename
-            path.write_bytes(jpeg(image))
+            path.write_bytes(encoded)
             names[name] = f'/media/runs/{self.id}/evidence/{filename}'
             hashes[name] = fingerprint(path)
         return {'id': observation_id, 'run_id': self.id, 'created_at': now(), 'source_frame': seq,
@@ -577,6 +607,8 @@ class Run:
                 scene.update(processing_state='STALE', suspected=False)
             metrics = copy.deepcopy(self.metrics)
             latency = metrics.pop('api_latency_ms')
+            local_latency = metrics.pop('local_frame_ms')
+            metrics['local_mean_ms'] = round(sum(local_latency)/len(local_latency), 1) if local_latency else None
             metrics['api_mean_ms'] = round(sum(latency)/len(latency), 1) if latency else None
             image_key = self.frames[-1][:2] if self.frames else None
             return {'id': self.id, 'status': self.state, 'error': self.error, 'source_id': self.source_id,

@@ -33,6 +33,46 @@ def jpeg(frame, quality=85):
     return encoded.tobytes()
 
 
+def observation_image(image, region):
+    if region != 'head':
+        return jpeg(image, 95), 'jpg'
+    ok, encoded = cv2.imencode('.png', image, [cv2.IMWRITE_PNG_COMPRESSION, 3])
+    if not ok:
+        raise ValueError('이미지 인코딩 실패')
+    return encoded.tobytes(), 'png'
+
+
+def head_region(points, confidence, width, height):
+    valid = (confidence >= 0.4) & np.isfinite(points).all(axis=1)
+    valid &= (points[:, 0] > 0) & (points[:, 0] < width) & (points[:, 1] > 0) & (points[:, 1] < height)
+    face_ids = [index for index in range(5) if valid[index]]
+    shoulders = [index for index in (5, 6) if valid[index]]
+    hips = [index for index in (11, 12) if valid[index]]
+    if not face_ids:
+        # A broad context crop is not evidence that the face itself is visible.
+        bottom = max(height * 0.35, max((points[i, 1] for i in shoulders), default=0) + height * 0.12)
+        desired = [0, 0, width, min(height, bottom)]
+        method = 'upper_body_context'
+    else:
+        face = points[face_ids]
+        center = face.mean(axis=0)
+        span = float(np.ptp(face, axis=0).max())
+        torso_length = (float(np.linalg.norm(points[hips].mean(axis=0)-points[shoulders].mean(axis=0)))
+                        if shoulders and hips else height * 0.3)
+        # COCO has no chin point: retain a generous jaw/filter margin around the face landmarks.
+        scale = max(span * 1.8, min(torso_length * 0.65, height * 0.35), min(width * 0.6, height * 0.22), 32)
+        desired = [min(face[:, 0].min()-scale*0.45, center[0]-scale*0.7),
+                   face[:, 1].min()-scale*0.65,
+                   max(face[:, 0].max()+scale*0.45, center[0]+scale*0.7),
+                   face[:, 1].max()+scale*0.85]
+        method = 'face_landmarks_with_jaw_margin'
+    box = bounded_box(desired, width, height)
+    return box, {'method': method, 'face_keypoints': face_ids,
+                 'landmark_confidence': round(float(confidence[face_ids].mean()), 4) if face_ids else 0,
+                 'clipped_edges': int(sum((desired[0] < 0, desired[1] < 0, desired[2] > width, desired[3] > height))),
+                 'version': 'head-context-v2'}
+
+
 class Identity:
     def __init__(self):
         self.model = None
@@ -130,6 +170,11 @@ class Vision:
         points = result.keypoints.xy[index].cpu().numpy()
         confidence = result.keypoints.conf[index].cpu().numpy()
         body.update(keypoints=points.tolist(), keypoint_confidence=confidence.tolist())
+        head_box, head_info = head_region(points, confidence, width, height)
+        body['boxes']['head'] = head_box
+        body['images']['head'] = crop(person, head_box)
+        body['head_region'] = head_info
+        body.update(route='pose_head_context', reason='대상 연결 머리/안면 영역과 사람 영상으로 관찰')
         torso_ids = [5, 6, 11, 12]
         if not all(confidence[index] >= 0.4 for index in torso_ids):
             return body
@@ -139,10 +184,9 @@ class Vision:
         if right - left < 12 or bottom - top < 20:
             return body
         pad_x, pad_y = (right - left) * 0.15, (bottom - top) * 0.1
-        boxes = {'person': [0, 0, width, height],
+        boxes = {**body['boxes'],
                  'torso': bounded_box([left-pad_x, top-pad_y, right+pad_x, bottom+pad_y], width, height),
-                 'legs': bounded_box([0, max(0, top + (bottom-top)*0.75), width, height], width, height),
-                 'head': bounded_box([0, 0, width, min(height, top+pad_y)], width, height)}
+                 'legs': bounded_box([0, max(0, top + (bottom-top)*0.75), width, height], width, height)}
         # Keep torso context for side views; do not change the Decisions detail crops.
         center_x = float((left + right) / 2)
         half_width = max(float((right-left)*0.65), float((bottom-top)*0.35))

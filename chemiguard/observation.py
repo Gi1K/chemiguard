@@ -53,11 +53,35 @@ def request_due(track, captured, signature):
     return reason if elapsed >= interval else None
 
 
-def select_candidate(candidates, captured, last_observed):
-    eligible = [row for row in candidates if 0 <= captured-row['captured'] <= WINDOW_SECONDS
-                and row['captured'] > last_observed]
+def face_quality(body):
+    if body is None or 'head' not in body['images']:
+        return {'score': 0, 'method': 'no_associated_head', 'face_keypoints': [], 'visibility_proxy': 0}
+    image = body['images']['head']
+    info = body['head_region']
+    height, width = image.shape[:2]
+    scale = min(1, 160 / max(height, width))
+    size = (max(1, round(width*scale)), max(1, round(height*scale)))
+    gray = cv2.cvtColor(cv2.resize(image, size), cv2.COLOR_BGR2GRAY)
+    sharpness = float(cv2.Laplacian(gray, cv2.CV_32F).var())
+    visibility = info['landmark_confidence']
+    # Landmarks are only a visibility proxy, not an occlusion or PPE classifier.
+    score = (min(math.log1p(sharpness)/8, 1) + min(min(width, height)/160, 1)
+             + visibility - info['clipped_edges']*0.25) if info['face_keypoints'] else 0
+    return {**info, 'score': round(max(0, score), 4), 'sharpness': round(sharpness, 2),
+            'width': width, 'height': height, 'visibility_proxy': visibility}
+
+
+def eligible_candidates(candidates, captured, last_observed):
+    return [row for row in candidates if 0 <= captured-row['captured'] <= WINDOW_SECONDS
+            and row['captured'] > last_observed]
+
+
+def select_candidate(candidates, captured, last_observed, prefer_face=False):
+    eligible = eligible_candidates(candidates, captured, last_observed)
     # Rank only image quality and recency, never the predicted clothing state.
-    return max(eligible, key=lambda row: row['quality']['score'] - (captured-row['captured'])*0.5, default=None)
+    return max(eligible, key=lambda row: row['quality']['score']
+               + (row.get('face_quality', {}).get('score', 0) if prefer_face else 0)
+               - (captured-row['captured'])*0.5, default=None)
 
 
 def combine_observation(track, result, observed, observation_id, ttl, consensus_window):

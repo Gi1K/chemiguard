@@ -8,8 +8,11 @@ import time
 import httpx
 
 from .config import API_ENDPOINT, API_MODEL
-from .vision import jpeg
+from .vision import observation_image
 from .wearing import PARTS, summarize_parts
+
+IMAGE_DETAIL = 'original'
+INPUT_VERSION = 'original-crops-lossless-head-v1'
 
 RULES = (
     'Inspect only the central tracked person in the first image. All detail crops show the same moment. '
@@ -136,6 +139,7 @@ def observe(images, policy):
               'respirator_assessment': 'full_face_external_appearance' if respirator_required else 'not_requested',
               'wearing_assessment': policy.get('wearing_assessment', 'all_required'),
               'closure_assessment': policy.get('closure_assessment', 'visible_components')}
+    result.update(input_version=INPUT_VERSION, image_detail=IMAGE_DETAIL, image_inputs=[], timings_ms={})
     key = os.getenv('OPENAI_API_KEY', '').strip()
     if not key:
         return result | {'error': 'OPENAI_API_KEY 미설정', 'latency_ms': 0}
@@ -144,16 +148,27 @@ def observe(images, policy):
     for name in ('person', 'torso', 'legs', 'head'):
         if name not in images or (name == 'head' and not (policy['hood_required'] or respirator_required)):
             continue
+        encoded, extension = observation_image(images[name], name)
+        mime = 'image/png' if extension == 'png' else 'image/jpeg'
+        result['image_inputs'].append({'region': name, 'mime_type': mime, 'detail': IMAGE_DETAIL,
+                                       'width': images[name].shape[1], 'height': images[name].shape[0],
+                                       'bytes': len(encoded), 'sha256': hashlib.sha256(encoded).hexdigest()})
         content.extend([
             {'type': 'input_text', 'text': f'Image: {name}. Same observation; region label does not establish visibility.'},
-            {'type': 'input_image', 'image_url': 'data:image/jpeg;base64,' + base64.b64encode(jpeg(images[name])).decode('ascii')},
+            {'type': 'input_image', 'detail': IMAGE_DETAIL,
+             'image_url': f'data:{mime};base64,' + base64.b64encode(encoded).decode('ascii')},
         ])
     body = {'model': API_MODEL, 'input': [{'role': 'user', 'content': content}], 'questions': questions}
     payload = json.dumps(body, separators=(',', ':')).encode()
     result['request_sha256'] = hashlib.sha256(payload).hexdigest()
+    result['request_bytes'] = len(payload)
+    result['timings_ms']['input_encoding'] = round((time.monotonic()-start)*1000, 1)
+    request_start = time.monotonic()
     try:
         response = httpx.post(API_ENDPOINT, content=payload, timeout=httpx.Timeout(5, connect=3),
                               headers={'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'})
+        result['timings_ms']['api_roundtrip'] = round((time.monotonic()-request_start)*1000, 1)
+        parse_start = time.monotonic()
         result['http_status'] = response.status_code
         result['request_id'] = response.headers.get('x-request-id')
         if response.status_code != 200:
@@ -165,11 +180,14 @@ def observe(images, policy):
             parts, scores = parse_answers(data, questions)
             result.update(summarize_parts(parts, policy), parts=parts, choice_scores=scores,
                           processing_state='RUNNING', error=None)
+        result['timings_ms']['response_processing'] = round((time.monotonic()-parse_start)*1000, 1)
     except httpx.TimeoutException:
         result['error'] = 'Decisions 응답 시간 초과'
     except httpx.HTTPError:
         result['error'] = 'Decisions 연결 실패'
     except (ValueError, KeyError, TypeError, AttributeError):
         result['error'] = 'Decisions 응답 형식 오류'
+    if 'api_roundtrip' not in result['timings_ms']:
+        result['timings_ms']['api_roundtrip'] = round((time.monotonic()-request_start)*1000, 1)
     result['latency_ms'] = round((time.monotonic() - start) * 1000, 1)
     return result

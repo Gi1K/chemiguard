@@ -3,6 +3,7 @@ import json
 import unittest
 from unittest.mock import patch
 
+import numpy as np
 from pydantic import ValidationError
 
 from chemiguard.app import PolicyInput, lifespan
@@ -65,12 +66,12 @@ class RespiratorRules(unittest.TestCase):
                                        1.0 if choice['value'] == COVERED[row['name']] else 0.0}
                                       for choice in row['choices']]} for row in questions]
         with patch.dict('os.environ', {'OPENAI_API_KEY': 'offline-test-key'}), \
-                patch('chemiguard.decisions.jpeg', return_value=b'offline-test-image'), \
                 patch('chemiguard.decisions.httpx.post') as post:
             post.return_value.status_code = 200
             post.return_value.headers = {}
             post.return_value.json.return_value = {'answers': answers}
-            result = observe({'person': object(), 'head': object()}, policy)
+            result = observe({'person': np.zeros((160, 80, 3), dtype=np.uint8),
+                              'head': np.zeros((60, 80, 3), dtype=np.uint8)}, policy)
             request = json.loads(post.call_args.kwargs['content'])
         labels = [part['text'] for part in request['input'][0]['content'] if part['type'] == 'input_text']
         self.assertTrue(any(text.startswith('Image: head.') for text in labels))
