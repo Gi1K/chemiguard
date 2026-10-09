@@ -38,9 +38,32 @@ bash run.sh
 
 기존 사진 44개는 `allow_local_preview=true`, `allow_redistribution=false`인 자료다. 기존 원본이 있는 PC에서는 `.env`의 `PPE_LOCAL_PHOTOS_DIR`에 원본 `kit-catalog` 폴더의 절대 경로를 지정한다. 이 폴더 아래 `assets`의 등록된 파일만 읽는다. 사진을 저장소나 `dist`로 복사하지 않는다.
 
-서버와 같은 PC에서 `http://127.0.0.1:34402` 또는 `http://localhost:34402`로 직접 접속할 때만 사진을 표시한다. 외부 호스트·프록시 전달 요청은 사진에 접근할 수 없다. 사진은 원래 비율을 유지하고, 상세 화면에서 확대할 수 있다. 저해상도 원본을 확대해도 해상도가 높아지지는 않는다. 제품군 대표사진은 정확 모델 사진과 구분해 표시한다.
+기본적으로 서버와 같은 PC에서 `http://127.0.0.1:34402` 또는 `http://localhost:34402`로 직접 접속할 때 사진을 표시한다. 사용자가 요청한 비공개 원격 미리보기는 아래 Tailscale 설정으로 허용한다. 그 외 호스트·프록시 전달 요청은 사진에 접근할 수 없다. 사진은 원래 비율을 유지하고, 상세 화면에서 확대할 수 있다. 저해상도 원본을 확대해도 해상도가 높아지지는 않는다. 제품군 대표사진은 정확 모델 사진과 구분해 표시한다.
 
 공개 배포에는 재배포 권한이 확인되지 않은 사진을 포함하지 않는다. 공개 화면은 품목 도식과 원본 출처 링크를 표시한다. 도식은 실제 제품 사진이 아니다. 공개 사진은 별도 권한 확인 후 추가하는 후속 범위다.
+
+## Tailscale 비공개 원격 접속
+
+서버 PC와 접속 기기에서 Tailscale을 켠다. 서버의 `tailscale status --json`에서 확인한 DNS 이름을 사용해 `.env`에 다음 항목을 설정한다. 기존 API 키는 유지한다.
+
+```dotenv
+PPE_TAILSCALE_ORIGIN=https://your-device.your-tailnet.ts.net:9443
+PPE_TAILSCALE_USER_LOGIN=your-tailscale-login
+PPE_ALLOWED_ORIGINS=http://127.0.0.1:34402,http://localhost:34402,https://your-device.your-tailnet.ts.net:9443
+```
+
+`bash run.sh`로 재시작한 뒤, 다른 터미널에서 다음 명령을 실행한다. Tailscale 운영자 권한이 없는 경우 `sudo`를 붙여 PC 관리자가 실행한다. 기존 Serve/Funnel 설정을 초기화하지 않고 사용하지 않는 전용 포트에만 추가한다.
+
+```bash
+tailscale serve --bg --https=9443 http://127.0.0.1:34402
+tailscale serve status
+```
+
+접속 주소는 `https://your-device.your-tailnet.ts.net:9443/kit-catalog/`다. 화면과 API가 같은 출처이므로 `PUBLIC_API_BASE`는 비워 둔다. 상담 시연 코드는 이 주소의 **상담 접근 설정**에도 입력한다. 브라우저의 초안·설정은 주소별로 저장되므로 기존 로컬 주소와 자동 공유되지 않는다.
+
+사진은 정확한 Host와 허용한 `Tailscale-User-Login`이 모두 일치하고 실제 프록시 연결이 loopback일 때만 표시한다. `run.sh`는 Tailscale 사진 설정 시 `127.0.0.1` 바인딩을 강제하고, 전달 헤더로 접속 IP를 바꾸는 동작을 끈다. 수동으로 서버를 띄워도 `--host 127.0.0.1 --no-proxy-headers`를 유지해야 한다. [Tailscale Serve](https://tailscale.com/docs/features/tailscale-serve)는 클라이언트가 보낸 신원 헤더를 제거하고 실제 사용자 신원을 붙인다. 태그된 기기는 사용자 신원이 없어 사진을 표시하지 않는다. 공개 Funnel로 전환하지 않는다.
+
+이 연결만 끄려면 `tailscale serve --https=9443 off`를 사용한다. Serve는 백그라운드 설정을 유지하지만 앱 서버는 별도로 실행 중이어야 한다. 현재 실행은 PC 재부팅 후 자동 시작 서비스가 아니다.
 
 ## 요청과 제한
 

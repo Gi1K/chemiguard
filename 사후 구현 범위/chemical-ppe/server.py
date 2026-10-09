@@ -14,6 +14,7 @@ import sqlite3
 import sys
 import time
 import uuid
+from urllib.parse import urlsplit
 
 import httpx
 from fastapi import FastAPI, Request
@@ -342,14 +343,30 @@ def create_app(settings=None):
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
     app.state.counselor = counselor
     # Optional pre-existing photos are read directly from disk, never copied into
-    # the Git repository or dist. Only direct loopback requests may see them.
+    # the Git repository or dist. Private Tailscale preview is opt-in and bound
+    # to one HTTPS origin/user, with the backend listening only on loopback.
     photo_directory = os.environ.get('PPE_LOCAL_PHOTOS_DIR')
     photo_root = Path(photo_directory).resolve() if photo_directory else None
+    tailnet_origin = os.environ.get('PPE_TAILSCALE_ORIGIN', '').rstrip('/')
+    tailnet_login = os.environ.get('PPE_TAILSCALE_USER_LOGIN', '')
+    if tailnet_origin or tailnet_login:
+        if (not tailnet_login or tailnet_origin not in settings.origins
+                or not re.fullmatch(r'https://[a-z0-9-]+\.[a-z0-9-]+\.ts\.net(?::\d+)?', tailnet_origin)):
+            raise ValueError('Private Tailscale preview requires an exact allowed HTTPS origin and user login')
+    tailnet_host = urlsplit(tailnet_origin).netloc
 
     def local_media_allowed(request):
-        return bool(photo_root and request.client and request.client.host in ('127.0.0.1', '::1')
-                    and request.url.hostname in ('127.0.0.1', 'localhost', '::1')
-                    and not request.headers.get('forwarded') and not request.headers.get('x-forwarded-for'))
+        if not photo_root or not request.client or request.client.host not in ('127.0.0.1', '::1'):
+            return False
+        direct = (request.url.hostname in ('127.0.0.1', 'localhost', '::1')
+                  and not request.headers.get('forwarded') and not request.headers.get('x-forwarded-for'))
+        # Serve strips caller-supplied identity headers and injects the signed-in
+        # tailnet user; Funnel has no identity. run.sh disables proxy rewriting so
+        # request.client is the actual loopback peer, not X-Forwarded-For.
+        private_tailnet = (tailnet_host and tailnet_login
+                          and request.headers.get('host') == tailnet_host
+                          and request.headers.get('tailscale-user-login') == tailnet_login)
+        return bool(direct or private_tailnet)
 
     def local_photo(pid):
         p = contract.products.get(pid)
