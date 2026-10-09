@@ -99,5 +99,75 @@ async def main():
     print('PASS: offline request → Responses payload → evidence → follow-up; missing input; timeout; invalid ID; authentication/origin/body limits; persistent quota; stop switch. Paid calls: 0.')
 
 
+async def check_agents_transport():
+    """Exercise the real SDK's SSE parser with an offline HTTP transport."""
+    import httpx2
+    import agents_backend
+
+    sdk = agents_backend.AsyncOpenAI
+    with tempfile.TemporaryDirectory() as directory:
+        root = Path(directory)
+        settings = server.Settings('offline-key', 'gpt-6-luna', 'offline-code-123456',
+            ['http://localhost:34402'], True, 30, 30, 1000000, 5000, root / 'usage.db', root / 'STOP',
+            backend='agents', agent_budget_enabled=True)
+        mode, methods = ['completed'], []
+        turn = {'id': 'turn_fixture', 'agent_id': 'agent_fixture', 'session_id': 'sess_fixture',
+                'object': 'agent.session.turn', 'created_at': 0, 'subagent_id': None, 'status': 'in_progress'}
+
+        def transport(request):
+            assert str(request.url).startswith('https://api.openai.com/v1/agents/sessions')
+            assert request.headers['openai-beta'] == 'agents=v1'
+            methods.append((request.method, request.url.path))
+            if request.method == 'DELETE':
+                return httpx2.Response(200, json={'id': 'sess_fixture', 'deleted': True, 'object': 'agent.session.deleted'})
+            body = json.loads(request.content)
+            if request.url.path.endswith('/events'):
+                assert body['events'] == [{'type': 'agent.session.input.cancel'}]
+                return httpx2.Response(200, json={})
+            assert body['environment'] == {'type': 'none'} and not body['agent']['tools']
+            assert body['agent']['multi_agent']['enabled'] is False
+            assert body['agent']['text']['format']['type'] == 'json_schema'
+            assert ('spend_control' in body) is settings.agent_budget_enabled
+            if settings.agent_budget_enabled:
+                assert body['spend_control']['limit'] == 5
+            events = [
+                {'type': 'agent.session.created', 'session': {'id': 'sess_fixture'}},
+                {'type': 'agent.session.idle', 'session': {'id': 'sess_fixture'}},
+                {'type': 'agent.session.turn.created', 'session_id': 'sess_fixture', 'turn': turn},
+            ]
+            if mode[0] == 'completed':
+                events.extend([
+                    {'type': 'agent.session.turn.item.done', 'session_id': 'sess_fixture', 'turn_id': turn['id'], 'output_index': 0,
+                     'item': {'id': 'msg_fixture', 'type': 'message', 'turn_id': turn['id'], 'phase': 'final_answer',
+                              'role': 'assistant', 'status': 'completed', 'content': [{'type': 'output_text', 'text': '{"status":"connected"}'}]}},
+                    {'type': 'agent.session.turn.completed', 'session_id': 'sess_fixture', 'turn_id': turn['id'], 'turn': {**turn, 'status': 'completed'}},
+                    {'type': 'agent.session.idle', 'session': {'id': 'sess_fixture'}},
+                ])
+            stream = ''.join('data: ' + json.dumps({**e, 'event_id': f'event_{i}'}) + '\n\n' for i, e in enumerate(events))
+            return httpx2.Response(200, headers={'content-type': 'text/event-stream'}, content=stream.encode())
+
+        def client_factory(**kwargs):
+            assert kwargs['max_retries'] == 0
+            return sdk(http_client=httpx2.AsyncClient(transport=httpx2.MockTransport(transport)), **kwargs)
+
+        schema = {'type': 'object', 'properties': {'status': {'type': 'string'}}, 'required': ['status'], 'additionalProperties': False}
+        with patch.object(agents_backend, 'AsyncOpenAI', client_factory):
+            gateway = agents_backend.AgentsGateway(settings)
+            value = await gateway.generate(messages=[{'role': 'user', 'content': 'fixture'}], instructions='fixture', schema=schema, spend_cents=5)
+            assert value == {'status': 'connected'} and not gateway.pending()
+            assert methods[-1] == ('DELETE', '/v1/agents/sessions/sess_fixture')
+            mode[0] = 'incomplete'
+            settings.agent_budget_enabled = False
+            try:
+                await gateway.generate(messages=[{'role': 'user', 'content': 'fixture'}], instructions='fixture', schema=schema, spend_cents=5)
+                raise AssertionError('An idle/incomplete stream was accepted')
+            except agents_backend.AgentServiceError as error:
+                assert error.code == 'incomplete'
+            assert methods[-2:] == [('POST', '/v1/agents/sessions/sess_fixture/events'), ('DELETE', '/v1/agents/sessions/sess_fixture')]
+            assert not gateway.pending()
+    print('PASS: real Agents SDK SSE parsing; initial idle is not success; spend option; incomplete stream cancellation and deletion. Paid calls: 0.')
+
+
 if __name__ == '__main__':
     asyncio.run(main())
+    asyncio.run(check_agents_transport())

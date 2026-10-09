@@ -1,4 +1,4 @@
-"""H02–H04: public Responses adapter. No Codex auth or subprocess is invoked."""
+"""H02–H04: Agents/Responses adapter. No personal Codex auth is invoked."""
 from __future__ import annotations
 
 import asyncio
@@ -21,6 +21,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from jsonschema import validate, ValidationError
+from agents_backend import AgentsGateway, AgentServiceError
 
 ROOT = Path(__file__).resolve().parent
 PREWORK = ROOT.parent.parent / '사전 구현 범위/04_화학보호복_기존페이지'
@@ -84,6 +85,10 @@ class Settings:
     max_output: int
     usage_db: Path
     stop_file: Path
+    backend: str = 'responses'
+    agent_session_cents: int = 50
+    agent_daily_cents: int = 500
+    agent_budget_enabled: bool = False
 
     @classmethod
     def from_env(cls):
@@ -95,13 +100,18 @@ class Settings:
         origins = [o.strip().rstrip('/') for o in os.environ.get('PPE_ALLOWED_ORIGINS', 'http://127.0.0.1:34402,http://localhost:34402').split(',') if o.strip()]
         if any(not re.fullmatch(r'https://[^/?#]+|http://(?:localhost|127\.0\.0\.1)(?::\d+)?', o) for o in origins):
             raise ValueError('PPE_ALLOWED_ORIGINS must contain explicit HTTPS origins or local HTTP origins')
+        backend = os.environ.get('PPE_BACKEND', 'agents')
+        if backend not in ('agents', 'responses'):
+            raise ValueError('PPE_BACKEND must be agents or responses')
         return cls(os.environ.get('OPENAI_API_KEY', ''), os.environ.get('OPENAI_MODEL', ''),
                    os.environ.get('PPE_DEMO_TOKEN', ''), origins,
                    os.environ.get('PPE_CHAT_ENABLED', 'true').lower() == 'true',
                    positive('PPE_DAILY_REQUESTS', 30), positive('PPE_REQUESTS_PER_MINUTE', 4),
                    positive('PPE_DAILY_TOKEN_BUDGET', 1_500_000), positive('PPE_MAX_OUTPUT_TOKENS', 5000),
                    ROOT / os.environ.get('PPE_USAGE_DB', '.runtime/usage.sqlite3'),
-                   ROOT / os.environ.get('PPE_STOP_FILE', '.runtime/STOP'))
+                   ROOT / os.environ.get('PPE_STOP_FILE', '.runtime/STOP'), backend,
+                   positive('PPE_AGENT_SESSION_CENTS', 50), positive('PPE_AGENT_DAILY_CENTS', 500),
+                   os.environ.get('PPE_AGENT_BUDGET_ENABLED', 'false').lower() == 'true')
 
     def ready(self):
         return bool(self.api_key and self.model and len(self.demo_token) >= 16 and self.origins and self.enabled and not self.stop_file.exists())
@@ -118,9 +128,11 @@ class UsageLedger:
     def connect(self):
         return sqlite3.connect(self.settings.usage_db, timeout=5)
 
-    def reserve(self, *, request=False, tokens=0):
+    def reserve(self, *, request=False, tokens=0, cents=0):
         day = datetime.now(timezone.utc).date().isoformat()
         changes = [(f'tokens:{day}', tokens, self.settings.token_budget)] if tokens else []
+        if cents:
+            changes.append((f'agent_cents:{day}', cents, self.settings.agent_daily_cents))
         if request:
             changes += [(f'requests:{day}', 1, self.settings.daily_requests),
                         (f'minute:{int(time.time() // 60)}', 1, self.settings.per_minute)]
@@ -236,10 +248,30 @@ class Counselor:
         self.ledger = UsageLedger(settings)
         self.lock = asyncio.Lock()
         self.sessions = {}
+        self.agents = AgentsGateway(settings)
 
     async def model_call(self, messages, schema, max_output, instructions=INSTRUCTIONS):
         if not self.settings.ready():
             raise PublicError('상담이 중지되었거나 서버 설정이 필요합니다.', 503, 'unavailable')
+        if self.settings.backend == 'agents':
+            # Agents has no max_output_tokens field. Local token reservations are
+            # estimates, not a remote output or dollar cap. Session budgets are
+            # opt-in: the current account rejects spend_control as not enabled.
+            estimate = len(json.dumps([messages, instructions, schema], ensure_ascii=False).encode()) + 4096 + max_output
+            self.ledger.reserve(tokens=estimate,
+                cents=self.settings.agent_session_cents if self.settings.agent_budget_enabled else 0)
+            try:
+                return await self.agents.generate(messages=messages, instructions=instructions,
+                    schema=schema, spend_cents=self.settings.agent_session_cents)
+            except AgentServiceError as error:
+                messages_by_code = {
+                    'access_denied': 'Agents API 또는 모델 접근 권한을 확인하세요. 키에 Agents 읽기·쓰기와 Responses 쓰기 권한이 필요합니다.',
+                    'cleanup_required': '이전 에이전트 세션 정리를 확인하지 못해 새 상담을 중지했습니다. 운영 담당자가 서버 연결을 확인해야 합니다.',
+                    'stopped': '상담이 중지되었습니다. 저장된 초안은 유지됩니다.',
+                    'incomplete': '에이전트가 답변을 완료하지 못했습니다. 비용 한도·작업 조건을 확인한 뒤 직접 다시 요청하세요.',
+                }
+                raise PublicError(messages_by_code.get(error.code, '에이전트 요청을 완료하지 못했습니다. 서버 설정을 확인하세요.'),
+                                  503 if error.code in ('stopped', 'cleanup_required') else 502, 'agents_' + error.code) from None
         payload = {'model': self.settings.model, 'store': False, 'instructions': instructions,
                    'input': messages, 'max_output_tokens': max_output,
                    'text': {'format': {'type': 'json_schema', 'name': 'ppe_review', 'strict': True, 'schema': schema}}}
@@ -301,7 +333,7 @@ class Counselor:
             # Keep bounded conversational context; never store API keys or raw pages.
             self.sessions[session_id] = {'last_used': time.monotonic(), 'history': history + [
                 {'role': 'user', 'content': message}, {'role': 'assistant', 'content': json.dumps(answer, ensure_ascii=False)}]}
-            return {**result, 'session_id': session_id, 'backend': 'openai-responses', 'model': self.settings.model}
+            return {**result, 'session_id': session_id, 'backend': 'openai-' + self.settings.backend, 'model': self.settings.model}
 
 
 def create_app(settings=None):
@@ -352,7 +384,7 @@ def create_app(settings=None):
 
     @app.get('/api/ppe/status')
     async def status(request: Request):
-        return {'ready': settings.ready(), 'backend': 'openai-responses', 'access_required': True,
+        return {'ready': settings.ready(), 'backend': 'openai-' + settings.backend, 'access_required': True,
                 'local_photos': {pid: f'/api/ppe/local-media/{pid}' for pid in contract.products if local_photo(pid)} if local_media_allowed(request) else {},
                 'message': '서버 키·모델·시연 코드 설정 또는 상담 재개가 필요합니다. 제품 탐색과 초안 저장은 사용할 수 있습니다.' if not settings.ready() else '시연 코드를 입력해 상담할 수 있습니다.'}
 

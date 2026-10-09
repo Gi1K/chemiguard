@@ -5,7 +5,7 @@ api.example.com {
     }
     reverse_proxy 127.0.0.1:34402 {
         transport http {
-            response_header_timeout 160s
+            response_header_timeout 180s
         }
     }
 }

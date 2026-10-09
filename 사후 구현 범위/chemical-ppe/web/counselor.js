@@ -1,4 +1,4 @@
-// New public Responses API client and evidence presentation.
+// Public counselor client (Agents or Responses) and evidence presentation.
 let demoToken = "";
 let serverReady = false;
 const apiBase = window.PPE_CONFIG?.apiBase || "";
@@ -75,11 +75,11 @@ async function submitChat(event) {
     );
   setBusy(true);
   $("chatProgress").textContent =
-    "근거 조회 및 조합 검토 중 · 최대 약 2분 30초";
+    "근거 조회 및 조합 검토 중 · 최대 약 3분";
   try {
     const r = await fetch(`${apiBase}/api/ppe/chat`, {
       method: "POST",
-      signal: AbortSignal.timeout(155000),
+      signal: AbortSignal.timeout(175000),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${demoToken}`,
