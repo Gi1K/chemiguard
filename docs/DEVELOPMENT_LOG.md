@@ -218,3 +218,15 @@
   - https://www.dupont.co.uk/products/tychem-4000-s-slchz6twh16.html
   - https://www.dupont.com/content/dam/dupont/amer/us/en/personal-protection/public/documents/es/IFU_Tychem_4000S_model_CHZ6.pdf
   - https://www.dupont.co.uk/knowledge/donning-and-doffing.html
+
+## 흰색 4000 S·회색 6000 F 대표 등록 적용 (2026-10-09)
+
+- 사용자 요청: 기존 사진을 확인하고 흰색은 Tychem 4000 S로 DB에 반영하며 회색은 한 제품만 남긴다. '하나'는 제품 하나로 해석해 정면/측면 사진은 유지한다.
+- 사진 확인: 기존 P11 I044 원본에서 흰색 Tychem 4000 표지를, P04 I023 원본에서 회색 Tychem 6000 표지를 육안 확인했다. 등록 출처/제품명과 대조해 흰색은 P11(Tychem 4000 S, CHZ5 참고 사진 3장), 회색은 P04(Tychem 6000 F CHA5, TFCHA5TGY00, 2장)를 선택했다. 영상 CHZ6와 참고 CHZ5의 변형 차이는 유지한다. 새 사진 다운로드/재배포는 없었다.
+- 발견/변경: 기존 등록은 용도+Type을 키로 사용해 미정인 용도·형식으로 두 색상을 따로 등록할 수 없었다. products.py의 site_product_slot과 app.py의 registration_mode=color/purpose_type을 추가했다. 색상 모드는 purpose/protection_type=null만 허용하고 색상별 1개 최신 revision을 고른다. 기존 목적별 모드는 여전히 용도/Type이 필수이고 기존 데이터도 그대로 읽는다. mode/색상 변경으로 과거 revision을 바꾸지 않는다.
+- UI 변경: siteCatalog.jsx의 색상별/용도·형식별 선택, 대표 사진·계열·미지정 표기, main.jsx의 비교 사진/제외 사진 분리, productComparison.jsx의 실행 기준 비교 개수와 색상 대표 표시를 추가했다. bootstrap과 실행 snapshot에 site_products를 포함해 화면의 기준을 맞췄다. 기존 정책/관찰/임베딩/사진 데이터는 수정하지 않았다.
+- 실제 DB 반영: POST /api/site-products로 흰색 site_product_63db6c9706d44dd4(P11)와 회색 site_product_cf6160812b1c4b2c(P04)를 각각 v1 활성 등록했다. 둘 다 용도/Type null, chemical_suitability=NOT_ASSESSED다. reference 7개는 그대로이며 새 비교 목록은 2제품/5장이다. Tyvek 500 Xpert(P12)와 DEMO 2장은 제외 영역에 보존됐다.
+- 실제 새 실행: run_1731d22dc7f94328, 두 사람 17.52초, Large/기본 v6(reference 7), 84 처리 프레임, Decisions 14회/오류 0/폐기 1/사건 2, FINISHED. 마지막 17.48초 응답 1개는 종료 뒤 도착해 run_not_running으로 폐기됐다. 새 SigLIP 비교 28회 모두 product_count=2, comparison_scope=site_registered, 후보 ID는 P11/P04만이었다. P12를 예측값에서 사후 치환한 것이 아니라 검색할 등록 집합을 실행 시작 때 제한했다.
+- 결과/한계: 오른쪽 보조자 16회·왼쪽 주 착용자 12회 모두 P11이 1위였다. 주 착용자 gap 0.01568~0.05355, 보조자 0.02647~0.05337이다. 보조자 실제 제품은 미확인이므로 이를 모두 정답이라고 평가하지 않는다. 후보를 3종에서 2종으로 줄인 순위 변화이며 모델 학습/일반 정확도 개선 증거가 아니다. 별도 자동 색상 분류와 미등록 흰 의복 거부는 미구현이며 점수/간격 임계값을 변경하지 않았다.
+- 최소 검증: 기존 7개+색상 2개 공존/색상별 revision·목적 미지정/잘못된 mode 입력 거부·2개 후보 제한을 포함한 10개 제품/API 검사가 통과했다. production build와 diff 공백 확인 통과. 실제 등록 화면에서 두 대표 이미지 로드·비교 5장·제외 2장·수정 폼, 실시간/종료 후 2종 후보를 확인했다. 데스크톱/390x844 모바일 가로 넘침 없음, 콘솔 오류 0. 원격 Mac 터널 자체의 별도 검증은 아니다.
+- 보존/기록: .data/site-colors-{desktop,mobile,comparison}.png와 DB/실행 근거는 로컬 Git 제외다. 서비스가 FINISHED 상태임을 확인한 뒤 한 번 재시작해 반영했다. 소수 확인 외의 벤치마크/학습/네트워크 노출/다른 AI 제공자 추가는 없다. AGENTS·범위·본 기록과 이번 코드만 별도 커밋하고 동시 작업의 다른 문서/발표 변경은 보존한다.

@@ -53,6 +53,19 @@ class ProductComparisonTests(unittest.TestCase):
         assigned[0]['enabled'] = False
         self.assertFalse(rank_references([1, 0], references, 'model', assigned)['candidates'])
 
+    def test_color_scope_keeps_two_families_and_excludes_unselected_white(self):
+        refs = [{'id': product, 'product_id': product, 'product_name': product, 'embedding': [1, 0],
+                 'reference_kind': 'product_photo', 'model_sha256': 'model', 'region': 'torso',
+                 'crop_url': '/photo.jpg', 'view': 'front'} for product in ('P11', 'P04', 'P12')]
+        selected = [{'registration_mode': 'color', 'color': color, 'product_id': product, 'enabled': True,
+                     'purpose': None, 'protection_type': None, 'revision': 1}
+                    for color, product in (('white', 'P11'), ('gray', 'P04'))]
+        result = rank_references([1, 0], refs, 'model', current_site_products(selected))
+        self.assertEqual({row['product_id'] for row in result['candidates']}, {'P11', 'P04'})
+        self.assertEqual(result['product_count'], 2)
+        self.assertEqual(result['candidates'][0]['site_assignments'][0]['purpose_label'], '용도 미지정')
+        self.assertTrue(result['ambiguous'])
+
 
 if __name__ == '__main__':
     unittest.main()

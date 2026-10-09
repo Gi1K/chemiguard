@@ -7,7 +7,7 @@ import { Activity, AlertTriangle, ArrowDownToLine, ArrowLeft, Bell, Camera, Chec
 import './style.css';
 import {TrackingOverlay, useNativePlayback} from './videoPlayback';
 import {ProductComparisons} from './productComparison';
-import {SiteCatalog} from './siteCatalog';
+import {SiteCatalog,siteReferences} from './siteCatalog';
 import {observationLabel, WEARING_LABELS} from './wearingStatus';
 
 const LABEL = {
@@ -153,13 +153,13 @@ function App(){
                 <div className="observation-note"><Eye size={15}/><span>영상 관찰 · 최종 판단은 담당자 확인</span></div>
               </section>
             </div>
-            <ProductComparisons tracks={visibleTracks} references={boot.references} run={run}/>
+            <ProductComparisons tracks={visibleTracks} references={boot.references} siteProducts={boot.site_products} run={run}/>
             <section className="recent-events"><div className="section-title"><h2>이번 실행 사건</h2><button className="text-button" onClick={()=>setPage('events')}>전체 사건<ChevronRight size={15}/></button></div><EventTable events={currentEvents.slice(0,6)} open={openEvent}/></section>
           </>}
           {page==='sources' && <SourcesView sources={boot.sources} choose={chooseSource}/>}
           {page==='events' && <EventsView events={events} open={openEvent}/>}
           {page==='policies' && <PoliciesView policies={boot.policies} edit={(value)=>{setEventDetail(value);setModal('policy-edit');}}/>}
-          {page==='references' && <><SiteCatalog references={boot.references}/><ReferencesView references={boot.references}/></>}
+          {page==='references' && <><SiteCatalog references={boot.references} onChange={rows=>setBoot(old=>({...old,site_products:rows}))}/><ReferenceSelection references={boot.references} siteProducts={boot.site_products}/></>}
           {page==='runs' && <RunsView runs={runs} showEvents={(id)=>{setPage('events');setToast(`실행 ${id}의 사건은 목록에서 확인할 수 있습니다.`);}}/>}
         </>}
       </main>
@@ -221,6 +221,13 @@ function EventsView({events,open}){
   const [filter,setFilter]=useState('all');const list=events.filter(row=>filter==='all'||row.review_status===filter);
   return <><div className="view-toolbar"><div className="tabs">{[['all','전체'],['OPEN','미검토'],['ACKNOWLEDGED','확인'],['DISMISSED','반려'],['DEFERRED','보류']].map(([id,name])=><button key={id} className={filter===id?'active':''} onClick={()=>setFilter(id)}>{name}<span>{events.filter(row=>id==='all'||row.review_status===id).length}</span></button>)}</div><span className="subtle">원본 관찰 + 담당자 검토 이력</span></div><EventTable events={list} open={open}/></>;
 }
+function ReferenceSelection({references,siteProducts}){
+  const selected=siteReferences(references,siteProducts);
+  const ids=new Set(selected.map(row=>row.id));
+  const archived=references.filter(row=>!ids.has(row.id));
+  return <><div className="section-title"><h2>비교 사진</h2><span className="subtle">{selected.length}장</span></div><ReferencesView references={selected}/>{archived.length>0&&<details className="reference-archive"><summary>비교 제외 사진 · {archived.length}장 보관</summary><ReferencesView references={archived}/></details>}</>;
+}
+
 function SourcesView({sources,choose}){
   const [query,setQuery]=useState(''),[filter,setFilter]=useState('전체');
   const list=sources.filter(row=>(filter==='전체'||row.case===filter)&&`${row.name} ${row.source}`.toLowerCase().includes(query.toLowerCase()));

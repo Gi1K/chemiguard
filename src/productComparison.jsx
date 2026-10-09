@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ExternalLink, ScanSearch, Shirt} from 'lucide-react';
 import './productComparison.css';
-import {COLORS} from './siteCatalog';
+import {COLORS,siteReferences} from './siteCatalog';
 
 const score = value => Number.isFinite(value) ? value.toFixed(3) : '-';
 const stamp = value => `${Number(value || 0).toFixed(2)}s`;
@@ -45,13 +45,13 @@ function Comparison({person}) {
       </div>
       <ol className="product-ranking">{candidates.map(row=><li key={row.product_id}><span>{row.name}</span><b>{score(row.score)}</b></li>)}</ol>
       <div className="product-score-note">1·2위 차이 {score(matching.gap)} · 확률/정확도 아님 · 비교 {matching.product_count}종</div>
-      <div className="product-site-use">{candidate.site_assignments?.length?candidate.site_assignments.map(row=><p key={row.id}><i style={{background:COLORS[row.color]?.[1]}}/>현장 지정 · {row.purpose_label} · {row.protection_type} · {COLORS[row.color]?.[0]}</p>):<p>현장 용도 미등록 · 참고 제품 사진 비교</p>}</div>
+      <div className="product-site-use">{candidate.site_assignments?.length?candidate.site_assignments.map(row=><p key={row.id}><i style={{background:COLORS[row.color]?.[1]}}/>{row.registration_mode==='color'?`${COLORS[row.color]?.[0]} 대표 · 용도·형식 미지정`:`현장 지정 · ${row.purpose_label} · ${row.protection_type} · ${COLORS[row.color]?.[0]}`}</p>):<p>현장 용도 미등록 · 참고 제품 사진 비교</p>}</div>
       <ProductFacts product={candidate.product}/>
     </>}
   </article>;
 }
 
-export function ProductComparisons({tracks,references,run}) {
+export function ProductComparisons({tracks,references,siteProducts=[],run}) {
   const [history,setHistory]=useState(null),[error,setError]=useState('');
   const savedMode=run&&['PAUSED','FINISHED','STOPPED','ERROR','INTERRUPTED'].includes(run.status);
   useEffect(()=>{
@@ -65,9 +65,11 @@ export function ProductComparisons({tracks,references,run}) {
     return()=>{disposed=true;};
   },[run?.id,run?.status,savedMode]);
   const comparisons=savedMode?(history?.runId===run.id?history.rows:[]):tracks;
-  const products=Object.values(Object.fromEntries(references.filter(row=>row.reference_kind==='product_photo').map(row=>[row.product_id,row])));
+  const eligible=siteReferences(references,run?.site_products??siteProducts).filter(row=>!run?.policy||row.revision<=run.policy.reference_revision);
+  const products=Object.values(Object.fromEntries(eligible.map(row=>[row.product_id,row])));
+  const comparedCount=comparisons.find(person=>person.identity?.product_count!=null)?.identity.product_count??products.length;
   return <section className="product-section">
-    <div className="section-title"><h2><ScanSearch size={18}/>착용 제품 외형 비교</h2><span className="subtle">SigLIP2 · 등록 {products.length}종</span></div>
+    <div className="section-title"><h2><ScanSearch size={18}/>착용 제품 외형 비교</h2><span className="subtle">SigLIP2 · {savedMode?'저장 비교':'비교 대상'} {comparedCount}종</span></div>
     {error&&<p className="product-warning">{error}</p>}
     {comparisons.length?<div className="product-comparisons">{comparisons.map(person=><Comparison key={person.track_token} person={person}/>)}</div>:
       <div className="product-library">{products.length?products.map(row=><details key={row.product_id}><summary><img src={row.crop_url} alt={row.product_name}/><span>{row.product_name}<small>등록 제품 정보</small></span></summary><ProductFacts product={row.product}/></details>):<p className="product-empty"><Shirt size={18}/>비교할 제품 사진 미등록</p>}</div>}

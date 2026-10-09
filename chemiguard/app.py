@@ -18,7 +18,7 @@ from .monitor import monitor
 from .sources import VIDEO_EXTENSIONS, sources
 from .store import now, store, uid
 from .vision import identity
-from .products import current_site_products, product_profile
+from .products import current_site_products, product_profile, site_product_slot
 
 
 class PolicyInput(BaseModel):
@@ -85,12 +85,21 @@ class ReferenceInput(BaseModel):
 
 class SiteProductInput(BaseModel):
     model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
-    purpose: Literal['acid', 'alkali', 'acid_alkali', 'other']
-    protection_type: Literal['Type 1', 'Type 2', 'Type 3', 'Type 4', 'Type 5', 'Type 6', '기타']
+    registration_mode: Literal['purpose_type', 'color'] = 'purpose_type'
+    purpose: Literal['acid', 'alkali', 'acid_alkali', 'other'] | None = None
+    protection_type: Literal['Type 1', 'Type 2', 'Type 3', 'Type 4', 'Type 5', 'Type 6', '기타'] | None = None
     color: Literal['white', 'yellow', 'orange', 'green', 'blue', 'gray', 'black', 'other']
     product_id: str = Field(min_length=1, max_length=80)
     enabled: bool = True
     note: str = Field(default='', max_length=500)
+
+    @model_validator(mode='after')
+    def validate_registration(self):
+        if self.registration_mode == 'purpose_type' and (self.purpose is None or self.protection_type is None):
+            raise ValueError('용도·형식별 등록은 용도와 형식을 지정해 주세요.')
+        if self.registration_mode == 'color' and (self.purpose is not None or self.protection_type is not None):
+            raise ValueError('색상별 등록은 용도·형식을 미지정으로 유지합니다.')
+        return self
 
 
 @asynccontextmanager
@@ -144,6 +153,7 @@ def health():
 def bootstrap():
     return {'system': system_status(), 'sources': sources.list(), 'policies': store.list('policy'),
             'references': [public_reference(row) for row in store.list('reference')],
+            'site_products': current_site_products(store.list('site_product')),
             'active': monitor.active.snapshot() if monitor.active else None}
 
 
@@ -225,13 +235,13 @@ def add_site_product(payload: SiteProductInput):
                for row in store.list('reference')):
         raise HTTPException(400, '해당 제품의 제품 사진을 먼저 등록해 주세요.')
     profile = product_profile(payload.product_id)
-    if profile and payload.protection_type != '기타':
+    if profile and payload.protection_type not in (None, '기타'):
         declared_type = payload.protection_type.removeprefix('Type ')
         if declared_type not in {value.split('-')[0] for value in profile['types']}:
             raise HTTPException(400, '선택한 형식이 등록 제품의 제조사 자료와 다릅니다.')
     with store.lock:
         previous = [row for row in store.list('site_product')
-                    if row['purpose'] == payload.purpose and row['protection_type'] == payload.protection_type]
+                    if site_product_slot(row) == site_product_slot(payload.model_dump())]
         latest = max(previous, key=lambda row: row['revision'], default=None)
         return store.put('site_product', payload.model_dump() | {
             'revision': latest['revision']+1 if latest else 1, 'supersedes': latest['id'] if latest else None,

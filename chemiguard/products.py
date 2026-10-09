@@ -18,10 +18,16 @@ PRODUCTS = {
 PURPOSES = {'acid': '내산', 'alkali': '내염기', 'acid_alkali': '내산·내염기', 'other': '기타'}
 
 
+def site_product_slot(row):
+    if row.get('registration_mode') == 'color':
+        return ('color', row['color'])
+    return ('purpose_type', row['purpose'], row['protection_type'])
+
+
 def current_site_products(rows):
     latest = {}
     for row in sorted(rows, key=lambda item: item['revision']):
-        latest[(row['purpose'], row['protection_type'])] = row
+        latest[site_product_slot(row)] = row
     return list(latest.values())
 
 
@@ -72,7 +78,7 @@ def rank_references(vector, references, model_hash, site_products=None):
                        supporting_references=matches[:2], product=product_profile(product['product_id']))
         if product['product']:
             product['name'] = product['product']['family'] + ' 계열'
-        product['site_assignments'] = [row | {'purpose_label': PURPOSES[row['purpose']]}
+        product['site_assignments'] = [row | {'purpose_label': PURPOSES.get(row.get('purpose'), '용도 미지정')}
                                        for row in assignments if row['product_id'] == product['product_id']]
         candidates.append(product)
     candidates.sort(key=lambda row: row['score'], reverse=True)

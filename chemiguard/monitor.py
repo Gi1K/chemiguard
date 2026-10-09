@@ -589,6 +589,7 @@ class Run:
                     'scene_epoch': self.scene_epoch,
                     'person_size': self.size, 'people_state': self.record.get('people_state', 'WAITING'),
                     'tracks': tracks, 'scene': scene, 'metrics': metrics, 'policy': self.policy,
+                    'site_products': self.site_products,
                     'frame_url': f'/api/runs/{self.id}/frame?generation={image_key[0]}&seq={image_key[1]}' if image_key else None,
                     'updated_at': now(), 'frame_age_s': round(current-self.last_processed, 2) if self.last_processed else None}
 

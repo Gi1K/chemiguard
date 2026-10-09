@@ -14,7 +14,7 @@ class SiteRegistrationTests(unittest.TestCase):
         self.folder = tempfile.TemporaryDirectory()
         with patch('chemiguard.store.DATA', Path(self.folder.name)):
             self.store = Store()
-        for product_id in ('P11', 'P12'):
+        for product_id in ('P11', 'P12', 'P04'):
             self.store.put('reference', {'product_id': product_id, 'reference_kind': 'product_photo'})
         self.patch = patch('chemiguard.app.store', self.store)
         self.patch.start()
@@ -45,6 +45,28 @@ class SiteRegistrationTests(unittest.TestCase):
             response = self.client.post('/api/site-products', json=self.payload | {'product_id': product_id})
             self.assertEqual(response.status_code, 400)
         self.assertEqual(self.store.list('site_product'), [])
+
+    def test_color_slots_coexist_and_preserve_revisions_without_purpose_claims(self):
+        white = {'registration_mode': 'color', 'color': 'white', 'product_id': 'P11'}
+        first = self.client.post('/api/site-products', json=white)
+        gray = self.client.post('/api/site-products', json=white | {'color': 'gray', 'product_id': 'P04'})
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(gray.status_code, 200)
+        rows = self.client.get('/api/site-products').json()
+        self.assertEqual({row['product_id'] for row in rows}, {'P11', 'P04'})
+        self.assertTrue(all(row['purpose'] is None and row['protection_type'] is None for row in rows))
+        updated = self.client.post('/api/site-products', json=white | {'enabled': False}).json()
+        self.assertEqual(updated['supersedes'], first.json()['id'])
+        self.assertEqual(updated['revision'], 2)
+        rows = self.client.get('/api/site-products').json()
+        self.assertEqual(len(rows), 2)
+        self.assertTrue(next(row for row in rows if row['color'] == 'gray')['enabled'])
+        self.assertEqual(len(self.store.list('site_product')), 3)
+
+    def test_registration_modes_reject_missing_or_unwanted_purpose(self):
+        color = {'registration_mode': 'color', 'color': 'white', 'product_id': 'P11'}
+        for payload in (color | {'purpose': 'acid'}, color | {'registration_mode': 'purpose_type'}):
+            self.assertEqual(self.client.post('/api/site-products', json=payload).status_code, 422)
 
 
 if __name__ == '__main__':
