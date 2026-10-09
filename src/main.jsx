@@ -140,7 +140,7 @@ function App(){
               <Field label="시연 영상"><select aria-label="시연 영상" value={sourceId} disabled={running} onChange={e=>setSourceId(e.target.value)}>{boot.sources.map(row=><option key={row.id} value={row.id}>{row.name}</option>)}</select></Field>
               <Field label="작업 기준"><select aria-label="작업 기준" value={policyId} disabled={running} onChange={e=>setPolicyId(e.target.value)}>{boot.policies.map(row=><option key={row.id} value={row.id}>{row.name} · v{row.revision}</option>)}</select></Field>
               <div className="field"><span>사람 감지</span><div className="segmented" role="group" aria-label="사람 감지 모델">{['medium','large'].map(value=><button key={value} aria-label={value==='medium'?'Medium':'Large'} aria-pressed={size===value} disabled={running} className={size===value?'active':''} onClick={()=>setSize(value)}>{value==='medium'?'Medium':'Large'}</button>)}</div></div>
-              <button className="button primary start" disabled={busy || running || !sourceId || !policyId} onClick={start}>{busy || run?.status==='LOADING'?<LoaderCircle className="spin" size={18}/>:<Play size={18}/>}분석 시작</button>
+              <button className="button primary start" disabled={busy || running || !sourceId || !policyId} onClick={start}>{busy || run?.status==='LOADING'?<LoaderCircle className="spin" size={18}/>:<Play size={18}/>}시연 시작</button>
             </section>
             {!boot.system.api_configured && <div className="notice warning"><AlertTriangle size={17}/>Luna 연결 대기 · 서버에 OPENAI_API_KEY를 설정해 주세요.</div>}
             <section className="metrics-band"><Metric label="현재 추적" value={visibleTracks.length} unit="명" icon={Users}/><Metric label="이번 실행 사건" value={currentEvents.length} unit="건" icon={Bell}/><Metric label="로컬 처리" value={run?.status==='RUNNING'?run.metrics.processing_fps:'-'} unit="FPS" icon={Activity}/><Metric label="Decisions 응답" value={run?.metrics.api_mean_ms? (run.metrics.api_mean_ms/1000).toFixed(2):'-'} unit="초" icon={Clock3}/></section>
@@ -183,7 +183,7 @@ function VideoPanel({source,run,connected,control,busy,onStart,canStart,onPresen
   const playback=useNativePlayback(source,current?run:null,connected);
   const {video,position,dimensions}=playback;
   const playing=current&&['RUNNING','PAUSED'].includes(run.status);
-  const playTitle=playing?(run.status==='RUNNING'?'일시정지':'재개'):current?'처음부터 분석':'분석 시작';
+  const playTitle=playing?(run.status==='RUNNING'?'일시정지':'재개'):current?'시연 다시 시작':'시연 시작';
   const togglePlayback=()=>{
     if(run?.status!=='RUNNING')video.current?.play().catch(()=>{});
     if(playing)control(run.status==='RUNNING'?'pause':'resume',run.status==='RUNNING'?video.current?.currentTime:undefined);

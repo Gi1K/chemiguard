@@ -383,3 +383,9 @@
 - 검증: 첫 WORN/측면 VISIBLE_WORN, 단일 미착용과 2회 경보/복구, 숨은 여밈의 미해제, 오류·만료·미래·일시정지·비활성 표시를 포함한 새 Python 4개와 기존 visible_wearing 8개/observation 6개 등 18개 통과. 상단 즉시 집계/경보 우선과 기존 라벨/시점 정렬 Node 20개 통과. production build 및 diff 공백 검사 통과.
 - 실제 확인: 분석 FINISHED/전화 completed/automatic=false를 확인한 뒤 서비스를 재시작했다. 두 사람 Large/정책 v6의 새 run_a2e8c7c447354f2a는 25 API, 오류/폐기 0이었다. 실제 착용자 #2의 첫 유효 PPE 원본 3.28초 응답은 VISIBLE_WORN, API 328.6ms, 근거 ID 1개/confirmed=false였고 4.48초 표시 프레임부터 동일 상태와 제품 CANDIDATE가 전달됐다. 원본 5.92초의 두 번째 관찰에서만 confirmed=true가 됐다. 브라우저에서 지정 보호구 1/2명·미착용 1명과 박스의 착용 표시, 콘솔 경고/오류 0을 확인했다. 실제 전화는 발신하지 않았다.
 - 근거/한계: .data/first-wearing-verification에 실제 snapshot·화면을 Git 제외 저장했다. 즉시는 첫 유효 응답 후 별도 2회 대기를 없앤 의미이며 프레임 0부터의 분류·지연 0·독립 정확도 보장이 아니다. 보이는 범위 착용의 숨은 부위/제품 적합성 미확정은 유지한다. 다른 세션의 전화·발표·증빙 등 변경은 이번 커밋에서 제외한다.
+
+
+## 2026-10-09 - 시작 버튼을 시연 시작으로 변경
+
+- 요청/변경: src/main.jsx의 상단 '분석 시작'을 '시연 시작'으로 변경했다. 영상 하단 버튼의 title/aria-label도 '시연 시작' 및 '시연 다시 시작'으로 맞췄다. 이벤트 핸들러·비활성 조건·분석/경보 정책은 그대로다.
+- 실제 확인: production build 성공, 브라우저 새로고침 후 상단 '시연 시작' 표시를 확인했다. Git 제외 .data/demo-label-verification/start-button.png에 화면을 보존했다. 문구 변경이라 GPU/API 재실행·추가 추론 시험·서비스 재시작은 하지 않았다. 기존 동시 작업은 커밋에서 제외한다.
