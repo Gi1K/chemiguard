@@ -1,0 +1,19 @@
+[Unit]
+Description=ChemiGuard chemical PPE catalog
+After=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=simple
+# Replace with the absolute application directory (the folder containing run.sh).
+WorkingDirectory=/absolute/path/to/chemical-ppe
+ExecStart=/usr/bin/bash ./run.sh
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=200
+UMask=0077
+
+[Install]
+WantedBy=default.target

@@ -44,6 +44,20 @@ bash run.sh
 
 ## Tailscale 비공개 원격 접속
 
+### SSH 터널로 접속 (sudo 불필요)
+
+서버에서 SSH 로그인이 가능한 계정으로 연결한다. Tailscale IP를 사용하면 서버와 접속 기기 모두 Tailscale에 연결되어 있어야 한다. **아래 명령은 페이지를 볼 맥/PC의 터미널에서 실행한다.** 이미 서버에 SSH로 접속한 셸 안에서 실행하지 않는다. `your-user@your-server`는 실제 서버 계정과 Tailscale IP 또는 SSH 호스트로 바꾼다.
+
+```bash
+ssh -N -T -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -L 127.0.0.1:34402:127.0.0.1:34402 your-user@your-server
+```
+
+인증한 뒤 터미널이 아무 출력 없이 대기하면 연결이 유지되는 정상 상태다. 같은 맥/PC의 브라우저에서 `http://127.0.0.1:34402/kit-catalog/`를 연다. `Ctrl+C`로 터널을 종료할 수 있다. 사진·API 요청은 이 터널을 함께 통과하며 기존 로컬 Origin과 사진 접근 조건을 만족한다. 상담은 기존 시연 코드가 필요하다. SSH 터널 자체에는 Tailscale Serve 설정이나 sudo가 필요 없다.
+
+`Address already in use`라면 접속 기기의 34402 포트가 사용 중이다. 자신이 띄운 기존 터널이면 해당 터미널에서 종료하고 다시 연결한다. 임의로 다른 프로세스를 종료하지 않는다. 다른 로컬 포트를 사용할 경우에는 서버 `PPE_ALLOWED_ORIGINS`에도 그 로컬 주소를 추가해야 상담이 동작한다. SSH 로그인 실패는 서버 계정/키/암호 문제이며 홈페이지 API 키와 별개다.
+
+### Tailscale Serve HTTPS 접속
+
 서버 PC와 접속 기기에서 Tailscale을 켠다. 서버의 `tailscale status --json`에서 확인한 DNS 이름을 사용해 `.env`에 다음 항목을 설정한다. 기존 API 키는 유지한다.
 
 ```dotenv
@@ -63,7 +77,19 @@ tailscale serve status
 
 사진은 정확한 Host와 허용한 `Tailscale-User-Login`이 모두 일치하고 실제 프록시 연결이 loopback일 때만 표시한다. `run.sh`는 Tailscale 사진 설정 시 `127.0.0.1` 바인딩을 강제하고, 전달 헤더로 접속 IP를 바꾸는 동작을 끈다. 수동으로 서버를 띄워도 `--host 127.0.0.1 --no-proxy-headers`를 유지해야 한다. [Tailscale Serve](https://tailscale.com/docs/features/tailscale-serve)는 클라이언트가 보낸 신원 헤더를 제거하고 실제 사용자 신원을 붙인다. 태그된 기기는 사용자 신원이 없어 사진을 표시하지 않는다. 공개 Funnel로 전환하지 않는다.
 
-이 연결만 끄려면 `tailscale serve --https=9443 off`를 사용한다. Serve는 백그라운드 설정을 유지하지만 앱 서버는 별도로 실행 중이어야 한다. 현재 실행은 PC 재부팅 후 자동 시작 서비스가 아니다.
+이 연결만 끄려면 `tailscale serve --https=9443 off`를 사용한다. Serve는 백그라운드 설정을 유지하지만 앱 서버는 별도로 실행 중이어야 한다.
+
+### 서버 지속 실행
+
+Linux 서버에서는 `deploy/chemiguard-catalog.service.example`을 `~/.config/systemd/user/chemiguard-catalog.service`로 복사하고 `WorkingDirectory`를 이 앱의 절대 경로로 수정한다. 기존 수동 실행 서버가 있으면 해당 프로세스만 종료한 후 아래 명령으로 시작한다. 서비스도 동일한 `run.sh`와 로컬 `.env`를 사용한다.
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now chemiguard-catalog.service
+systemctl --user status chemiguard-catalog.service --no-pager
+```
+
+설정 변경 후에는 `systemctl --user restart chemiguard-catalog.service`, 중지하려면 `systemctl --user stop chemiguard-catalog.service`를 쓴다. SSH 접속 종료 후나 PC 부팅 때도 실행하려면 해당 서버 계정의 `loginctl show-user "$USER" -p Linger`가 `Linger=yes`여야 한다. 현재 작업 PC는 이미 활성화되어 있어 시스템 권한 설정을 변경하지 않았다. 원격 기기의 SSH 터널은 별개이므로 접속할 때 다시 실행한다.
 
 ## 요청과 제한
 
