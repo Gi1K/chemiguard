@@ -49,6 +49,7 @@ for (const name of [
   "photo-upload",
   "counselor",
   "catalog-sync",
+  "collection",
   "bootstrap",
 ]) {
   await copyFile(
@@ -106,6 +107,8 @@ await copyFile(
   path.join(root, "web/criteria.html"),
   path.join(out, "criteria.html"),
 );
+for (const name of ["collection.html", "collection.css"])
+  await copyFile(path.join(root, "web", name), path.join(out, name));
 await writeFile(
   path.join(root, "dist/index.html"),
   '<!doctype html><html lang="ko"><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/kit-catalog/"><title>ChemiGuard</title><a href="/kit-catalog/">ChemiGuard 열기</a></html>',

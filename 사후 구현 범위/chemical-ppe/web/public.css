@@ -36,6 +36,11 @@ body {
 .utility-bar a {
   letter-spacing: 0;
 }
+.utility-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
 .shop-header {
   min-height: 104px;
   border-bottom: 1px solid var(--line);
