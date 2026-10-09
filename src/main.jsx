@@ -10,6 +10,7 @@ import {ProductCheck,ProductComparisons} from './productComparison';
 import {SiteCatalog,siteReferences} from './siteCatalog';
 import {observationLabel, WEARING_LABELS} from './wearingStatus';
 import {VideoStatus} from './videoStatus.jsx';
+import './demoShowcase.css';
 
 const LABEL = {
   RUNNING: '분석 중', WAITING: '대기', LOADING: '모델 준비 중', PAUSED: '일시정지', STOPPED: '중지',
@@ -106,7 +107,8 @@ function App(){
   useEffect(()=>{if(!toast)return;const timer=setTimeout(()=>setToast(''),6000);return()=>clearTimeout(timer);},[toast]);
   const perform=async(task)=>{setBusy(true);setError('');try{return await task();}catch(e){setError(e.message);return null;}finally{setBusy(false);}};
   const changeRun=(task)=>{runVersion.current++;return perform(async()=>{try{return await task();}finally{runVersion.current++;}});};
-  const start=()=>changeRun(async()=>{const value=await api('/runs',{method:'POST',body:JSON.stringify({source_id:sourceId,policy_id:policyId,person_size:size})});setRun(value);setPage('monitor');});
+  const startSource=(id,destination='monitor')=>changeRun(async()=>{const value=await api('/runs',{method:'POST',body:JSON.stringify({source_id:id,policy_id:policyId,person_size:size})});setRun(value);setSourceId(value.source_id);setPage(destination);});
+  const start=()=>startSource(sourceId);
   const control=(action,position)=>changeRun(async()=>setRun(await api(`/runs/${run.id}/control`,{method:'POST',body:JSON.stringify({action,position})})));
   const openEvent=(id)=>perform(async()=>{setEventDetail(await api(`/events/${id}`));setModal('event');});
   const source=boot?.sources.find(row=>row.id===sourceId);
@@ -115,7 +117,7 @@ function App(){
   const visibleTracks=aligned?presented.tracks:[];
   const visibleScene=aligned?presented.scene:null;
   const currentEvents=events.filter(row=>row.run_id===run?.id);
-  const chooseSource=(id)=>{if(running){setError('현재 분석을 중지한 뒤 영상을 변경해 주세요.');return;}setSourceId(id);setPage('monitor');};
+  const chooseSource=(id)=>{if(running&&id!==run?.source_id){setError('현재 분석을 중지한 뒤 영상을 변경해 주세요.');return;}setSourceId(id);setPage('monitor');};
   return <div className="app-shell">
     <aside className="sidebar">
       <a className="brand" href="#" onClick={e=>{e.preventDefault();setPage('monitor');}}><span className="brand-icon"><ShieldCheck size={24}/></span><div>ChemiGuard<small>SAFETY OPERATIONS</small></div></a>
@@ -158,7 +160,8 @@ function App(){
             <ProductComparisons tracks={visibleTracks} references={boot.references} siteProducts={boot.site_products} run={run}/>
             <section className="recent-events"><div className="section-title"><h2>이번 실행 사건</h2><button className="text-button" onClick={()=>setPage('events')}>전체 사건<ChevronRight size={15}/></button></div><EventTable events={currentEvents.slice(0,6)} open={openEvent}/></section>
           </>}
-          {page==='sources' && <SourcesView sources={boot.sources} choose={chooseSource}/>}
+          {page==='sources' && <SourcesView sources={boot.sources} choose={chooseSource} run={run} connected={connected} busy={busy} control={control}
+            onStart={id=>startSource(id,'sources')} policies={boot.policies} policyId={policyId} setPolicyId={setPolicyId} size={size} setSize={setSize}/>}
           {page==='events' && <EventsView events={events} open={openEvent}/>}
           {page==='policies' && <PoliciesView policies={boot.policies} edit={(value)=>{setEventDetail(value);setModal('policy-edit');}}/>}
           {page==='references' && <><SiteCatalog references={boot.references} onChange={rows=>setBoot(old=>({...old,site_products:rows}))}/><ReferenceSelection references={boot.references} siteProducts={boot.site_products}/></>}
@@ -181,7 +184,7 @@ function VideoPanel({source,run,connected,control,busy,onStart,canStart,onPresen
   const [seek,setSeek]=useState(null); const panel=useRef();
   const current=run && run.source_id===source?.id;
   const playback=useNativePlayback(source,current?run:null,connected);
-  const {video,position,dimensions}=playback;
+  const {video,position,dimensions,duration}=playback;
   const playing=current&&['RUNNING','PAUSED'].includes(run.status);
   const playTitle=playing?(run.status==='RUNNING'?'일시정지':'재개'):current?'시연 다시 시작':'시연 시작';
   const togglePlayback=()=>{
@@ -202,7 +205,7 @@ function VideoPanel({source,run,connected,control,busy,onStart,canStart,onPresen
       {(current&&run.status==='LOADING'||playback.buffering)&&<div className="video-loading"><LoaderCircle size={27} className="spin"/><span>{run?.status==='LOADING'?'분석 모델 준비 중':'영상 불러오는 중'}</span></div>}
       {(playback.mediaError||current&&run.error)&&<div className="video-error"><AlertTriangle size={18}/>{playback.mediaError||run.error}</div>}
     </div>
-    <div className="video-controls"><IconButton icon={current&&run.status==='RUNNING'?Pause:Play} title={playTitle} disabled={busy||(!playing&&!canStart)} onClick={togglePlayback}/><IconButton icon={Square} title="분석 중지" disabled={!current||!activeStatus(run.status)||busy} onClick={()=>control('stop')}/><span className="duration">{timecode(position)}</span><input aria-label="영상 위치" type="range" min="0" max={current?run.duration_s||1:1} step="0.1" value={seek??(current?position:0)} disabled={!playing||busy} onChange={e=>setSeek(Number(e.target.value))} onPointerUp={commitSeek} onKeyUp={commitSeek}/><span className="duration">{timecode(current?run.duration_s:0)}</span><IconButton icon={Maximize2} title="전체 화면" onClick={()=>{if(document.fullscreenElement)document.exitFullscreen();else panel.current.requestFullscreen?.();}}/></div>
+    <div className="video-controls"><IconButton icon={current&&run.status==='RUNNING'?Pause:Play} title={playTitle} disabled={busy||(!playing&&!canStart)} onClick={togglePlayback}/><IconButton icon={Square} title="분석 중지" disabled={!current||!activeStatus(run.status)||busy} onClick={()=>control('stop')}/><span className="duration">{timecode(position)}</span><input aria-label="영상 위치" type="range" min="0" max={(current?run.duration_s:duration)||1} step="0.1" value={seek??(current?position:0)} disabled={!playing||busy} onChange={e=>setSeek(Number(e.target.value))} onPointerUp={commitSeek} onKeyUp={commitSeek}/><span className="duration">{timecode(current?run.duration_s:duration)}</span><IconButton icon={Maximize2} title="전체 화면" onClick={()=>{if(document.fullscreenElement)document.exitFullscreen();else panel.current.requestFullscreen?.();}}/></div>
   </div>;
 }
 function Box({box,width,height,color,label}){return <div className={`bounding-box ${color}`} style={{left:`${box[0]/width*100}%`,top:`${box[1]/height*100}%`,width:`${(box[2]-box[0])/width*100}%`,height:`${(box[3]-box[1])/height*100}%`}}><span>{label}</span></div>;}
@@ -232,11 +235,39 @@ function ReferenceSelection({references,siteProducts}){
   return <><div className="section-title"><h2>비교 사진</h2><span className="subtle">{selected.length}장</span></div><ReferencesView references={selected}/>{archived.length>0&&<details className="reference-archive"><summary>비교 제외 사진 · {archived.length}장 보관</summary><ReferencesView references={archived}/></details>}</>;
 }
 
-function SourcesView({sources,choose}){
-  const [query,setQuery]=useState(''),[filter,setFilter]=useState('전체');
-  const list=sources.filter(row=>(filter==='전체'||row.case===filter)&&`${row.name} ${row.source}`.toLowerCase().includes(query.toLowerCase()));
-  return <><div className="view-toolbar"><div className="tabs">{['전체',...new Set(sources.map(row=>row.case))].map(value=><button key={value} className={filter===value?'active':''} onClick={()=>setFilter(value)}>{value}</button>)}</div><div className="search"><Search size={16}/><input aria-label="영상 검색" placeholder="영상 검색" value={query} onChange={e=>setQuery(e.target.value)}/></div></div>
-    <div className="source-grid">{list.map(row=><article key={row.id} className="source-item"><div className="source-picture"><img src={row.preview_url} alt={row.name} loading="lazy"/><span>{row.case}</span></div><div className="source-content"><small>{row.origin}</small><h3 title={row.name}>{row.name}</h3><button className="button" onClick={()=>choose(row.id)}><Play size={15}/>관제에서 열기</button></div></article>)}</div>{!list.length&&<Empty icon={FileVideo}>해당하는 영상이 없습니다</Empty>}</>;
+function SourcesView({sources,choose,run,connected,busy,control,onStart,policies,policyId,setPolicyId,size,setSize}){
+  const sections=useRef(new Map());
+  const running=activeStatus(run?.status);
+  const jump=id=>sections.current.get(id)?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  return <div className="demo-showcase">
+    <div className="demo-settings">
+      <Field label="작업 기준"><select aria-label="시연 작업 기준" value={policyId} disabled={running||busy} onChange={e=>setPolicyId(e.target.value)}>{policies.map(row=><option key={row.id} value={row.id}>{row.name} · v{row.revision}</option>)}</select></Field>
+      <div className="field"><span>사람 감지</span><div className="segmented" role="group" aria-label="시연 사람 감지 모델">{['medium','large'].map(value=><button key={value} aria-label={value==='medium'?'Medium':'Large'} aria-pressed={size===value} disabled={running||busy} className={size===value?'active':''} onClick={()=>setSize(value)}>{value==='medium'?'Medium':'Large'}</button>)}</div></div>
+      <span className="demo-run-state"><i className={running?'online':'idle'}/>{running?`${sources.find(row=>row.id===run.source_id)?.name||'영상'} · ${LABEL[run.status]}`:`시연 영상 ${sources.length}개`}</span>
+    </div>
+    <nav className="demo-index" aria-label="시연 영상 바로가기">{sources.map((source,index)=><button key={source.id} onClick={()=>jump(source.id)} aria-label={`${source.name} 영상으로 이동`}>
+      <img src={source.preview_url} alt=""/><span><small>{String(index+1).padStart(2,'0')}</small>{source.name}</span><ChevronRight size={15}/>
+    </button>)}</nav>
+    {sources.map((source,index)=><section className="demo-section" id={`demo-${source.id}`} key={source.id} aria-labelledby={`demo-title-${source.id}`}
+      ref={element=>{if(element)sections.current.set(source.id,element);else sections.current.delete(source.id);}}>
+      <DemoVideo source={source} index={index} run={run} connected={connected} busy={busy} control={control} onStart={()=>onStart(source.id)} canStart={!running&&Boolean(policyId)&&connected} choose={()=>choose(source.id)}/>
+    </section>)}
+    {!sources.length&&<Empty icon={FileVideo}>등록된 시연 영상이 없습니다</Empty>}
+  </div>;
+}
+function DemoVideo({source,index,run,connected,busy,control,onStart,canStart,choose}){
+  const [presented,setPresented]=useState(null);
+  const current=run?.source_id===source.id?run:null;
+  const otherRunning=activeStatus(run?.status)&&!current;
+  return <>
+    <header className="demo-section-heading"><div className="demo-heading-title"><span className="demo-number">{String(index+1).padStart(2,'0')}</span><div><small>{source.case}</small><h2 id={`demo-title-${source.id}`}>{source.name}</h2></div></div>
+      <div className="demo-actions"><Badge value={current?.status||'WAITING'}>{otherRunning?'다른 영상 시연 중':undefined}</Badge>
+        <IconButton icon={Radio} title={`${source.name} 관제에서 열기`} disabled={otherRunning||busy} onClick={choose}/>
+        <button className="button primary" disabled={!canStart||busy} onClick={onStart}>{current?.status==='LOADING'?<LoaderCircle size={17} className="spin"/>:<Play size={17}/>}시연 시작</button>
+      </div>
+    </header>
+    <VideoPanel source={source} run={current} connected={connected} control={control} busy={busy} onStart={onStart} canStart={canStart} onPresentedFrame={setPresented} presented={presented}/>
+  </>;
 }
 function PoliciesView({policies,edit}){return <div className="policy-list">{policies.map(row=><article key={row.id} className="policy-row"><div className="policy-symbol"><SlidersHorizontal size={22}/></div><div className="policy-description"><h3>{row.name}<span>v{row.revision}</span></h3><p>{row.zone_id}</p><div className="policy-tags"><span>{row.wearing_assessment==='visible_regions'?'보이는 범위 관찰':'전체 부위 확인'}</span>{row.coverall_required&&<span>화학복 필수</span>}{row.hood_required&&<span>후드 필수</span>}{row.respirator_required&&<span>전면형 방독면 필수</span>}{row.closure_required&&<span>여밈 필수</span>}{row.identity_required&&<span>등록 제품 확인</span>}{row.release_monitoring&&<span>장면 관찰</span>}</div></div><div className="policy-version"><small>사진 revision {row.reference_revision}</small><span>{date(row.created_at)}</span></div><button className="button" onClick={()=>edit(row)}><Settings2 size={16}/>새 버전</button></article>)}</div>;}
 function ReferencesView({references}){return references.length?<div className="reference-grid">{references.map(row=><article className="reference-item" key={row.id}><div className="reference-picture"><img src={row.crop_url} alt={row.product_name}/></div><div><small>{row.product_id} · {row.view}</small><h3>{row.product_name}</h3><p>{row.source}</p><div className="reference-details"><span>몸통 영역</span><span>revision {row.revision}</span><Badge value="RUNNING">임베딩 완료</Badge></div></div></article>)}</div>:<Empty icon={ImagePlus}>등록된 제품 참고 사진이 없습니다</Empty>;}

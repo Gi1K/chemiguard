@@ -5,9 +5,10 @@ import {overlayLabel} from './wearingStatus';
 export function useNativePlayback(source, run, connected) {
   const video=useRef(null), clock=useRef(null), synced=useRef('');
   const [position,setPosition]=useState(0), [dimensions,setDimensions]=useState(null);
+  const [duration,setDuration]=useState(0);
   const [mediaError,setMediaError]=useState(''), [buffering,setBuffering]=useState(false);
   useEffect(()=>{
-    setPosition(0);setDimensions(null);setMediaError('');setBuffering(false);synced.current='';
+    setPosition(0);setDimensions(null);setDuration(0);setMediaError('');setBuffering(false);synced.current='';
   },[source?.id]);
   useEffect(()=>{clock.current={run,connected,received:performance.now()};},[run,connected]);
   useEffect(()=>{
@@ -47,9 +48,9 @@ export function useNativePlayback(source, run, connected) {
   },[]);
   const loaded=()=>{
     const element=video.current;
-    setDimensions([element.videoWidth,element.videoHeight]);setMediaError('');synced.current='';
+    setDimensions([element.videoWidth,element.videoHeight]);setDuration(Number.isFinite(element.duration)?element.duration:0);setMediaError('');synced.current='';
   };
-  return {video,position,dimensions,mediaError,buffering,loaded,
+  return {video,position,dimensions,duration,mediaError,buffering,loaded,
     waiting:()=>setBuffering(true), ready:()=>setBuffering(false),
     failed:()=>{setBuffering(false);setMediaError('원본 영상 재생 실패 · 연결 또는 영상 코덱을 확인해 주세요.');}};
 }
