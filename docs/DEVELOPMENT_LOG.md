@@ -268,3 +268,15 @@
 - 회귀/화면: 제품/API 15개, 입력 품질 5개, JS 표시 5개 검사 통과 및 production build/diff 공백 검사 통과. 제품 검사에는 미등록색, 등록 외 대조군, 빈/비활성 목록, 색상 점수 보류, 연속 확인·가림/오류/TTL·조건별 복구·새 대상이 포함된다. 실제 사건 목록/상세에서 긴급 빨간 경보·원본/crop·검토 양식 표시를 확인했다. 390x844 모바일/데스크톱 가로 넘침 없음, 콘솔 오류 0. 전화·Discord·웹 푸시·원격 Mac/알림음 실제 출력은 이번 검증에 포함하지 않았다.
 - 운영 보존: 반영 직전 새 두 사람 실행 run_378b0db724a0474d가 LOADING에 들어와 서비스 재시작과 겹쳤다. STOPPED 기록을 삭제하지 않고 사용자에게 알린 뒤 같은 source/policy/Large로 run_32b052d54db349ca를 새로 실행했다. 본선 경보 확인 자료·사진·DB·스크린샷은 .data의 Git 제외 상태이며 영상/등록 목록/이전 결과를 변경하지 않았다.
 - 한계: 색상은 조명·가림·흐림에 민감하고 색상 일치는 제품 일치가 아니다. 0.03 외형 차이는 현장 검증된 분류 임계값이 아니며 흰색 유사 제품/미보유 제품/참고 사진 편향에서 오탐·미탐 가능성이 남는다. 모든 미등록 제품을 걸러냈거나 새 모델을 학습했다고 주장하지 않는다. 사진 4회+실제 영상 26회 총 30회의 새 API 확인이며 반복 벤치마크는 하지 않았다. 사용자 별도 PPE top-1 작업과 발표/라이선스 변경은 이 개선과 분리해 보존한다.
+
+## SigLIP2 vs Decisions 제품 비교 및 속도 실측 (2026-10-09)
+
+- 요청: 미해당 선택을 포함한 Decisions 제품 비교 가능성을 실제 사진으로 우선 시험하고 속도를 측정한다. 운영 모델 교체나 새 대규모 검증으로 확대하지 않았다.
+- 변경: scripts/compare_product_decisions.py에 고정 private manifest, R1/R2 참조 사진, none/uncertain/no_coverall, 입력 해시/원응답/점수/토큰/인코딩/왕복/총시간, 시드 고정 순서와 1~3회 제한을 추가했다. 기존 parse_answers의 제품 margin 0.2와 PPE top1을 그대로 사용한다. 운영 모듈/DB/서비스/경보/UI는 변경하지 않았다.
+- 방법: 참조 P11 3장/P04 2장, 같은 query crop 10개씩 2회; SigLIP은 저장 reference embedding과 새 query 추론, Decisions는 매 요청 실제 참고 사진과 query 전송. SigLIP의 보관 P12 대조 결과도 별도 기록한다. 원본/기존 입력을 재사용했지만 과거 예측을 답으로 재생하지 않았다. 회색/흰색 자기 사진 대조 2개는 독립 성능 근거에서 제외하며 회색 사람 검출 실패가 해결됐다는 뜻이 아니다.
+- 실제 실행: 주 시험 2026-10-09 13:25:27~13:25:43 KST, RTX 3090, 실행 시작 전 관제 active=null. SigLIP 20회 + Luna 32회(PPE baseline 6, combined 6, 제품 단독 20), 후속 실패 진단 Luna 2회. 34회 모두 HTTP 200/파싱 오류 0이며 정확도 100%라는 뜻이 아니다. 모델 초기 load 935.2ms, 첫 추론 297.3ms는 warm 시간과 분리했다.
+- 시간: warm SigLIP 중앙값 16.5ms(15.4~20.6), 제품 Decisions 415.5ms(331.0~694.5), PPE+색상 baseline 396.9ms(310.3~564.7), combined 428.3ms(412.2~509.3). 같은 입력/회차별 combined-baseline 추가 지연 중앙값 56.2ms, 평균 47.5ms(6쌍). 네트워크 왕복이지 서버 순수 추론 시간이 아니다. combined 입력 토큰은 baseline 대비 1,386~1,512 증가했다.
+- 관찰: 자기 사진 2개는 해당 후보, 노란 AlphaTec/ChemMax·흰 Tyvek I052·위장무늬 4개는 Decisions none을 각 2회 선택했다. 실제 V08 착용자 2시점과 제품 미확인 보조자는 uncertain. 이는 margin 거부가 아니라 원응답의 uncertain 1위다. 검은 셔츠 탈의 crop은 no_coverall을 놓치고 회색 R2를 두 번 선택했다. SigLIP은 노란 두 제품도 활성 P11 1위로 내므로 순위만으로 일치를 승인할 수 없다. 흰 Tyvek은 P12 대조 차이 +0.031912가 재현됐다.
+- 실패 진단: 같은 검은 셔츠에 사람 전체/부위 맥락을 추가한 API 2회도 실패를 해소하지 못했다. 기존 baseline은 torso/left_arm uncovered, combined는 둘 다 covered와 제품 R2였다(652.4ms vs 779.6ms). 주 시험에서도 V08 전면형 방독면이 baseline uncertain에서 combined covered로 바뀌었다. 원인이 참고 사진의 대상 혼동인지 질문/맥락 간 영향인지 이번 소수 시험만으로 확정하지 않지만, 같은 요청 통합의 부위 판정 퇴행은 운영 보류 근거다.
+- 결정/잔여 문제: 독립 PPE+색상 관찰과 SigLIP을 유지한다. 제품 전용 Decisions의 미해당 거부는 후속 후보지만 낮은 해상도 흰색 구분/탈의/도움 주는 사람 혼입에서 검증이 필요하다. 제품 일치와 PPE 착용을 독립 유지하고, 미해당 HIGH 연결은 기존 승인 규칙을 보존한다. 이번 실험 옵션은 아직 운영 화면 선택지가 아니다.
+- 확인/보존: 스크립트 py_compile 및 git diff --check 통과. 반복 속도 측정 외 전체 테스트/영상 재생/서비스 재시작은 하지 않았다. .data/product-comparison/manifest.json, run-1/results.jsonl, run-1/summary.json 및 context-diagnostic.json에 private 근거를 보관한다. public 보고서는 docs/PRODUCT_COMPARISON_PROBE.md이며 키/사진/개인 근거는 커밋에서 제외한다. 동시 발표/라이선스/감사 문서 변경은 이 커밋과 분리한다.
