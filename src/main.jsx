@@ -11,6 +11,7 @@ import {SiteCatalog,siteReferences} from './siteCatalog';
 import {observationLabel, WEARING_LABELS} from './wearingStatus';
 import {VideoStatus} from './videoStatus.jsx';
 import './demoShowcase.css';
+import {PhoneAlertsView, ContactRouting, PhoneCallHistory, DemoPhoneStatus} from './phoneAlerts';
 
 const LABEL = {
   RUNNING: '분석 중', WAITING: '대기', LOADING: '모델 준비 중', PAUSED: '일시정지', STOPPED: '중지',
@@ -25,7 +26,8 @@ const LABEL = {
 const PARTS = {torso: '몸통', left_arm: '왼팔', right_arm: '오른팔', left_leg: '왼다리', right_leg: '오른다리', hood: '후드', closure: '여밈', respirator: '전면형 방독면'};
 const NAV = [{id:'monitor', title:'영상 관제', icon:Radio}, {id:'sources', title:'시연 영상', icon:FileVideo},
   {id:'events', title:'사건 검토', icon:Bell}, {id:'policies', title:'작업 기준', icon:SlidersHorizontal},
-  {id:'references', title:'등록 사진', icon:Layers3}, {id:'runs', title:'실행 이력', icon:History}];
+  {id:'references', title:'등록 사진', icon:Layers3}, {id:'runs', title:'실행 이력', icon:History},
+  {id:'phone', title:'전화 알림', icon:Bell}];
 const activeStatus = (value) => ['RUNNING','PAUSED','LOADING'].includes(value);
 const timecode = (value=0) => `${Math.floor(value/60).toString().padStart(2,'0')}:${Math.floor(value%60).toString().padStart(2,'0')}`;
 const date = (value) => value ? new Date(value).toLocaleString('ko-KR', {hour12:false, month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}) : '-';
@@ -164,6 +166,7 @@ function App(){
           {page==='sources' && <SourcesView sources={boot.sources} choose={chooseSource} run={run} connected={connected} busy={busy} control={control}
             onStart={id=>startSource(id,'sources')} policies={boot.policies} policyId={policyId} setPolicyId={setPolicyId} size={size} setSize={setSize}/>}
           {page==='events' && <EventsView events={events} open={openEvent}/>}
+          {page==='phone' && <PhoneAlertsView/>}
           {page==='policies' && <PoliciesView policies={boot.policies} edit={(value)=>{setEventDetail(value);setModal('policy-edit');}}/>}
           {page==='references' && <><SiteCatalog references={boot.references} onChange={rows=>setBoot(old=>({...old,site_products:rows}))}/><ReferenceSelection references={boot.references} siteProducts={boot.site_products}/></>}
           {page==='runs' && <RunsView runs={runs} showEvents={(id)=>{setPage('events');setToast(`실행 ${id}의 사건은 목록에서 확인할 수 있습니다.`);}}/>}
@@ -285,6 +288,7 @@ function DemoVideo({source,index,run,connected,busy,control,onStart,canStart,cho
         <button className="button primary" disabled={!canStart||busy} onClick={onStart}>{current?.status==='LOADING'?<LoaderCircle size={17} className="spin"/>:<Play size={17}/>}시연 시작</button>
       </div>
     </header>
+    {source.name==='receiver_valve_centered'&&<DemoPhoneStatus/>}
     <VideoPanel source={source} run={current} connected={connected} control={control} busy={busy} onStart={onStart} canStart={canStart} onPresentedFrame={setPresented} presented={presented}/>
   </>;
 }
@@ -315,6 +319,7 @@ function EventModal({detail,onClose,submit,busy}){
     <div className="evidence-layout"><div className="evidence-images"><figure><img src={observation.images.frame} alt="관측 시점의 원본 맥락"/><figcaption>관측 원본 · {timecode(observation.source_time_s)} · 프레임 {observation.source_frame}</figcaption></figure><div className="crop-grid">{Object.entries(observation.images).filter(([name])=>name!=='frame').map(([name,url])=><figure key={name}><img src={url} alt={`${name} 근거 crop`}/><figcaption>{{person:'사람 전체',torso:'몸통',legs:'다리',head:'머리·안면',release:'누출'}[name]||name}</figcaption></figure>)}</div></div>
       <div className="review-panel"><h3>관찰 정보</h3><dl><dt>입력 영상</dt><dd>{event.source_name}</dd><dt>작업 기준</dt><dd>{run.policy.name} · v{event.policy_revision}</dd><dt>관찰 결과</dt><dd>{LABEL[result.wearing]||'누출'}</dd><dt>관측 시각</dt><dd>{date(observation.created_at)}</dd><dt>API 응답</dt><dd>{result.latency_ms!=null?`${(result.latency_ms/1000).toFixed(3)}초`:'로컬 분석'}</dd></dl>
       <ProductCheck check={result.product_check}/>
+      {['VIOLATION_SUSPECTED','PRODUCT_MISMATCH_SUSPECTED','RELEASE_SUSPECTED'].includes(event.kind)?<ContactRouting key={event.id} eventId={event.id} eventCreatedAt={event.created_at} reviewed={reviews.length>0}/>:<><h3>전화 알림 · 수신 확인</h3><PhoneCallHistory calls={detail.phone_calls}/></>}
       <h3>담당자 검토</h3><form onSubmit={e=>{e.preventDefault();const form=new FormData(e.currentTarget);submit({reviewer:form.get('reviewer'),action,note:form.get('note')});}}><div className="review-actions">{[['ACKNOWLEDGED','확인',CheckCircle2],['DISMISSED','반려',XCircle],['DEFERRED','보류',Clock3]].map(([id,label,Icon])=><button type="button" key={id} className={action===id?'active':''} onClick={()=>setAction(id)}><Icon size={16}/>{label}</button>)}</div><Field label="담당자"><input name="reviewer" required defaultValue={reviews[0]?.reviewer||''}/></Field><Field label="검토 의견"><textarea name="note" required rows="3" maxLength={2000}/></Field><button className="button primary full" disabled={busy}><Check size={16}/>검토 기록 저장</button></form>
       <div className="review-history"><h3>검토 이력 <span>{reviews.length}</span></h3>{reviews.length?reviews.map(review=><div className="review-record" key={review.id}><div><Badge value={review.action}/><strong>{review.reviewer}</strong></div><p>{review.note}</p><small>{date(review.created_at)}</small></div>):<p className="subtle">아직 검토 기록이 없습니다.</p>}</div></div></div>
       <details className="raw-result"><summary>원시 관찰 · 요청 추적 정보</summary><pre>{JSON.stringify({observation,supporting_observations:detail.supporting_observations},null,2)}</pre></details>

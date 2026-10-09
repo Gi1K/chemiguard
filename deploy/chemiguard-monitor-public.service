@@ -1,7 +1,7 @@
 [Unit]
 Description=ChemiGuard hackathon public HTTPS demo through Nginx
 After=network-online.target chemiguard-monitor.service
-Requires=chemiguard-monitor.service
+Wants=chemiguard-monitor.service
 
 [Service]
 Type=simple

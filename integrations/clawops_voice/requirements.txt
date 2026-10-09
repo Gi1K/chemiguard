@@ -1,0 +1,3 @@
+# Optional phone integration; all AI inference is through OpenAI.
+clawops[agent,openai]==0.38.0
+openai==3.26.1

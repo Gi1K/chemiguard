@@ -55,3 +55,8 @@ Quick Tunnel의 임의 URL은 터널 재시작 시 바뀔 수 있다. 서버와 
 
 구성 근거: [Nginx proxy](https://nginx.org/en/docs/http/ngx_http_proxy_module.html),
 [Cloudflare Quick Tunnels](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/).
+# 통합 시연 전화
+
+마지막 receiver 영상은 사용자 승인으로 매 시연 자동 통합 전화를 지원한다. 로컬 `/api/phone/demo`의 enable/disable로 켜고 끄며 활성화 후 공개 페이지에서 새 시연을 시작해도 미착용·누출 두 사건의 실제 Decisions 확인 후 등록번호에 한 통을 안내한다. 일반 자동 전화는 계속 꺼져 있다. 공개 프록시는 `test`, `calls`, `demo` 직접 발신/설정 경로를 차단하고 공개 요청 표시 헤더를 덮어쓴다. 화면/읽기용 `/api/phone`은 유지한다. 페이지 열기·새로고침·과거 기록·재시작 복구는 발신하지 않는다. 실행마다 실제 전화 비용이 발생할 수 있으며 번호 공통 50초 간격과 실행별 최대 한 통을 적용한다.
+
+공개 서비스의 관제 의존성은 Wants/After다. 관제 앱 재시작 중 터널 자체는 유지하여 공개 URL 변경을 피한다. 관제 중지 중에는 프록시가 일시적으로 502를 반환할 수 있다.

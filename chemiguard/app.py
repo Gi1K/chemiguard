@@ -5,9 +5,11 @@ import shutil
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Literal
+from uuid import UUID
+from urllib.parse import urlsplit
 
 import torch
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from PIL import Image, ImageOps, UnidentifiedImageError
@@ -20,6 +22,37 @@ from .sources import VIDEO_EXTENSIONS, sources
 from .store import now, store, uid
 from .vision import identity
 from .products import current_site_products, product_profile, site_product_slot
+from .phone_alerts import PhoneAlerts, public_call
+from .contact_routing import ContactRole, public_decision
+
+
+class PhoneTestInput(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    request_id: UUID
+    confirm: Literal[True]
+    role: ContactRole = 'site_safety_manager'
+
+
+class ContactPlanInput(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    role: ContactRole | None = None
+    reason: str = Field(default='', max_length=500)
+    demo_replay: bool = False
+
+
+class PhonePlanInput(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    plan_id: str = Field(min_length=1, max_length=100)
+    revision: int = Field(ge=1)
+    request_id: UUID
+    confirm: Literal[True]
+
+
+class PhoneDemoInput(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    request_id: UUID
+    confirm: Literal[True]
+    action: Literal['arm', 'cancel', 'enable', 'disable'] = 'arm'
 
 
 class PolicyInput(BaseModel):
@@ -116,10 +149,18 @@ async def lifespan(app):
         store.put('policy', PolicyInput(**fields).model_dump() |
                   {'revision': latest['revision']+1, 'reference_revision': store.revision(),
                    'supersedes': latest['id']})
-    yield
-    if monitor.busy():
-        monitor.active.control('stop')
-        monitor.active.thread.join(timeout=10)
+    phone_alerts = PhoneAlerts(store) if app is not None else None
+    if phone_alerts is not None:
+        app.state.phone_alerts = phone_alerts
+        await phone_alerts.start()
+    try:
+        yield
+    finally:
+        if phone_alerts is not None:
+            await phone_alerts.stop()
+        if monitor.busy():
+            monitor.active.control('stop')
+            monitor.active.thread.join(timeout=10)
 
 
 class TrackingCompressionMiddleware:
@@ -303,7 +344,9 @@ def start_run(payload: RunInput):
         raise HTTPException(404, '정책을 찾을 수 없습니다.')
     if policy['reference_revision'] != store.revision():
         raise HTTPException(409, '등록 사진이 변경되었습니다. 정책을 새 버전으로 저장해 주세요.')
-    return monitor.start(payload.source_id, policy, payload.person_size)
+    result = monitor.start(payload.source_id, policy, payload.person_size)
+    app.state.phone_alerts.demo.on_run(result['id'])
+    return result
 
 
 @app.get('/api/runs/active')
@@ -405,6 +448,61 @@ def list_events(run_id: str | None = None):
     return rows
 
 
+@app.get('/api/phone')
+def phone_status():
+    return app.state.phone_alerts.status()
+
+
+def require_phone_origin(request):
+    # Reject cross-site browser requests. The app remains bound to loopback.
+    origin = request.headers.get('origin')
+    if request.headers.get('sec-fetch-site') == 'cross-site' or (origin and urlsplit(origin).netloc != request.headers.get('host')):
+        raise HTTPException(403, '관제 화면에서만 시연 전화를 요청해 주세요.')
+
+
+@app.post('/api/phone/test')
+async def phone_test(payload: PhoneTestInput, request: Request):
+    require_phone_origin(request)
+    return app.state.phone_alerts.enqueue(request_id=payload.request_id, role=payload.role)
+
+
+@app.post('/api/phone/demo')
+async def phone_demo(payload: PhoneDemoInput, request: Request):
+    require_phone_origin(request)
+    # The public proxy overwrites this header; a public caller cannot opt into real calls.
+    if request.headers.get('x-chemiguard-public') == '1':
+        raise HTTPException(403, '전화 예약은 로컬 관제 화면에서만 가능합니다.')
+    demo = app.state.phone_alerts.demo
+    if payload.action in {'enable', 'disable'}:
+        return demo.configure(payload.action == 'enable')
+    return demo.cancel() if payload.action == 'cancel' else demo.arm(payload.request_id)
+
+
+@app.get('/api/events/{event_id}/contact')
+def contact_status(event_id: str):
+    if not store.get('event', event_id):
+        raise HTTPException(404, '사건을 찾을 수 없습니다.')
+    decisions = store.related('contact_decision', 'event_id', event_id)
+    plans = store.related('notification_plan', 'event_id', event_id)
+    return {'decision': public_decision(decisions[0]) if decisions else None,
+            'plan': max(plans, key=lambda p: p['revision'], default=None),
+            'plans': plans,
+            'calls': app.state.phone_alerts.calls_for_event(event_id)}
+
+
+@app.post('/api/events/{event_id}/contact')
+async def contact_prepare(event_id: str, payload: ContactPlanInput, request: Request):
+    require_phone_origin(request)
+    await app.state.phone_alerts.router.prepare(event_id, **payload.model_dump())
+    return contact_status(event_id)
+
+
+@app.post('/api/phone/calls')
+async def phone_call(payload: PhonePlanInput, request: Request):
+    require_phone_origin(request)
+    return app.state.phone_alerts.enqueue_plan(payload.plan_id, payload.revision, payload.request_id)
+
+
 @app.get('/api/events/{event_id}')
 def event_detail(event_id: str):
     event = store.get('event', event_id)
@@ -413,6 +511,7 @@ def event_detail(event_id: str):
     return {'event': event, 'observation': store.get('observation', event['observation_id']),
             'supporting_observations': [store.get('observation', key) for key in event.get('supporting_observation_ids', [])],
             'reviews': store.related('review', 'event_id', event_id),
+            'phone_calls': app.state.phone_alerts.calls_for_event(event_id),
             'run': store.get('run', event['run_id'])}
 
 
