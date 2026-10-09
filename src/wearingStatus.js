@@ -6,6 +6,7 @@ export const WEARING_LABELS = {
 const PART_NAMES = {torso:'몸통',left_arm:'왼팔',right_arm:'오른팔',left_leg:'왼다리',right_leg:'오른다리',hood:'후드',closure:'여밈',respirator:'전면형 방독면'};
 
 export function observationLabel(track) {
+  if(Object.keys(track.product_alerts||{}).length) return '등록 보호복 불일치 의심';
   if(track.active_violations?.length) return '미해제 위반 재확인';
   if(track.wearing==='NOT_WORN') {
     const missing=Object.entries(track.parts||{}).filter(([,state])=>state==='uncovered'||state==='open');
@@ -15,6 +16,6 @@ export function observationLabel(track) {
 }
 
 export function overlayLabel(track) {
-  if(!track.active_violations?.length&&['WORN','VISIBLE_WORN'].includes(track.wearing)) return '착용';
+  if(!track.active_violations?.length&&!Object.keys(track.product_alerts||{}).length&&['WORN','VISIBLE_WORN'].includes(track.wearing)) return '착용';
   return observationLabel(track);
 }

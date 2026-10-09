@@ -46,7 +46,7 @@ VISIBLE_RULES = (
 )
 
 
-def questions_for(policy):
+def questions_for(policy, product_check=False):
     visible = policy.get('wearing_assessment') == 'visible_regions'
     unknown_states = ('not_visible', 'uncertain') if visible else ('unobservable',)
     hidden_instruction = ('If hidden by viewpoint or occlusion choose not_visible; if visible but ambiguous choose uncertain.'
@@ -98,6 +98,18 @@ def questions_for(policy):
                               + 'Observe external wearing only, not cartridge suitability, certification, fit, '
                               'seal, breathing-air supply or chemical protection.'),
                           'choices': [{'value': state} for state in ('covered', 'uncovered', *unknown_states)]})
+    if product_check:
+        questions.append({'type': 'choice', 'name': 'garment_color', 'instructions': (
+            'What is the dominant fabric color of the protective coverall WORN by the central target? '
+            'Ignore skin, gloves, respirator, boots, logos, seams, helpers and background. '
+            'Use the visible torso and limbs; white fabric in local shadows remains white. '
+            'Use gray only if the material itself is distinguishably gray. '
+            'Choose no_coverall if no protective coverall is visibly worn, not_visible if the fabric is hidden, '
+            'other includes clearly multicolored/patterned fabric (such as camouflage) or an unlisted color; '
+            'uncertain is for ambiguous lighting, blur or insufficient pixels. '
+            'Do not infer the color from a brand, product model or expected registration.'),
+            'choices': [{'value': value} for value in ('white', 'gray', 'yellow', 'orange', 'green',
+                        'blue', 'black', 'other', 'no_coverall', 'not_visible', 'uncertain')]})
     return questions
 
 
@@ -139,7 +151,7 @@ def parse_answers(data, questions):
     return parsed, scores
 
 
-def observe(images, policy):
+def observe(images, policy, product_check=False):
     start = time.monotonic()
     visible = policy.get('wearing_assessment') == 'visible_regions'
     respirator_required = policy.get('respirator_required', False)
@@ -152,10 +164,12 @@ def observe(images, policy):
               'closure_assessment': policy.get('closure_assessment', 'visible_components')}
     result.update(input_version=INPUT_VERSION, image_detail=IMAGE_DETAIL, image_inputs=[], timings_ms={},
                   ppe_selection_version=PPE_SELECTION_VERSION)
+    if product_check:
+        result.update(prompt_version='ppe-observation-v6-color', garment_color='uncertain')
     key = os.getenv('OPENAI_API_KEY', '').strip()
     if not key:
         return result | {'error': 'OPENAI_API_KEY 미설정', 'latency_ms': 0}
-    questions = questions_for(policy)
+    questions = questions_for(policy, product_check)
     content = [{'type': 'input_text', 'text': VISIBLE_RULES if visible else RULES}]
     for name in ('person', 'torso', 'legs', 'head'):
         if name not in images or (name == 'head' and not (policy['hood_required'] or respirator_required)):
@@ -190,6 +204,8 @@ def observe(images, policy):
             result['raw_result'] = data
             result['usage'] = data.get('usage')
             parts, scores = parse_answers(data, questions)
+            if product_check:
+                result['garment_color'] = parts.pop('garment_color')
             result.update(summarize_parts(parts, policy), parts=parts, choice_scores=scores,
                           processing_state='RUNNING', error=None)
         result['timings_ms']['response_processing'] = round((time.monotonic()-parse_start)*1000, 1)

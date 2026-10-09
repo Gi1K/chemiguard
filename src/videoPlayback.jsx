@@ -106,7 +106,7 @@ export function TrackingOverlay({video,run,connected,sourceKey,onPresentedFrame}
       for(const track of frame.tracks){
         const fresh=track.source_time_s!=null&&position-track.source_time_s<=5;
         const wearing=fresh?track.wearing:'UNKNOWN';
-        const alarm=track.active_violations?.length>0;
+        const alarm=track.active_violations?.length>0||Object.keys(track.product_alerts||{}).length>0;
         box(track.bbox,wearing==='NOT_WORN'||alarm?'#c44748':['WORN','VISIBLE_WORN'].includes(wearing)?'#168063':'#a97419',
           `#${track.track_id} ${overlayLabel({...track,wearing})}`);
       }

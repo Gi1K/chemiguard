@@ -352,6 +352,13 @@ def identity_history(run_id: str):
         if row.get('candidates'):
             latest[row['track_token']] = {'track_id': row['track_id'], 'track_token': row['track_token'],
                                           'identity': row, 'saved_comparison': True}
+    for observation in sorted(store.related('observation', 'run_id', run_id), key=lambda row: row.get('source_time_s', 0)):
+        token = observation.get('track_token')
+        if token in latest and observation.get('applied') and observation['result'].get('product_check'):
+            check = observation['result']['product_check']
+            latest[token].update(product_check=check, product_alerts=check.get('active_alerts', {}))
+            if check.get('identity', {}).get('candidates'):
+                latest[token]['identity'] = check['identity']
     return list(latest.values())[-6:]
 
 

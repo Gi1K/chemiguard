@@ -1,10 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {ExternalLink, ScanSearch, Shirt} from 'lucide-react';
+import {AlertTriangle, ExternalLink, ScanSearch, Shirt} from 'lucide-react';
 import './productComparison.css';
 import {COLORS,siteReferences} from './siteCatalog';
 
 const score = value => Number.isFinite(value) ? value.toFixed(3) : '-';
 const stamp = value => `${Number(value || 0).toFixed(2)}s`;
+
+export function ProductCheck({check={},alerts=check.active_alerts||{}}) {
+  const alarm=Object.keys(alerts).length>0;
+  const color=COLORS[check.observed_color]?.[0]||({no_coverall:'보호복 미관찰',not_visible:'안 보임',uncertain:'판독 불가'}[check.observed_color])||'관찰 대기';
+  const title=alarm?'등록 보호복 불일치 의심':check.state==='MISMATCH'?'불일치 재확인 중':check.state==='STALE'?'제품 관측 만료':'등록 제품 미확정';
+  if(!check.version&&!alarm&&check.state!=='STALE') return null;
+  return <div className={`product-check ${alarm?'product-alarm':''}`} role={alarm?'alert':undefined}>
+    <strong>{alarm&&<AlertTriangle size={16}/>} {title}{alarm&&<span>긴급</span>}</strong>
+    <p>{check.state==='STALE'?'최신 관측 없음':`관찰 색상 ${color} · 등록 ${(check.registered_colors||[]).map(value=>COLORS[value]?.[0]||value).join(' / ')||'없음'}`}</p>
+    {check.source_time_s!=null&&<p>제품 관측 {stamp(check.source_time_s)}</p>}
+    <p>{alarm?Object.values(alerts).join(' · '):check.reason}</p>
+  </div>;
+}
 
 function ProductFacts({product}) {
   if (!product) return <p className="product-warning">제품 자료 미등록 · 성능 미확인</p>;
@@ -30,6 +43,7 @@ function Comparison({person}) {
   const candidate=candidates.find(row=>row.product_id===selection) || candidates[0];
   return <article className="product-comparison">
     <header><h3>사람 #{person.track_id}{person.saved_comparison&&<small>저장된 관측 · 실시간 아님</small>}</h3><span className="product-warning">{matching.ambiguous?'계열 구분 보류':'외형 후보 · 모델 미확정'}</span></header>
+    <ProductCheck check={person.product_check} alerts={person.product_alerts}/>
     {!candidate?<p className="product-empty">{matching.reason || '몸통 사진 비교 대기'}</p>:<>
       <div className="product-visuals">
         <figure><img src={matching.query_url} alt={`사람 ${person.track_id} 비교 입력 몸통`}/><figcaption>관측 {stamp(matching.source_time_s)}</figcaption></figure>
@@ -45,6 +59,7 @@ function Comparison({person}) {
       </div>
       <ol className="product-ranking">{candidates.map(row=><li key={row.product_id}><span>{row.name}</span><b>{score(row.score)}</b></li>)}</ol>
       <div className="product-score-note">1·2위 차이 {score(matching.gap)} · 확률/정확도 아님 · 비교 {matching.product_count}종</div>
+      {matching.outside_candidate&&<p className="product-score-note">등록 외 대조 · {matching.outside_candidate.name} {score(matching.outside_candidate.score)} · 등록 1위 대비 {score(matching.outside_gap)}</p>}
       <div className="product-site-use">{candidate.site_assignments?.length?candidate.site_assignments.map(row=><p key={row.id}><i style={{background:COLORS[row.color]?.[1]}}/>{row.registration_mode==='color'?`${COLORS[row.color]?.[0]} 대표 · 용도·형식 미지정`:`현장 지정 · ${row.purpose_label} · ${row.protection_type} · ${COLORS[row.color]?.[0]}`}</p>):<p>현장 용도 미등록 · 참고 제품 사진 비교</p>}</div>
       <ProductFacts product={candidate.product}/>
     </>}

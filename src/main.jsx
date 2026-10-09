@@ -6,7 +6,7 @@ import { Activity, AlertTriangle, ArrowDownToLine, ArrowLeft, Bell, Camera, Chec
   Video, Volume2, VolumeX, X, XCircle, Eye, ExternalLink } from 'lucide-react';
 import './style.css';
 import {TrackingOverlay, useNativePlayback} from './videoPlayback';
-import {ProductComparisons} from './productComparison';
+import {ProductCheck,ProductComparisons} from './productComparison';
 import {SiteCatalog,siteReferences} from './siteCatalog';
 import {observationLabel, WEARING_LABELS} from './wearingStatus';
 
@@ -15,6 +15,7 @@ const LABEL = {
   FINISHED: '분석 완료', INTERRUPTED: '연결 중단', ERROR: '오류', STALE: '관측 만료', DISABLED: '비활성',
   ...WEARING_LABELS,
   VIOLATION_SUSPECTED: '착용 위반 의심', RELEASE_SUSPECTED: '연무·분출 의심', REVIEW_REQUIRED: '확인 필요',
+  PRODUCT_MISMATCH_SUSPECTED: '등록 보호복 불일치 의심',
   OPEN: '미검토', ACKNOWLEDGED: '확인', DISMISSED: '반려', DEFERRED: '보류',
   covered: '착용', uncovered: '미착용', unobservable: '확인 불가', closed: '닫힘', open: '열림',
   not_visible: '안 보임', uncertain: '판독 불가',
@@ -26,7 +27,7 @@ const NAV = [{id:'monitor', title:'영상 관제', icon:Radio}, {id:'sources', t
 const activeStatus = (value) => ['RUNNING','PAUSED','LOADING'].includes(value);
 const timecode = (value=0) => `${Math.floor(value/60).toString().padStart(2,'0')}:${Math.floor(value%60).toString().padStart(2,'0')}`;
 const date = (value) => value ? new Date(value).toLocaleString('ko-KR', {hour12:false, month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}) : '-';
-const tone = value => ['NOT_WORN','VIOLATION_SUSPECTED','ERROR','uncovered','open'].includes(value) ? 'red' : ['RELEASE_SUSPECTED','REVIEW_REQUIRED','UNKNOWN','STALE','DEFERRED','unobservable','uncertain'].includes(value) ? 'amber' : ['WORN','VISIBLE_WORN','RUNNING','covered','closed','ACKNOWLEDGED'].includes(value) ? 'green' : 'muted';
+const tone = value => ['NOT_WORN','VIOLATION_SUSPECTED','PRODUCT_MISMATCH_SUSPECTED','ERROR','uncovered','open'].includes(value) ? 'red' : ['RELEASE_SUSPECTED','REVIEW_REQUIRED','UNKNOWN','STALE','DEFERRED','unobservable','uncertain'].includes(value) ? 'amber' : ['WORN','VISIBLE_WORN','RUNNING','covered','closed','ACKNOWLEDGED'].includes(value) ? 'green' : 'muted';
 
 async function api(path, options={}) {
   const result = await fetch(`/api${path}`, { ...options, headers: options.body instanceof FormData ? {} : {'Content-Type':'application/json', ...options.headers} });
@@ -205,12 +206,13 @@ function VideoPanel({source,run,connected,control,busy,onStart,canStart,onPresen
 function Box({box,width,height,color,label}){return <div className={`bounding-box ${color}`} style={{left:`${box[0]/width*100}%`,top:`${box[1]/height*100}%`,width:`${(box[2]-box[0])/width*100}%`,height:`${(box[3]-box[1])/height*100}%`}}><span>{label}</span></div>;}
 function Person({person,fresh}){
   const wearing=fresh?person.wearing:'UNKNOWN';
-  const alarm=person.active_violations?.length>0;
+  const alarm=person.active_violations?.length>0||Object.keys(person.product_alerts||{}).length>0;
   return <article className="person"><div className="person-head"><span className="person-id"><UserRound size={16}/>PERSON <b>{String(person.track_id).padStart(2,'0')}</b></span><Badge value={alarm?'VIOLATION_SUSPECTED':wearing}>{observationLabel({...person,wearing})}</Badge></div>
     <div className="parts">{Object.entries(PARTS).filter(([name])=>!['hood','closure','respirator'].includes(name)||name in person.parts).map(([name,label])=><div key={name}><span>{label}</span><b className={tone(fresh?person.parts[name]:'UNKNOWN')}>{fresh?(LABEL[person.parts[name]]||'-'):'-'}</b></div>)}</div>
     <div className="person-reason">{fresh?person.reason:'유효한 최신 관측 없음'}</div>
     {fresh&&person.wearing==='VISIBLE_WORN'&&<div className="person-reason">전체 필수 부위 · 미확인 항목 있음</div>}
     {person.active_violations?.length>0&&<div className="person-reason red">미해제 경보 · {person.active_violations.join(' · ')}</div>}
+    <ProductCheck check={fresh?person.product_check:{state:'STALE'}} alerts={person.product_alerts}/>
     <div className="person-meta"><Badge value={fresh?person.processing_state:'STALE'}/><span>{person.pending?'관찰 요청 중':person.confirmed?'연속 2회 관찰':'합의 대기'}</span>{person.latency_ms!=null&&<span>{(person.latency_ms/1000).toFixed(2)}s</span>}</div>
     <div className="identity-line"><span>등록 제품 외형</span>{person.identity.candidates?.length?<><strong>{person.identity.candidates[0].name}</strong><small>후보 · 미확정</small></>:<small>{person.identity.reason||'참고 사진 없음'}</small>}</div>
   </article>;
@@ -260,6 +262,7 @@ function EventModal({detail,onClose,submit,busy}){
   return <Modal title="사건 근거 · 담당자 검토" onClose={onClose} wide><div className="event-summary"><Badge value={event.kind}/><strong>{event.reason}</strong><span>{timecode(event.source_time_s)} · {event.track_id!=null?`사람 #${event.track_id}`:'장면 전체'}</span><a className="icon-button" title="사건 JSON 다운로드" aria-label="사건 JSON 다운로드" href={`/api/events/${event.id}/export`}><ArrowDownToLine size={18}/></a></div>
     <div className="evidence-layout"><div className="evidence-images"><figure><img src={observation.images.frame} alt="관측 시점의 원본 맥락"/><figcaption>관측 원본 · {timecode(observation.source_time_s)} · 프레임 {observation.source_frame}</figcaption></figure><div className="crop-grid">{Object.entries(observation.images).filter(([name])=>name!=='frame').map(([name,url])=><figure key={name}><img src={url} alt={`${name} 근거 crop`}/><figcaption>{{person:'사람 전체',torso:'몸통',legs:'다리',head:'머리·안면',release:'장면 후보'}[name]||name}</figcaption></figure>)}</div></div>
       <div className="review-panel"><h3>관찰 정보</h3><dl><dt>입력 영상</dt><dd>{event.source_name}</dd><dt>작업 기준</dt><dd>{run.policy.name} · v{event.policy_revision}</dd><dt>관찰 결과</dt><dd>{LABEL[result.wearing]||'가시적 장면 후보'}</dd><dt>관측 시각</dt><dd>{date(observation.created_at)}</dd><dt>API 응답</dt><dd>{result.latency_ms!=null?`${(result.latency_ms/1000).toFixed(3)}초`:'로컬 분석'}</dd></dl>
+      <ProductCheck check={result.product_check}/>
       <h3>담당자 검토</h3><form onSubmit={e=>{e.preventDefault();const form=new FormData(e.currentTarget);submit({reviewer:form.get('reviewer'),action,note:form.get('note')});}}><div className="review-actions">{[['ACKNOWLEDGED','확인',CheckCircle2],['DISMISSED','반려',XCircle],['DEFERRED','보류',Clock3]].map(([id,label,Icon])=><button type="button" key={id} className={action===id?'active':''} onClick={()=>setAction(id)}><Icon size={16}/>{label}</button>)}</div><Field label="담당자"><input name="reviewer" required defaultValue={reviews[0]?.reviewer||''}/></Field><Field label="검토 의견"><textarea name="note" required rows="3" maxLength={2000}/></Field><button className="button primary full" disabled={busy}><Check size={16}/>검토 기록 저장</button></form>
       <div className="review-history"><h3>검토 이력 <span>{reviews.length}</span></h3>{reviews.length?reviews.map(review=><div className="review-record" key={review.id}><div><Badge value={review.action}/><strong>{review.reviewer}</strong></div><p>{review.note}</p><small>{date(review.created_at)}</small></div>):<p className="subtle">아직 검토 기록이 없습니다.</p>}</div></div></div>
       <details className="raw-result"><summary>원시 관찰 · 요청 추적 정보</summary><pre>{JSON.stringify({observation,supporting_observations:detail.supporting_observations},null,2)}</pre></details>

@@ -20,3 +20,8 @@ test('full-face respirator has a specific missing-equipment label',()=>{
   assert.equal(overlayLabel({wearing:'NOT_WORN',parts:{hood:'covered',respirator:'uncovered'}}),'전면형 방독면 미착용 의심');
   assert.equal(overlayLabel({wearing:'VISIBLE_WORN',active_violations:['필수 전면형 방독면 미착용']}),'미해제 위반 재확인');
 });
+test('product mismatch overrides a wearing label without erasing PPE observations',()=>{
+  const track={wearing:'WORN',product_alerts:{color:'미등록 색상 노랑'}};
+  assert.equal(overlayLabel(track),'등록 보호복 불일치 의심');
+  assert.equal(observationLabel(track),'등록 보호복 불일치 의심');
+});

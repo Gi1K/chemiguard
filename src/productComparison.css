@@ -35,3 +35,4 @@
 .site-colors small{font-size:10px;color:#5f7270}.site-enabled{display:flex;align-items:center;gap:8px;font-size:11px}
 .site-form-footer{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.site-form-footer>span{font-size:10px;color:#718380;flex:1;min-width:180px}
 .product-site-use{padding-top:12px;font-size:11px;color:#5c7470}.product-site-use p{display:flex;gap:7px;align-items:center;flex-wrap:wrap;line-height:1.6}
+.product-check{border-left:3px solid #c99324;padding:9px 12px;margin:10px 0;background:#fff9e9;font-size:12px;overflow-wrap:anywhere}.product-check strong{display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:13px}.product-check p{margin:5px 0 0;line-height:1.5}.product-check.product-alarm{border-color:#c8303d;background:#fff0f1;color:#a31d2b}.product-check strong span{margin-left:auto;font-size:11px}.product-check svg{flex-shrink:0}

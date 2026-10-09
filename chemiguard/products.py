@@ -59,8 +59,6 @@ def rank_references(vector, references, model_hash, site_products=None):
         if (reference.get('reference_kind') != 'product_photo'
                 or reference.get('model_sha256') != model_hash or reference.get('region') != 'torso'):
             continue
-        if site_products and reference['product_id'] not in allowed:
-            continue
         embedding = np.asarray(reference.get('embedding', []), dtype=np.float32)
         if embedding.shape != vector.shape or not np.isfinite(embedding).all():
             continue
@@ -82,6 +80,9 @@ def rank_references(vector, references, model_hash, site_products=None):
                                        for row in assignments if row['product_id'] == product['product_id']]
         candidates.append(product)
     candidates.sort(key=lambda row: row['score'], reverse=True)
+    outside = next((row for row in candidates if row['product_id'] not in allowed), None) if site_products else None
+    if site_products:
+        candidates = [row for row in candidates if row['product_id'] in allowed]
     gap = candidates[0]['score'] - candidates[1]['score'] if len(candidates) > 1 else None
     # Review-only heuristic, never a calibrated model-identification threshold.
     ambiguous = gap is None or gap < 0.03
@@ -89,6 +90,8 @@ def rank_references(vector, references, model_hash, site_products=None):
             'product_count': len(candidates), 'reference_count': sum(row['reference_count'] for row in candidates),
             'gap': gap, 'ambiguous': ambiguous, 'review_gap_threshold': 0.03,
             'score_kind': 'cosine_top2_mean', 'model': 'siglip2-base-patch16-384',
+            'outside_candidate': outside,
+            'outside_gap': outside['score']-candidates[0]['score'] if outside and candidates else None,
             'comparison_scope': 'site_registered' if site_products else 'reference_library',
             'reason': ('계열 구분 보류' if ambiguous else '계열 후보 · 제품 미확정') if candidates else '비교 가능한 제품 사진 없음',
             'suitability': 'NOT_ASSESSED'}

@@ -19,6 +19,7 @@ from .observation import (SCHEDULE, WINDOW_SECONDS, combine_observation, eligibl
 from .store import now, store, uid
 from .vision import Vision, crop, identity, jpeg, observation_image
 from .products import current_site_products
+from .product_alerts import VERSION as PRODUCT_ALERT_VERSION, assess_product, combine_product_check
 
 OBSERVATION_TTL = 5.0
 TRACK_TTL = 1.2
@@ -88,6 +89,8 @@ class Run:
         self.references = [row for row in store.list('reference') if row['revision'] <= policy['reference_revision']]
         self.site_products = copy.deepcopy(current_site_products(store.list('site_product')))
         self.record['site_products'] = self.site_products
+        self.record['product_alert_version'] = PRODUCT_ALERT_VERSION
+        self.record['product_alarm_severity'] = 'HIGH'
         self.thread = threading.Thread(target=self._work, daemon=True, name=self.id)
         self.thread.start()
 
@@ -333,7 +336,8 @@ class Run:
             trigger = request_due(person, captured, person.get('signature')) if person.get('signature') is not None else None
             needs_api = self.policy['coverall_required'] and trigger is not None
             api_available = self.future is None or self.future.done()
-            needs_identity = bool(self.references) and identity_checks < 2 and captured-person['last_identity'] >= 1
+            needs_identity = bool(self.references) and ((needs_api and api_available)
+                             or identity_checks < 2 and captured-person['last_identity'] >= 1)
             if not (needs_api and api_available or needs_identity):
                 continue
             if person['confidence'] < 0.45:
@@ -396,6 +400,7 @@ class Run:
                 envelope['timings_ms'] = {'candidate_preparation': preparation_ms, 'pose_calls': pose_calls,
                                           'evidence_encoding_and_save': round((time.monotonic()-evidence_start)*1000, 1)}
                 envelope.update(track_id=person['track_id'], track_token=person['token'],
+                                identity=copy.deepcopy(matching) if needs_identity else {},
                                 generation=epoch, scene_epoch=scene_epoch, observed_monotonic=selected['captured'],
                                 trigger_reason=trigger, requested_monotonic=time.monotonic(),
                                 selection={'window_s': WINDOW_SECONDS, 'candidate_count': len(person['candidates']),
@@ -422,7 +427,7 @@ class Run:
                     person.update(pending=True, last_requested=captured, last_observed=selected['captured'],
                                   requested_signature=selected['quality']['signature'], trigger_reason=trigger)
                     self.metrics['api_calls'] += 1
-                self.future = self.pool.submit(decisions.observe, body['images'], self.policy)
+                self.future = self.pool.submit(decisions.observe, body['images'], self.policy, bool(self.site_products))
                 self.future.add_done_callback(lambda future, env=envelope: self._answer(future, env))
 
     def _identify(self, body, selected, person, epoch, scene_epoch):
@@ -488,6 +493,12 @@ class Run:
             observation = envelope | {'completed_at': now(), 'completed_monotonic': completed,
                                       'result': result, 'applied': discarded is None, 'discard_reason': discarded}
             if not discarded:
+                product_check = assess_product(result.get('garment_color', 'uncertain'),
+                                                envelope.get('identity', {}), self.site_products, result.get('error'))
+                product_check['source_time_s'] = envelope['source_time_s']
+                product_transition = combine_product_check(track, product_check, envelope['observed_monotonic'], envelope['id'])
+                result['product_check'] = product_check
+                observation['product_transition'] = product_transition
                 transition = combine_observation(track, result, envelope['observed_monotonic'], envelope['id'],
                                                  OBSERVATION_TTL, CONSENSUS_WINDOW)
                 observation['transition'] = transition | {
@@ -511,6 +522,11 @@ class Run:
             track['processing_state'] = result['processing_state']
             track['reason'] = result.get('reason') or result.get('error')
             track['errors'] = track.get('errors', 0)+1 if result.get('error') else 0
+            if product_transition['new_alerts']:
+                self._event('PRODUCT_MISMATCH_SUSPECTED',
+                            ' · '.join(product_check['active_alerts'][key] for key in product_transition['new_alerts']),
+                            observation, track['token']+':'+envelope['id'],
+                            product_transition['supporting_observation_ids'])
             if transition['new_violations']:
                 self._event('VIOLATION_SUSPECTED', ' · '.join(transition['new_violations']), observation,
                             str(track['token'])+':'+','.join(transition['new_violations']),
@@ -556,6 +572,7 @@ class Run:
             return
         self.cooldowns[cooldown_key] = timestamp
         store.put('event', {'run_id': self.id, 'kind': kind, 'reason': reason,
+                            'severity': 'HIGH' if kind in ('VIOLATION_SUSPECTED', 'PRODUCT_MISMATCH_SUSPECTED') else 'REVIEW',
                             'source_time_s': observation['source_time_s'], 'track_id': observation.get('track_id'),
                             'observation_id': observation['id'], 'policy_id': self.policy['id'],
                             'supporting_observation_ids': supporting_observation_ids or [observation['id']],
@@ -595,6 +612,8 @@ class Run:
                            'all_required_observed': bool(valid and track.get('complete_confirmed')),
                            'violations': result.get('violations', []) if valid else [],
                            'active_violations': track['active_violations'], 'reason': reason,
+                           'product_check': result.get('product_check', {}) if valid else {'state': 'STALE'},
+                           'product_alerts': dict(track.get('product_alerts', {})),
                            'trigger_reason': track.get('trigger_reason'),
                            'source_time_s': result.get('source_time_s'), 'latency_ms': result.get('latency_ms')}))
         return tracks
