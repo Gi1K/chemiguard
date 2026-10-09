@@ -1,8 +1,17 @@
 // Baseline initialization adapted for the new public UI.
 async function init() {
-  const r = await fetch("catalog-data.json", { cache: "no-store" });
-  if (!r.ok) throw new Error("제품 자료를 불러오지 못했습니다.");
-  data = await r.json();
+  try {
+    data = await fetchCatalog();
+  } catch {
+    const r = await fetch("catalog-data.json", { cache: "no-store" });
+    if (!r.ok) throw new Error("제품 자료를 불러오지 못했습니다.");
+    data = await r.json();
+  }
+  renderCatalogMaintenance(data.catalog_meta);
+  setInterval(() => refreshCatalog(), 60000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) refreshCatalog();
+  });
   parts.forEach((part) => {
     $(part.id).insertAdjacentHTML(
       "beforeend",

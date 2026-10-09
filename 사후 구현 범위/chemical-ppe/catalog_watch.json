@@ -1,0 +1,60 @@
+{
+  "timezone": "Asia/Seoul",
+  "schedule_label": "매일 오전 9시",
+  "max_pages_per_run": 16,
+  "manufacturers": [
+    {
+      "name": "DuPont",
+      "domains": ["dupont.com", "dupont.co.kr"],
+      "start_urls": ["https://www.dupont.com/safespec.html"],
+      "query": "site:dupont.com Tychem chemical protective coverall new product"
+    },
+    {
+      "name": "Ansell",
+      "domains": ["ansell.com"],
+      "start_urls": [
+        "https://www.ansell.com/us/en/products/alphatec-4000-cfr-jacket-stitched-taped-model-222"
+      ],
+      "query": "site:ansell.com AlphaTec chemical protective coverall new product"
+    },
+    {
+      "name": "Lakeland",
+      "domains": ["lakeland.com"],
+      "start_urls": ["https://www.lakeland.com/all-products/"],
+      "query": "site:lakeland.com chemical suits ChemMax new product"
+    },
+    {
+      "name": "3M",
+      "domains": ["3m.com", "3m.co.kr"],
+      "start_urls": [],
+      "query": "site:3m.co.kr 화학 보호복 장갑 호흡보호구 신제품"
+    },
+    {
+      "name": "Respirex International",
+      "domains": ["respirex.com"],
+      "start_urls": [
+        "https://www.respirex.com/en/products/simplair-ae-tank-suit"
+      ],
+      "query": "site:respirex.com chemical protective suit new product"
+    },
+    {
+      "name": "Hancom Lifecare",
+      "aliases": ["한컴라이프케어(산청)"],
+      "domains": ["hancomlifecare.com", "hancomsafety.co.kr"],
+      "start_urls": ["https://global.hancomlifecare.com/products/sca1800"],
+      "query": "site:hancomlifecare.com 화학보호복 신제품"
+    },
+    {
+      "name": "SHOWA",
+      "domains": ["showagroup.com"],
+      "start_urls": ["https://www.showagroup.com/us-en/shop/874r/"],
+      "query": "site:showagroup.com chemical resistant glove new"
+    },
+    {
+      "name": "OTOS",
+      "domains": ["otos.co.kr"],
+      "start_urls": [],
+      "query": "site:otos.co.kr 화학 보안경 보안면 신제품"
+    }
+  ]
+}

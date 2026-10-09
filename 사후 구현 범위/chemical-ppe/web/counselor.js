@@ -149,6 +149,11 @@ async function submitChat(event, confirmation = null) {
       throw new Error(response.error || "상담 요청을 완료하지 못했습니다.");
     }
     chatSession = response.session_id;
+    if (
+      response.catalog_revision &&
+      response.catalog_revision !== data.catalog_meta?.revision
+    )
+      await refreshCatalog(true);
     userMessages.push(message || "라벨 사진 첨부");
     if (confirmation || response.photo_reading) {
       document.querySelectorAll("[data-photo-review]").forEach((button) => {

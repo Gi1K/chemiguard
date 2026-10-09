@@ -30,9 +30,22 @@ bash run.sh
 | 사전 상담 지식 | 원본 `CatalogChat.instructions/output_schema`와 `chemical_live_lookup.lookup_chemicals` 재사용. 원본 서버 초기화·CodexClient 실행은 없음 |
 | 사후 화면 | `web/index.html`은 기존 DOM 계약을 바탕으로 다시 구성. `catalog.js`는 사진 중심 카드·카테고리·상세·확대·최대 3개 비교, `counselor.js`는 API 접근·오류·시험 원문 표시. `public.css`, `catalog.css`는 새 화면과 모바일 스타일 |
 | 사후 API | `server.py`, `agents_backend.py`: CAS 계획 → 기존 제조사 조회 → 조합. 요청당 최대 2개의 Agents 세션 또는 Responses 요청, 임시 대화, 응답 검증, 접근·호출 제한 |
+| 사후 제품 관리 | `catalog_store.py`, `catalog_sources.py`, `catalog_admin.py`, `web/catalog-sync.js`: 영속 제품 DB, 공식 출처 검증·중복 방지·변경 이력, 일일 관리 자동화와 홈페이지 갱신 |
 | 사후 배포 | `build.mjs`, Vercel 설정, 서버 실행/HTTPS 프록시 예시. `dist/`는 생성물이며 커밋하지 않음 |
 
 기존 화면과 기능을 새로 개발한 것으로 세지 않는다. 빌드는 기준선 해시가 하나라도 바뀌면 중단한다. 원본은 사전 폴더에 보존하고, 분리·정리·개선한 파일은 사후 폴더에 둔다. 원래 사진의 모델 일치/대표사진 상태와 실제 판매 색상 메타데이터는 보존한다.
+
+## 제품 DB와 매일 자동 확인
+
+홈페이지는 `.runtime/catalog.sqlite3`를 사용한다. 최초 실행 때 기존 44개 제품·150개 출처를 한 번 이관하며, 원본 JSON은 변경하지 않는다. 카탈로그 화면·비교·선택 목록과 상담은 같은 DB를 읽는다. 새 제품이 반영되면 활성 화면이 최대 60초 안에 갱신하며, 열린 상세 창이나 진행 중인 상담은 다음 확인 때 갱신한다. 서버에 연결하지 못하면 기본 44개 목록으로 돌아가고 화면에 상태를 표시한다.
+
+현재 작업 PC에는 **한국 시간 매일 오전 9시**에 이 대화의 Codex 관리 자동화가 공식 제조사 자료를 확인하도록 등록했다. 홈페이지 상담은 기존 Luna Agents API를 사용하고, 관리 자동화는 Codex가 실행한다. **서버 PC와 Codex 앱이 켜져 있어야 정기 확인이 실행된다.** 저장소 복제만으로 다른 PC에 일정이 설치되지는 않는다. 홈페이지의 `제품 자동 업데이트`에서 등록 일정, 최근 실행 시각, 추가·갱신 건수와 실패 출처를 볼 수 있다.
+
+공식 본문에서 이름·정확 모델·품목을 확인한 제품만 기본 정보로 추가한다. 새로 발견한 제품은 `성능 검토 전`이며 자동 추천·조합에서는 제외한다. 수동 비교·초안 선택은 가능하다. 출시일·인증·시험 성능·국내 재고·이미지 권한을 추정하지 않는다. 신규 사진은 공식 출처 링크로 확인한다.
+
+현재 첫 수집에서 DuPont QS127T GR을 추가해 운영 DB는 45개 제품·151개 출처다. 이는 최근 출시가 확인되었다는 뜻이 아니다. 일부 제조사의 HTTP 403은 실패로 기록했다. 정적 `catalog-data.json`은 기본 자료이며, 화면의 제품·출처 링크는 DB 연결 시 최신 API로 연결한다.
+
+관리 절차, 검색 대상과 한계는 [CATALOG_MAINTENANCE.md](CATALOG_MAINTENANCE.md)에 있다. `.venv/bin/python catalog_admin.py status`로 현재 상태를 확인한다. 쓰기는 로컬 CLI로만 수행하며 외부 쓰기 API는 제공하지 않는다. DB·수집 결과는 Git 제외다. 장기 운영을 위한 별도 서버 스케줄러, 백업과 성능 검토·승인 기능은 후속 범위다.
 
 ## 사진 표시
 
@@ -106,6 +119,7 @@ systemctl --user status chemiguard-catalog.service --no-pager
 ### API와 운영 제한
 
 - `GET /api/ppe/status`: 상담 준비 상태와 허용된 로컬 사진 목록. 키·시연 코드 값은 반환하지 않는다.
+- `GET /api/ppe/catalog`: 로컬 경로·비공개 사진 정보를 제거한 최신 제품·출처 목록. `GET /api/ppe/catalog/status`: 최근 수집 결과와 등록 일정. 두 응답 모두 캐시하지 않는다.
 - `GET /api/ppe/local-media/{product_id}`: 위 로컬 조건을 만족한 등록 사진만 반환.
 - `POST /api/ppe/chat`: `Authorization: Bearer <시연 코드>`와 JSON. `message`, `session_id`, `auto_kit_options`, `existing_kits`, 선택적 `photos`(data URL 배열), `photo_confirmation`(`review_id`, 수정한 `text`)을 받는다. 사진과 확인 텍스트를 같은 요청에 보내지 않는다.
 - 브라우저 Origin이 있으면 허용 목록과 대조하고, 모든 요청의 시연 코드를 확인한다. Origin은 인증 대용이 아니다. 글 요청 최대 32KB, 메시지 6000자. 사진 요청 본문은 2,000,000바이트, 장당 실제 파일 700,000바이트·1600만 픽셀, 최대 2장. 사진 확인 텍스트는 2000자까지다. 임의 원격 이미지 URL은 받지 않는다.

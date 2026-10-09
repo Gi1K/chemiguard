@@ -15,6 +15,7 @@
     <script src="catalog.js" defer></script>
     <script src="photo-upload.js" defer></script>
     <script src="counselor.js" defer></script>
+    <script src="catalog-sync.js" defer></script>
     <script src="bootstrap.js" defer></script>
   </head>
   <body>
@@ -108,6 +109,12 @@
             물질을 입력해 추천받기 ↗
           </button>
         </div>
+        <details class="catalog-updates" id="catalogUpdates">
+          <summary>
+            제품 자동 업데이트 <span id="catalogUpdateBadge">연결 확인 중</span>
+          </summary>
+          <div id="catalogUpdateDetails"></div>
+        </details>
         <div
           id="categoryChips"
           class="category-chips"
@@ -488,7 +495,7 @@
         </div>
         <div>
           <a href="criteria.html" target="_blank" rel="noopener">선정 기준 ↗</a
-          ><a href="catalog-data.json" target="_blank" rel="noopener"
+          ><a id="catalogDataLink" href="catalog-data.json" target="_blank" rel="noopener"
             >제품·출처 자료 ↗</a
           ><span class="small muted">현장을 위한 근거 있는 선택</span>
         </div>

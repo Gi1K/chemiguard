@@ -32,6 +32,8 @@ function productSource(p) {
 }
 
 function photoNote(p) {
+  if (p.discovery)
+    return "공식 출처에서 실물 사진 확인 · 사진 사용 권한 검토 전";
   return p.images?.[0]?.exact_style_match
     ? "모델 연결 사진 · 판매 옵션은 별도 확인"
     : "제품군 대표사진 · 정확한 판매 모델 확인 필요";
@@ -113,6 +115,7 @@ function productCard(p) {
       <span class="photo-status">${productPhotoUrl(p) ? (p.images?.[0]?.exact_style_match ? "모델 연결 사진" : "제품군 대표사진") : "실물 사진 아님"}</span>
     </div>
     <div class="product-meta"><p class="section-kicker">${esc(p.manufacturer)}</p><h3>${esc(p.display_name)}</h3>
+      ${p.discovery ? '<p class="discovery-badge">최근 발견 · 성능 검토 전</p>' : ""}
       <div class="card-specs"><span>${esc(label)}</span>${productTypes.length ? `<span>${productTypes.map((t) => `${t}형식`).join(" · ")}</span>` : ""}${swatch(colour(p))}</div>
       <p class="purchase-summary">${p.domestic_purchase?.length ? `국내 판매·견적 경로 ${p.domestic_purchase.length}곳` : "국내 구매 경로 확인 전"} <span>· 실재고 별도 확인</span></p>
       <div class="card-actions"><button type="button" data-detail="${esc(p.product_id)}">상세 보기</button><button type="button" class="choose-product" data-product="${esc(p.product_id)}">조합에 담기 ＋</button></div>
@@ -143,6 +146,7 @@ function openProduct(productId) {
         .map((t) => `<span class="badge neutral">${t}형식 표시</span>`)
         .join("")}${swatch(colour(p))}</div>
       <p class="small muted">${esc(p.identity.model)}${p.item_standard_summary ? ` · ${esc(p.item_standard_summary)}` : ""}</p>
+      ${p.discovery ? `<p class="discovery-badge">${esc(new Date(p.discovery.first_seen_at).toLocaleDateString("ko-KR"))} 처음 발견 · 출시일 미확인</p><p class="small">제조사 제품명과 모델만 확인했습니다. 국내 인증·구매 경로·물질별 성능을 확인하기 전에는 자동 추천에 넣지 않습니다.</p>` : ""}
       <div class="detail-action"><button type="button" class="primary" data-detail-add="${esc(p.product_id)}">내 조합에 담기 ＋</button><button type="button" data-compare="${esc(p.product_id)}">${comparedProducts.has(p.product_id) ? "비교에서 빼기" : "비교에 추가"}</button></div>
       <section class="detail-section"><h3>국내 구매·견적 경로</h3>${purchases(p)}</section>
       <section class="detail-section"><h3>제품·인증 근거</h3><dl>${(p.certifications || []).map(certText).join("")}</dl>${performanceMarkup(p)}</section>

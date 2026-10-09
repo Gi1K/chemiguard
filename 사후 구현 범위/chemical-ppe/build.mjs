@@ -48,6 +48,7 @@ for (const name of [
   "catalog",
   "photo-upload",
   "counselor",
+  "catalog-sync",
   "bootstrap",
 ]) {
   await copyFile(

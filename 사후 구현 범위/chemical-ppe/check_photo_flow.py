@@ -101,7 +101,7 @@ async def main():
                 assert unreadable.status_code == 200
                 assert unreadable.json()['photo_reading']['review_id'] is None
                 assert unreadable.json()['candidates'] == unreadable.json()['kits'] == []
-        assert {path.name for path in root.iterdir()} == {'usage.db'}
+        assert {path.name for path in root.iterdir()} == {'usage.db', 'catalog.sqlite3'}
     print('PASS: image-only input; real image validation; metadata removed; no OCR/pixels in conversation before confirmation; corrected text used; expired confirmation rejected; unreadable photo has no recommendations. Paid calls: 0.')
 
 
